@@ -1,0 +1,116 @@
+@using BHIC.Common.Html;
+@using BHIC.Common.XmlHelper;
+@using BHIC.Common.Configuration;
+
+@{
+    <!-- Get request URL scheme and host details -->
+    var baseSchemeAndHostUrl = string.Concat(HttpContext.Current.Request.Url.Scheme, "://", HttpContext.Current.Request.Url.Host);
+
+    var appBaseUrl = string.Concat(ConfigCommonKeyReader.AppBaseUrl, HttpContext.Current.Request.Url.Host == "localhost" ? ConfigCommonKeyReader.WcBaseUrlPath : "");
+
+    <!-- Prepare SEO url by add trailing "/" during deployment and blank for localhost -->
+    var appendSlash = (appBaseUrl.EndsWith("/") ? string.Empty : "/");
+
+    <!-- GUIN-166: Albin - Prepare PP Base url -->
+    var WcAppBaseUrl = string.Concat(appBaseUrl, appendSlash);
+
+}
+@if (!String.IsNullOrWhiteSpace(ConfigCommonKeyReader.InspectletWid))
+{
+    @*@CDN.RenderScripts("/bundles/scripts/inspectlet")*@
+    <script src='@CDN.Path/Content/Common/scripts/inspectlet.js?v=@ConfigCommonKeyReader.CdnVersion'></script>
+}
+
+<div class="header-top clear">
+    <div class="container">
+
+        @if (ViewBag.Title != "Home")
+        {
+            <span class="brand-tagline">Cover Your Business with Warren Buffett's Berkshire Hathaway Insurance Group</span>
+        }
+    </div>
+</div>
+
+<div class="container clear">
+    <div class="row no-gutter">
+        <div class="lg-col-3">
+            <h1 class="logo pull-left">
+                <a href='@string.Concat(baseSchemeAndHostUrl,(HttpContext.Current.Request.Url.Host == "localhost" ? ConfigCommonKeyReader.WCUrl : ""))'>
+                    @Html.ThemeImage("logo_big.png", "img-responsive", new { alt = "Cover Your Business" })
+                </a>
+            </h1>
+        </div>
+        <div class="lg-col-9 nav-col">
+            <div class="topbar bg-gold clear">
+                <div class="dropdown helpline-dropdown">
+                    <p class="talk-to-expert"> Talk to our Licensed Experts </p>
+                    <a class="sysPhoneHref helpline">
+                        <svg class="icon-phone-white" xmlns="http://www.w3.org/2000/svg" version="1.1" x="0" y="0" viewBox="0 0 52.5 52.5" xml:space="preserve"><path d="M40.3 33.3c-1-0.7-3.6-1.4-5.6 1.1 -2 2.5-4.5 6.6-13.8-2.8 -9.3-9.3-5.2-11.8-2.8-13.8 2.5-2 1.8-4.5 1.1-5.6 -0.7-1-5-7.7-5.8-8.8 -0.8-1.1-1.8-2.9-4.2-2.6C7.5 1.1 0.8 4.7 0.8 12.3s6 17 14.2 25.2c8.2 8.2 17.6 14.2 25.2 14.2 7.6 0 11.2-6.8 11.5-8.5 0.3-2.4-1.5-3.4-2.6-4.2C48 38.3 41.3 33.9 40.3 33.3z" /></svg>
+                        <span class="sysPhone"></span>
+                    </a>
+                    <p class="call-time"> Mon - Fri 8am - 8pm EST </p>
+                </div>
+            </div>
+            <nav class="navbar clear right">
+                <svg class="icon-close lg-hide pull-left menu-close" xmlns="http://www.w3.org/2000/svg" version="1.1" x="0" y="0" viewBox="0 0 24 25" xml:space="preserve" width="25" height="25">
+                <path class="fill-teal" d="M15.2 12.5l7.9-8.4c0.8-0.9 0.7-2.4-0.2-3.2 -1-0.8-2.4-0.8-3.3 0.2L12 9.1 4.4 1C3.5 0.1 2.1 0 1.1 0.8c-1 0.8-1.1 2.3-0.2 3.2l7.9 8.4 -7.9 8.4c-0.8 0.9-0.7 2.4 0.2 3.2 1 0.8 2.4 0.8 3.3-0.2l7.6-8.1 7.6 8.1c0.8 0.9 2.3 1 3.3 0.2 1-0.8 1.1-2.3 0.2-3.2L15.2 12.5z" />
+                </svg>
+                <ul class="main-menu no-style topNavigation">
+                    <li><a href='@string.Concat(WcAppBaseUrl, "workers-comp")' id="products">Workers' Compensation</a></li>
+                    <li><a href='@string.Concat(WcAppBaseUrl, "business-owners-policy")' id="about-us">Property & Liability (BOP)</a></li>
+                    <li><a href='@string.Concat(WcAppBaseUrl, "commercial-auto")' id="resources">Commercial Auto</a></li>
+                    <li id="ReportClaim"><a href="#/ReportClaimDashboard">Claims</a></li>
+                    <li id="YourAccount"><a href="~/#/Login" >Your Policy</a></li>
+                </ul>
+            </nav>
+        </div>
+    </div>
+    <div class="menu-open lg-hide">
+        <span></span>
+        <span></span>
+        <span></span>
+    </div>
+</div>
+
+
+<script>
+    $('.menu-open').on('click', function () {
+        $('.navbar').addClass('reveal');
+        $('.overlay').addClass('on');
+    });
+    $('.menu-close').on('click', function () {
+        $('.navbar').removeClass('reveal');
+        $('.overlay').removeClass('on');
+    });
+    $('.dropdown-toggle').click(function (e) {
+        $(this).siblings('.dropdown-menu').slideToggle(100);
+        $('.dropdown-menu').not($(this).siblings()).hide();
+        e.preventDefault();
+    });
+    $(document).on('click', function (event) {
+        if (!$(event.target).closest('.dropdown').length) {
+            $('.dropdown-menu').hide();
+        }
+    });
+    $(window).resize(function () {
+        $('.overlay').removeClass('on');
+    });
+
+
+    $(document).ready(function () {
+
+        if ($(window).width() < 801) {
+            $("header").css("margin-top", $('div.topbar').height() + 'px');
+        } else {
+            $("header").css("margin-top", "0px");
+        }
+
+        $(window).resize(function () {
+            if ($(window).width() < 785) {
+                $("header").css("margin-top", $('div.topbar').height() +     'px');
+            } else {
+                $("header").css("margin-top", "0px");
+            }
+        });
+    });
+</script>

@@ -1,0 +1,103 @@
+﻿@using BHIC.Common.Configuration;
+@using BHIC.Common.XmlHelper;
+
+@{
+    var cdnVersion = BHIC.Portal.Dashboard.BaseController.GetAssemblyVersion();
+}
+
+@*@CDN.RenderScripts("/bundles/scripts/captcha")*@
+
+<script src="https://www.google.com/recaptcha/api.js"></script>
+<script type="text/javascript">
+    $(document).ready(function () {
+        var wH = $(window).height() - 340;
+        $('.page-content').css('minHeight', wH);
+
+        bindTooltip();
+    });
+</script>
+<input type="hidden" id="hdnViewId" value="YourAccount">
+<section class="page-content bg-blue--dark bt10" ng-init="loginController">
+    <div class="container">
+        <div class="row">
+            <div class="alert alert-info info-panel mb2" ng-show="verifiedemail">
+                <div class="row">
+                    <div class="lg-col-9 md-col-8 sm-col-12">
+                        <p class="text-bold alert-text"> Welcome back, it doesn't appear you ever confirmed your email, please click here if you want us to resend. If you have any questions or want to speak to someone at our helpdesk, you can email us at <a href="mailto:customerservice@coveryourbusiness.com" class="email"> CustomerService@CoverYourBusiness.com</a>, call us at <a href="tel:8444720967"> 844-472-0967 </a> or click on live chat below. </p>
+                    </div>
+                    <div class="lg-col-3 md-col-4 sm-col-12 right">
+                        <button class="btn btn-primary" ng-click="resendMailFn();">Resend</button>
+                    </div>
+                </div>
+            </div>
+            <div class="alert alert-success" ng-show="afterverification">
+                <p class="alert-text text-bold">A link to confirm your Email has been sent to you. If you don’t receive our e-mail after  few minutes, be sure to check your spam filter.</p>
+            </div>
+            @if (!string.IsNullOrWhiteSpace(ViewBag.Name))
+            {
+                <div class="alert alert-success info-panel" ng-if="((@ViewBag.Name)==verified)">
+                    <p class="alert-text text-bold"> Thank you for verifying your email. Please login with your credentials.</p>
+                </div>
+            }
+
+            <div class="lg-col-5 col-centered">
+                <div class="page-title b0 mb0">
+                    <h4>Policy Center Login</h4>
+                    <p>Login to your online account with us and view your policy, pay your bill, request a Certificate of Insurance, and more...</p>
+                </div>                                
+                <div style="color:red" ng-show="valid">{{responseMsg}}</div>
+                <div class="row">
+                    <div class="lg-col-10">
+                        <form class="form-login" name="loginform" data-ng-submit="loginform.$valid && checkUserAutntication()" onerrorfocus-form novalidate>
+                            <div class="form-group mb1">
+                                <label for="" class="sr-only">Email Address / Policy Code</label>
+                                <input id="txtemail" type="email" name="email" ng-model="Email" ng-change="resetMsg();"
+                                       required class="field field-lg" placeholder="Email" autofocus="true" ng-model-options="{updateOn:'blur focusout'}" />
+                                <span style="color:red" ng-show="loginform.email.$invalid && (submitted || !loginform.email.$pristine)">
+                                    <span ng-show="loginform.email.$error.required &&  (submitted || !loginform.email.$pristine)">Email is required.</span>
+                                    <span ng-show="loginform.email.$error.email && (submitted || !loginform.email.$pristine)">Invalid email address.</span>
+                                </span>
+                            </div>
+                            <div class="form-group mb1">
+                                <label for="" class="sr-only">Password</label>
+                                <input type="password" style="font-family: verdana, sans-serif; font-weight: bold;" placeholder="Password" ng-change="password = password.split(' ').join('')"
+                                       name="password" ng-model="Password" required class="field field-lg" ng-model-options="{updateOn:'blur focusout'}">
+                                <span style="color:red" ng-show="loginform.password.$invalid && (submitted || !loginform.password.$pristine)">
+                                    <span ng-show="loginform.password.$error.required && (submitted || !loginform.password.$pristine)">Password is required.</span>
+                                </span>
+                                <span class="error" ng-bind="formerrormsg"></span>
+                            </div>
+                            <div class="form-group mb1" ng-show="captcha">
+                                <div class="g-recaptcha" data-sitekey="@ConfigCommonKeyReader.CaptchaSiteKey"></div>
+                            </div>
+                            <button type="submit" class="btn btn-primary btn-block field-lg" ng-click="submitted=true">Login</button>
+                        </form>
+                    </div>
+                </div>
+                <p>Your GEICO Commercial Auto Policy? <a href="https://www.geico.com/manageyourpolicy/commercial/" target="_blank" class="tooltip" title="You can login to GEICO's policy center here to manage your Commercial Auto policy or you can reach GEICO at <span style='white-space:nowrap'> (866) 509-9444 </span> for any questions related to your policy. Their Customer Support representatives are available from Monday to Friday, 8am-9pm EST.">Login here</a></p>
+                <p class="mb0"><a href="~/#/ForgotPassword">Forgot Your Password?</a></p>
+                <p>New to our Policy Center? <a href="~/#/Registration">Register Now</a></p>
+
+            </div>
+        </div>
+    </div>
+</section>
+
+<script type="text/javascript">
+    $('#txtemail').focus();
+</script>
+<script>
+    $(document).ready(function () {
+
+        //highligh selected menu item
+        $('.main-menu').find('li').each(function () {
+            $(this).removeAttr('class');
+            if ($(this).attr('id') != undefined && $('#hdnViewId').val() != undefined) {
+                if ($(this).attr('id') == $('#hdnViewId').val()) {
+                    $(this).addClass('active');
+                }
+            }
+        });
+    });
+</script>
+

@@ -1,0 +1,258 @@
+﻿@using BHIC.ViewDomain.QuestionEngine;
+@using BHIC.Common.XmlHelper;
+@using BHIC.Common.Configuration;
+
+@model BHIC.ViewDomain.QuestionEngine.QuestionnaireViewModelAngular
+
+<!-- Comment : Here Inspectlet widget plugged -->
+@*@if (!String.IsNullOrWhiteSpace(ConfigCommonKeyReader.InspectletWid))
+{
+    <script type="text/javascript">
+        var inspectletWid = '@ConfigCommonKeyReader.InspectletWid';
+        var inspectletQuoteid = '@Session["quoteId"].ToString()';
+        var inspectletSessionid = '@Session.SessionID'
+        var resetSession = false;
+        window.recordSession(inspectletWid, inspectletQuoteid, inspectletSessionid, resetSession)
+    </script>
+}*@
+
+@{
+    <!-- Get question id has to be made hidden but need to be posted on submission -->
+    var HowLongBeenInBusinessQuestionId = ConfigCommonKeyReader.HowLongBeenInBusinessQuestionId;
+}
+
+<section class="progress-bar bg-blue">
+    <div class="container">
+        <ul class="no-style steps clear">
+            <li ng-repeat="link in NavLinks" class="{{link.ClassName}}"><a oncontextmenu="return false;" ng-href="{{link.Href}}" url="{{link.NavigationLink}}" ng-click="goTo($event)" target="_self">{{link.DisplayText}}</a></li>
+        </ul>
+    </div>
+</section>
+<section class="page-content">
+    <div class="container">
+        <div class="row">
+            <div class="lg-col-8">
+                <div class="content">
+                    <div class="page-title">
+                        <h2>Workers' Compensation</h2>
+                        <p>
+                            We have just a few more questions for you that will help us accurately quote your insurance cost.
+                        </p>
+                    </div>
+                    <form name="form_Questions" class="questions" novalidate data-ng-init="questionsCtrl.init(@Newtonsoft.Json.JsonConvert.SerializeObject(Model));">
+                        @*@Html.AntiForgeryToken()*@
+                        <div error-messages-control errormessagelist="questionsCtrl.listOfErrors"></div>
+
+                        <div class="questions">
+                            <!-- Comment : Here Fein section inclusion decision making -->
+                            <div class="question" data-ng-if="questionsCtrl.isFeinApplicable" data-ng-cloak="">
+                                <div class="form-group">
+                                    <div class="row">
+                                        <label class="lg-col-3">Tax ID Type </label>
+                                        <div class="lg-col-8">
+                                            <div class="radio-group">
+                                                <div class="with-tooltip">
+                                                    <label class="radio d-tcell">
+                                                        <input type="radio" ng-model="selectedTaxIdType" value="E" ng-change="updateTaxIdOrSSN('E')" 
+                                                               checked name="business" id="profession">
+                                                        <span></span>Federal Employer Identification Number (FEIN)
+                                                    </label>                                                    
+                                                </div>
+                                                <label class="radio">
+                                                    <input type="radio" ng-model="selectedTaxIdType" value="S" ng-change="updateTaxIdOrSSN('S')" name="business" id="industry">
+                                                    <span></span>Social Security Number (SSN)
+                                                </label>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <label class="lg-col-3">Tax ID </label>
+                                        <div class="lg-col-8 input-group field-lg">
+                                            <input type="text" ng-if="showTaxId" name="feinControlText" class="d-tcell field inspectletIgnore"
+                                                   mask-input mask-format="99-9999999" data-ng-model="feinNumber" update="true"
+                                                   validate-taxid-number-control minlength="9" placeholder="Enter your Tax ID"
+                                                   required>
+                                            <!-- FEIN Text field validation -->
+                                            <span class="error" ng-if="showTaxId && (submitted || !form_Questions.feinControlText.$pristine) && form_Questions.feinControlText.$error.required">Tax ID required</span>
+                                            <span class="error" ng-if="!form_Questions.feinControlText.$error.required && showTaxId && form_Questions.feinControlText.$error.validTaxIdNumber"> Invalid FEIN number </span>
+
+
+                                            <input type="text" ng-if="!showTaxId" name="ssnControlText" class="d-tcell field inspectletIgnore"
+                                                   mask-input mask-format="999-99-9999" data-ng-model="ssnNumber" update="true"
+                                                   validate-taxid-number-control minlength="9" placeholder="Enter your SSN"
+                                                   required>
+
+                                            <!-- SSN Text field validation -->
+                                            <span class="error" ng-if="!showTaxId && (submitted || !form_Questions.ssnControlText.$pristine) && form_Questions.ssnControlText.$error.required">SSN required</span>
+                                            <span class="error" ng-if="!form_Questions.ssnControlText.$error.required && !showTaxId &&  form_Questions.ssnControlText.$error.validTaxIdNumber"> Invalid SSN number </span>
+
+                                            <p class="field-help">
+                                                Your Tax ID is linked to your claims history, so we use it to price your policy by checking to see if there is a published Experience Modification Factor or XMOD for your business.
+                                                <a href="" ng-click="expandAndCollapse();" class="text-expand">{{displayText}}</a>
+                                            </p>
+                                            <p ng-hide="!moreText" class="field-help">
+                                                An Experience Mod (sometimes called a <strong>MOD</strong> or <strong>X-MOD</strong>)
+                                                is an adjustment or modification to the pricing of your coverage that is specific to a particular business, and is based upon your previous claim
+                                                experience as compared to other businesses of the same size and scope of operations. Generally, a business must be in operation a minimum of three years
+                                                and have generated sufficient premium in a single year for a MOD to be assigned. Since MODs are unique to each business,
+                                                the organization that calculates the number (either NCCI or the state's Workers' Compensation Bureau) will associate the factor with the Tax ID.
+                                            </p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="question" id="quesionNumber{{questionId}}" data-ng-repeat="question in questionsCtrl.questions track by question.questionId" data-ng-init="questionId = question.questionId;
+                            ctrlType = question.QuestionType; ctrlLimitList = question.QuestionResponseLimitList; questionsCtrl.questionId = '';
+                             conditionalQuestionsList = (questionsCtrl.questions | filter : { WhenQuestion: question.questionId } : true);
+                             conditionalQuestions = (conditionalQuestionsList).length; hasDependentQs= conditionalQuestions >0 ? true : false"
+                                 data-ng-show="question.RenderFlag == true && question.questionId != @HowLongBeenInBusinessQuestionId">
+
+                                <data-ng-form name="userFieldForm">
+
+                                    <div class="form-group">
+
+                                        <!-- Comment : Here avoid question text in case question id is folllowing -->
+                                        <label ng-bind-html="question.questionText"></label>
+
+                                        <!-- QuestionType = T: Text -->
+                                        <div data-ng-if="ctrlType == 'T'">
+                                            <input type="text" name="questionTypeText" class="input-group-input field" data-ng-model="question.UserResponse" ng-model-options="{ updateOn: 'blur' }" data-ng-minlength="{{ctrlLimitList[0].Value}}" data-ng-maxlength="{{ctrlLimitList[0].Prompt}}" data-ng-required="true" />
+                                        </div>
+
+                                        <!-- QuestionType = N: Numeric -->
+                                        <div data-ng-if="ctrlType == 'N'">
+                                            <input type="number" name="questionTypeNumber" class="field field-sm"
+                                                   data-ng-init="question.UserResponse = (question.UserResponse == '' || question.UserResponse == null) ? '' : questionsCtrl.convertToNumeric(question.UserResponse)"
+                                                   data-ng-model="question.UserResponse"
+                                                   data-ng-pattern="/^(\d)+$/"
+                                                   min="{{ctrlLimitList[0].Value}}"
+                                                   max="{{ctrlLimitList[1].Value}}"
+                                                   data-ng-change="questionsCtrl.showConditionalQuestion(question,question.UserResponse)"
+                                                   data-ng-show="question.questionId != @HowLongBeenInBusinessQuestionId"
+                                                   numeric-only
+                                                   data-ng-required="true" />
+                                        </div>
+
+                                        <!-- QuestionType = P: Percentage -->
+                                        <div class="number-increment-decrement" data-ng-if="ctrlType == 'P'">
+                                            <strong class="number-decrement left-radius" data-ng-click="questionsCtrl.manipulatePercentageControls(question,-1,ctrlLimitList[0].Value,ctrlLimitList[1].Value)">-</strong>
+                                            <input type="text" id="questionTypePercentage{{questionId}}" name="questionTypePercentage{{questionId}}" value="0" class="number-field field"
+                                                   ng-model="question.UserResponse" min="{{ctrlLimitList[0].Value}}" max="{{ctrlLimitList[1].Value}}"
+                                                   data-ng-blur="questionsCtrl.manipulatePercentageControls(question,0,ctrlLimitList[0].Value,ctrlLimitList[1].Value)"
+                                                   numeric-only />
+                                            <strong class="number-increment right-radius" data-ng-click="questionsCtrl.manipulatePercentageControls(question,+1,ctrlLimitList[0].Value,ctrlLimitList[1].Value)">+</strong>
+                                        </div>
+
+                                        <!-- QuestionType = L: List -->
+                                        <div data-ng-if="ctrlType == 'L'">
+                                            <select name="questionTypeList" class="form-control" data-ng-options="listItem.Value as listItem.Prompt for listItem in ctrlLimitList" data-ng-model="question.UserResponse" data-ng-required="true" data-ng-change="questionsCtrl.showConditionalQuestion(question,question.UserResponse)">
+                                                <option value="">--Select--</option>
+                                            </select>
+                                        </div>
+
+                                        <!-- QuestionType = D: Date -->
+                                        <div class="input-group width-auto" data-ng-if="ctrlType == 'D'">
+                                            <input type="text" name="questionTypeDate" class="input-group-input no-radius field" date-control data-ng-model="question.UserResponse" format="mm/dd/yy" placeholder="mm/dd/yy">
+                                            <div class="input-group-addon"><i class="fa fa-calendar"></i></div>
+                                        </div>
+
+                                        <!-- QuestionType = R: Radio Group -->
+                                        <div class="radio-toggle" data-ng-if="ctrlType == 'R' && question.sortOrder != questionsCtrl.questions[questionsCtrl.questions.length-1].sortOrder">
+                                            <div class="btn-radio">
+                                                <input type="radio" id="questionTypeRadio{{questionId}}Y" name="questionTypeRadio{{questionId}}" value="{{ctrlLimitList[0].Value}}" data-ng-model="question.UserResponse" data-ng-change="questionsCtrl.showConditionalQuestion(question,ctrlLimitList[0].Value)" ng-required="(!hasDependentQs && question.RenderFlag)" />
+                                                <label for="questionTypeRadio{{questionId}}Y">Yes</label>
+                                            </div>
+                                            <div class="btn-radio">
+                                                <input type="radio" id="questionTypeRadio{{questionId}}N" name="questionTypeRadio{{questionId}}" value="{{ctrlLimitList[1].Value}}" data-ng-model="question.UserResponse" data-ng-change="questionsCtrl.showConditionalQuestion(question,ctrlLimitList[1].Value)" ng-required="(!hasDependentQs && question.RenderFlag)" />
+                                                <label for="questionTypeRadio{{questionId}}N">No</label>
+                                            </div>
+                                        </div>
+
+                                        <!-- Comment : Here in case of QuestionType='Radio' and 'I Agree' question then show exceptionly checkbox -->
+                                        <div class="radio-toggle" data-ng-if="ctrlType == 'R' && question.sortOrder == questionsCtrl.questions[questionsCtrl.questions.length -1].sortOrder">
+                                            <div class="btn-radio">
+                                                <input type="radio" id="questionTypeRadio{{questionId}}Y" name="questionTypeRadio{{questionId}}" value="{{ctrlLimitList[0].Value}}" data-ng-model="questionsCtrl.acceptFlag" data-ng-change="questionsCtrl.formSubmitted=false;question.UserResponse=questionsCtrl.acceptFlag;" ng-required="true" />
+                                                <label for="questionTypeRadio{{questionId}}Y">Yes</label>
+                                            </div>
+                                            <div class="btn-radio">
+                                                <input type="radio" id="questionTypeRadio{{questionId}}N" name="questionTypeRadio{{questionId}}" value="{{ctrlLimitList[1].Value}}" data-ng-model="questionsCtrl.acceptFlag" data-ng-change="questionsCtrl.formSubmitted=false;question.UserResponse=questionsCtrl.acceptFlag;" ng-required="true" />
+                                                <label for="questionTypeRadio{{questionId}}N">No</label>
+                                            </div>
+                                        </div>
+
+                                        <!-- Text field validation -->
+                                        <div data-ng-messages="userFieldForm.questionTypeText.$error" data-ng-if="(userFieldForm.questionTypeText.$touched && userFieldForm.questionTypeText.$invalid && !hasDependentQs) || (userFieldForm.questionTypeText.$invalid && question.RenderFlag && questionsCtrl.acceptFlag && questionsCtrl.formSubmitted && !hasDependentQs)" data-ng-cloak="">
+                                            <span data-ng-message="required" class="error">A response is required for this question !</span>
+                                            <span data-ng-message="number" class="error">The field response must be a number !</span>
+                                            <span data-ng-message="minlength" class="error">Minimum length can not be &lt; {{ctrlLimitList[0].Value}} !</span>
+                                            <span data-ng-message="maxlength" class="error">Maximum length can not be &gt; {{ctrlLimitList[0].Prompt}} !</span>
+                                        </div>
+
+                                        <!-- Numeric field validation -->
+                                        <div data-ng-messages="userFieldForm.questionTypeNumber.$error" data-ng-if="(userFieldForm.questionTypeNumber.$invalid && !hasDependentQs) && (userFieldForm.questionTypeNumber.$touched || (question.RenderFlag && questionsCtrl.acceptFlag && questionsCtrl.formSubmitted) )"
+                                             data-ng-cloak="">
+                                            <span ng-message="required" class="error">A response is required for this question !</span>
+                                            <span ng-message="number" class="error">The field response must be a number !</span>
+                                            <span ng-message="min" class="error">Minimum value can not be &lt; {{ctrlLimitList[0].Value}} !</span>
+                                            <span ng-message="max" class="error">Maximum value can not be &gt; {{ctrlLimitList[1].Value}} !</span>
+                                        </div>
+
+                                        <!-- RadioGroup field validation (Dynamic ng-messages not working) -->
+                                        <div ng-show="userFieldForm.questionTypeRadio{{questionId}}.$error && !hasDependentQs" data-ng-cloak=" ">
+                                            <span ng-show="userFieldForm.questionTypeRadio{{questionId}}.$invalid && question.RenderFlag && questionsCtrl.acceptFlag && questionsCtrl.formSubmitted" class="error">
+                                                A response is required for this question !
+                                            </span>
+                                        </div>
+                                    </div>
+                                </data-ng-form>
+                            </div>
+
+                        </div>
+
+                        <div class="btn-actions clear" data-ng-show="questionsCtrl.questions.length >0">
+                            <a id="backToCaptureQuote" type="button" class="btn btn-secondary disable-navigate" href="#/GetExposureDetails/">Back &amp; Modify</a>
+                            <input id="btn_Save" type="button" value="Continue" class="btn btn-primary pull-right disable-navigate" data-ng-disabled="!questionsCtrl.acceptFlag"
+                                   data-ng-click="questionsCtrl.formSubmitted=true; questionsCtrl.submitQuestionnaireForm(form_Questions.$valid,questionsCtrl.questions)" />
+                        </div>
+
+                        @*{{form_Questions.$valid}}
+                            <ul>
+                                <li ng-repeat="(key, errors) in form_Questions.$error track by $index">
+                                    <strong>{{ key }}</strong> errors
+                                    <ul>
+                                        <li ng-repeat="e in errors">{{$index}}. {{ e.$name }} has an error: <strong>{{ key }}</strong>.</li>
+                                    </ul>
+                                </li>
+                            </ul>*@
+
+                    </form>
+                </div>
+
+            </div>
+
+            <!-- Comment : Here common SaveForLater directive for all pages -->
+            <div id="ModelSaveForLater" save-for-later-div-control pagename="GetQuestions" isvalidform="{{form_Questions.$valid}}" currentquoteid="@Convert.ToString(Session["quoteId"])"
+                 submit-validated-form="questionsCtrl.submitSaveForLater(argument1)"></div>
+
+            @*<div id="ModelSaveForLater" save-for-later-div-control controllercontext="questionsCtrl" formvalidationstatus="form_Questions.$valid" validate-save-for-later="questionsCtrl.saveForLater(questionsCtrl)"></div>
+
+                <!-- Comment : Here model pop-up-1 for ask user to fill emailId -->
+                <save-for-later-form-model-control id="ModelSaveForLaterForm" controllercontext="questionsCtrl" close-save-for-later-model="questionsCtrl.closeSaveForLaterModel('ModelSaveForLater')">
+                </save-for-later-form-model-control>
+
+                <!-- Comment : Here model pop-up-2 to show user thanks text after successful submit -->
+                <thank-you-model-control id="ModelSaveForLaterThankYou" controllercontext="questionsCtrl" close-save-for-later-model="questionsCtrl.closeSaveForLaterModel('ModelSaveForLaterThankYou')">
+                </thank-you-model-control>*@
+
+        </div>
+    </div>
+</section>
+<script>
+    $(document).ready(function () {
+        $('.progress-bar').click(function (event) {
+            event.preventDefault();
+        });
+    });
+</script>
+@CDN.RenderScripts("/bundles/scripts/navigation")

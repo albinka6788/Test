@@ -1,0 +1,370 @@
+﻿
+@{
+    ViewBag.Title = "Questionnaire for quote generation";
+    Layout = "~/Areas/Landing/Views/Shared/_Layout.cshtml"; ;
+}
+
+<style type="text/css">
+
+    #div-questionsForm 
+    {
+        margin: 20px auto;
+        background-color: #e1d4c0;
+        padding-top:10px;
+    }
+    .bs-callout 
+    {
+        border-color: #eee;
+        border-radius: 4px;
+        border-style: solid;
+        border-width: 1px 1px 1px 5px;
+        margin: 20px 0;
+        padding: 15px 30px 15px 15px;
+    }
+    .bs-callout code, .bs-callout .highlight 
+    {
+        background-color: #fff;
+    }
+    .bs-callout-danger 
+    {
+        background-color: #f2dede;
+        border-color: #ce4844;
+    }
+    .bs-callout-warning 
+    {
+        background-color: #fcf8e3;
+        border-color: #ec971f;
+    }
+    .bs-callout-info 
+    {
+        background-color: #d9edf7;
+        border-color: #1b809e;
+    }
+    .bs-callout-success 
+    {
+        background-color: #dff0d8;
+        border-color: #3c763d;
+    }
+    .quesion-panel 
+    {
+        /*background-color: #fff;
+        border: 1px solid transparent;
+        border-radius: 4px;
+        box-shadow: 0 1px 1px rgba(0, 0, 0, 0.05);
+        margin:0px 0px 20px 20px;
+        width:95%;*/
+        background-color: #fff;
+        border-color: #eee;
+        border-radius: 4px;
+        border-style: solid;
+        border-width: 1px 1px 1px 1px;
+        margin: 20px 10px 0px 10px;        
+    }
+    .quesion-panel-danger {
+        background-color: #f2dede;
+        border-color: #ce4844;
+    }
+    .question-text {
+        padding: 15px 30px 15px 15px;
+    }
+    .validation-callout-error {
+        padding: 2px 0 2px 10px;
+        border-radius:3px;
+        background-color: #ce4844;
+        color: white;
+        font-weight: bold;
+    }
+    .validation-callout-info {
+        padding: 5px; 
+        border-radius:3px;
+        background-color: #d9edf7;
+        color: black;
+        font-weight: bold;
+    }
+    .question-form-submit {
+        margin: 20px 10px 0px 10px;
+        padding-bottom:10px;
+        opacity:0.3;
+    }
+    .active{
+        opacity:100;
+    }
+    #divScrolledArea {
+        height: inherit;border-radius: inherit;position: absolute;background-color:#eb502d;
+    }
+    #overlay 
+    {
+        background-color: rgba(0, 0, 0, 0.8);
+        z-index: 999;
+        position: fixed;
+        left: 0;
+        top: 0;
+        width: 100%;
+        height: 100%;
+        /*display: none;*/
+    }
+    .overlay-display 
+    {
+        display: none;
+    }
+    #processing
+    {    
+        color:#000;
+        background-color:#fff;
+        border-radius:4px;
+        padding:10px;
+        /*width: 21%;*/
+        position: fixed;
+        top: 50%;
+        left: 50%;
+        /* bring your own prefixes */
+        transform: translate(-50%, -50%);
+    }
+    #noDataFound {        
+        font-weight:bold;       
+        border-color: #eee;
+        border-radius: 4px;
+        border-style: solid;
+        border-width: 1px 1px 1px 1px;
+        margin: 20px 0;
+        padding: 15px 30px 15px 15px;
+
+        background-color: #fcf8e3;
+        border-color: #ec971f;
+    }
+    #noDataFound a,a:active{
+        text-decoration :underline;
+    }
+    #noDataFound a:hover {
+        text-decoration :none;
+        color:#ec971f;
+    }
+    .showNoDataFound {
+        display:none;
+    }
+</style>
+
+<div id="div-questionsForm" data-ng-app="bhic-app" data-ng-controller="questionsPageCtrl as questionsCtrl" data-ng-init="questionsCtrl.showNoDataFound = false">
+    @*<div id="div-questionsForm" data-ng-app="bhic-app" data-ng-controller="questionsPageCtrl as questionsCtrl">*@
+
+    <!--Comment : Here show/hide loader for processing requests -->
+    <div id="overlay" data-ng-class="{'overlay-display':!showLoader}">
+        <div id="processing">
+            <div style="float:left;padding-right:10px">Please wait</div>
+            <img src="~/Content/images/ajax-loader_blue.gif" />
+        </div>
+    </div>
+    <div id="noDataFound" data-ng-class="{'showNoDataFound':!questionsCtrl.showNoDataFound}">
+            <b>We didn't find anything to show here.</b> &nbsp;
+            @Html.ActionLink("Start Over", "Index", "WcHome", new { area = "Landing" }, null) &nbsp;
+            @Html.ActionLink("Or, Try it again", "QuestionsGet", "WcHome", new { area = "Landing" }, null)
+    </div>
+
+    <form name="form_Questions" novalidate>
+
+
+        @*<div class="btn-group" data-toggle="buttons" style="width:100px; ">
+                <label class="btn btn-primary DsRadioLabel ">
+                    <input class="questionId84" data-val="true" data-val-required="A response is required for this question." id="QuestionsResponse_Questions_6__ResponseRadio" name="QuestionsResponse.Questions[6].ResponseRadio" type="radio" value="Y"> Yes
+                </label>
+                <label class="btn btn-primary DsRadioLabel ">
+                    <input class="questionId84" id="QuestionsResponse_Questions_6__ResponseRadio" name="QuestionsResponse.Questions[6].ResponseRadio" type="radio" value="N"> No
+                </label>
+            </div>*@
+
+        @*<div class="sliderExample">
+                <a name="ex1"></a>
+                <strong>Step slider with event listeners (see console log)</strong>
+                <div ui-slider min="0" max="50" step="10" ng-model="sliderExample1"></div>
+                <input type="text" ng-model="sliderExample1" />
+            </div>*@
+        @*<div>
+                <div slider-days days="questionsCtrl.days" callback="update" ng-model="questionsCtrl.UserResponse"></div>
+                <input name="Test" type="text" value="0" ng-model="questionsCtrl.UserResponse" style="border: 0px; font-weight: bold; width:90px; text-align:right;padding:0px;color:red" data-ng-readonly="true" />%
+            </div>*@
+
+        @*<div data-ng-messages="(form_Questions.questionTypeList.$error)">
+                <div data-ng-message="required" class="validation-callout-error">A response is required for this question !</div>
+            </div>
+            <div>
+                <select name="questionTypeList" data-ng-options="listItem.Value as listItem.Prompt for listItem in [{'Value':'10','Prompt':'Prem-1'},{'Value':'20','Prompt':'Prem-2'},{'Value':'30','Prompt':'Prem-3'}]" data-ng-model="UserResponse" data-ng-required="true">
+                    <option value="">--Select--</option>
+                </select>
+            </div>
+            <select ng-init="person.somethingHere = options[0]" ng-model="person.somethingHere" ng-options="option.name for option in options"></select>*@
+
+
+        <div class="quesion-panel" style="clear:both;" data-ng-repeat="question in questionsCtrl.questions track by question.questionId" data-ng-init="questionId = question.questionId;
+            ctrlType = question.QuestionType; ctrlLimitList = question.QuestionResponseLimitList; questionsCtrl.questionId = '';
+             conditionalQuestions = (questionsCtrl.questions | filter : { WhenQuestion: questionId }).length; hasDependentQs= conditionalQuestions >0 ? true : false"
+             data-ng-show="question.RenderFlag == true">
+
+            <data-ng-form name="userFieldForm">
+
+                <!-- Text field validation -->
+                <div data-ng-messages="userFieldForm.questionTypeText.$error" data-ng-if="(userFieldForm.questionTypeText.$dirty && userFieldForm.questionTypeText.$invalid && !hasDependentQs) || (userFieldForm.questionTypeText.$invalid && question.RenderFlag && questionsCtrl.acceptFlag && questionsCtrl.formSubmitted && !hasDependentQs)" data-ng-cloak="">
+                    <div data-ng-message="required" class="validation-callout-error">A response is required for this question !</div>
+                    <div data-ng-message="number" class="validation-callout-error">The field response must be a number !</div>
+                    <div data-ng-message="minlength" class="validation-callout-error">Minimum length can not be &lt; {{ctrlLimitList[0].Value}} !</div>
+                    <div data-ng-message="maxlength" class="validation-callout-error">Maximum length can not be &gt; {{ctrlLimitList[0].Prompt}} !</div>
+                </div>
+
+                <!-- Numeric field validation -->
+                <div data-ng-messages="userFieldForm.questionTypeNumber.$error" data-ng-if="userFieldForm.questionTypeNumber.$dirty && userFieldForm.questionTypeNumber.$invalid && !hasDependentQs"
+                     data-ng-cloak="">
+                    <div ng-message="required" class="validation-callout-error">A response is required for this question !</div>
+                    <div ng-message="number" class="validation-callout-error">The field response must be a number !</div>
+                    <div ng-message="min" class="validation-callout-error">Minimum value can not be &lt; {{ctrlLimitList[0].Value}} !</div>
+                    <div ng-message="max" class="validation-callout-error">Maximum value can not be &gt; {{ctrlLimitList[1].Value}} !</div>
+                </div>
+
+                <!-- RadioGroup field validation (Dynamic ng-messages not working) -->
+                <div ng-show="userFieldForm.questionTypeRadio{{questionId}}.$error && !hasDependentQs" data-ng-cloak=" ">
+                    <div ng-show="userFieldForm.questionTypeRadio{{questionId}}.$invalid && question.RenderFlag && questionsCtrl.acceptFlag && questionsCtrl.formSubmitted" class="validation-callout-error">
+                        A response is required for this question !
+                    </div>
+                </div>
+
+                <!-- QuestionType = C: Checkbox -->
+                <!-- QuestionType = P: Percent -->
+                <!-- QuestionType = L: List -->
+                <div data-ng-messages="(userFieldForm.questionTypeList.$error)">
+                    <div data-ng-message="required" class="validation-callout-error">A response is required for this question !</div>
+                </div>
+
+                <!-- QuestionType = D: Date -->
+
+
+                <div class="question-text">
+                    @*{{questionId + "."}}*@
+                    <p data-ng-bind-html="question.questionText"></p>
+
+                    <!-- QuestionType = T: Text -->
+                    <div data-ng-if="ctrlType == 'T'">
+                        <input name="questionTypeText" type="text" data-ng-model="question.UserResponse" data-ng-minlength="{{ctrlLimitList[0].Value}}" data-ng-maxlength="{{ctrlLimitList[0].Prompt}}"
+                               data-ng-required="true" />
+                        @*<p>$pristine = has not been used  <b>{{userFieldForm.questionTypeText.$pristine}}</b></p>
+                            <p>$touched =    <b>{{userFieldForm.questionTypeText.$touched}}</b></p>
+                            <p>$dirty =      <b>{{userFieldForm.questionTypeText.$dirty}}</b></p>
+                            <p>$invalid =    <b>{{userFieldForm.questionTypeText.$invalid}}</b></p>
+                            <p>$error text = <b>{{userFieldForm.questionTypeText.$error}}</b></p>*@
+                    </div>
+
+                    <!-- QuestionType = N: Numeric -->
+                    <div data-ng-if="ctrlType == 'N'">
+                        <input name="questionTypeNumber" type="number" data-ng-init="question.UserResponse = questionsCtrl.convertToNumeric(question.UserResponse)" data-ng-model="question.UserResponse" data-ng-pattern="/^(\d)+$/" min="{{ctrlLimitList[0].Value}}" max="{{ctrlLimitList[1].Value}}" data-ng-required="true" />
+                    </div>
+
+                    <!-- QuestionType = R: Radio Group -->
+                    <!-- Comment : Here in case of QuestionType='Radio' and 'I Agree' question then show exceptionly checkbox -->
+                    <div data-ng-if="ctrlType == 'R' && question.sortOrder != 99999">
+                        <input name="questionTypeRadio{{questionId}}" type="radio" value="{{ctrlLimitList[0].Value}}" data-ng-model="question.UserResponse" data-ng-change="questionsCtrl.showConditionalQuestion(question,ctrlLimitList[0].Value)" ng-required="!hasDependentQs && question.RenderFlag" />&nbsp;
+                        <label data-ng-bind="ctrlLimitList[0].Prompt"></label>
+                        <input name="questionTypeRadio{{questionId}}" type="radio" value="{{ctrlLimitList[1].Value}}" data-ng-model="question.UserResponse" data-ng-change="questionsCtrl.showConditionalQuestion(question,ctrlLimitList[1].Value)" ng-required="!hasDependentQs && question.RenderFlag" />&nbsp;<label data-ng-bind="ctrlLimitList[1].Prompt"></label>
+
+                        <!-- Comment : Here toggle button usage -->
+                        @*<div class="btn-group" data-toggle="buttons" style="width:100%;">
+                                <label class="btn btn-primary">
+                                    <input name="questionTypeRadio{{questionId}}" type="radio" value="{{ctrlLimitList[0].Value}}" data-ng-model="question.UserResponse" data-ng-change="questionsCtrl.showConditionalQuestion(question,ctrlLimitList[0].Value)" ng-required="true" />
+                                    &nbsp;<label data-ng-bind="ctrlLimitList[0].Prompt"></label>
+                                </label>
+                                <label class="btn btn-primary">
+                                    <input name="questionTypeRadio{{questionId}}" type="radio" value="{{ctrlLimitList[1].Value}}" data-ng-model="question.UserResponse" data-ng-change="questionsCtrl.showConditionalQuestion(question,ctrlLimitList[1].Value)" ng-required="true" />
+                                    &nbsp;<label data-ng-bind="ctrlLimitList[1].Prompt"></label>
+                                </label>
+                            </div>*@
+                    </div>
+                    <div data-ng-if="ctrlType == 'R' && question.sortOrder == 99999">
+                        <input name="questionTypeChecbox{{questionId}}" type="checkbox" value="" data-ng-model="questionsCtrl.acceptFlag" data-ng-change="questionsCtrl.formSubmitted=false" />&nbsp;<label data-ng-bind="ctrlLimitList[0].Prompt"></label>
+                    </div>
+
+                    <!-- QuestionType = P: Percent -->
+                    <div data-ng-if="ctrlType == 'P'">
+                        <div style="margin-bottom:5px;">
+                            <input name="questionTypePercentage{{questionId}}" type="text" value="0" ng-model="question.UserResponse" style="border: 0px; font-weight: bold; width:30px; text-align:right;padding:0px;" data-ng-readonly="true" min="{{ctrlLimitList[0].Value}}" max="{{ctrlLimitList[1].Value}}" ng-change="questionsCtrl.update()" />%
+                        </div>
+                        @*<div style="">
+                                <input name="questionTypePercenatagChecbox{{questionId}}" type="checkbox" value="" data-ng-checked="question.UserResponse >0 ? true : false" data-ng-model="question.UserResponse" data-ng-change="questionsCtrl.showConditionalQuestion(question,question.UserResponse)" />
+                            </div>*@
+                        <div style="margin-left:15px;">
+                            <div ui-slider min="{{ctrlLimitList[0].Value}}" max="{{ctrlLimitList[1].Value}}" step="{{ctrlLimitList[2].Value}}" data-ng-model="question.UserResponse">
+                                <div id="divScrolledArea" style="width:{{question.UserResponse}}%;"></div>
+                            </div>
+                        </div>
+
+                        @*<div style="margin-bottom:5px;">
+                                <input id="slider-step-value{{questionId}}" type="text" value="0" style="border: 0px; font-weight: bold; width:30px; text-align:right;padding:0px;" readonly="readonly" name="questionTypePercentage" min="{{ctrlLimitList[0].Value}}" max="{{ctrlLimitList[1].Value}}" data-val-required="A response is required for this question." data-val-number="The field ResponsePercent must be a number." data-val="true" class="questionId94 valid" aria-required="true" aria-invalid="false" aria-describedby="slider-step-value5-error" />%
+                            </div>
+                            <div style="margin-left:15px;">
+                                <div id="slider-step{{questionId}}" class="ui-slider ui-slider-horizontal ui-widget ui-widget-content ui-corner-all"><div class="ui-slider-range ui-widget-header ui-corner-all ui-slider-range-min" style="width: 0%;"></div><span tabindex="0" class="ui-slider-handle ui-state-default ui-corner-all" style="left: 0%;"></span></div>
+                            </div>*@
+                    </div>
+
+                    <!-- QuestionType = L: List -->
+                    <div data-ng-if="ctrlType == 'L'">
+                        <select name="questionTypeList" data-ng-options="listItem.Value as listItem.Prompt for listItem in ctrlLimitList" data-ng-model="question.UserResponse" data-ng-change="questionsCtrl.showConditionalQuestion(question,question.UserResponse)" data-ng-required="true">
+                            <option value="">--Select--</option>
+                        </select>
+                    </div>
+
+                    <!-- QuestionType = D: Date -->
+                    <div data-ng-if="ctrlType == 'D'">
+                        <input name="questionTypeDate" type="text" data-ng-model="question.UserResponse" data-ng-change="questionsCtrl.showConditionalQuestion(question,question.UserResponse)" />
+                        {{question.UserResponse}}
+                    </div>
+
+                </div>
+
+                @*<ul>
+                        <li ng-repeat="(key, errors) in userFieldForm.$error track by $index">
+                            Inner Error : {{userFieldForm.$valid}}
+                            <br />
+                            <strong>{{ key }}</strong> errors
+                            <ul>
+                                <li ng-repeat="e in errors">{{$index}}. {{ e.$name }} has an error: <strong>{{ key }}</strong>.</li>
+                            </ul>
+                        </li>
+                    </ul>*@
+
+            </data-ng-form>
+
+        </div>
+
+        <!-- Comment : Here form submit controls -->
+        <div class="question-form-submit" data-ng-class="{active:questionsCtrl.acceptFlag}" data-ng-show="questionsCtrl.questions.length >0">
+            <input id="btn_Save" type="submit" value="GET MY QUOTE!" class="ds-button-activecommand" data-ng-disabled="!questionsCtrl.acceptFlag"
+                   data-ng-click="questionsCtrl.formSubmitted=true;showLoader = true;questionsCtrl.questionResponseSubmit(form_Questions.$valid,questionsCtrl.questions)" />
+            <input id="btn_Save" type="submit" value="Save for Later" class="btn-Save" data-ng-disabled="!questionsCtrl.acceptFlag" data-ng-click="questionsCtrl.redirectToSaveForLater()" />
+        </div>
+
+        @*{{form_Questions.$valid}}
+            <ul>
+                <li ng-repeat="(key, errors) in form_Questions.$error track by $index">
+                    <strong>{{ key }}</strong> errors
+                    <ul>
+                        <li ng-repeat="e in errors">{{$index}}. {{ e.$name }} has an error: <strong>{{ key }}</strong>.</li>
+                    </ul>
+                </li>
+            </ul>*@
+
+    </form>
+
+
+    @*<div class="bs-callout bs-callout-danger">
+            <div style="padding: 5px; color: white; font-weight: bold; background-color: rgb(206, 72, 68);">Response required !</div>
+            In the code segment above, error handling has been removed for brevity and demonstrative purposes. The developer should
+            take the proper security measures while adding the code above to his or her project.
+        </div>
+        <div class="bs-callout bs-callout-success">
+            In the code segment above, error handling has been removed for brevity and demonstrative purposes. The developer should
+            take the proper security measures while adding the code above to his or her project.
+        </div>*@
+
+    <!-- Comment : Here included files (styles) for JquerySlider -->
+    <link href="~/Content/jquery-ui.css" rel="stylesheet" />
+
+    <!-- Comment : Here included scripts files for page functionality -->
+    <script src="~/Scripts/bhic/services/wc/questionsApi.js"></script>
+    <script src="~/Scripts/bhic/controllers/wc/questionspageCtrl.js"></script>
+
+</div>

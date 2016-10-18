@@ -1,0 +1,17 @@
+﻿@using BHIC.Common.Html;
+@using BHIC.Common.Configuration;
+@using BHIC.Common.XmlHelper;
+@{
+    var cdnVersion = BHIC.Portal.Dashboard.BaseController.GetAssemblyVersion();
+}
+
+<meta name="viewport" content="width=device-width, initial-scale=1,maximum-scale=1,user-scalable=no">
+@CDN.RenderStyles("/bundles/styles/dashboard")
+
+<div class="container-fluid">
+    <div class="alert alert-warning alert-big info-panel">
+        <p class="text-bold alert-text-big"> Session Expired! </p>
+        <p class="text-alert m0"> <span class="text-bold"> Your session has expired. </span>  Please @Html.ActionLink("login", "RedirectToLogin", new { style = "cursor:pointer;" }) again </p>
+        <b><span id="timerCount"></span></b>
+    </div>
+</div>

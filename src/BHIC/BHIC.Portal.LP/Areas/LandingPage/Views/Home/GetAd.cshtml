@@ -1,0 +1,47 @@
+﻿@model BHIC.Portal.LP.Areas.LandingPage.Models.HomeViewModel
+@{
+    ViewBag.Title = "Landing Page Review";
+    Layout = "~/Areas/LandingPage/Views/Shared/_Template_01_Layout.cshtml";
+}
+@using (Html.BeginForm("GetAd", "Home", new { @id = "GetAd", @class = "form-inline", role = "form" }))
+{
+    @Html.HiddenFor(m => m.landingPageTransaction.TokenId)
+    <div class="row">
+        <div class="col-sm-4"></div>
+        <div class="col-sm-4"><img src="@Model.landingPageTransaction.logo" alt="Alternate Text" /></div>
+        <div class="col-sm-4"></div>
+    </div>
+    <hr />
+    <div class="row">
+        <div class="col-sm-4"><img src="@Model.landingPageTransaction.MainImage" alt="Alternate Text" /></div>
+        <div class="col-sm-8">
+            <fieldset>
+                <div class="">
+                    <h1>Your one-stop insurance shop</h1>
+                    <h3>@Model.landingPageTransaction.Comment</h3>
+                </div>
+                <div class="form-group row">
+                    <div class="col-md-4">
+                        @Html.TextBoxFor(m => m.landingPageTransaction.ZipCode, new { @class = "form-control", @placeholder = "ZipCode" })
+                    </div>
+                    <div class="col-lg-4">
+                        <button type="submit" class="btn btn-primary">GetQuote</button>
+                    </div>
+                </div>
+            </fieldset>
+        </div>
+
+    </div>
+    <br />
+    <br />
+    <hr />
+    <footer>
+        <div class="row">
+            <div class="col-sm-12" style="text-align:center">
+                <h2>Multi Policy Discount!</h2>
+                <h4>Get bigger savings when you insure more than just your car</h4>
+            </div>
+        </div>
+
+    </footer>
+}

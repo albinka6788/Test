@@ -1,0 +1,265 @@
+﻿@using BHIC.Common.Html;
+@using BHIC.Common.XmlHelper;
+@using BHIC.Common.Configuration;
+
+<section class="progress-bar bg-blue">
+    <div class="container">
+        <ul class="no-style steps clear" >
+            <li ng-repeat="link in quoteViewModel.NavLinks" class="{{link.ClassName}}"><a url="{{link.NavigationLink}}" ng-click="goTo($event)" target="_self">{{link.DisplayText}}</a></li>
+        </ul>
+    </div>
+</section>
+<section class="page-content">
+    <div class="container">
+        <div class="row no-gutter">
+            <div class="lg-col-8">
+                <div class="content">
+                    <div class="page-title">
+                        <h2>Workers' Compensation</h2>
+                    </div>
+                    <div error-messages-control errormessagelist="quoteViewModel.listOfErrors"></div>
+                    <form ng-show="!quoteViewModel.showCompanionClass" name="captureQuote" class="questions" novalidate>
+                        <div class="questions">
+                            <div class="question" ng-cloak>
+                                <div class="form-group">
+                                    <label>Please describe your business:</label>
+                                    <div class="radio-toggle radio-toggle-lg">
+                                        <div class="btn-radio">
+                                            <input type="radio" name="business" id="profession" ng-model="quoteViewModel.selectedSearch" ng-value="0" ng-click="quoteViewModel.updateSearchSelection(0)" checked>
+                                            <label for="profession">Start Typing</label>
+                                        </div>
+                                        <span class="text-blue text-medium ph15 sm-hide">Or</span>
+                                        <div class="btn-radio">
+                                            <input type="radio" name="business" id="industry" ng-model="quoteViewModel.selectedSearch" ng-value="1" ng-click="quoteViewModel.updateSearchSelection(1)">
+                                            <label for="industry">Pick an Industry</label>
+                                        </div>
+                                    </div>
+                                    <div ng-if="quoteViewModel.showProfession">
+                                        <div class="input-group with-tooltip with-icon">
+                                            <input name="businessName"
+                                                   id="txtBusinessName"
+                                                   data-ng-blur="(disableSubmit && quoteViewModel.businessName!='') ?quoteViewModel.validateExposureAmount('txtBusinessName'):''"
+                                                   data-ng-change="voidValidity()"
+                                                   auto-complete
+                                                   focus="true"
+                                                   class="d-tcell field ui-autocomplete-input"
+                                                   ng-model="quoteViewModel.businessName"
+                                                   @*ng-class="(!quoteViewModel.dataNotFound &&(quoteViewModel.selectedClassDescKeyId==''||quoteViewModel.selectedClassDescId==''))?'error':''"*@
+                                                   type="text"
+                                                   placeholder="e.g. carpenter, dry cleaner, caterer, etc."
+                                                   required>
+                                            <span class="icon-search"></span>
+                                            <div class="d-tcell">
+                                                <abbr bhic-tooltip class="tooltip" data-tooltip="Start by typing a description that best matches your business or review the industries in the drop down and work through the menus to select the best match for your business. If you can’t find a description that is a good match then click Pick an Industry, pick any industry & sub-industry, and then click Other at the bottom of the list so you can type your own description. Fill out the rest of the page and submit your contact info afterwards. We’ll get in touch with you shortly to get the right description for your business.">?</abbr>
+                                            </div>
+                                        </div>
+                                        <span class="error" ng-if="captureQuote.businessName.$error.required && (!captureQuote.businessName.$pristine || submitted)">Business/trade description is required</span>
+                                        <span class="error" ng-if="!captureQuote.businessName.$error.required && quoteViewModel.dataNotFound">No Records Found</span>
+                                        <span class="error" ng-if="!captureQuote.businessName.$error.required && quoteViewModel.searchOptionNotSelected">Please select at least one business</span>
+                                    </div>
+                                    <div ng-if="quoteViewModel.showIndustry">
+                                        <div class="select-group">
+                                            <select id="ddlIndustries"
+                                                    data-ng-model="quoteViewModel.industry"
+                                                    class="field field-lg"
+                                                    name="industry"
+                                                    focus="true"
+                                                    data-ng-options="industry.Description for industry in ::quoteViewModel.industries track by industry.IndustryId"
+                                                    data-ng-change="quoteViewModel.getSubIndustries(quoteViewModel.industry.IndustryId)"
+                                                    required>
+                                                <option value="">{{quoteViewModel.quotePageDefaults.defaults.industry}}</option>
+                                            </select>
+                                            <span class="error" ng-if="(!captureQuote.industry.$pristine && captureQuote.industry.$error.required)">Please Select Industry</span>
+                                            <div ng-if="quoteViewModel.showSubIndustry">
+                                                <select id="ddlSubIndustries"
+                                                        class="field field-lg"
+                                                        data-ng-model="quoteViewModel.subIndustry"
+                                                        name="subIndustry"
+                                                        data-ng-options="subIndustry.Description for subIndustry in quoteViewModel.subIndustries track by subIndustry.SubIndustryId"
+                                                        data-ng-change="quoteViewModel.getClass(quoteViewModel.subIndustry.SubIndustryId)"
+                                                        required>
+                                                    <option value="">{{quoteViewModel.quotePageDefaults.defaults.subIndustry}}</option>
+                                                </select>
+                                                <span class="error" ng-if="(!captureQuote.subIndustry.$pristine || submitted) && captureQuote.subIndustry.$error.required">Please Select SubIndustry</span>
+                                            </div>
+                                            <div ng-if="quoteViewModel.showClass">
+                                                <select id="ddlClass"
+                                                        class="field field-lg"
+                                                        data-ng-model="quoteViewModel.class"
+                                                        name="class"
+                                                        data-ng-options="class.Description for class in quoteViewModel.classes track by class.ClassDescriptionId"
+                                                        data-ng-change="quoteViewModel.validateExposureAmount('ddlClass')"
+                                                        required>
+                                                    <option value="">{{quoteViewModel.quotePageDefaults.defaults.business}}</option>
+                                                </select>
+                                                <span class="error" ng-if="(!captureQuote.class.$pristine || submitted) && captureQuote.class.$error.required">Please Select Business</span>
+                                            </div>
+                                            <div class="input-group" ng-if="quoteViewModel.subIndustry.SubIndustryId=='-1' || quoteViewModel.industry.IndustryId=='-1' || quoteViewModel.class.ClassDescriptionId=='-1'">
+                                                <input type="text"
+                                                       maxlength="50"
+                                                       class="input-group-input field field-lg"
+                                                       max-length="50"
+                                                       data-ng-model="quoteViewModel.otherBusinessName"
+                                                       name="otherBusinessName"
+                                                       required />
+                                                <br />
+                                                <span class="error" style="margin-top:4px;" ng-if="(!captureQuote.otherBusinessName.$pristine || submitted) && captureQuote.otherBusinessName.$error.required">Please Enter Other Business Name</span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="form-group d-iblock">
+                                    <label class="checkbox" ng-if="false">
+                                        <input ng-model="quoteViewModel.isMultiClass" type="checkbox" checked>
+                                        <span>
+                                            <svg class="icon-check" xmlns="http://www.w3.org/2000/svg" version="1.1" x="0" y="0" viewBox="-124 239.2 281 242" xml:space="preserve"> 
+                                            <path class="fill-teal--dark" d="M130.5 257.9c-9.3-9.3-24.4-9.3-33.7 0.7L-37.5 397l-35.1-35.1c-8.6-8.6-23-9.3-32.3-0.7l-11.5 10c-10 8.6-10 24.4-0.7 33.7l56.7 56.7c0 0 0 0 0.7 0l5.7 6.5c9.3 9.3 24.4 9.3 33.7-0.7l162.2-167c8.6-9.3 8.6-23.7-0.7-32.3L130.5 257.9z" />
+                                     </svg>
+                                        </span>
+                                        I run another business that doesn’t really fit any of the descriptions above.
+                                    </label>
+                                    <label class="checkbox d-iblock">
+                                        <input ng-model="quoteViewModel.isMultiState" type="checkbox">
+                                        <span>
+                                            <svg class="icon-check" xmlns="http://www.w3.org/2000/svg" version="1.1" x="0" y="0" viewBox="-124 239.2 281 242" xml:space="preserve"> 
+                                            <path class="fill-teal--dark" d="M130.5 257.9c-9.3-9.3-24.4-9.3-33.7 0.7L-37.5 397l-35.1-35.1c-8.6-8.6-23-9.3-32.3-0.7l-11.5 10c-10 8.6-10 24.4-0.7 33.7l56.7 56.7c0 0 0 0 0.7 0l5.7 6.5c9.3 9.3 24.4 9.3 33.7-0.7l162.2-167c8.6-9.3 8.6-23.7-0.7-32.3L130.5 257.9z" />
+                                      </svg>
+                                        </span>
+                                        I have locations in more than one state.
+                                    </label>
+                                </div>
+                            </div>
+                            <div class="question" ng-cloak>
+                                <div class="form-group">
+                                    <label>How much is the total annual employee payroll?</label>
+                                    <div ng-if="quoteViewModel.showMinPayRollFirstWarning" class="alert alert-warning relative">
+                                        <p class="alert-text">Hi, we just want to make sure we got your payroll right, you entered <strong>${{quoteViewModel.minPayrollExposureAmount}}</strong> and in most states, one full-time employee will earn at least <strong>{{25000| currency: "$" : 0}}</strong> annually. Did you mean to enter <strong>${{quoteViewModel.minPayrollExposureAmount}}</strong>?</p>
+                                        <div class="radio-group">
+                                            <label class="radio"><input ng-focus="!disableSubmit && quoteViewModel.showMinPayRollFirstWarning" type="radio" name="aep" ng-value="true" ng-click="quoteViewModel.updateMinPayRollFirstAlertResponse(true)"><span></span> Yes</label>
+                                            <label class="radio"><input type="radio" name="aep" ng-value="false" ng-click="quoteViewModel.updateMinPayRollFirstAlertResponse(false)"><span></span> No</label>
+                                        </div>
+                                    </div>
+                                    <div ng-if="quoteViewModel.showMinPayRollSecondWarning" class="alert alert-warning">
+                                        <p class="alert-text">Unfortunately for your type of business, the minimum payroll we are able to use is <strong>{{quoteViewModel.minExpValidationAmount| currency: "$" : 0}}</strong>. Want to keep going?</p>
+                                        <div class="radio-group">
+                                            <label class="radio"><input type="radio" name="gmt" ng-click="quoteViewModel.updateMinPayRollSecondAlertResponse(true)"><span></span> Yes, update for me</label>
+                                            <label class="radio"><input type="radio" name="gmt" ng-click="quoteViewModel.updateMinPayRollSecondAlertResponse(false)"><span></span> No</label>
+                                        </div>
+                                    </div>
+                                    <div class="input-group with-tooltip with-icon field-sm">
+                                        <input type="text"
+                                               id="txtMinPayrollExposureAmount"
+                                               name="minPayrollExposureAmount"
+                                               class="d-tcell field"
+                                               ng-change="voidValidity()"
+                                               ng-model="quoteViewModel.minPayrollExposureAmount"
+                                               ng-blur="(disableSubmit && quoteViewModel.minPayrollExposureAmount)?quoteViewModel.validateExposureAmount('txtMinPayrollExposureAmount'):''"
+                                               max-length="11"
+                                               ng-model-options="{updateOn:'blur focusout'}"
+                                               format="number"
+                                               currency-control
+                                               placeholder="e.g. 100,000" required />
+                                        <span class="icon-dollar"></span>
+                                        <div class="d-tcell">
+                                            <abbr data-tooltip="This actually is a more technical term than it seems, but it basically refers to the annual amount paid to all of your employees (both full and part time), including W-2, 1099, and cash wages. In other words, the amount DOES include wages, commissions, bonuses, overtime pay, and holiday/sick/vacation pay.  Annual employee payroll DOES NOT include tips, severance pay, overtime pay above and beyond regular rate of pay (this may vary state to state), payroll limitations, and any salaries of Executives, Officers, Owners, and Partners who elect to be excluded from coverage." class="tooltip">?</abbr>
+                                        </div>
+                                    </div>
+                                    <span class="error" ng-if="(!captureQuote.minPayrollExposureAmount.$pristine || submitted) && captureQuote.minPayrollExposureAmount.$error.required">Annual Employee Payroll is required</span>
+                                </div>
+                            </div>
+                            <div class="question">
+                                <div class="form-group">
+                                    <label>When do you want your policy to start? </label>
+                                    <div class="input-group with-icon">
+                                        <input type="text"
+                                               id="policyStartDate"
+                                               disable-date-picker="{{(!disableSubmit && quoteViewModel.showMinPayRollFirstWarning)}}"
+                                               name="policyStartDate"
+                                               date-control
+                                               class="datepicker field field-sm"
+                                               ng-model-options="{updateOn:'blur focusout'}"
+                                               startdate="+1"
+                                               enddate="+60"
+                                               ng-model="quoteViewModel.policyStartDate"
+                                               format="mm/dd/yy"
+                                               date-parser="MM/dd/yyyy"
+                                               placeholder="mm/dd/yyyy"
+                                               required>
+                                        <span class="icon-calendar"></span>
+                                    </div>
+                                    <span class="error" ng-if="(!captureQuote.policyStartDate.$error.required && captureQuote.policyStartDate.$error.invalidFormat)">Date format not valid</span>
+                                    <span class="error" ng-if="(!captureQuote.policyStartDate.$pristine || submitted) && !captureQuote.policyStartDate.$error.invalidFormat && !captureQuote.policyStartDate.$error.required && captureQuote.policyStartDate.$error.invalidRange">Policy Start Date should be between {{minDate}} and {{maxDate}}</span>
+                                    <span class="error" ng-if="(!captureQuote.policyStartDate.$pristine || submitted) && captureQuote.policyStartDate.$error.required">Policy Start Date not selected</span>
+                                </div>
+                            </div>
+                            <div class="question" ng-cloak>
+                                <div class="form-group">
+                                    <label>When did you start your business? </label>
+                                    <select class="field field-lg"
+                                            ng-class="(!captureQuote.businessYear.$pristine && captureQuote.businessYear.$error.required)?'error':''"
+                                            name="businessYear"
+                                            data-ng-model="quoteViewModel.businessYears"
+                                            data-ng-options="businessYear.text for businessYear in quoteViewModel.quotePageDefaults.businessYears track by businessYear.value"
+                                            required>
+                                        <option value="">{{quoteViewModel.quotePageDefaults.defaults.yearsOfBusiness}}</option>
+                                    </select>
+                                    <span class="error" ng-if="(!captureQuote.businessYear.$pristine ||submitted) && (captureQuote.businessYear.$error.required || quoteViewModel.businessYears=='')">Please select Years in Business</span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="btn-actions clear">
+                            <button type="button" onclick="window.location.href = '@ConfigCommonKeyReader.AppBaseUrl'" class="btn btn-secondary">Back &amp; Modify</button>
+                            <button id="getQuestions" ng-disabled="!minPayrollAllResponseRecieved || (disableSubmit || !captureQuote.$valid)" class="btn btn-primary pull-right" ng-click="submitted=true;(!captureQuote.policyStartDate.$error.invalidFormat && !captureQuote.policyStartDate.$error.invalidRange && captureQuote.$error)?quoteViewModel.submit():''">Continue</button>
+                        </div>
+                    </form>
+                    <multi-class-multi-state ng-if="quoteViewModel.showCompanionClass" msmcdata="msmcData" totalpayrollamount="quoteViewModel.minPayrollExposureAmount" submitdata="quoteViewModel.submit()"></multi-class-multi-state>
+                </div>
+            </div>
+
+            <!-- Comment : Here common SaveForLater directive for all pages -->
+            <div id="ModelSaveForLater" save-for-later-div-control pagename="ModifyQuote" isvalidform="{{captureQuote.$valid}}"
+                 submit-validated-form="quoteViewModel.submitSaveForLater(argument1)"></div>
+
+
+            @*<div id="ModelSaveForLater" save-for-later-div-control controllercontext="quoteViewModel" formvalidationstatus="true" validate-save-for-later="quoteViewModel.saveForLater()"></div>
+                <!-- Comment : Here model pop-up-1 for ask user to fill emailId -->
+                <save-for-later-form-model-control controllercontext="quoteViewModel" close-save-for-later-model="quoteViewModel.closeSaveForLaterModel('ModelSaveForLater')">
+                </save-for-later-form-model-control>
+                <!-- Comment : Here model pop-up-2 to show user thanks text after successful submit -->
+                <thank-you-model-control controllercontext="quoteViewModel" close-save-for-later-model="quoteViewModel.closeSaveForLaterModel('ModelSaveForLaterThankYou')">
+                </thank-you-model-control>*@
+
+        </div>
+    </div>
+</section>
+@*@if (ConfigCommonKeyReader.IsLiveEnvironment)
+{
+    <script type="text/javascript">
+
+        /* <![CDATA[ */
+
+        var google_conversion_id = 961668679;
+        var google_conversion_language = "en";
+        var google_conversion_format = "3";
+        var google_conversion_color = "ffffff";
+        var google_conversion_label = "4R0zCJLz_WMQx8zHygM";
+        var google_remarketing_only = false;
+
+        /* ]]> */
+
+    </script>
+    <script type="text/javascript" src="//www.googleadservices.com/pagead/conversion.js"></script>
+    <noscript>
+        <div style="display:inline;">
+            <img height="1" width="1" style="border-style:none;" alt="" src="//www.googleadservices.com/pagead/conversion/961668679/?label=4R0zCJLz_WMQx8zHygM&amp;guid=ON&amp;script=0" />
+        </div>
+    </noscript>
+}*@
+
+<script>
+    $(document).ready(function () {
+        $('.progress-bar').click(function (event) {
+            event.preventDefault();
+        });
+    });
+</script>

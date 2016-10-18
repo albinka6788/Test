@@ -1,0 +1,9 @@
+﻿@{
+    ViewBag.Title = "Index";
+}
+
+<h2>Index</h2>
+
+@Html.ActionLink("GetRequest", "TestPaymentTermsRequestsAPI", new { @message = "Get" }) <br/>
+@Html.ActionLink("PostRequest", "TestPaymentTermsRequestsAPI", new { @message = "Post" })<br/>
+@Html.ActionLink("DeleteRequest", "TestPaymentTermsRequestsAPI", new { @message = "Delete" })

@@ -1,0 +1,114 @@
+﻿<ng-form name="personalContact">
+    <div class="panel">
+        <div class="panel-body">
+            <h4>Your Contact Information</h4>
+            <hr>
+            <div class="form-group">
+                <label class="col-md-3">Email Address</label>
+                <div class="col-md-9">
+                    <input name="UserEmail" ng-model="purchaseModel.personalContact.email" type="email" required>
+                    <p data-ng-show="submitted && personalContact.UserEmail.$error.required" class="help-block">Email Address is required</p>
+                    <p data-ng-show="submitted && personalContact.UserEmail.$error.email" class="help-block">Email Address is invalid</p>
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="col-md-3">Confirm Email</label>
+                <div class="col-md-9">
+                    <input autocomplete="off" id="DsUserContactConfirmEmail" ng-model="purchaseModel.personalContact.confirmEmail" name="ConfirmUserEmail" type="email" value="" required>
+                    <p ng-show="submitted && personalContact.ConfirmUserEmail.$error.required " class="help-block">Confirm Email is required</p>
+                    <p ng-show="submitted && personalContact.ConfirmUserEmail.$error.email " class="help-block">Email Address is invalid</p>
+                    <p ng-show="submitted && personalContact.UserEmail.$modelValue!=personalContact.ConfirmUserEmail.$modelValue " class="help-block">'Confirm Email' and 'Email Address' do not match.</p>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label class="col-md-3" for="DsQuoteViewModel_UserFirstName">First Name</label>
+                <div class="col-md-9">
+                    <input maxlength="50" ng-model="purchaseModel.personalContact.firstName" ng-pattern="'[a-zA-Z ]*$'" name="UserFirstName" type="text" />
+                    <p ng-show="submitted && personalContact.UserFirstName.$error.maxlength" class="help-block">The field First Name must be a string with a maximum length of 50</p>
+                    <p ng-show="submitted && personalContact.UserFirstName.$error.pattern" class="help-block">Invalid Input</p>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label class="col-md-3">Last Name</label>
+                <div class="col-md-9">
+                    <input autocomplete="off" maxlength="50" ng-model="purchaseModel.personalContact.lastName" ng-pattern="'[a-zA-Z ]*$'" name="UserLastName" type="text" value="">
+                    <p ng-show="submitted && personalContact.UserLastName.$error.maxlength" class="help-block">The field last Name must be a string with a maximum length of 50</p>
+                    <p ng-show="submitted && personalContact.UserLastName.$error.pattern" class="help-block">Invalid Input</p>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label class="col-md-3">Contact Phone</label>
+                <div class="col-md-9">
+                    <input mask-input mask-format="(999) 999-9999[ x9999]" class="purchase_Phone" name="UserPhoneNumber" ng-model="purchaseModel.personalContact.phoneNumber" type="text" value="">
+                    <!--<p ng-show="(personalContact.zipCode.$error.maxlength||personalContact.zipCode.$error.minlength)" class="help-block">Zip code should be of 5 digits</p>-->
+                </div>
+            </div>
+        </div>
+    </div>
+</ng-form>
+<ng-form name="businessContact">
+    <div class="panel">
+        <div class="panel-body">
+            <h4>Covered Business Contact Information</h4>
+            <hr>
+
+            <div class="form-group">
+                <label class="col-md-3" for="Same_as_Your_Contact_Info_:">Same as Your Contact Info?:</label>
+                <div class="col-md-9">
+                    <!--<input ng-model="replicatePersonalContact" name="replicatePersonalContact" type="checkbox" ng-change="purchaseGetCtrl.stateChanged(purchaseGetCtrl.purchase)" value="true">-->
+                    <input type="checkbox" ng-model="purchaseModel.personalContact.sameAsContact"
+                           ng-change="stateChanged(purchaseModel.personalContact)" />
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label class="col-md-3" for="DsQuoteViewModel_Email">Email Address</label>
+                <div class="col-md-9">
+                    <input autocomplete="off" ng-model="purchaseModel.businessContact.bEmail" name="businessEmail" type="email" value="" required>
+                    <p ng-show="submitted && businessContact.businessEmail.$error.required " class="help-block">Email Address is required</p>
+                    <p ng-show="submitted && businessContact.businessEmail.$error.email " class="help-block">Invalid Email</p>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label class="col-md-3" for="DsQuoteViewModel_ConfirmEmail">Confirm Email</label>
+                <div class="col-md-9">
+                    <input autocomplete="off" name="businessConfirmEmail" ng-model="purchaseModel.businessContact.bConfirmEmail" type="email" value="" required>
+                    <p ng-show="submitted && businessContact.businessConfirmEmail.$error.required" class="help-block">Confirm Email is required</p>
+                    <p ng-show="submitted && businessContact.businessConfirmEmail.$error.email" class="help-block">Email Address is invalid</p>
+                    <p ng-show="submitted && businessContact.businessEmail.$modelValue!=businessContact.businessConfirmEmail.$modelValue" class="help-block">'Confirm Email' and 'Email Address' do not match.</p>
+                </div>
+
+            </div>
+
+            <div class="form-group">
+                <label class="col-md-3" for="DsQuoteViewModel_ContactFirstName">First Name</label>
+                <div class="col-md-9">
+                    <input autocomplete="off" name="businessContactFirstName" ng-model="purchaseModel.businessContact.bFirstName" ng-pattern="'[a-zA-Z ]*$'" maxlength="50" type="text" value="" required>
+                    <p ng-show="submitted && businessContact.businessContactFirstName.$error.required " class="help-block">First Name is required</p>
+                    <p ng-show="submitted && businessContact.businessContactFirstName.$error.pattern" class="help-block">Invalid Input</p>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label class="col-md-3" for="DsQuoteViewModel_ContactLastName">Last Name</label>
+                <div class="col-md-9">
+                    <input id="DsBusContactLName" name="businessContactLastName" ng-model="purchaseModel.businessContact.bLastName" ng-pattern="'[a-zA-Z ]*$'" type="text" value="" required>
+                    <p ng-show="submitted && businessContact.businessContactLastName.$error.required " class="help-block">Last Name is required</p>
+                    <p ng-show="submitted && businessContact.businessContactLastName.$error.pattern" class="help-block">Invalid Input</p>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label class="col-md-3 " for="Phone">Phone</label>
+                <div class="col-md-9">
+                    <input mask-input mask-format="(999) 999-9999[ x9999]" class="purchase_Phone" id="DsBusContactPhone" ng-model="purchaseModel.businessContact.bPhoneNumber" name="businessContactPhone" type="text" required>
+                    <p ng-show="submitted && businessContact.businessContactPhone.$error.required" class="help-block">Phone no is required</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</ng-form>

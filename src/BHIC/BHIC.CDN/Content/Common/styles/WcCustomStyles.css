@@ -1,0 +1,21 @@
+﻿.question:last-of-type ul 
+{
+    margin-top: 1em;
+}
+.question:last-of-type ul li 
+{
+    font-weight: 300;
+    color: #5C666F;
+}
+
+.select-group .error 
+{
+    margin-top: 0;
+}
+
+/* Purchase page*/
+.field.btn-loading {
+    background-position: 98% center;
+}
+/**/
+

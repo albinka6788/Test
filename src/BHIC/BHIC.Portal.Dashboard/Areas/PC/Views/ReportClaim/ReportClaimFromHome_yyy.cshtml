@@ -1,0 +1,217 @@
+﻿@using BHIC.Common.Html;
+@using BHIC.Common.Configuration;
+@using BHIC.Common.XmlHelper;
+@using BHIC.Common.CommonUtilities;
+@{
+    var cdnVersion = BHIC.Portal.Dashboard.BaseController.GetAssemblyVersion();
+
+    Dictionary<string, object> document = StaticDocuments.GetStaticDocuments();
+    string claimDoc = string.Empty, pharmacyDoc = string.Empty, bpClaimFormszip = string.Empty;
+    if (document != null && document.Count > 0)
+    {
+        List<string> currentPageDocument = (List<string>)document["ReportClaim"];
+        claimDoc = currentPageDocument.Count > 0 ? Server.UrlEncode(currentPageDocument[0]) : "";
+        pharmacyDoc = currentPageDocument.Count > 0 ? Server.UrlEncode(currentPageDocument[1]) : "";
+        bpClaimFormszip = currentPageDocument.Count > 0 ? Server.UrlEncode(currentPageDocument[2]) : "";
+    }
+}
+
+@* Inspectlet for this page only *@
+@if (!String.IsNullOrWhiteSpace(ConfigCommonKeyReader.InspectletWid))
+{
+    <script type="text/javascript">
+        var inspectletWid = '@ConfigCommonKeyReader.InspectletWid';
+        var resetSession = false;
+        var inspectletQuoteid = '@BHIC.Common.Quote.QuoteCookieHelper.Cookie_GetQuoteId(new HttpContextWrapper(HttpContext.Current))'
+        var inspectletSessionid = '@Session.SessionID'
+        var googleAdId = '@Session["googleAdId"]';
+        window.recordSession(inspectletWid, inspectletQuoteid, inspectletSessionid, resetSession, googleAdId)
+    </script>
+}
+<script type="text/javascript">
+    $(document).ready(function () {
+        // Handle custom triggering of clicks for browse button in IE
+        if (navigator.userAgent.indexOf("MSIE") > 0) {
+            $(".file-upload").mousedown(function () {
+                $(this).trigger('click');
+            });
+        }
+    });
+</script>
+@*@CDN.RenderScripts("/bundles/scripts/captcha")*@
+<script src="https://www.google.com/recaptcha/api.js"></script>
+<section class="page-content bt10" ng-init="setDynamicText()">
+    <div class="container">
+        <div class="alert alert-success info-panel" ng-if="responseMsg">
+            <p class="text-alert text-bold">Thank you for the information provided.</p>
+            <p class="alert-text"> Someone from our Claims Intake Department will be contacting you by phone to follow-up and to gather some important information to begin the claims process. In the mean time, if you have any questions or would like to talk to someone right away you can call us at <a href="" class="mailingClaims_NewClaimPhone"></a> and we will do our best to provide additional support with respect to your claim. </p>
+        </div>
+        <div class="alert alert-danger info-panel" ng-if="errorMsg">
+            <p class="text-alert text-bold">Request for a Claim Failed.</p>
+            <p class="alert-text"> Sorry for the inconvenience caused. You can try again or would like to talk to someone right away you can call us at <a href="" class="mailingClaims_NewClaimPhone"></a> and we will do our best to provide support with respect to your claim. </p>
+        </div>
+
+        <div class="alert alert-danger info-panel" ng-if="hasErrorMain">
+            <p class="text-bold alert-text">{{errorMessage}} </p>
+        </div>
+        <div class="row no-gutter">
+            <div class="lg-col-8">
+                <div class="page-title">
+                    <h2>{{(Type=="wc") ?"Report a Workers' Compensation Claim" : "Report a Business Owner's Policy Claim" }}</h2>
+                </div>
+                <form name="rpForm" class="form-report-claim form-horizontal" ng-submit="rpForm.$valid && ReportClaimFromHome();" onerrorfocus-form novalidate>
+                    <div class="form-group">
+                        <label class="lg-col-4">Policy Number</label>
+                        <div class="lg-col-7">
+                            <input type="text" name="rpCodeModel" class="field" placeholder="Policy Number" ng-model="rpCode" maxlength="10" autofocusfield="focusField" ng-pattern="/^[a-zA-Z0-9]*$/*/" ng-model-options="{updateOn:'blur focusout'}" />
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="lg-col-4">Name of the Insured/Business</label>
+                        <div class="lg-col-7">
+                            <input type="text" class="field" placeholder="Name of the Insured/Business" maxlength="200" ng-model="rpbusiness" name="rpbusinessModel" required ng-model-options="{updateOn:'blur focusout'}" /> @*ng-pattern="/^([A-Za-z\s]{1,}[\.]{0,1}[\']{0,1}[A-Za-z\s]{0,}){0,200}$/" />*@
+                            <span class="error" ng-show="rpForm.rpbusinessModel.$error.required &&  (submitted || !rpForm.rpbusinessModel.$pristine)">Name of the Insured/Business is required.</span>
+                            <span class="error" ng-show="rpForm.rpbusinessModel.$error.pattern &&  (submitted || !rpForm.rpbusinessModel.$pristine)">Not a valid Insured/Business Name.</span>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="lg-col-4">Your Name</label>
+                        <div class="lg-col-7">
+                            <input type="text" ng-model="rpname" class="field" name="rpNameModel" maxlength="100" placeholder="Your Name" ng-pattern="/^([A-Za-z\s]{1,}[\.]{0,1}[\']{0,1}[A-Za-z\s]{0,}){0,100}$/" required ng-model-options="{updateOn:'blur focusout'}" />
+                            <span class="error" ng-show="rpForm.rpNameModel.$error.required && (submitted || !rpForm.rpNameModel.$pristine)">Your Name is required.</span>
+                            <span class="error" ng-show="rpForm.rpNameModel.$error.pattern && (submitted || !rpForm.rpNameModel.$pristine)">Not a valid name.</span>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="lg-col-4">Best phone number to contact you</label>
+                        <div class="lg-col-7">
+                            <input type="tel" class="field" placeholder="XXX-XXX-XXXX xXXXX" mask-input mask-format="999-999-9999 x9999" ng-model="rpphone" maxlength="25" id="reportphone" name="rppModel" required ng-model-options="{updateOn:'blur focusout'}" />
+                            <span class="error" ng-show="rpForm.rppModel.$error.required && (submitted || !rpForm.rppModel.$pristine)">Phone number is required.</span>
+                            <span class="error" ng-bind="phoneerrormsg"></span>
+                        </div>
+                    </div>
+                    <div class="form-group" ng-if="Type=='wc'">
+                        <label class="lg-col-4">Name of Injured Worker</label>
+                        <div class="lg-col-7">
+                            <input type="text" ng-model="$parent.rpworker" class="field" placeholder="Name of Injured Worker" name="rpInjuredWorkerModel" maxlength="100" ng-pattern="/^([A-Za-z\s]{1,}[\.]{0,1}[\']{0,1}[A-Za-z\s]{0,}){0,100}$/" ng-model-options="{updateOn:'blur focusout'}" />
+                            <span class="error" ng-show="rpForm.rpInjuredWorkerModel.$error.pattern && (submitted || !rpForm.rpInjuredWorkerModel.$pristine)">Not a valid Injured Worker name.</span>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="lg-col-4">{{(Type=="wc") ? "Date of Injury/Illness" : "Date of Loss"}}</label>
+                        <div class="lg-col-7">
+                            <div class="with-icon">
+                                <div class="div-row">
+                                    <input type="text"
+                                           id="rpDateInjury"
+                                           name="rpDateInjury"
+                                           class="input-group-input field field-sm datepicker"
+                                           date-control
+                                           enddate="{{maxDate}}"
+                                           ng-model="rpDateInjury"
+                                           format="mm/dd/yy"
+                                           date-parser="MM/dd/yyyy"
+                                           placeholder="mm/dd/yyyy"
+                                           ng-pattern="/^(0?[1-9]|1[012])\/(0?[1-9]|[12][0-9]|3[01])\/(199\d|[2-9]\d{3})$/"
+                                           outsidereportclaim="true" />
+                                    <span class="icon-calendar"></span>
+                                    <span class="error" ng-if="(!rpForm.rpDateInjury.$error.required && rpForm.rpDateInjury.$error.invalidFormat)">Date format is not valid</span>
+                                    <span class="error" ng-if="(!rpForm.rpDateInjury.$pristine || submitted) &&  rpForm.rpDateInjury.$error.invalidRange"> Date should not be more than {{maxDate}}</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="lg-col-4">{{(Type=="wc") ? "Location at the time of Injury/Illness" : "Location of Loss"}}</label>
+                        <div class="lg-col-7">
+                            <input type="text" ng-model="rplocation" class="field" maxlength="50" name="rplocationModel" placeholder="{{(Type=='wc') ? 'Location at the time of Injury/Illness' : 'Location of Loss'}}" ng-model-options="{updateOn:'blur focusout'}">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="lg-col-4">{{(Type=="wc") ? "Short description of Injury/Illness" : "Short description of loss and damage/injury if liability" }}</label>
+                        <div class="lg-col-7">
+                            <textarea ng-model="rpdescription" class="field" maxlength="250" name="rpdescriptionModel" placeholder="{{(Type=='wc') ? 'Short description of Injury/Illness' : 'Short description of loss and damage/injury if liability'}}" ng-model-options="{updateOn:'blur focusout'}"></textarea>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="lg-col-4">
+                            Upload Supporting Documents
+                        </label>
+                        <div class="lg-col-7">
+                            <input type="file" id="filesel" name="file" multiple files-upload="getUploadedFiles($files)" class="field file-upload" ng-model="fileselected" placeholder="Browse" onkeydown="this.blur()" oncontextmenu="return false;">
+                            <span class="error">{{fileException}}</span>
+                            <div class="text-small"> If there is anything you want to send us, such as pictures or a copy of demand letter, etc. upload here or send in an email to <a href="mailto:Claims@CoverYourBusiness.com"> Claims@CoverYourBusiness.com</a>. Please include the Name Insured and policy number (if you have it) in the title of your email </div>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="lg-col-8 lg-offset-4">
+                            <div class="g-recaptcha" data-sitekey="@ConfigCommonKeyReader.CaptchaSiteKey" data-expired-callback="ResetCaptcha()"></div>
+                            <span class="error" ng-show="prCapthcaError" ng-bind="prCapthcaError"></span>
+                        </div>
+                    </div>
+                    <p class="text-bold" ng-if="Type=='wc'"> Important steps to consider right after an employee is injured:</p>
+                    <ul class="info-list" ng-if="Type=='wc'">
+                        <li> Make sure urgent medical care is provided to any injured worker as necessary </li>
+                        <li> If any equipment / machinery contributed to the work place injury, secure it and as appropriate, take pictures and you can send them to us at <a href="mailto:Claims@CoverYourBusiness.com"> Claims@CoverYourBusiness.com </a> or upload documents above. (please put policy number and Named Insured in title of the email) </li>
+                        <li> Please submit medical bills and/or other claim documentation via fax, mail, or email at contact info listed on this page. </li>
+                        <li> If applicable, please provide a copy of the police report and/or surveillance video and obtain any contact information for any witnesses. </li>
+                        <li> If any questions please contact customer service at <a href="" class="mailingClaims_NewClaimPhone"></a> </li>
+                    </ul>
+                    <div class="btn-actions lg-col-11 right">
+                        <button class="btn btn-primary" ng-click="submitted=true">Submit</button>
+                    </div>
+                </form>
+            </div>
+            <div class="lg-offset-1 lg-col-3">
+                <div class="widget claims-support">
+                    <div class="widget-heading">
+                        <h6>Claims Support</h6>
+                    </div>
+                    <div class="widget-content">
+                        <address>
+                            <strong class="nowrap companyDomain"></strong>
+                            <br> <span class="physicalAddress2"></span>
+                            <br> <span class="physical_AddressCSZ"></span>
+                        </address>
+                        <p>
+                            <span class="nowrap"><strong>Toll Free No: </strong><a href="" class="mailingClaims_NewClaimPhone"></a></span><br />
+                            <span class="nowrap"><strong>Claims Fax: </strong><span class="faxNumber_Claims"></span></span><br />
+                            <span class="nowrap"><a href="mailto:Claims@CoverYourBusiness.com">Claims@CoverYourBusiness.com</a></span>
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row" ng-if="Type=='wc'">
+            <div class="lg-col-12">
+                <hr>
+                <p class="text-bold"> Important Information</p>
+                <p class="text-bold mb0">Part A</p>
+                <p> Please note, this form serves as an initial claim notification. On submission, the Claims Intake Department will be contacting you by phone to gather some important information to begin the claims process. </p>
+                <p> <span style="cursor:pointer; color:#D49000; font-weight:500; " onclick="DownloadStaticDocument('@claimDoc');">Click here</span> to access the detailed information we will be asking you for. </p>
+                <p class="text-bold mb0">Part B</p>
+                <p>To obtain the customized list of providers for your location that was produced with your policy, you can also log into the <a href="#/Login"> Policyholder Service Centre </a>  or call customer service at <a href="" class="mailingClaims_NewClaimPhone"> </a>. </p>
+                <p>
+                    Access a directory of medical providers within the network using the following links.
+                    <br>
+                    <a href="https://www.viiad.com/anthemcompass/BCANTHEMW001/app/home.asp" target="_blank"> For California </a>
+                    @*<a href="https://www.talispoint.com/firsthealth/?AE=997636628&amp;CAID=CVTMPN" target="_blank"> For California </a>*@
+                    <br>
+                    <a href="https://www.talispoint.com/firsthealth/?AE=997532665&CAID=BRKHA" target="_blank"> For Other States </a>
+                </p>
+                <p> <a href="#/Login">Click here</a> to access our pharmacy benefit information to assist you in obtaining prescription drugs related to your workers' compensation claim. This form enables you to fill prescriptions written by your authorized workers' compensation physician for medications related to your injury. Simply fill in the form below and present it at the pharmacy at the time your prescription is filled. This form should ensure that you will have no out-of-pocket expenses when you fill your first prescription. </p>
+            </div>
+        </div>
+        <hr ng-if="Type=='bp'">
+        <div class="row" ng-if="Type=='bp'">
+            <div class="lg-col-12">
+                <p class="text-bold"> Important Information</p>
+                <div class="the-box">
+                    <p> Please note, this form serves as an initial claim notification. On submission, the Claims Intake Department will be contacting you by phone to gather some important information to begin the claims process.  </p>
+                    <p> <span style="cursor:pointer; color:#D49000; font-weight:500; " onclick="DownloadStaticDocument('@bpClaimFormszip');">Click here</span> to access the detailed information we will be asking you for.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+@CDN.RenderScripts("/bundles/scripts/common-system-variables")

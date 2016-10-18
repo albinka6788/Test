@@ -1,0 +1,27 @@
+﻿@using BHIC.Common.Html;
+@using BHIC.Common.XmlHelper;
+@using BHIC.Common.Configuration;
+@if (!String.IsNullOrWhiteSpace(ConfigCommonKeyReader.InspectletWid))
+{
+    <script type="text/javascript">
+        var inspectletWid = '@ConfigCommonKeyReader.InspectletWid';
+        var resetSession = false;
+        var inspectletQuoteid = '@BHIC.Common.Quote.QuoteCookieHelper.Cookie_GetQuoteId(new HttpContextWrapper(HttpContext.Current))'
+        var inspectletSessionid = '@Session.SessionID'
+        var googleAdId = '@Session["googleAdId"]';
+        window.recordSession(inspectletWid, inspectletQuoteid, inspectletSessionid, resetSession, googleAdId)
+        
+    </script>
+
+}
+@Html.AntiForgeryToken()
+@model object pageStaticContent
+
+@{
+    ViewBag.Title = "Quote Page Index";
+    Layout = "~/Areas/PurchasePath/Views/Shared/_Layout.cshtml";
+}
+
+<div class="shift">
+    @Html.Raw(Model.ToString())
+</div>

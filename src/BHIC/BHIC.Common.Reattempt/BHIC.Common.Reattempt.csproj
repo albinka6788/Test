@@ -1,0 +1,84 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="12.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{31E9D6CF-1340-40B7-A6A9-52FB61829901}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>BHIC.Common.Reattempt</RootNamespace>
+    <AssemblyName>BHIC.Common.Reattempt</AssemblyName>
+    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <SolutionDir Condition="$(SolutionDir) == '' Or $(SolutionDir) == '*Undefined*'">..\</SolutionDir>
+    <RestorePackages>true</RestorePackages>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="Newtonsoft.Json, Version=4.5.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <HintPath>..\packages\Newtonsoft.Json.4.5.11\lib\net40\Newtonsoft.Json.dll</HintPath>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Web" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Common\Reattempt.cs" />
+    <Compile Include="Common\ReattemptInfo.cs" />
+    <Compile Include="Common\ReattemptProcess.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="TransactionLogging\TransactionLogService.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\BHIC.Common.Logging\BHIC.Common.Logging.csproj">
+      <Project>{1127c27c-68f5-4525-a68a-72367147a4cb}</Project>
+      <Name>BHIC.Common.Logging</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\BHIC.Common.XmlHelper\BHIC.Common.XmlHelper.csproj">
+      <Project>{1aa9af35-8d49-4406-b1f0-0fb7ad69bfb1}</Project>
+      <Name>BHIC.Common.XmlHelper</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\BHIC.Core\BHIC.Core.WC.csproj">
+      <Project>{55f05b0d-b992-4eb1-91a5-9274adcfaaaa}</Project>
+      <Name>BHIC.Core.WC</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\BHIC.DML.WC\BHIC.DML.WC.csproj">
+      <Project>{cafa6ace-09bc-4f38-ad61-641576f3333d}</Project>
+      <Name>BHIC.DML.WC</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="packages.config" />
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <Import Project="$(SolutionDir)\.nuget\NuGet.targets" Condition="Exists('$(SolutionDir)\.nuget\NuGet.targets')" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>

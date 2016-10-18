@@ -1,0 +1,230 @@
+﻿@using BHIC.Common.Html;
+@using BHIC.Common.Configuration;
+@using BHIC.Common.XmlHelper;
+@using BHIC.Domain.Dashboard;
+@using BHIC.Common.Client;
+@using BHIC.Core.Background;
+@using BHIC.Contract.Background;
+
+@model BHIC.ViewDomain.Landing.HomeViewModel
+
+@{
+    var cdnVersion = BHIC.Portal.WC.BaseController.GetAssemblyVersion();
+
+    <!-- Get request URL scheme and host details -->
+    var baseSchemeAndHostUrl = string.Concat(HttpContext.Current.Request.Url.Scheme, "://", HttpContext.Current.Request.Url.Host);
+
+    <!-- Prepare PP Base url -->
+    var AppBaseUrl = string.Concat(baseSchemeAndHostUrl, ConfigCommonKeyReader.PurchasePathAppBaseURL);
+
+    <!-- Prepare PP Base url withour last trailing slash -->
+    AppBaseUrl = AppBaseUrl.EndsWith("/") ? AppBaseUrl.Substring(0, AppBaseUrl.Length - 1) : AppBaseUrl;
+
+    ServiceProvider guardServiceProvider = new GuardServiceProvider() { ServiceCategory = ServiceProviderConstants.GuardServiceCategoryWC };
+    ISystemVariableService systemVariable = new SystemVariableService(guardServiceProvider);
+
+    var bHours = systemVariable.GetSystemVariableByKey(ConfigCommonKeyReader.ApplicationContactInfo["BusinessHours"]);
+
+    //Comment : Here get PC session as well as PP session
+    var appSesson = Session["CustomSession"] != null ? (BHIC.ViewDomain.CustomSession)Session["CustomSession"] : null;
+}
+
+@if (!String.IsNullOrWhiteSpace(ConfigCommonKeyReader.InspectletWid))
+{
+    @*@CDN.RenderScripts("/bundles/scripts/inspectlet")*@
+    <script src='@CDN.Path/Content/Common/scripts/inspectlet.js?v=@ConfigCommonKeyReader.CdnVersion'></script>
+}
+
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>@(string.IsNullOrWhiteSpace(ViewBag.Title) == true ? "Home" : ViewBag.Title) - Cover Your Business</title>
+    <meta name="description" content="CoverYourBusiness.com provides coverage to commercial insurance buyers for their businesses from insurers of the Berkshire Hathaway group of Insurance Companies." />
+    <link href="@CDN.Path/Content/Common/images/favicon.ico" rel="icon" type="image/x-icon">
+    <link href="@ConfigCommonKeyReader.CloudTypographyUrl" rel="stylesheet">
+    @CDN.RenderStyles("/bundles/styles")
+
+    <style type="text/css">
+        /* Below code bloack stopping bundle Minification taht why seprate from style.css (it's now handled in MVC-5 )*/
+        keyframes scroll {
+            0%;
+
+        {
+            opacity: 1;
+            -webkit-transform: translateY(0px);
+            -ms-transform: translateY(0px);
+            transform: translateY(0px);
+        }
+
+        75% {
+            opacity: 0.7;
+            -webkit-transform: translateY(10px);
+            -ms-transform: translateY(10px);
+            transform: translateY(10px);
+        }
+
+        100% {
+            opacity: 1;
+            -webkit-transform: translateY(0px);
+            -ms-transform: translateY(0px);
+            transform: translateY(0px);
+        }
+
+        }
+    </style>
+
+</head>
+
+<body ng-app="BHIC">
+    <!-- Comment : Here page level section -->
+    <div id="divLoader">
+        <loader></loader>
+    </div>
+
+    <!-- Comment : Here header section -->
+    <header class="with-nav">
+        @Html.Partial("_Header")
+    </header>
+
+    <!-- Comment : Here main central body section -->
+    <div class="main">
+        @RenderBody()
+    </div>
+
+    <!-- Comment : Here footer section -->
+    <footer class="bg-blue sm-center">
+        @Html.Partial("_Footer")
+    </footer>
+    <div class="remodal remodal-full" data-remodal-id="scheduleCallModel" data-remodal-options="hashTracking: false">
+        <button ng-click="closeThankyouForm();" class="remodal-close"></button>
+        <div class="container">
+            <div class="row">
+                <div class="lg-col-6 center">
+                    <div class="mb2">
+                        <div class="mb1 clockImg">
+                            @Html.ThemeImage("schedule_a_call_icon.png", "img-responsive", new { alt = "" })
+                        </div>
+                        <p class="left"> If now is not a convenient time, we are happy to talk to you at a time that works better. We are available from <span class="text-medium hoursBusiness"></span>. Pick a time and we’ll give you a call back to discuss your insurance then. </p>
+                    </div>
+                </div>
+                <schedule-call></schedule-call>
+            </div>
+        </div>
+    </div>
+    <div class="overlay"></div>
+
+    <!-- Comment : Here script bundles links -->
+    @CDN.RenderScripts("/bundles/scripts/jquery")
+    @CDN.RenderScripts("/bundles/scripts/angular")
+    @CDN.RenderScripts("/bundles/scripts/wc-homepage")
+
+    <!-- Comment : Here get PC user session after Header load -->
+    @{
+        var appSessonPcUser = Session["user"] != null ? (UserRegistration)Session["user"] : null;
+    }
+
+    <!-- Comment : Here Google Analytics & Chat Code Script Block -->
+    <script>
+        var homeVM = @Html.ToJsonRaw(Model)
+        var appBaseDomain = '@AppBaseUrl';
+        var appCdnDomain = '@CDN.Path';
+
+        var loggedUserEmailId = '@((appSessonPcUser != null && !string.IsNullOrEmpty(appSessonPcUser.Email)) ? appSessonPcUser.Email : "")';
+        @*var loggedUserEmailId = '@(Session["user"] != null ? ((UserRegistration)Session["user"]).Email : "")'; //Old Line *@
+
+        var prospectInfoEmailId =
+                '@((appSesson != null && appSesson.BusinessInfoVM != null && !string.IsNullOrEmpty(appSesson.BusinessInfoVM.Email)) ? appSesson.BusinessInfoVM.Email : "")';
+
+        var hoursBusiness ='@bHours';
+        var appBaseUrl = '@ConfigCommonKeyReader.AppBaseUrl';
+
+    </script>
+
+    <!-- Comment : Here Google Analytics Code Block -->
+    @*<script>
+        (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+            (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+            m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+        })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+        ga('create', '@ConfigCommonKeyReader.GACode', 'auto');
+        ga('send', 'pageview');
+
+        </script>*@
+
+    <!-- Comment : Here Start LiveChat Embedded Icon/Tracking Code -->
+    <script>
+        // Start LiveChat Embedded Icon/Tracking Code
+        //debugger;
+        var __lc = {};
+        __lc.license = @ConfigCommonKeyReader.LCLicense;
+        __lc.group =    '@ConfigCommonKeyReader.LCGroup';
+        __lc.params = [
+                            { name: '@ConfigCommonKeyReader.LCServerName', value: '@ConfigCommonKeyReader.LCServerValue' },
+        ];
+
+        //Comment : Here Based on environment set LIVE CHAT
+        var flag='@ConfigCommonKeyReader.EnvironmentName';
+
+        if(!(flag.toUpperCase() =='DEV'))
+        {
+            var lc = document.createElement('script'); lc.type = 'text/javascript'; lc.async = true;
+            lc.src = '@ConfigCommonKeyReader.LCSrc';
+
+            var s = document.getElementsByTagName('script')[0];
+            s.parentNode.insertBefore(lc, s);
+        }
+    </script>
+    <script>
+
+        phoneNumber_CSR ='@BHIC.Common.XmlHelper.ConfigCommonKeyReader.ApplicationContactInfo["PhoneNumber_CSR"]';
+        companyDomain = '@BHIC.Common.XmlHelper.ConfigCommonKeyReader.ApplicationContactInfo["Company_Domain"]';
+        companyName = '@BHIC.Common.XmlHelper.ConfigCommonKeyReader.ApplicationContactInfo["SysVarCompanyName"]';
+        companyName_NENATI20 ='@BHIC.Common.XmlHelper.ConfigCommonKeyReader.ApplicationContactInfo["CompanyName_NENATI20"]';
+        physical_Address1 ='@BHIC.Common.XmlHelper.ConfigCommonKeyReader.ApplicationContactInfo["Physical_Address1"]';
+        physical_Address2 ='@BHIC.Common.XmlHelper.ConfigCommonKeyReader.ApplicationContactInfo["Physical_Address2"]';
+        physical_AddressCSZ ='@BHIC.Common.XmlHelper.ConfigCommonKeyReader.ApplicationContactInfo["Physical_AddressCSZ"]';
+        mailingClaims_NewClaimPhone ='@BHIC.Common.XmlHelper.ConfigCommonKeyReader.ApplicationContactInfo["MailingClaims_NewClaimPhone"]';
+        faxNumber_Claims = '@BHIC.Common.XmlHelper.ConfigCommonKeyReader.ApplicationContactInfo["FaxNumber_Claims"]';
+        company_WebsiteURL ='@BHIC.Common.XmlHelper.ConfigCommonKeyReader.ApplicationContactInfo["Company_WebsiteURL"]';
+        businessHours = '@BHIC.Common.XmlHelper.ConfigCommonKeyReader.ApplicationContactInfo["BusinessHours"]';
+
+    </script>
+    <script>
+        //Comment : Here to make home page inFieldLabels on input focus
+        $(function () { $(".enterZipCode").inFieldLabels(); });
+
+        $('[data-remodal-target="scheduleCallModel"]').click(function()
+        {
+            //Comment : Here get model DIV object for ScheduleACall
+            var modelBox = $('[data-remodal-id=scheduleCallModel]').remodal();
+
+            //if not undefined
+            if (modelBox) {
+                modelBox.open();
+            }
+
+            $('.remodal-overlay').addClass("overlay-light");
+
+            //var inst = $('[data-remodal-id=schedule-call]').remodal();
+            //inst.open();
+        });
+    </script>
+    <script>
+    $(function() {
+        if (window.location.hash) {
+            var hash = window.location.hash.substring(1);
+            if (hash == "/faq-bop") {
+                $('.faq-bop').trigger("click");
+            }
+        }
+    });
+    </script> 
+
+    @RenderSection("scripts", required: false)
+</body>
+
+</html>

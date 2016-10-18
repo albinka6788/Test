@@ -1,0 +1,55 @@
+﻿@using BHIC.Common.Html;
+@using BHIC.Common.XmlHelper;
+@using BHIC.Common.Configuration;
+@using BHIC.Common.Client;
+@using BHIC.Core.Background;
+@using BHIC.Contract.Background;
+
+@if (!String.IsNullOrWhiteSpace(ConfigCommonKeyReader.InspectletWid))
+{
+    <script type="text/javascript">
+        var inspectletWid = '@ConfigCommonKeyReader.InspectletWid';
+        var resetSession = false;
+        var inspectletQuoteid = '@BHIC.Common.Quote.QuoteCookieHelper.Cookie_GetQuoteId(new HttpContextWrapper(HttpContext.Current))'
+        var inspectletSessionid = '@Session.SessionID'
+        var googleAdId = '@Session["googleAdId"]';
+        window.recordSession(inspectletWid, inspectletQuoteid, inspectletSessionid, resetSession, googleAdId)
+    </script>
+}
+
+
+@{
+    ViewBag.Title = "Home";
+    Layout = "~/Areas/PurchasePath/Views/Shared/_Layout.cshtml";
+
+    ServiceProvider guardServiceProvider = new GuardServiceProvider() { ServiceCategory = ServiceProviderConstants.GuardServiceCategoryWC };
+    ISystemVariableService systemVariable = new SystemVariableService(guardServiceProvider);
+
+    var phoneNumber_CSR = systemVariable.GetSystemVariableByKey(ConfigCommonKeyReader.ApplicationContactInfo["PhoneNumber_CSR"]);
+}
+
+@{
+    Dictionary<string, string> resources = ThemeManager.ThemeResources(this.Context);
+
+    var coverBusiness = ThemeManager.GetResourceKeyValue(resources, "CoverYourBusinessTitle");
+    var convenient = ThemeManager.GetResourceKeyValue(resources, "Convenient");
+    var easy = ThemeManager.GetResourceKeyValue(resources, "Easy");
+    var convenientSubText = ThemeManager.GetResourceKeyValue(resources, "ConvenientSubText");
+    var affordable = ThemeManager.GetResourceKeyValue(resources, "Affordable");
+    var affordable2 = ThemeManager.GetResourceKeyValue(resources, "Affordable2");
+    var affordableSubText = ThemeManager.GetResourceKeyValue(resources, "AffordableSubText");
+    var twentyFourBySeven = ThemeManager.GetResourceKeyValue(resources, "TwentyFourBySeven");
+    var support = ThemeManager.GetResourceKeyValue(resources, "Support");
+    var support2 = ThemeManager.GetResourceKeyValue(resources, "Support2");
+    var supportSubText = ThemeManager.GetResourceKeyValue(resources, "SupportSubText");
+
+}
+
+<div class="shift" data-ng-controller="landingPageController">
+
+    @Html.Partial("_Home")
+
+    @*<section class="home hero-unit">
+            @Html.Partial("_Landing")
+        </section>*@
+</div>

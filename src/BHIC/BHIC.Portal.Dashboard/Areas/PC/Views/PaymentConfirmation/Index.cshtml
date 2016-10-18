@@ -1,0 +1,19 @@
+﻿@{BHIC.Common.Payment.PaymentResponseViewModel customSession = (BHIC.Common.Payment.PaymentResponseViewModel)Session["PaymentResponse"];
+
+}
+
+<script src="https://code.jquery.com/jquery-1.10.2.js"></script>
+
+<script type="text/javascript">
+    $(document).ready(function () {
+
+        if ('@Convert.ToInt32(customSession.IsPaymentSuccess)' == 0) {
+
+            window.location.href = '@string.Concat(customSession.PaymentURL, "PolicyCentre/Dashboard/Index#/MakePayment/" + @customSession.TransactionCode)';
+        }
+        else {
+            window.location.href = '@string.Concat(customSession.PaymentURL, "PolicyCentre/Dashboard/Index#/PolicyInformation/" + @customSession.TransactionCode)';
+        }
+
+    });
+</script>

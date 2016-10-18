@@ -1,0 +1,1198 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="12.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProductVersion>
+    </ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{B4222FAA-D94D-487A-B1C0-69758FCC8E68}</ProjectGuid>
+    <ProjectTypeGuids>{E3E379DF-F4C6-4180-9B81-6769533ABE47};{349c5851-65df-11da-9384-00065b846f21};{fae04ec0-301f-11d3-bf4b-00c04f79efbc}</ProjectTypeGuids>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>BHIC.CDN</RootNamespace>
+    <AssemblyName>BHIC.CDN</AssemblyName>
+    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
+    <MvcBuildViews>false</MvcBuildViews>
+    <UseIISExpress>false</UseIISExpress>
+    <IISExpressSSLPort />
+    <IISExpressAnonymousAuthentication />
+    <IISExpressWindowsAuthentication />
+    <IISExpressUseClassicPipelineMode />
+    <SolutionDir Condition="$(SolutionDir) == '' Or $(SolutionDir) == '*Undefined*'">..\</SolutionDir>
+    <RestorePackages>true</RestorePackages>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <UseVSHostingProcess>false</UseVSHostingProcess>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="Antlr3.Runtime">
+      <HintPath>..\packages\Antlr.3.4.1.9004\lib\Antlr3.Runtime.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="Newtonsoft.Json, Version=4.5.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\Newtonsoft.Json.7.0.1\lib\net45\Newtonsoft.Json.dll</HintPath>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Web.DynamicData" />
+    <Reference Include="System.Web.Entity" />
+    <Reference Include="System.Web.ApplicationServices" />
+    <Reference Include="System.ComponentModel.DataAnnotations" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="System.Web.Optimization">
+      <HintPath>..\packages\Microsoft.AspNet.Web.Optimization.1.1.3\lib\net40\System.Web.Optimization.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Web" />
+    <Reference Include="System.Web.Extensions" />
+    <Reference Include="System.Web.Abstractions" />
+    <Reference Include="System.Web.Routing" />
+    <Reference Include="System.Xml" />
+    <Reference Include="System.Web.Services" />
+    <Reference Include="System.EnterpriseServices" />
+    <Reference Include="Microsoft.Web.Infrastructure, Version=1.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <Private>True</Private>
+      <HintPath>..\packages\Microsoft.Web.Infrastructure.1.0.0.0\lib\net40\Microsoft.Web.Infrastructure.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Web.Mvc.FixedDisplayModes, Version=1.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <Private>True</Private>
+      <HintPath>..\packages\Microsoft.AspNet.Mvc.FixedDisplayModes.1.0.0\lib\net40\Microsoft.Web.Mvc.FixedDisplayModes.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Net.Http">
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System.Net.Http.Formatting, Version=4.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.AspNet.WebApi.Client.4.0.30506.0\lib\net40\System.Net.Http.Formatting.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System.Net.Http.WebRequest">
+    </Reference>
+    <Reference Include="System.Web.Helpers, Version=2.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <Private>True</Private>
+      <HintPath>..\packages\Microsoft.AspNet.WebPages.2.0.30506.0\lib\net40\System.Web.Helpers.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.Http, Version=4.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.AspNet.WebApi.Core.4.0.30506.0\lib\net40\System.Web.Http.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System.Web.Http.WebHost, Version=4.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.AspNet.WebApi.WebHost.4.0.30506.0\lib\net40\System.Web.Http.WebHost.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System.Web.Mvc, Version=4.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <Private>True</Private>
+      <HintPath>..\packages\Microsoft.AspNet.Mvc.4.0.30506.0\lib\net40\System.Web.Mvc.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.Razor, Version=2.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <Private>True</Private>
+      <HintPath>..\packages\Microsoft.AspNet.Razor.2.0.30506.0\lib\net40\System.Web.Razor.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.WebPages, Version=2.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <Private>True</Private>
+      <HintPath>..\packages\Microsoft.AspNet.WebPages.2.0.30506.0\lib\net40\System.Web.WebPages.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.WebPages.Deployment, Version=2.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <Private>True</Private>
+      <HintPath>..\packages\Microsoft.AspNet.WebPages.2.0.30506.0\lib\net40\System.Web.WebPages.Deployment.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.WebPages.Razor, Version=2.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <Private>True</Private>
+      <HintPath>..\packages\Microsoft.AspNet.WebPages.2.0.30506.0\lib\net40\System.Web.WebPages.Razor.dll</HintPath>
+    </Reference>
+    <Reference Include="WebGrease">
+      <HintPath>..\packages\WebGrease.1.5.2\lib\WebGrease.dll</HintPath>
+    </Reference>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="App_Code\CDNVersion.cs" />
+    <Compile Include="App_Start\BundleConfig.cs" />
+    <Compile Include="Controllers\HomeController.cs" />
+    <Compile Include="Global.asax.cs">
+      <DependentUpon>Global.asax</DependentUpon>
+    </Compile>
+    <Compile Include="Properties\AssemblyInfo.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="App_Start\FilterConfig.cs" />
+    <Compile Include="App_Start\RouteConfig.cs" />
+    <Compile Include="App_Start\WebApiConfig.cs" />
+    <Content Include="Content\CA\scripts\scripts.js" />
+    <Content Include="Content\CA\styles\style.css" />
+    <Content Include="Content\Common\images\appicon-highres.png" />
+    <Content Include="Content\Common\images\appicon.png" />
+    <Content Include="Content\Common\images\apple-touch-icon.png" />
+    <Content Include="Content\Common\images\arrow.png" />
+    <Content Include="Content\Common\images\bg-blue.png" />
+    <Content Include="Content\Common\images\bg-darkblue.png" />
+    <Content Include="Content\Common\images\bg-hero-unit-bop.jpg" />
+    <Content Include="Content\Common\images\bg-hero-unit-comercial-auto.jpg" />
+    <Content Include="Content\Common\images\bg-hero-unit-wc.jpg" />
+    <Content Include="Content\Common\images\bg-teal.jpg" />
+    <Content Include="Content\Common\images\bg-teal.png" />
+    <Content Include="Content\Common\images\bg-testimonial.jpg" />
+    <Content Include="Content\Common\images\bop.png" />
+    <Content Include="Content\Common\images\ca.png" />
+    <Content Include="Content\Common\images\chat.png" />
+    <Content Include="Content\Common\images\favicon.ico" />
+    <Content Include="Content\Common\images\geico_logo.png" />
+    <Content Include="Content\Common\images\icon-calendar.svg" />
+    <Content Include="Content\Common\images\icon-close.svg" />
+    <Content Include="Content\Common\images\icon-credit-card.svg" />
+    <Content Include="Content\Common\images\icon-dollar.svg" />
+    <Content Include="Content\Common\images\icon-marker.svg" />
+    <Content Include="Content\Common\images\icon-search.svg" />
+    <Content Include="Content\Common\images\loading-lg.gif" />
+    <Content Include="Content\Common\images\phone.png" />
+    <Content Include="Content\Common\images\schedule_a_call_icon.png" />
+    <Content Include="Content\Common\images\step1.svg" />
+    <Content Include="Content\Common\images\step2.svg" />
+    <Content Include="Content\Common\images\step2_disable.svg" />
+    <Content Include="Content\Common\images\step3.svg" />
+    <Content Include="Content\Common\images\step3_disable.svg" />
+    <Content Include="Content\Common\images\step4.svg" />
+    <Content Include="Content\Common\images\step4_disable.svg" />
+    <Content Include="Content\Common\images\step5.svg" />
+    <Content Include="Content\Common\images\step5_disable.svg" />
+    <Content Include="Content\Common\scripts\directives\navigationDirective.js" />
+    <Content Include="Content\Common\scripts\navigation.js" />
+    <Content Include="Content\Common\static-files\loss-control\english\Choosing_and_Using_Work_Gloves.pdf" />
+    <Content Include="Content\Common\static-files\loss-control\english\Choosing_and_Using_Work_Shoes.pdf" />
+    <Content Include="Content\Common\static-files\loss-control\english\Cleaning_the_Right_Way.pdf" />
+    <Content Include="Content\Common\static-files\loss-control\english\Clean_up_before_you_slip_up.pdf" />
+    <Content Include="Content\Common\static-files\loss-control\english\Climbing_and_Reaching_Safely.pdf" />
+    <Content Include="Content\Common\static-files\loss-control\english\Communication_Tips_for_a_Diverse_Workforce.pdf" />
+    <Content Include="Content\Common\static-files\loss-control\english\Confined_Space_Atmospheric_Controls.pdf" />
+    <Content Include="Content\Common\static-files\loss-control\english\Confined_space_entries_are_never_routine.pdf" />
+    <Content Include="Content\Common\static-files\loss-control\english\Confined_Space_Hazards--Engulfment.pdf" />
+    <Content Include="Content\Common\static-files\loss-control\english\Confined_Space_Hazards--Explosive_Combustible_Atmosphere.pdf" />
+    <Content Include="Content\Common\static-files\loss-control\english\Confined_Space_Hazards--Oxygen_Deficiency_or_Enrichment.pdf" />
+    <Content Include="Content\Common\static-files\loss-control\english\Confined_Space_Hazards--Physical_Conditions.pdf" />
+    <Content Include="Content\Common\static-files\loss-control\english\Confined_Space_Hazards--Toxic_Contaminants.pdf" />
+    <Content Include="Content\Common\static-files\loss-control\english\Confined_Space_Pers_Roles_and_Resp--Attendant.pdf" />
+    <Content Include="Content\Common\static-files\loss-control\english\Confined_Space_Pers_Roles_and_Resp--Entrant.pdf" />
+    <Content Include="Content\Common\static-files\loss-control\english\Confined_Space_Pers_Roles_and_Resp--Rescue_Team.pdf" />
+    <Content Include="Content\Common\static-files\loss-control\english\Confined_Space_Pers_Roles_and_Resp--Supervisor.pdf" />
+    <Content Include="Content\Common\static-files\loss-control\english\Correct_Ways_to_Carry_and_Move_Objects.pdf" />
+    <Content Include="Content\Common\static-files\loss-control\english\Cumulative_Trauma_Disorders.pdf" />
+    <Content Include="Content\Common\static-files\loss-control\english\CYB_Safety_Video_List--6-7-2016.pdf" />
+    <Content Include="Content\Common\static-files\loss-control\english\Emergencies_Involving_Flammables.pdf" />
+    <Content Include="Content\Common\static-files\loss-control\english\Emergencies_Involving_Reactives.pdf" />
+    <Content Include="Content\Common\static-files\loss-control\english\Emergencies_Involving_Solvents.pdf" />
+    <Content Include="Content\Common\static-files\loss-control\english\Expect_the_unexpected.pdf" />
+    <Content Include="Content\Common\static-files\loss-control\english\Eye_Hazards.pdf" />
+    <Content Include="Content\Common\static-files\loss-control\english\Facts_About_Fire_Extinguishers.pdf" />
+    <Content Include="Content\Common\static-files\loss-control\english\Falls_hurt--Watch_where_youre_walking.pdf" />
+    <Content Include="Content\Common\static-files\loss-control\english\Fire_Danger_of_Flammable_and_Combustible_Liquids.pdf" />
+    <Content Include="Content\Common\static-files\loss-control\english\Fire_Emergencies--What_to_Do.pdf" />
+    <Content Include="Content\Common\static-files\loss-control\english\Fire_Extinguishers--Choosing_the_Right_One.pdf" />
+    <Content Include="Content\Common\static-files\loss-control\english\Fire_Safety_Quiz.pdf" />
+    <Content Include="Content\Common\static-files\loss-control\english\First_Aid_for_Adults_Who_Stop_Breathing.pdf" />
+    <Content Include="Content\Common\static-files\loss-control\english\First_Aid_for_a_Choking_Adult.pdf" />
+    <Content Include="Content\Common\static-files\loss-control\english\First_Aid_for_Cuts_and_Wounds.pdf" />
+    <Content Include="Content\Common\static-files\loss-control\english\First_Aid_for_Eye_Injuries.pdf" />
+    <Content Include="Content\Common\static-files\loss-control\english\First_Aid_for_Heart_Attack.pdf" />
+    <Content Include="Content\Common\static-files\loss-control\english\First_Aid_for_Heatstroke.pdf" />
+    <Content Include="Content\Common\static-files\loss-control\english\First_Aid_for_Minor_Burns.pdf" />
+    <Content Include="Content\Common\static-files\loss-control\english\First_Aid_for_Minor_Wounds.pdf" />
+    <Content Include="Content\Common\static-files\loss-control\english\First_Aid_for_Punctures.pdf" />
+    <Content Include="Content\Common\static-files\loss-control\english\First_Aid_for_Shock.pdf" />
+    <Content Include="Content\Common\static-files\loss-control\english\First_Aid_for_Strains_and_Sprains.pdf" />
+    <Content Include="Content\Common\static-files\loss-control\english\Focus_on_Leadership_Skills.pdf" />
+    <Content Include="Content\Common\static-files\loss-control\english\Food_Service_Lifting_Basics.pdf" />
+    <Content Include="Content\Common\static-files\loss-control\english\Food_Storage_Basics.pdf" />
+    <Content Include="Content\Common\static-files\loss-control\english\Get_help_with_heavy_loads.pdf" />
+    <Content Include="Content\Common\static-files\loss-control\english\Guard_Against_Machine_Injuries.pdf" />
+    <Content Include="Content\Common\static-files\loss-control\english\Hazardous_Material_Identification_System_Labels.pdf" />
+    <Content Include="Content\Common\static-files\loss-control\english\Hearing_Hazards.pdf" />
+    <Content Include="Content\Common\static-files\loss-control\english\How_Noise_Affects_Hearing.pdf" />
+    <Content Include="Content\Common\static-files\loss-control\english\How_to_Use_a_Fire_Extinguisher.pdf" />
+    <Content Include="Content\Common\static-files\loss-control\english\Importance_of_Personal_Cleanliness.pdf" />
+    <Content Include="Content\Common\static-files\loss-control\english\Keeping_Customers_Happy.pdf" />
+    <Content Include="Content\Common\static-files\loss-control\english\Keeping_Your_Cool_in_Stressful_Situations.pdf" />
+    <Content Include="Content\Common\static-files\loss-control\english\Keep_Hot_Food_at_140F--Keep_Cold_Food_at_40F_%28poster%29.pdf" />
+    <Content Include="Content\Common\static-files\loss-control\english\Keep_your_distance.pdf" />
+    <Content Include="Content\Common\static-files\loss-control\english\Kitchen_Sanitation.pdf" />
+    <Content Include="Content\Common\static-files\loss-control\english\Knife_Handling_and_Safety.pdf" />
+    <Content Include="Content\Common\static-files\loss-control\english\Knowing_CPR_Means_You_Can_Save_Lives.pdf" />
+    <Content Include="Content\Common\static-files\loss-control\english\Know_About_Hazardous_Chemicals.pdf" />
+    <Content Include="Content\Common\static-files\loss-control\english\Know_Your_Restaurant_Equipment.pdf" />
+    <Content Include="Content\Common\static-files\loss-control\english\Lead_Hazards.pdf" />
+    <Content Include="Content\Common\static-files\loss-control\english\Lifting_Awkward_Loads.pdf" />
+    <Content Include="Content\Common\static-files\loss-control\english\Lifting_Basics_1.pdf" />
+    <Content Include="Content\Common\static-files\loss-control\english\Lifting_Basics_2.pdf" />
+    <Content Include="Content\Common\static-files\loss-control\english\Lift_with_your_legs--not_your_back.pdf" />
+    <Content Include="Content\Common\static-files\loss-control\english\Lift_With_Your_Legs__Not_Your_Back_%28poster%29.pdf" />
+    <Content Include="Content\Common\static-files\loss-control\english\Lockout_Tagout--De-Energize_for_Safety.pdf" />
+    <Content Include="Content\Common\static-files\loss-control\english\Managing_Work_Stress.pdf" />
+    <Content Include="Content\Common\static-files\loss-control\english\Manufacturers_Warning_Labels.pdf" />
+    <Content Include="Content\Common\static-files\loss-control\english\Material_Handling--Dollies_and_Hand_Trucks.pdf" />
+    <Content Include="Content\Common\static-files\loss-control\english\Material_Handling--Powered_Hand_Trucks.pdf" />
+    <Content Include="Content\Common\static-files\loss-control\english\Material_Safety_Data_Sheets.pdf" />
+    <Content Include="Content\Common\static-files\loss-control\english\NFPA_Diamond.pdf" />
+    <Content Include="Content\Common\static-files\loss-control\english\On_or_off_the_job--keep_safety_in_mind.pdf" />
+    <Content Include="Content\Common\static-files\loss-control\english\Ouch--Watch_out_for_pinch_points.pdf" />
+    <Content Include="Content\Common\static-files\loss-control\english\Pay_attention_to_chemical_warning_labels.pdf" />
+    <Content Include="Content\Common\static-files\loss-control\english\Preventing_and_Treating_Burns.pdf" />
+    <Content Include="Content\Common\static-files\loss-control\english\Preventing_Back_Injuries.pdf" />
+    <Content Include="Content\Common\static-files\loss-control\english\Preventing_Explosions--Tips_for_Worksite_Safety.pdf" />
+    <Content Include="Content\Common\static-files\loss-control\english\Preventing_Fires.pdf" />
+    <Content Include="Content\Common\static-files\loss-control\english\Preventing_Foodborne_Illnesses.pdf" />
+    <Content Include="Content\Common\static-files\loss-control\english\Preventing_Musculoskeletal_Disorders.pdf" />
+    <Content Include="Content\Common\static-files\loss-control\english\Preventing_Slips_Trips_and_Falls--Steps_to_Keep_You_on_Your_Feet.pdf" />
+    <Content Include="Content\Common\static-files\loss-control\english\Prevent_chemical_burns.pdf" />
+    <Content Include="Content\Common\static-files\loss-control\english\Prevent_chemical_spills_leaks--Inspect_containers_regularly.pdf" />
+    <Content Include="Content\Common\static-files\loss-control\english\Properties_of_Hazardous_Materials_%281%29.pdf" />
+    <Content Include="Content\Common\static-files\loss-control\english\Properties_of_Hazardous_Materials_%282%29.pdf" />
+    <Content Include="Content\Common\static-files\loss-control\english\Protecting_Against_Chemical_Hazards--Safe_Chemical_Use.pdf" />
+    <Content Include="Content\Common\static-files\loss-control\english\Protect_Yourself_Against_Violence_in_the_Workplace.pdf" />
+    <Content Include="Content\Common\static-files\loss-control\english\Quiz_on_Bacteria.pdf" />
+    <Content Include="Content\Common\static-files\loss-control\english\Reactivity_of_Hazardous_Materials.pdf" />
+    <Content Include="Content\Common\static-files\loss-control\english\Reading_Material_Safety_Data_Sheets.pdf" />
+    <Content Include="Content\Common\static-files\loss-control\english\Recognizing_Medical_Conditions.pdf" />
+    <Content Include="Content\Common\static-files\loss-control\english\Report_Unsafe_Conditions_%28poster%29.pdf" />
+    <Content Include="Content\Common\static-files\loss-control\english\Respect_electricity.pdf" />
+    <Content Include="Content\Common\static-files\loss-control\english\Respiratory_Hazards.pdf" />
+    <Content Include="Content\Common\static-files\loss-control\english\Responding_to_an_Electrical_Emergency.pdf" />
+    <Content Include="Content\Common\static-files\loss-control\english\Responding_to_a_Chemical_Spill.pdf" />
+    <Content Include="Content\Common\static-files\loss-control\english\Safety_and_alcohol_dont_mix.pdf" />
+    <Content Include="Content\Common\static-files\loss-control\english\Safety_Belts_Can_Save_Your_Life.pdf" />
+    <Content Include="Content\Common\static-files\loss-control\english\Safety_belts_keep_the_family_together.pdf" />
+    <Content Include="Content\Common\static-files\loss-control\english\Safety_Health_Lifting_Basics.pdf" />
+    <Content Include="Content\Common\static-files\loss-control\english\Safety_in_the_Dining_Room.pdf" />
+    <Content Include="Content\Common\static-files\loss-control\english\Safety_is_everyones_job.pdf" />
+    <Content Include="Content\Common\static-files\loss-control\english\Safety_Means_No_Fooling_Around.pdf" />
+    <Content Include="Content\Common\static-files\loss-control\english\Salmonella--What_It_Is_and_How_to_Prevent_It.pdf" />
+    <Content Include="Content\Common\static-files\loss-control\english\Signs_of_Alcohol_or_Drug_Abuse.pdf" />
+    <Content Include="Content\Common\static-files\loss-control\english\Skin_Hazards.pdf" />
+    <Content Include="Content\Common\static-files\loss-control\english\Slips_Trips_and_Falls.pdf" />
+    <Content Include="Content\Common\static-files\loss-control\english\Stop_Horsing_Around.pdf" />
+    <Content Include="Content\Common\static-files\loss-control\english\Store_flammables_properly.pdf" />
+    <Content Include="Content\Common\static-files\loss-control\english\Storing_Hazardous_Chemicals.pdf" />
+    <Content Include="Content\Common\static-files\loss-control\english\Storm Safety.pdf" />
+    <Content Include="Content\Common\static-files\loss-control\english\Stove_and_Cooking_Safety.pdf" />
+    <Content Include="Content\Common\static-files\loss-control\english\The_Hazards_of_Heat.pdf" />
+    <Content Include="Content\Common\static-files\loss-control\english\The_Mechanics_of_Lifting--How_Your_Back_Works.pdf" />
+    <Content Include="Content\Common\static-files\loss-control\english\The_Price_of_Accidents.pdf" />
+    <Content Include="Content\Common\static-files\loss-control\english\Tips_for_Good_Hygiene.pdf" />
+    <Content Include="Content\Common\static-files\loss-control\english\Understanding_Material_Safety_Data_Sheets_%28MSDS%29.pdf" />
+    <Content Include="Content\Common\static-files\loss-control\english\Use_eye_protection.pdf" />
+    <Content Include="Content\Common\static-files\loss-control\english\Use_proper_head_protection.pdf" />
+    <Content Include="Content\Common\static-files\loss-control\english\Use_proper_safety_shoes.pdf" />
+    <Content Include="Content\Common\static-files\loss-control\english\Use_proper_work_gloves.pdf" />
+    <Content Include="Content\Common\static-files\loss-control\english\Use_respiratory_protection.pdf" />
+    <Content Include="Content\Common\static-files\loss-control\english\Use_the_right_tool_for_the_job.pdf" />
+    <Content Include="Content\Common\static-files\loss-control\english\Wash_Your_Hands_%28poster%29.pdf" />
+    <Content Include="Content\Common\static-files\loss-control\english\Watch_out_around_corners.pdf" />
+    <Content Include="Content\Common\static-files\loss-control\english\Watch_Out_Around_Corners_%28poster%29.pdf" />
+    <Content Include="Content\Common\static-files\loss-control\english\Watch_Out_for_Incompatible_Chemicals.pdf" />
+    <Content Include="Content\Common\static-files\loss-control\english\Watch_Out_for_Pinch_Points.pdf" />
+    <Content Include="Content\Common\static-files\loss-control\english\Watch_Your_Step_on_Scaffolds.pdf" />
+    <Content Include="Content\Common\static-files\loss-control\english\Welding_Hazards.pdf" />
+    <Content Include="Content\Common\static-files\loss-control\english\Whats_Your_Safety_Score_%28quiz%29.pdf" />
+    <Content Include="Content\Common\static-files\loss-control\english\What_Is_a_Confined_Space.pdf" />
+    <Content Include="Content\Common\static-files\loss-control\english\What_You_Need_to_Know_About_Pest_Control.pdf" />
+    <Content Include="Content\Common\static-files\loss-control\english\When_Someone_Is_Choking.pdf" />
+    <Content Include="Content\Common\static-files\loss-control\english\Working_Near_Overhead_Power_Lines.pdf" />
+    <Content Include="Content\Common\static-files\loss-control\english\Working_Safely_Around_Forklifts.pdf" />
+    <Content Include="Content\Common\static-files\loss-control\english\Working_Safely_on_Loading_Docks.pdf" />
+    <Content Include="Content\Common\static-files\loss-control\english\Working_Safely_With_Electricity.pdf" />
+    <Content Include="Content\Common\static-files\loss-control\english\Working_Safely_With_Grinders.pdf" />
+    <Content Include="Content\Common\static-files\loss-control\english\Working_Safely_With_Ladders.pdf" />
+    <Content Include="Content\Common\static-files\loss-control\english\Workplace_Food_Safety_Inspections.pdf" />
+    <Content Include="Content\Common\static-files\loss-control\english\Workplace_Safety_Checklist.pdf" />
+    <Content Include="Content\Common\static-files\loss-control\english\Worksite_Fire_Emergencies.pdf" />
+    <Content Include="Content\Common\static-files\loss-control\english\You_cant_follow_safety_rules_in_your_sleep.pdf" />
+    <Content Include="Content\Common\static-files\loss-control\english\You_Can_Help_Prevent_Employee_Theft.pdf" />
+    <Content Include="Content\Common\static-files\loss-control\english\You_Can_Prevent_Slips_Trips_and_Falls_%28poster%29.pdf" />
+    <Content Include="Content\LandingPage\scripts\custominspectlet.js" />
+    <Content Include="Content\Common\scripts\customMethodsHome.js" />
+    <Content Include="Content\Common\scripts\customMethodsOther.js" />
+    <Content Include="Content\PolicyCentre\scripts\directives\focusDirective.js" />
+    <Content Include="Content\Common\scripts\directives\mutiple-file-upload-control.js" />
+    <Content Include="Content\Common\scripts\directives\scheduleCallControl\scheduleCallControlTemplate.html" />
+    <Content Include="Content\Common\scripts\directives\scheduleCallControl\scheduleCallDirective.js" />
+    <Content Include="Content\Common\scripts\directives\time-picker-mask-control.js" />
+    <Content Include="Content\Common\scripts\disable-browser-back.js" />
+    <Content Include="Content\Common\scripts\inspectlet.js" />
+    <Content Include="Content\Common\scripts\log-out.js" />
+    <Content Include="Content\Common\scripts\services\schedule-call-service.js" />
+    <Content Include="Content\Common\scripts\system-variable-service.js" />
+    <Content Include="Content\LandingPage\scripts\apps.js" />
+    <Content Include="Content\LandingPage\scripts\controllers\insertorupdate-landingpage-controller.js" />
+    <Content Include="Content\LandingPage\scripts\controllers\landing-Page-controller.js" />
+    <Content Include="Content\LandingPage\scripts\controllers\login-controller.js" />
+    <Content Include="Content\LandingPage\scripts\controllers\preview-landing-Page-controller.js" />
+    <Content Include="Content\LandingPage\scripts\controllers\template-background-controller.js" />
+    <Content Include="Content\LandingPage\scripts\controllers\template-controller.js" />
+    <Content Include="Content\LandingPage\scripts\directives\dcarDirective.js" />
+    <Content Include="Content\LandingPage\scripts\directives\filesUploadDirective.js" />
+    <Content Include="Content\LandingPage\scripts\directives\numbersOnlyDirective.js" />
+    <Content Include="Content\LandingPage\scripts\filters\dateFormat.js" />
+    <Content Include="Content\LandingPage\scripts\GoogleAnalytics.js" />
+    <Content Include="Content\LandingPage\scripts\landingPage.js" />
+    <Content Include="Content\LandingPage\scripts\main.js" />
+    <Content Include="Content\LandingPage\scripts\modules\bhic-landingPage-controllers-module.js" />
+    <Content Include="Content\LandingPage\scripts\modules\bhic-landingPage-directive-module.js" />
+    <Content Include="Content\LandingPage\scripts\modules\bhic-landingPage-module.js" />
+    <Content Include="Content\LandingPage\scripts\modules\bhic-landingPage-services-module.js" />
+    <Content Include="Content\LandingPage\scripts\services\shared-user-service.js" />
+    <Content Include="Content\LandingPage\scripts\services\wrapper-for-authorised-user-service.js" />
+    <Content Include="Content\PolicyCentre\scripts\controllers\edit-contact-address-controller.js" />
+    <Content Include="Content\PolicyCentre\scripts\controllers\helpful-resources-controller.js" />
+    <Content Include="Content\PolicyCentre\scripts\controllers\request-loss-run-controller.js" />
+    <Content Include="Content\PolicyCentre\scripts\controllers\upload-documents-controller.js" />
+    <Content Include="Content\PolicyCentre\scripts\module\bhic-dashboard-controllers-module.js" />
+    <Content Include="Content\PolicyCentre\scripts\module\bhic-dashboard-directive-module.js" />
+    <Content Include="Content\PolicyCentre\scripts\module\bhic-dashboard-module.js" />
+    <Content Include="Content\PolicyCentre\scripts\module\bhic-dashboard-services-module.js" />
+    <Content Include="Content\PolicyCentre\scripts\module\bhic-login-module.js" />
+    <Content Include="Content\PolicyCentre\scripts\policycentre_auth.js" />
+    <Content Include="Content\PolicyCentre\themes\3D3FB29E-23B6-4863-A11D-863811A013D6\images\bg-teal.jpg" />
+    <Content Include="Content\PolicyCentre\themes\3D3FB29E-23B6-4863-A11D-863811A013D6\images\icon-calendar.svg" />
+    <Content Include="Content\PolicyCentre\themes\3D3FB29E-23B6-4863-A11D-863811A013D6\images\icon-close.svg" />
+    <Content Include="Content\PolicyCentre\themes\3D3FB29E-23B6-4863-A11D-863811A013D6\images\loading-lg.gif" />
+    <Content Include="Content\PolicyCentre\themes\3D3FB29E-23B6-4863-A11D-863811A013D6\images\loading_old.gif" />
+    <Content Include="Content\PolicyCentre\themes\3D3FB29E-23B6-4863-A11D-863811A013D6\images\schedule_a_call_icon.png" />
+    <Content Include="Content\PolicyCentre\themes\3D3FB29E-23B6-4863-A11D-863811A013D6\styles\style-login.css" />
+    <Content Include="Content\PolicyCentre\themes\3D3FB29E-23B6-4863-A11D-863811A013D6\styles\style.css" />
+    <Content Include="Content\PolicyCentre\themes\_sharedFiles\useremail-bop-policyclaim-body.html" />
+    <Content Include="Content\PolicyCentre\themes\_sharedFiles\useremail-contactAddress-subject.html" />
+    <Content Include="Content\PolicyCentre\themes\_sharedFiles\useremail-contactAddress-body.html" />
+    <Content Include="Content\PolicyCentre\themes\_sharedFiles\useremail-reset-password-confirmation-subject.html" />
+    <Content Include="Content\PolicyCentre\themes\_sharedFiles\useremail-reset-password-confirmation-body.html" />
+    <Content Include="Content\PolicyCentre\themes\_sharedFiles\useremail-uploaddocument-body.html" />
+    <Content Include="Content\PolicyCentre\themes\_sharedFiles\useremail-uploaddocument-subject.html" />
+    <Content Include="Content\WC\data\companion-code.js" />
+    <Content Include="Content\WC\data\quote-page-defaults.js" />
+    <Content Include="Content\WC\scripts\controllers\exposure-controller.js" />
+    <Content Include="Content\WC\scripts\controllers\business-info-controller.js" />
+    <Content Include="Content\WC\scripts\directives\business-info-zip-validation-directive.js" />
+    <Content Include="Content\WC\scripts\directives\business-search-directive.js" />
+    <Content Include="Content\WC\scripts\directives\focusDirective.js" />
+    <Content Include="Content\WC\scripts\directives\saveForLaterDirectiveOLD.js" />
+    <Content Include="Content\WC\scripts\services\business-info-service.js" />
+    <Content Include="Content\WC\scripts\services\navigation-service.js" />
+    <Content Include="Content\WC\scripts\services\exposure-service.js" />
+    <Content Include="Content\WC\themes\68C2585C-0525-4C36-ABCB-30F486846403\images\bg-blue%281%29.png" />
+    <Content Include="Content\WC\themes\68C2585C-0525-4C36-ABCB-30F486846403\images\bg-teal.jpg" />
+    <Content Include="Content\WC\themes\68C2585C-0525-4C36-ABCB-30F486846403\images\bg-testimonial.jpg" />
+    <Content Include="Content\WC\themes\68C2585C-0525-4C36-ABCB-30F486846403\images\cyb_logo_small.png" />
+    <Content Include="Content\WC\themes\68C2585C-0525-4C36-ABCB-30F486846403\images\geico_logo.png" />
+    <Content Include="Content\Common\images\icon-bop.png" />
+    <Content Include="Content\Common\images\icon-ca.png" />
+    <Content Include="Content\Common\images\icon-wc.png" />
+    <Content Include="Content\Common\images\img1.png" />
+    <Content Include="Content\Common\images\img2.png" />
+    <Content Include="Content\Common\images\img3.png" />
+    <Content Include="Content\Common\images\loading.gif" />
+    <Content Include="Content\Common\images\logo.png" />
+    <Content Include="Content\Common\images\neon-phone.png" />
+    <Content Include="Content\Common\images\wc.png" />
+    <Content Include="Content\Common\scripts\angular-resource\angular-resource.js" />
+    <Content Include="Content\Common\scripts\angular-resource\angular-resource.min.js" />
+    <Content Include="Content\Common\scripts\angular\angular-animate.js" />
+    <Content Include="Content\Common\scripts\angular\angular-cookies.js" />
+    <Content Include="Content\Common\scripts\angular\angular-loader.js" />
+    <Content Include="Content\Common\scripts\angular\angular-messages.js" />
+    <Content Include="Content\Common\scripts\angular\angular-mocks.js" />
+    <Content Include="Content\Common\scripts\angular\angular-resource.js" />
+    <Content Include="Content\Common\scripts\angular\angular-route.js" />
+    <Content Include="Content\Common\scripts\angular\angular-route.min.js" />
+    <Content Include="Content\Common\scripts\angular\angular-sanitize.js" />
+    <Content Include="Content\Common\scripts\angular\angular-scenario.js" />
+    <Content Include="Content\Common\scripts\angular\angular-touch.js" />
+    <Content Include="Content\Common\scripts\angular\angular.js" />
+    <Content Include="Content\Common\scripts\angular\angular.min.js" />
+    <Content Include="Content\Common\scripts\angular\ngStorage.js" />
+    <Content Include="Content\Common\scripts\angular\ui-utils.js" />
+    <Content Include="Content\Common\scripts\api.js" />
+    <Content Include="Content\Common\scripts\autoNumeric.js" />
+    <Content Include="Content\Common\scripts\bootstrap-datepicker.js" />
+    <Content Include="Content\Common\scripts\bootstrap.js" />
+    <Content Include="Content\Common\scripts\bootstrap.min.js" />
+    <Content Include="Content\Common\scripts\controllers\landing-page-controller.js" />
+    <Content Include="Content\Common\scripts\controllers\logout-controller.js" />
+    <Content Include="Content\Common\scripts\directives\bhic-tooltip.js" />
+    <Content Include="Content\Common\scripts\directives\loadingControl\loadingControlTemplate.html" />
+    <Content Include="Content\Common\scripts\directives\loadingControl\loadingDirective.js" />
+    <Content Include="Content\Common\scripts\directives\zipCodeValidationDirective.js" />
+    <Content Include="Content\Common\scripts\angular-resource\angular-resource.min.js.map" />
+    <None Include="Content\Common\scripts\jquery-1.10.2.intellisense.js" />
+    <Content Include="Content\Common\scripts\dropkick.min.js" />
+    <Content Include="Content\Common\scripts\jquery-1.10.2.js" />
+    <Content Include="Content\Common\scripts\jquery-1.10.2.min.js" />
+    <Content Include="Content\Common\scripts\jquery-1.11.3.js" />
+    <Content Include="Content\Common\scripts\jquery-2.1.4.js" />
+    <Content Include="Content\Common\scripts\jquery-ui-1.10.2.js" />
+    <Content Include="Content\Common\scripts\jquery-ui.js" />
+    <Content Include="Content\Common\scripts\jquery-ui.min.js" />
+    <Content Include="Content\Common\scripts\jquery.inputmask.bundle.js" />
+    <None Include="Content\Common\scripts\jquery.validate-vsdoc.js" />
+    <Content Include="Content\Common\scripts\jquery.validate.js" />
+    <Content Include="Content\Common\scripts\jquery.validate.min.js" />
+    <Content Include="Content\Common\scripts\jquery.validate.unobtrusive.js" />
+    <Content Include="Content\Common\scripts\jquery.validate.unobtrusive.min.js" />
+    <Content Include="Content\Common\scripts\main.js" />
+    <Content Include="Content\Common\scripts\modernizr-2.6.2.js" />
+    <Content Include="Content\Common\scripts\modules\bhic-controllers-module.js" />
+    <Content Include="Content\Common\scripts\modules\bhic-directives-module.js" />
+    <Content Include="Content\Common\scripts\modules\bhic-module.js" />
+    <Content Include="Content\Common\scripts\modules\bhic-services-module.js" />
+    <Content Include="Content\Common\scripts\owl.carousel.min.js" />
+    <Content Include="Content\Common\scripts\questionRender.js" />
+    <Content Include="Content\Common\scripts\remodal.min.js" />
+    <Content Include="Content\Common\scripts\respond.js" />
+    <Content Include="Content\Common\scripts\respond.min.js" />
+    <Content Include="Content\Common\scripts\services\captcha-service.js" />
+    <Content Include="Content\Common\scripts\services\core-utils.js" />
+    <Content Include="Content\Common\scripts\services\landing\landingPageDataProvider.js" />
+    <Content Include="Content\Common\scripts\services\loading-service.js" />
+    <Content Include="Content\Common\scripts\services\restServiceConsumer.js" />
+    <Content Include="Content\Common\scripts\session-expire-countdown-timer.js" />
+    <Content Include="Content\Common\scripts\underscore-min.js" />
+    <Content Include="Content\Common\styles\dropkick.css" />
+    <Content Include="Content\Common\styles\font-awesome.css" />
+    <Content Include="Content\Common\styles\fonts.css" />
+    <Content Include="Content\Common\styles\googleapis.css" />
+    <Content Include="Content\Common\styles\jquery-ui.structure.min.css" />
+    <Content Include="Content\Common\styles\owl.carousel.css" />
+    <Content Include="Content\Common\styles\owl.theme.css" />
+    <Content Include="Content\Common\styles\owl.transitions.css" />
+    <Content Include="Content\Common\styles\style.css" />
+    <Content Include="Content\Common\styles\WcCustomStyles.css" />
+    <Content Include="Content\PolicyCentre\scripts\apps.js" />
+    <Content Include="Content\PolicyCentre\scripts\controllers\account-registration-controller.js" />
+    <Content Include="Content\PolicyCentre\scripts\controllers\cancel-policy-controller.js" />
+    <Content Include="Content\PolicyCentre\scripts\controllers\change-password-controller.js" />
+    <Content Include="Content\PolicyCentre\scripts\controllers\contact-info-controller.js" />
+    <Content Include="Content\PolicyCentre\scripts\controllers\edit-contact-info-controller.js" />
+    <Content Include="Content\PolicyCentre\scripts\controllers\error-controller.js" />
+    <Content Include="Content\PolicyCentre\scripts\controllers\forgot-password-controller.js" />
+    <Content Include="Content\PolicyCentre\scripts\controllers\header-controller.js" />
+    <Content Include="Content\PolicyCentre\scripts\controllers\login-controller.js" />
+    <Content Include="Content\PolicyCentre\scripts\controllers\make-payment-controller.js" />
+    <Content Include="Content\PolicyCentre\scripts\controllers\physician-panel-controller.js" />
+    <Content Include="Content\PolicyCentre\scripts\controllers\policy-detail-controller.js" />
+    <Content Include="Content\PolicyCentre\scripts\controllers\policy-document-controller.js" />
+    <Content Include="Content\PolicyCentre\scripts\controllers\policy-information-controller.js" />
+    <Content Include="Content\PolicyCentre\scripts\controllers\policy-payment-controller.js" />
+    <Content Include="Content\PolicyCentre\scripts\controllers\report-claim-controller.js" />
+    <Content Include="Content\PolicyCentre\scripts\controllers\report-claim-from-home-controller.js" />
+    <Content Include="Content\PolicyCentre\scripts\controllers\ReportClaimDashboardController.js" />
+    <Content Include="Content\PolicyCentre\scripts\controllers\request-certificate-controller.js" />
+    <Content Include="Content\PolicyCentre\scripts\controllers\request-policy-change-controller.js" />
+    <Content Include="Content\PolicyCentre\scripts\controllers\reset-password-controller.js" />
+    <Content Include="Content\PolicyCentre\scripts\controllers\saved-quotes-controller.js" />
+    <Content Include="Content\PolicyCentre\scripts\controllers\session-controller.js" />
+    <Content Include="Content\PolicyCentre\scripts\controllers\side-menu-controller.js" />
+    <Content Include="Content\PolicyCentre\scripts\controllers\style-responsive.css" />
+    <Content Include="Content\PolicyCentre\scripts\controllers\your-policies-controller.js" />
+    <Content Include="Content\PolicyCentre\scripts\datatable.js" />
+    <Content Include="Content\PolicyCentre\scripts\directives\AutoFocusDirective.js" />
+    <Content Include="Content\PolicyCentre\scripts\directives\ccNumberValidatorDirective.js" />
+    <Content Include="Content\PolicyCentre\scripts\directives\dateControlDirective.js" />
+    <Content Include="Content\PolicyCentre\scripts\directives\filesUploadDirective.js" />
+    <Content Include="Content\PolicyCentre\scripts\directives\maskInputDirective.js" />
+    <Content Include="Content\PolicyCentre\scripts\directives\numericOnlyDirective.js" />
+    <Content Include="Content\PolicyCentre\scripts\directives\onerrorfocusFormDirective.js" />
+    <Content Include="Content\PolicyCentre\scripts\main.js" />
+    <Content Include="Content\PolicyCentre\scripts\owl.carousel.min.js" />
+    <Content Include="Content\PolicyCentre\scripts\policycentre.js" />
+    <Content Include="Content\PolicyCentre\scripts\remodal.min.js" />
+    <Content Include="Content\PolicyCentre\scripts\savedquote.remodal.js" />
+    <Content Include="Content\PolicyCentre\scripts\services\shared-user-service.js" />
+    <Content Include="Content\PolicyCentre\scripts\services\wrapper-for-authorised-user-service.js" />
+    <Content Include="Content\PolicyCentre\scripts\services\wrapper-for-unauthorised-user-service.js" />
+    <Content Include="Content\PolicyCentre\styles\bootstrap-datepicker.css" />
+    <Content Include="Content\PolicyCentre\styles\common\dropkick.css" />
+    <Content Include="Content\PolicyCentre\styles\common\style-responsive.css" />
+    <Content Include="Content\PolicyCentre\styles\font-awesome.css" />
+    <Content Include="Content\PolicyCentre\styles\font-awesome.min.css" />
+    <Content Include="Content\PolicyCentre\styles\images\ui-bg_glass_100_fdf5ce_1x400.png" />
+    <Content Include="Content\PolicyCentre\styles\images\ui-bg_highlight-soft_100_eeeeee_1x100.png" />
+    <Content Include="Content\PolicyCentre\styles\jquery-ui.css" />
+    <Content Include="Content\PolicyCentre\styles\jquery-ui.min.css" />
+    <Content Include="Content\PolicyCentre\styles\owl.carousel.css" />
+    <Content Include="Content\PolicyCentre\styles\owl.theme.css" />
+    <Content Include="Content\PolicyCentre\styles\owl.transitions.css" />
+    <Content Include="Content\PolicyCentre\themes\3D3FB29E-23B6-4863-A11D-863811A013D6\images\favicon.ico" />
+    <Content Include="Content\PolicyCentre\themes\3D3FB29E-23B6-4863-A11D-863811A013D6\images\icon-bop.png" />
+    <Content Include="Content\PolicyCentre\themes\3D3FB29E-23B6-4863-A11D-863811A013D6\images\icon-ca.png" />
+    <Content Include="Content\PolicyCentre\themes\3D3FB29E-23B6-4863-A11D-863811A013D6\images\icon-wc.png" />
+    <Content Include="Content\PolicyCentre\themes\3D3FB29E-23B6-4863-A11D-863811A013D6\images\loading.gif" />
+    <Content Include="Content\PolicyCentre\themes\3D3FB29E-23B6-4863-A11D-863811A013D6\images\logo.png" />
+    <Content Include="Content\PolicyCentre\themes\3D3FB29E-23B6-4863-A11D-863811A013D6\images\logo_big.png" />
+    <Content Include="Content\PolicyCentre\themes\3D3FB29E-23B6-4863-A11D-863811A013D6\images\neon-phone.png" />
+    <Content Include="Content\PolicyCentre\themes\3D3FB29E-23B6-4863-A11D-863811A013D6\images\sort_asc.png" />
+    <Content Include="Content\PolicyCentre\themes\3D3FB29E-23B6-4863-A11D-863811A013D6\images\sort_asc_disabled.png" />
+    <Content Include="Content\PolicyCentre\themes\3D3FB29E-23B6-4863-A11D-863811A013D6\images\sort_both.png" />
+    <Content Include="Content\PolicyCentre\themes\3D3FB29E-23B6-4863-A11D-863811A013D6\images\sort_desc.png" />
+    <Content Include="Content\PolicyCentre\themes\3D3FB29E-23B6-4863-A11D-863811A013D6\images\sort_desc_disabled.png" />
+    <Content Include="Content\PolicyCentre\themes\_sharedFiles\emailImages\bg.jpg" />
+    <Content Include="Content\PolicyCentre\themes\_sharedFiles\emailImages\ease.png" />
+    <Content Include="Content\PolicyCentre\themes\_sharedFiles\emailImages\link.png" />
+    <Content Include="Content\PolicyCentre\themes\_sharedFiles\emailImages\logo.png" />
+    <Content Include="Content\PolicyCentre\themes\_sharedFiles\emailImages\mail.png" />
+    <Content Include="Content\PolicyCentre\themes\_sharedFiles\emailImages\phone.png" />
+    <Content Include="Content\PolicyCentre\themes\_sharedFiles\emailImages\security.png" />
+    <Content Include="Content\PolicyCentre\themes\_sharedFiles\emailImages\telephone.png" />
+    <Content Include="Content\PolicyCentre\themes\_sharedFiles\landing-common-zip-section.html" />
+    <Content Include="Content\PolicyCentre\themes\_sharedFiles\useremail-contactinfo-body.html" />
+    <Content Include="Content\PolicyCentre\themes\_sharedFiles\useremail-contactinfo-subject.html" />
+    <Content Include="Content\PolicyCentre\themes\_sharedFiles\useremail-passwordreset-body.html" />
+    <Content Include="Content\PolicyCentre\themes\_sharedFiles\useremail-passwordreset-subject.html" />
+    <Content Include="Content\PolicyCentre\themes\_sharedFiles\useremail-policycancellation-body.html" />
+    <Content Include="Content\PolicyCentre\themes\_sharedFiles\useremail-policycancellation-subject.html" />
+    <Content Include="Content\PolicyCentre\themes\_sharedFiles\useremail-policychange-body.html" />
+    <Content Include="Content\PolicyCentre\themes\_sharedFiles\useremail-policychange-subject.html" />
+    <Content Include="Content\PolicyCentre\themes\_sharedFiles\useremail-policyclaim-body.html" />
+    <Content Include="Content\PolicyCentre\themes\_sharedFiles\useremail-policyclaim-subject.html" />
+    <Content Include="Content\PolicyCentre\themes\_sharedFiles\useremail-registration-body.html" />
+    <Content Include="Content\PolicyCentre\themes\_sharedFiles\useremail-registration-subject.html" />
+    <Content Include="Content\PolicyCentre\themes\_sharedFiles\useremail-welcome-body.html" />
+    <Content Include="Content\PolicyCentre\themes\_sharedFiles\useremail-welcome-subject.html" />
+    <Content Include="Content\PolicyCentre\themes\_sharedFiles\value.png" />
+    <Content Include="Content\WC\scripts\controllers\buy-policy-controller.js" />
+    <Content Include="Content\WC\scripts\controllers\order-summary-controller.js" />
+    <Content Include="Content\WC\scripts\controllers\purchase-quote-controller.js" />
+    <Content Include="Content\WC\scripts\controllers\questions-controller.js" />
+    <Content Include="Content\WC\scripts\controllers\quote-controller.js" />
+    <Content Include="Content\WC\scripts\controllers\quote-summary-controller.js" />
+    <Content Include="Content\WC\scripts\controllers\referral-quote-controller.js" />
+    <Content Include="Content\WC\scripts\controllers\session-expired-controller.js" />
+    <Content Include="Content\WC\scripts\directives\ccNumberValidatorDirective.js" />
+    <Content Include="Content\WC\scripts\directives\check-user-existence-control.js" />
+    <Content Include="Content\WC\scripts\directives\cityTypeHeadDirective.js" />
+    <Content Include="Content\WC\scripts\directives\currencyDirective.js" />
+    <Content Include="Content\WC\scripts\directives\dateControlDirective.js" />
+    <Content Include="Content\WC\scripts\directives\error-messages-control.js" />
+    <Content Include="Content\WC\scripts\directives\invalid-password-control.js" />
+    <Content Include="Content\WC\scripts\directives\maskInputDirective.js" />
+    <Content Include="Content\WC\scripts\directives\multi-class-multi-state\multi-class-multi-state-directive.js" />
+    <Content Include="Content\WC\scripts\directives\multi-class-multi-state\multi-class-multi-state-template.html" />
+    <Content Include="Content\WC\scripts\directives\numericOnlyDirective.js" />
+    <Content Include="Content\WC\scripts\directives\saveForLaterDirective.js" />
+    <Content Include="Content\WC\scripts\directives\session-expired.js" />
+    <Content Include="Content\WC\scripts\directives\typeAheadControlDirective.js" />
+    <Content Include="Content\WC\scripts\directives\validate-taxid-number-control.js" />
+    <Content Include="Content\WC\scripts\module\bhic-wc-controllers-module.js" />
+    <Content Include="Content\WC\scripts\module\bhic-wc-directive-module.js" />
+    <Content Include="Content\WC\scripts\module\bhic-wc-module.js" />
+    <Content Include="Content\WC\scripts\module\bhic-wc-services-module.js" />
+    <Content Include="Content\WC\scripts\services\order-summary-service.js" />
+    <Content Include="Content\WC\scripts\services\policy-payment-service.js" />
+    <Content Include="Content\WC\scripts\services\purchase-quote-service.js" />
+    <Content Include="Content\WC\scripts\services\questions-service.js" />
+    <Content Include="Content\WC\scripts\services\quote-service.js" />
+    <Content Include="Content\WC\scripts\services\quote-summary-service.js" />
+    <Content Include="Content\WC\scripts\services\referral-quote-service.js" />
+    <Content Include="Content\WC\scripts\services\session-recoverer-service.js" />
+    <Content Include="Content\WC\styles\images\ui-bg_glass_100_fdf5ce_1x400.png" />
+    <Content Include="Content\WC\styles\images\ui-bg_highlight-soft_100_eeeeee_1x100.png" />
+    <Content Include="Content\WC\styles\jquery-ui.min.css" />
+    <Content Include="Content\WC\themes\68C2585C-0525-4C36-ABCB-30F486846403\images\bg-blue.png" />
+    <Content Include="Content\WC\themes\68C2585C-0525-4C36-ABCB-30F486846403\images\bg-darkblue.png" />
+    <Content Include="Content\WC\themes\68C2585C-0525-4C36-ABCB-30F486846403\images\bg-hero-unit-bop.jpg" />
+    <Content Include="Content\WC\themes\68C2585C-0525-4C36-ABCB-30F486846403\images\bg-hero-unit-comercial-auto.jpg" />
+    <Content Include="Content\WC\themes\68C2585C-0525-4C36-ABCB-30F486846403\images\bg-hero-unit-wc.jpg" />
+    <Content Include="Content\WC\themes\68C2585C-0525-4C36-ABCB-30F486846403\images\bop.png" />
+    <Content Include="Content\WC\themes\68C2585C-0525-4C36-ABCB-30F486846403\images\ca.png" />
+    <Content Include="Content\WC\themes\68C2585C-0525-4C36-ABCB-30F486846403\images\chat.png" />
+    <Content Include="Content\WC\themes\68C2585C-0525-4C36-ABCB-30F486846403\images\favicon.ico" />
+    <Content Include="Content\WC\themes\68C2585C-0525-4C36-ABCB-30F486846403\images\icon-bop.png" />
+    <Content Include="Content\WC\themes\68C2585C-0525-4C36-ABCB-30F486846403\images\icon-ca.png" />
+    <Content Include="Content\WC\themes\68C2585C-0525-4C36-ABCB-30F486846403\images\icon-calendar.svg" />
+    <Content Include="Content\WC\themes\68C2585C-0525-4C36-ABCB-30F486846403\images\icon-close.svg" />
+    <Content Include="Content\WC\themes\68C2585C-0525-4C36-ABCB-30F486846403\images\icon-credit-card.svg" />
+    <Content Include="Content\WC\themes\68C2585C-0525-4C36-ABCB-30F486846403\images\icon-dollar.svg" />
+    <Content Include="Content\WC\themes\68C2585C-0525-4C36-ABCB-30F486846403\images\icon-marker.svg" />
+    <Content Include="Content\WC\themes\68C2585C-0525-4C36-ABCB-30F486846403\images\icon-search.svg" />
+    <Content Include="Content\WC\themes\68C2585C-0525-4C36-ABCB-30F486846403\images\icon-wc.png" />
+    <Content Include="Content\WC\themes\68C2585C-0525-4C36-ABCB-30F486846403\images\img1.png" />
+    <Content Include="Content\WC\themes\68C2585C-0525-4C36-ABCB-30F486846403\images\img2.png" />
+    <Content Include="Content\WC\themes\68C2585C-0525-4C36-ABCB-30F486846403\images\img3.png" />
+    <Content Include="Content\WC\themes\68C2585C-0525-4C36-ABCB-30F486846403\images\loading%281%29.gif" />
+    <Content Include="Content\WC\themes\68C2585C-0525-4C36-ABCB-30F486846403\images\loading-lg.gif" />
+    <Content Include="Content\WC\themes\68C2585C-0525-4C36-ABCB-30F486846403\images\loading.gif" />
+    <Content Include="Content\WC\themes\68C2585C-0525-4C36-ABCB-30F486846403\images\logo.png" />
+    <Content Include="Content\WC\themes\68C2585C-0525-4C36-ABCB-30F486846403\images\neon-phone.png" />
+    <Content Include="Content\WC\themes\68C2585C-0525-4C36-ABCB-30F486846403\images\phone.png" />
+    <Content Include="Content\WC\themes\68C2585C-0525-4C36-ABCB-30F486846403\images\schedule_a_call_icon.png" />
+    <Content Include="Content\WC\themes\68C2585C-0525-4C36-ABCB-30F486846403\images\step1.svg" />
+    <Content Include="Content\WC\themes\68C2585C-0525-4C36-ABCB-30F486846403\images\step2.svg" />
+    <Content Include="Content\WC\themes\68C2585C-0525-4C36-ABCB-30F486846403\images\step2_disable.svg" />
+    <Content Include="Content\WC\themes\68C2585C-0525-4C36-ABCB-30F486846403\images\step3.svg" />
+    <Content Include="Content\WC\themes\68C2585C-0525-4C36-ABCB-30F486846403\images\step3_disable.svg" />
+    <Content Include="Content\WC\themes\68C2585C-0525-4C36-ABCB-30F486846403\images\step4.svg" />
+    <Content Include="Content\WC\themes\68C2585C-0525-4C36-ABCB-30F486846403\images\step4_disable.svg" />
+    <Content Include="Content\WC\themes\68C2585C-0525-4C36-ABCB-30F486846403\images\step5.svg" />
+    <Content Include="Content\WC\themes\68C2585C-0525-4C36-ABCB-30F486846403\images\step5_disable.svg" />
+    <Content Include="Content\WC\themes\68C2585C-0525-4C36-ABCB-30F486846403\images\wc.png" />
+    <Content Include="Content\WC\themes\68C2585C-0525-4C36-ABCB-30F486846403\styles\dropkick.css" />
+    <Content Include="Content\WC\themes\68C2585C-0525-4C36-ABCB-30F486846403\styles\jquery-ui.structure.min.css" />
+    <Content Include="Content\WC\themes\68C2585C-0525-4C36-ABCB-30F486846403\styles\owl.carousel.css" />
+    <Content Include="Content\WC\themes\68C2585C-0525-4C36-ABCB-30F486846403\styles\owl.theme.css" />
+    <Content Include="Content\WC\themes\68C2585C-0525-4C36-ABCB-30F486846403\styles\owl.transitions.css" />
+    <Content Include="Content\WC\themes\_sharedFiles\about-us.html" />
+    <Content Include="Content\WC\themes\_sharedFiles\bop-major-coverage.html" />
+    <Content Include="Content\WC\themes\_sharedFiles\business-owners-policy.html" />
+    <Content Include="Content\WC\themes\_sharedFiles\ca-claim-info.html" />
+    <Content Include="Content\WC\themes\_sharedFiles\ca-claim-info_yyy.html" />
+    <Content Include="Content\WC\themes\_sharedFiles\checkbox-terms-and-conditions.html" />
+    <Content Include="Content\WC\themes\_sharedFiles\commercial-auto.html" />
+    <Content Include="Content\WC\themes\_sharedFiles\connecticut-mcp.html" />
+    <Content Include="Content\WC\themes\_sharedFiles\educational-flyers.html" />
+    <Content Include="Content\WC\themes\_sharedFiles\educational-flyers_OLD.html" />
+    <Content Include="Content\WC\themes\_sharedFiles\emailImages\bg.jpg" />
+    <Content Include="Content\WC\themes\_sharedFiles\emailImages\ease.png" />
+    <Content Include="Content\WC\themes\_sharedFiles\emailImages\link.png" />
+    <Content Include="Content\WC\themes\_sharedFiles\emailImages\logo.png" />
+    <Content Include="Content\WC\themes\_sharedFiles\emailImages\mail.png" />
+    <Content Include="Content\WC\themes\_sharedFiles\emailImages\phone.png" />
+    <Content Include="Content\WC\themes\_sharedFiles\emailImages\security.png" />
+    <Content Include="Content\WC\themes\_sharedFiles\emailImages\telephone.png" />
+    <Content Include="Content\WC\themes\_sharedFiles\epn.html" />
+    <Content Include="Content\WC\themes\_sharedFiles\faq.html" />
+    <Content Include="Content\WC\themes\_sharedFiles\guardemail-soft-referral-body-old.html" />
+    <Content Include="Content\WC\themes\_sharedFiles\guardemail-soft-referral-body.html" />
+    <Content Include="Content\WC\themes\_sharedFiles\guardemail-soft-referral-subject-old.html" />
+    <Content Include="Content\WC\themes\_sharedFiles\guardemail-soft-referral-subject.html" />
+    <Content Include="Content\WC\themes\_sharedFiles\landing-common-zip-section.html" />
+    <Content Include="Content\WC\themes\_sharedFiles\loss-control.html" />
+    <Content Include="Content\WC\themes\_sharedFiles\message-for-normal-flow-referral-header.html" />
+    <Content Include="Content\WC\themes\_sharedFiles\message-for-multistate-multiclass-referral-header.html" />
+    <Content Include="Content\WC\themes\_sharedFiles\other-disclosures.html" />
+    <Content Include="Content\WC\themes\_sharedFiles\payment-failure-mail-body.html" />
+    <Content Include="Content\WC\themes\_sharedFiles\payment-failure-mail-subject.html" />
+    <Content Include="Content\WC\themes\_sharedFiles\bop-policy-welcome-mail-body.html" />
+    <Content Include="Content\WC\themes\_sharedFiles\policy-welcome-mail-body.html" />
+    <Content Include="Content\WC\themes\_sharedFiles\bop-policy-welcome-mail-subject.html" />
+    <Content Include="Content\WC\themes\_sharedFiles\policy-welcome-mail-subject.html" />
+    <Content Include="Content\WC\themes\_sharedFiles\privacy-policy.html" />
+    <Content Include="Content\WC\themes\_sharedFiles\products.html" />
+    <Content Include="Content\WC\themes\_sharedFiles\referral-complete.html" />
+    <Content Include="Content\WC\themes\_sharedFiles\referral.html" />
+    <Content Include="Content\WC\themes\_sharedFiles\resources.html" />
+    <Content Include="Content\WC\themes\_sharedFiles\resources_yyy.html" />
+    <Content Include="Content\WC\themes\_sharedFiles\schedule-call-body.html" />
+    <Content Include="Content\WC\themes\_sharedFiles\schedule-call-subject.html" />
+    <Content Include="Content\WC\themes\_sharedFiles\terms-conditions.html" />
+    <Content Include="Content\WC\themes\_sharedFiles\texas-mpn.html" />
+    <Content Include="Content\WC\themes\_sharedFiles\user-account-registration-anchor.html" />
+    <Content Include="Content\WC\themes\_sharedFiles\user-account-registration-mail-body.html" />
+    <Content Include="Content\WC\themes\_sharedFiles\user-account-registration-mail-subject.html" />
+    <Content Include="Content\WC\themes\_sharedFiles\useremail-passwordreset-body.html" />
+    <Content Include="Content\WC\themes\_sharedFiles\useremail-passwordreset-subject.html" />
+    <Content Include="Content\WC\themes\_sharedFiles\useremail-saveforlater-bop-anchortext.html" />
+    <Content Include="Content\WC\themes\_sharedFiles\useremail-saveforlater-anchortext.html" />
+    <Content Include="Content\WC\themes\_sharedFiles\useremail-saveforlater-bop-body.html" />
+    <Content Include="Content\WC\themes\_sharedFiles\useremail-saveforlater-body.html" />
+    <Content Include="Content\WC\themes\_sharedFiles\useremail-saveforlater-bop-subject.html" />
+    <Content Include="Content\WC\themes\_sharedFiles\useremail-saveforlater-subject.html" />
+    <Content Include="Content\WC\themes\_sharedFiles\workers-comp.html" />
+    <Content Include="Global.asax" />
+    <Content Include="Properties\PublishProfiles\CDNPreProd.pubxml.user" />
+    <Content Include="Properties\PublishProfiles\CDNProduction.pubxml.user" />
+    <Content Include="Properties\PublishProfiles\CDNQA.pubxml.user" />
+    <Content Include="Properties\PublishProfiles\CDNUAT.pubxml.user" />
+    <Content Include="Web.config">
+      <SubType>Designer</SubType>
+    </Content>
+    <Content Include="Web.Debug.config">
+      <DependentUpon>Web.config</DependentUpon>
+    </Content>
+    <Content Include="Web.Release.config">
+      <DependentUpon>Web.config</DependentUpon>
+    </Content>
+    <Content Include="Views\Web.config" />
+    <Content Include="Content\WC\themes\68C2585C-0525-4C36-ABCB-30F486846403\resources.json" />
+    <Content Include="Content\Common\styles\imgPath.less" />
+    <Content Include="Content\PolicyCentre\styles\fonts\fontawesome-webfont.ttf" />
+    <Content Include="Content\PolicyCentre\styles\fonts\fontawesome-webfont.woff" />
+    <Content Include="Content\Common\static-files\1CT_MCP_Reference_Flyer.pdf" />
+    <Content Include="Content\Common\static-files\First_Report_of_Injury_WC.pdf" />
+    <Content Include="Content\Common\static-files\ny_c1051_acknowledgement of WC law.pdf" />
+    <Content Include="Content\Common\static-files\pa_acknowledgment.pdf" />
+    <Content Include="Content\Common\static-files\pa_information.pdf" />
+    <Content Include="Content\Common\static-files\TX_Coventry_Employee_Acknowledgment.pdf" />
+    <Content Include="Content\Common\static-files\TX_Coventry_Network_Notice.pdf" />
+    <Content Include="Content\Common\static-files\TX_Coventry_Provider_Instruction_Form.pdf" />
+    <Content Include="Content\Common\static-files\2CT_MCP_Employer_Application_Form.pdf" />
+    <Content Include="Content\Common\static-files\3CT_MCP_Summary_of_Employer_Responsibilities.pdf" />
+    <Content Include="Content\Common\static-files\5CT MCP Initial Employee Notice.pdf" />
+    <Content Include="Content\Common\static-files\6CT MCP Employee Notice at Time of Injury.pdf" />
+    <Content Include="Content\Common\static-files\BH_Direct_First_Fill_Letter_English_Spanish_vt.3.pdf" />
+    <Content Include="Content\Common\static-files\CA_English_Time-of-Hire_Pamphlet.pdf" />
+    <Content Include="Content\Common\static-files\CA_Spanish_Time-of-Hire_Pamphlet.pdf" />
+    <Content Include="Content\Common\static-files\DWCForm7_2010--NO_MPN.pdf" />
+    <Content Include="Content\Common\static-files\id_posting_notice-bhdic.pdf" />
+    <Content Include="Content\Common\static-files\Liability_First_Notice_of_Loss_BOP.pdf" />
+    <Content Include="Content\Common\static-files\nj_panel_bhdic.pdf" />
+    <Content Include="Content\Common\static-files\pa_posting_notice-bhdic.pdf" />
+    <Content Include="Content\Common\static-files\PolicyWC000000C.pdf" />
+    <Content Include="Content\Common\static-files\wv_posting_notice-bhdic.pdf" />
+    <Content Include="Content\Common\static-files\ny_posting_notice-bhdic.pdf" />
+    <Content Include="Content\Common\static-files\nh_posting_notice-bhdic.pdf" />
+    <Content Include="Content\Common\static-files\Property_First_Notice_of_Loss_BOP.pdf" />
+    <Content Include="Content\Common\static-files\nj_posting_notice-spanish-bhdic.pdf" />
+    <Content Include="Content\Common\static-files\nj_posting_notice-bhdic.pdf" />
+    <Content Include="Content\Common\static-files\CA_DWCForm1_and_NOPE.pdf" />
+    <Content Include="Content\Common\static-files\pa_instructions.pdf" />
+    <Content Include="Content\Common\static-files\4CT MCP Employer Handbook.pdf" />
+    <Content Include="Content\Common\static-files\DirectDraftform-CYB_withfields.pdf" />
+    <Content Include="Content\Common\static-files\TX_Coventry_Employee_Information_Materials.pdf" />
+    <Content Include="Content\Common\static-files\DWCForm7_2010.pdf" />
+    <Content Include="Content\Common\static-files\direct-draft-form.pdf" />
+    <Content Include="Content\Common\static-files\id_posting_notice-NL&amp;F.pdf" />
+    <Content Include="Content\Common\static-files\nh_posting_notice-NL&amp;F.pdf" />
+    <Content Include="Content\Common\static-files\nj_panel-NL&amp;F.pdf" />
+    <Content Include="Content\Common\static-files\nj_posting_notice-NL&amp;F.pdf" />
+    <Content Include="Content\Common\static-files\nj_posting_notice-spanish-NL&amp;F.pdf" />
+    <Content Include="Content\Common\static-files\ny_posting_notice-NL&amp;F.pdf" />
+    <Content Include="Content\Common\static-files\pa_posting_notice-NL&amp;F.pdf" />
+    <Content Include="Content\Common\static-files\wv_posting_notice-NL&amp;F.pdf" />
+    <Content Include="Content\Common\static-files\loss-control\english\101_Stress_Relievers.pdf" />
+    <Content Include="Content\Common\static-files\loss-control\english\Accidents_Cost_Everyone.pdf" />
+    <Content Include="Content\Common\static-files\loss-control\english\Accidents_dont_just_happen.pdf" />
+    <Content Include="Content\Common\static-files\loss-control\english\Alcohol_and_Drugs_Have_No_Place_in_the_Workplace.pdf" />
+    <Content Include="Content\Common\static-files\loss-control\english\Alcohol_and_Other_Drugs_Affect_Safety.pdf" />
+    <Content Include="Content\Common\static-files\loss-control\english\Assess_Your_Stress.pdf" />
+    <Content Include="Content\Common\static-files\loss-control\english\Attitude_Is_Everything.pdf" />
+    <Content Include="Content\Common\static-files\loss-control\english\A_Guide_to_Worksite_Fire_Safety.pdf" />
+    <Content Include="Content\Common\static-files\loss-control\english\Back_Exercises--Making_Your_Back_Work_for_You.pdf" />
+    <Content Include="Content\Common\static-files\loss-control\english\Back_Exercises.pdf" />
+    <Content Include="Content\Common\static-files\loss-control\english\Back_Stretches.pdf" />
+    <Content Include="Content\Common\static-files\loss-control\english\Bad_wires_can_cause_fires.pdf" />
+    <Content Include="Content\Common\static-files\loss-control\english\Basic_Rules_for_Forklift_Operation.pdf" />
+    <Content Include="Content\Common\static-files\loss-control\english\Basic_Rules_for_Hand_Tools.pdf" />
+    <Content Include="Content\Common\static-files\loss-control\english\Basic_Rules_for_Portable_Power_Tools.pdf" />
+    <Content Include="Content\Common\static-files\loss-control\english\Basic_rule_of_thumb--Leave_guards_in_place.pdf" />
+    <Content Include="Content\Common\static-files\loss-control\english\Before_you_work_on_it--lock_it_out.pdf" />
+    <Content Include="Content\Common\static-files\loss-control\english\Characteristics_of_a_Defensive_Driver.pdf" />
+    <Content Include="Content\Common\static-files\loss-control\english\Choosing_and_Using_Eye_Protection.pdf" />
+    <Content Include="Content\Common\static-files\loss-control\english\Choosing_and_Using_Hearing_Protection.pdf" />
+    <Content Include="Content\Common\static-files\loss-control\english\Choosing_and_Using_Protective_Headwear.pdf" />
+    <Content Include="Content\Common\static-files\loss-control\english\Choosing_and_Using_Respiratory_Protection.pdf" />
+    <Content Include="Content\Common\static-files\loss-control\english\Dont_Let_Your_Workplace_Be_a_Target_for_Robbery.pdf" />
+    <Content Include="Content\Common\static-files\loss-control\english\Dot_Labels_and_Placards.pdf" />
+    <Content Include="Content\Common\static-files\loss-control\english\Do_push_it--Dont_pull_it.pdf" />
+    <Content Include="Content\Common\static-files\loss-control\english\Do_your_part_to_prevent_slips_and_falls.pdf" />
+    <Content Include="Content\Common\static-files\loss-control\english\Do_you_know_where_the_fire_extinguisher_is.pdf" />
+    <Content Include="Content\Common\static-files\loss-control\english\Do_You_Know_Where_the_Fire_Extinguisher_Is_%28poster%29.pdf" />
+    <Content Include="Content\Common\static-files\loss-control\english\Driving_in_Bad_Weather.pdf" />
+    <Content Include="Content\Common\static-files\loss-control\english\EColi_What_It_Is_and_How_to_Prevent_It.pdf" />
+    <Content Include="Content\Common\static-files\loss-control\english\Eight_Steps_to_Lock_Out_Hazardous_Energy.pdf" />
+    <Content Include="Content\Common\static-files\loss-control\english\Emergencies_Involving_Corrosives.pdf" />
+    <Content Include="Content\Common\static-files\loss-control\english\Hand_Hazards.pdf" />
+    <Content Include="Content\Common\static-files\loss-control\english\Hand_Washing_101.pdf" />
+    <Content Include="Content\Common\static-files\loss-control\english\Hazardous_Chemical_Categories--Compressed_Gases.pdf" />
+    <Content Include="Content\Common\static-files\loss-control\english\Hazardous_Chemical_Categories--Corrosive_Materials.pdf" />
+    <Content Include="Content\Common\static-files\loss-control\english\Hazardous_Chemical_Categories--Explosives.pdf" />
+    <Content Include="Content\Common\static-files\loss-control\english\Hazardous_Chemical_Categories--Flammable_Liquids.pdf" />
+    <Content Include="Content\Common\static-files\loss-control\english\Hazardous_Chemical_Categories--Flammable_Solids.pdf" />
+    <Content Include="Content\Common\static-files\loss-control\english\Hazardous_Chemical_Categories--Misc_Hazardous_Materials.pdf" />
+    <Content Include="Content\Common\static-files\loss-control\english\Hazardous_Chemical_Categories--Oxidizers.pdf" />
+    <Content Include="Content\Common\static-files\loss-control\english\Hazardous_Chemical_Categories--Poisonous_Materials.pdf" />
+    <Content Include="Content\Common\static-files\loss-control\english\Hazardous_Chemical_Categories--Radioactive_Materials.pdf" />
+    <Content Include="Content\Common\static-files\loss-control\english\Testing_and_Monitoring_the_Atmosphere_of_a_Confined_Space.pdf" />
+    <Content Include="Content\Common\static-files\loss-control\english\The_Confined_Space_Entry_Permit.pdf" />
+    <Content Include="Content\Common\static-files\loss-control\english\The_Fire_Triangle.pdf" />
+    <Content Include="Content\Common\static-files\loss-control\english\The_Golden_Rule_of_Safe_Driving.pdf" />
+    <Content Include="Content\Common\static-files\loss-control\english\The_Hazards_of_Cold.pdf" />
+    <Content Include="Content\Common\static-files\loss-control\english\The_Hazards_of_Electrical_Shock.pdf" />
+    <Content Include="Content\Common\static-files\loss-control\english\The_Hazards_of_Fatigue.pdf" />
+    <Content Include="Content\Common\static-files\loss-control\spanish\101_maneras_de_aliviar_la_tension.pdf" />
+    <Content Include="Content\Common\static-files\loss-control\spanish\Actividad_y_responsabilidad_del_personal_que_labora_en_un_espacio_confinado--Ayudante.pdf" />
+    <Content Include="Content\Common\static-files\loss-control\spanish\Actividad_y_responsabilidad_del_personal_que_labora_en_un_espacio_confinado--Equipo_de_rescate.pdf" />
+    <Content Include="Content\Common\static-files\loss-control\spanish\Actividad_y_responsabilidad_del_personal_que_labora_en_un_espacio_confinado--Ingreso.pdf" />
+    <Content Include="Content\Common\static-files\loss-control\spanish\Actividad_y_responsabilidad_del_personal_que_labora_en_un_espacio_confinado--Supervisor.pdf" />
+    <Content Include="Content\Common\static-files\loss-control\spanish\Almacenamiento_de_materiales_peligrosos.pdf" />
+    <Content Include="Content\Common\static-files\loss-control\spanish\Almacene_adecuadamente_los_materiales_inflamables.pdf" />
+    <Content Include="Content\Common\static-files\loss-control\spanish\Al_levantar_cargas--haga_el_esfuerzo_con_sus_piernas_no_con_su_espalda.pdf" />
+    <Content Include="Content\Common\static-files\loss-control\spanish\Antes_de_trabajar_en_una_maquina--idesconectela.pdf" />
+    <Content Include="Content\Common\static-files\loss-control\spanish\Aprendiendo_resucitacion_cardiopulmonar_se_pueden_salvar_vidas.pdf" />
+    <Content Include="Content\Common\static-files\loss-control\spanish\Atmosfera_explosiva_o_combustible.pdf" />
+    <Content Include="Content\Common\static-files\loss-control\spanish\Autorizacion_para_entrar_a_un_espacio_confinado.pdf" />
+    <Content Include="Content\Common\static-files\loss-control\spanish\Ay--Tenga_cuidado_con_los_puntos_donde_pueda_pellizcarse.pdf" />
+    <Content Include="Content\Common\static-files\loss-control\spanish\Ayude_a_evitar_resbalones_y_caidas.pdf" />
+    <Content Include="Content\Common\static-files\loss-control\spanish\Caracteristicas_de_un_conductor_que_maneja_a_la_defensiva.pdf" />
+    <Content Include="Content\Common\static-files\loss-control\spanish\Categorias_de_materiales_quimicos_peligrosos--Materiales_corrosivos.pdf" />
+    <Content Include="Content\Common\static-files\loss-control\spanish\Categorias_de_materiales_quimicos_peligrosos--Materiales_radioactivos.pdf" />
+    <Content Include="Content\Common\static-files\loss-control\spanish\Categorias_de_materiales_quimicos_peligrosos--Materiales_venenosos.pdf" />
+    <Content Include="Content\Common\static-files\loss-control\spanish\Categorias_de_quimicos_peligrosos--Explosivos_y_agentes_explosivos.pdf" />
+    <Content Include="Content\Common\static-files\loss-control\spanish\Categorias_de_quimicos_peligrosos--Gases_comprimidos.pdf" />
+    <Content Include="Content\Common\static-files\loss-control\spanish\Categorias_de_quimicos_peligrosos--Liquidos_inflamables.pdf" />
+    <Content Include="Content\Common\static-files\loss-control\spanish\Categorias_de_quimicos_peligrosos--Oxidantes.pdf" />
+    <Content Include="Content\Common\static-files\loss-control\spanish\Categorias_de_quimicos_peligrosos--Solidos_inflamables.pdf" />
+    <Content Include="Content\Common\static-files\loss-control\spanish\Como_actuar_correctamente_en_emergencias_electricas.pdf" />
+    <Content Include="Content\Common\static-files\loss-control\spanish\Como_afecta_el_ruido_a_los_oidos.pdf" />
+    <Content Include="Content\Common\static-files\loss-control\spanish\Como_alcanzar_de_manera_segura_objetos_de_sitios_altos.pdf" />
+    <Content Include="Content\Common\static-files\loss-control\spanish\Como_califica_en_seguridad.pdf" />
+    <Content Include="Content\Common\static-files\loss-control\spanish\Como_complacer_a_los_clientes.pdf" />
+    <Content Include="Content\Common\static-files\loss-control\spanish\Como_conducir_en_mal_tiempo.pdf" />
+    <Content Include="Content\Common\static-files\loss-control\spanish\Como_escoger_y_utilizar_cascos_protectores.pdf" />
+    <Content Include="Content\Common\static-files\loss-control\spanish\Como_escoger_y_utilizar_guantes_de_trabajo.pdf" />
+    <Content Include="Content\Common\static-files\loss-control\spanish\Como_escoger_y_utilizar_proteccion_para_los_oidos.pdf" />
+    <Content Include="Content\Common\static-files\loss-control\spanish\Como_escoger_y_utilizar_proteccion_para_los_ojos.pdf" />
+    <Content Include="Content\Common\static-files\loss-control\spanish\Como_escoger_y_utilizar_proteccion_respiratoria.pdf" />
+    <Content Include="Content\Common\static-files\loss-control\spanish\Como_escoger_y_utilizar_zapatos_de_trabajo.pdf" />
+    <Content Include="Content\Common\static-files\loss-control\spanish\Como_evitar_enfermedades_acarreadas_por_alimentos.pdf" />
+    <Content Include="Content\Common\static-files\loss-control\spanish\Como_evitar_incendios.pdf" />
+    <Content Include="Content\Common\static-files\loss-control\spanish\Como_evitar_lesiones_de_espalda.pdf" />
+    <Content Include="Content\Common\static-files\loss-control\spanish\Como_evitar_resbalones_tropiezos_y_caidas.pdf" />
+    <Content Include="Content\Common\static-files\loss-control\spanish\Como_evitar_y_como_tratar_quemaduras.pdf" />
+    <Content Include="Content\Common\static-files\loss-control\spanish\Como_interpretar_las_hojas_de_datos_de_seguridad_de_los_materiales.pdf" />
+    <Content Include="Content\Common\static-files\loss-control\spanish\Como_leer_las_hojas_de_datos_de_seguridad_de_materiales.pdf" />
+    <Content Include="Content\Common\static-files\loss-control\spanish\Como_levantar_cargas_dificiles.pdf" />
+    <Content Include="Content\Common\static-files\loss-control\spanish\Como_manejar_la_tension_en_el_trabajo.pdf" />
+    <Content Include="Content\Common\static-files\loss-control\spanish\Como_mantener_la_calma_en_situaciones_dificiles.pdf" />
+    <Content Include="Content\Common\static-files\loss-control\spanish\Como_prevenir_explosiones--Consejos_para_observar_medidas_de_seguridad_en_el_trabajo.pdf" />
+    <Content Include="Content\Common\static-files\loss-control\spanish\Como_prevenir_trastornos_musculoesqueletales.pdf" />
+    <Content Include="Content\Common\static-files\loss-control\spanish\Como_protegerse_de_peligros_quimicos--su_guia_para_el_uso_seguro_de_sustancias_quimicas.pdf" />
+    <Content Include="Content\Common\static-files\loss-control\spanish\Como_reconocer_condiciones_que_exigen_asistencia_medica.pdf" />
+    <Content Include="Content\Common\static-files\loss-control\spanish\Como_responder_a_un_derrame_quimico.pdf" />
+    <Content Include="Content\Common\static-files\loss-control\spanish\Como_trabajar_cerca_de_cables_de_alta_tension.pdf" />
+    <Content Include="Content\Common\static-files\loss-control\spanish\Como_trabajar_de_manera_segura_con_montacargas.pdf" />
+    <Content Include="Content\Common\static-files\loss-control\spanish\Como_trabajar_de_manera_segura_en_los_muelles_de_carga.pdf" />
+    <Content Include="Content\Common\static-files\loss-control\spanish\Como_trabajar_sin_riesgos_con_escaleras_de_mano.pdf" />
+    <Content Include="Content\Common\static-files\loss-control\spanish\Como_trabajar_sin_riesgos_con_la_electricidad.pdf" />
+    <Content Include="Content\Common\static-files\loss-control\spanish\Como_trabajar_sin_riesgos_con_molinos.pdf" />
+    <Content Include="Content\Common\static-files\loss-control\spanish\Como_usar_un_extinguidor_de_incendios.pdf" />
+    <Content Include="Content\Common\static-files\loss-control\spanish\Concentracion_de_alcohol_en_la_sangre_y_en_su_cuerpo.pdf" />
+    <Content Include="Content\Common\static-files\loss-control\spanish\Condiciones_fisicas.pdf" />
+    <Content Include="Content\Common\static-files\loss-control\spanish\Condiciones_ocasionadas_por_acumulacion_de_trauma.pdf" />
+    <Content Include="Content\Common\static-files\loss-control\spanish\Conozca_como_utilizar_sustancias_quimicas_peligrosas.pdf" />
+    <Content Include="Content\Common\static-files\loss-control\spanish\Conozca_el_equipo_de_su_restaurante.pdf" />
+    <Content Include="Content\Common\static-files\loss-control\spanish\Consejos_para_buena_comunicacion_con_una_fuerza_de_trabajo.pdf" />
+    <Content Include="Content\Common\static-files\loss-control\spanish\Contaminantes_toxicos.pdf" />
+    <Content Include="Content\Common\static-files\loss-control\spanish\Controles_atmosfericos_del_espacio_confinado.pdf" />
+    <Content Include="Content\Common\static-files\loss-control\spanish\Cuando_alguien_se_esta_ahogando.pdf" />
+    <Content Include="Content\Common\static-files\loss-control\spanish\CUIDADO.pdf" />
+    <Content Include="Content\Common\static-files\loss-control\spanish\Cuidado_en_las_esquinas.pdf" />
+    <Content Include="Content\Common\static-files\loss-control\spanish\Cuidado_especial_al_manejar_materiales_quimicos_incompatibles.pdf" />
+    <Content Include="Content\Common\static-files\loss-control\spanish\Cuidese_de_las_heridas_ocasionadas_por_las_maquinas.pdf" />
+    <Content Include="Content\Common\static-files\loss-control\spanish\Cuidese_de_los_puntos_donde_pueda_pellizcarse.pdf" />
+    <Content Include="Content\Common\static-files\loss-control\spanish\Cuide_sus_pasos_en_los_andamios.pdf" />
+    <Content Include="Content\Common\static-files\loss-control\spanish\Dentro_del_trabajo--no_se_olvide_de_su_seguridad.pdf" />
+    <Content Include="Content\Common\static-files\loss-control\spanish\Desconexion_con_seguro_y_colocacion_de_etiquetas.pdf" />
+    <Content Include="Content\Common\static-files\loss-control\spanish\Diamante_NFPA.pdf" />
+    <Content Include="Content\Common\static-files\loss-control\spanish\Ecoli_Que_es_la_bacteria_Ecoli_y_como_debe_evitarse.pdf" />
+    <Content Include="Content\Common\static-files\loss-control\spanish\El_alcohol_y_otras_drogas_afectan_la_seguridad.pdf" />
+    <Content Include="Content\Common\static-files\loss-control\spanish\El_ingreso_a_los_espacios_confinados_nunca_es_cosa_de_rutina.pdf" />
+    <Content Include="Content\Common\static-files\loss-control\spanish\El_triangulo_del_fuego.pdf" />
+    <Content Include="Content\Common\static-files\loss-control\spanish\Emergencias_con_materiales_corrosivos.pdf" />
+    <Content Include="Content\Common\static-files\loss-control\spanish\Emergencias_con_materiales_inflamables.pdf" />
+    <Content Include="Content\Common\static-files\loss-control\spanish\Emergencias_con_materiales_reactivos.pdf" />
+    <Content Include="Content\Common\static-files\loss-control\spanish\Emergencias_con_solventes.pdf" />
+    <Content Include="Content\Common\static-files\loss-control\spanish\Emergencias_provocadas_por_incendio_en_el_trabajo.pdf" />
+    <Content Include="Content\Common\static-files\loss-control\spanish\Empuje--No_hale.pdf" />
+    <Content Include="Content\Common\static-files\loss-control\spanish\Espere_lo_inesperado.pdf" />
+    <Content Include="Content\Common\static-files\loss-control\spanish\Etiquetas_de_advertencia_de_los_fabricantes.pdf" />
+    <Content Include="Content\Common\static-files\loss-control\spanish\Etiquetas_y_placas_requeridas_por_el_Departamento_de_Transporte.pdf" />
+    <Content Include="Content\Common\static-files\loss-control\spanish\Evite_derrames_y_fugas_de_sustancias_quimicas_inspeccione_regularmente_los_recipientes.pdf" />
+    <Content Include="Content\Common\static-files\loss-control\spanish\Evite_las_quemaduras_con_sustancias_quimicas.pdf" />
+    <Content Include="Content\Common\static-files\loss-control\spanish\Extinguidores_de_incendios--Como_seleccionar_el_extinguidor_adecuado.pdf" />
+    <Content Include="Content\Common\static-files\loss-control\spanish\Falta_o_exceso_de_oxigeno.pdf" />
+    <Content Include="Content\Common\static-files\loss-control\spanish\Las_caidas_duelen--Mire_por_donde_camina.pdf" />
+    <Content Include="Content\Common\static-files\loss-control\spanish\Las_hojas_de_datos_de_seguridad_de_los_materiales.pdf" />
+    <Content Include="Content\Common\static-files\loss-control\spanish\La_actitud_lo_hace_todo.pdf" />
+    <Content Include="Content\Common\static-files\loss-control\spanish\La_regla_de_oro_para_conducir_de_forma_segura.pdf" />
+    <Content Include="Content\Common\static-files\loss-control\spanish\La_seguridad_es_trabajo_de_todos.pdf" />
+    <Content Include="Content\Common\static-files\loss-control\spanish\La_seguridad_no_acepta_bromas_pesadas.pdf" />
+    <Content Include="Content\Common\static-files\loss-control\spanish\La_seguridad_y_el_alcohol_no_combinan_bien.pdf" />
+    <Content Include="Content\Common\static-files\loss-control\spanish\Limpie_para_evitar_resbalones_y_caidas.pdf" />
+    <Content Include="Content\Common\static-files\loss-control\spanish\Los_accidentes_no_ocurren_solos.pdf" />
+    <Content Include="Content\Common\static-files\loss-control\spanish\Los_accidentes_perjudican_a_todos.pdf" />
+    <Content Include="Content\Common\static-files\loss-control\spanish\Los_cables_averiados_pueden_causar_un_incendio.pdf" />
+    <Content Include="Content\Common\static-files\loss-control\spanish\Los_cinturones_de_seguridad_mantienen_a_la_familia_unida.pdf" />
+    <Content Include="Content\Common\static-files\loss-control\spanish\Los_cinturones_de_seguridad_pueden_salvarle_la_vida.pdf" />
+    <Content Include="Content\Common\static-files\loss-control\spanish\Los_movimientos_mecanicos_al_levantar_cargas.pdf" />
+    <Content Include="Content\Common\static-files\loss-control\spanish\Los_peligros_del_calor.pdf" />
+    <Content Include="Content\Common\static-files\loss-control\spanish\Los_peligros_del_frio.pdf" />
+    <Content Include="Content\Common\static-files\loss-control\spanish\Los_peligros_de_la_fatiga.pdf" />
+    <Content Include="Content\Common\static-files\loss-control\spanish\Maneje_su_tension.pdf" />
+    <Content Include="Content\Common\static-files\loss-control\spanish\Manejo_de_materiales--Carretillas_de_mano_motorizadas.pdf" />
+    <Content Include="Content\Common\static-files\loss-control\spanish\Manejo_de_materiales--Plataformas_rodantes_y_carretillas_de_mano.pdf" />
+    <Content Include="Content\Common\static-files\loss-control\spanish\Mantenga_su_distancia.pdf" />
+    <Content Include="Content\Common\static-files\loss-control\spanish\Materiales_peligrosos_varios.pdf" />
+    <Content Include="Content\Common\static-files\loss-control\spanish\Norma_basica_no_retire_los_protectores.pdf" />
+    <Content Include="Content\Common\static-files\loss-control\spanish\Ocho_pasos_para_desconectar_energia_peligrosa_con_seguro.pdf" />
+    <Content Include="Content\Common\static-files\loss-control\spanish\Patogenos_acarreados_en_el_torrente_sanguineo--Precauciones_universales.pdf" />
+    <Content Include="Content\Common\static-files\loss-control\spanish\Patogenos_acarreados_en_el_torrente_sanguineo_VIH_y_hepatitis_B.pdf" />
+    <Content Include="Content\Common\static-files\loss-control\spanish\Peligros_al_soldar.pdf" />
+    <Content Include="Content\Common\static-files\loss-control\spanish\Peligros_del_plomo.pdf" />
+    <Content Include="Content\Common\static-files\loss-control\spanish\Peligros_de_los_choques_electricos.pdf" />
+    <Content Include="Content\Common\static-files\loss-control\spanish\Peligros_para_el_oido.pdf" />
+    <Content Include="Content\Common\static-files\loss-control\spanish\Peligros_para_las_manos.pdf" />
+    <Content Include="Content\Common\static-files\loss-control\spanish\Peligros_para_la_piel.pdf" />
+    <Content Include="Content\Common\static-files\loss-control\spanish\Peligros_para_los_ojos.pdf" />
+    <Content Include="Content\Common\static-files\loss-control\spanish\Peligros_respiratorios.pdf" />
+    <Content Include="Content\Common\static-files\loss-control\spanish\Peligro_de_incendio_ocasionado_por_liquidos_inflamables_y_combustibles.pdf" />
+    <Content Include="Content\Common\static-files\loss-control\spanish\Pero_si_solo_estaban_bromeando.pdf" />
+    <Content Include="Content\Common\static-files\loss-control\spanish\Pida_ayuda_antes_de_tratar_de_extinguir_un_incendio.pdf" />
+    <Content Include="Content\Common\static-files\loss-control\spanish\Preste_atencion_a_las_etiquetas_de_advertencia_sobre_sustancias_quimicas.pdf" />
+    <Content Include="Content\Common\static-files\loss-control\spanish\Primeros_auxilios_cuando_se_ahoga_un_adulto.pdf" />
+    <Content Include="Content\Common\static-files\loss-control\spanish\Primeros_auxilios_cuando_un_adulto_deja_de_respirar.pdf" />
+    <Content Include="Content\Common\static-files\loss-control\spanish\Primeros_auxilios_en_casos_de_heridas_por_perforacion.pdf" />
+    <Content Include="Content\Common\static-files\loss-control\spanish\Primeros_auxilios_en_casos_de_insolacion.pdf" />
+    <Content Include="Content\Common\static-files\loss-control\spanish\Primeros_auxilios_en_caso_de_ataque_al_corazon.pdf" />
+    <Content Include="Content\Common\static-files\loss-control\spanish\Primeros_auxilios_en_caso_de_conmocion_ataque_o_choque.pdf" />
+    <Content Include="Content\Common\static-files\loss-control\spanish\Primeros_auxilios_en_caso_de_distensiones_o_luxaciones.pdf" />
+    <Content Include="Content\Common\static-files\loss-control\spanish\Primeros_auxilios_en_caso_de_heridas_menores.pdf" />
+    <Content Include="Content\Common\static-files\loss-control\spanish\Primeros_auxilios_en_caso_de_lesiones_en_los_ojos.pdf" />
+    <Content Include="Content\Common\static-files\loss-control\spanish\Primeros_auxilios_en_caso_de_quemaduras_menores.pdf" />
+    <Content Include="Content\Common\static-files\loss-control\spanish\Propiedades_de_los_materiales_peligrosos_%281%29.pdf" />
+    <Content Include="Content\Common\static-files\loss-control\spanish\Propiedades_de_los_materiales_peligrosos_%282%29.pdf" />
+    <Content Include="Content\Common\static-files\loss-control\spanish\Protejase_contra_la_violencia_en_el_lugar_de_trabajo.pdf" />
+    <Content Include="Content\Common\static-files\loss-control\spanish\Protejase_los_ojos.pdf" />
+    <Content Include="Content\Common\static-files\loss-control\spanish\Que_es_un_espacio_confinado.pdf" />
+    <Content Include="Content\Common\static-files\loss-control\spanish\Reactividad_a_materiales_peligrosos.pdf" />
+    <Content Include="Content\Common\static-files\loss-control\spanish\Refuerce_sus_aptitudes_de_liderazgo.pdf" />
+    <Content Include="Content\Common\static-files\loss-control\spanish\Reglas_basicas_para_la_operacion_de_montacargas.pdf" />
+    <Content Include="Content\Common\static-files\loss-control\spanish\Reglas_basicas_para_la_utilizacion_de_herramientas_electricas_portatiles.pdf" />
+    <Content Include="Content\Common\static-files\loss-control\spanish\Reglas_basicas_para_la_utilizacion_de_herramientas_manuales.pdf" />
+    <Content Include="Content\Common\static-files\loss-control\spanish\Resbalones_tropiezos_y_caidas.pdf" />
+    <Content Include="Content\Common\static-files\loss-control\spanish\Respete_la_electricidad.pdf" />
+    <Content Include="Content\Common\static-files\loss-control\spanish\Senales_de_abuso_de_alcohol_y_drogas.pdf" />
+    <Content Include="Content\Common\static-files\loss-control\spanish\Sistema_de_etiquetas_de_identificacion_de_materiales_peligrosos.pdf" />
+    <Content Include="Content\Common\static-files\loss-control\spanish\Si_esta_dormido_no_puede_seguir_las_medidas_de_seguridad.pdf" />
+    <Content Include="Content\Common\static-files\loss-control\spanish\Sofocacion.pdf" />
+    <Content Include="Content\Common\static-files\loss-control\spanish\Solicite_ayuda_para_levantar_cargas_pesadas.pdf" />
+    <Content Include="Content\Common\static-files\loss-control\spanish\Una_guia_para_trabajar_con_seguridad_cerca_del_fuego.pdf" />
+    <Content Include="Content\Common\static-files\loss-control\spanish\Utilice_el_casco_adecuado.pdf" />
+    <Content Include="Content\Common\static-files\loss-control\spanish\Utilice_la_herramienta_correcta_para_el_trabajo.pdf" />
+    <Content Include="Content\Common\static-files\loss-control\spanish\Utilice_los_guantes_de_trabajo_adecuados.pdf" />
+    <Content Include="Content\Common\static-files\loss-control\spanish\Utilice_los_zapatos_de_seguridad_adecuados.pdf" />
+    <Content Include="Content\Common\static-files\loss-control\spanish\Utilice_proteccion_respiratoria.pdf" />
+    <Content Include="Content\Common\static-files\loss-control\spanish\Verificacion_y_control_de_la_atmosfera_en_un_espacio_confinado.pdf" />
+    <Content Include="Content\Common\static-files\loss-control\spanish\El_precio_de_los_accidentes.pdf" />
+    <Content Include="Content\Common\static-files\loss-control\spanish\Emergencias_ocasionadas_por_incendios.pdf" />
+    <Content Include="Content\Common\static-files\loss-control\spanish\En_el_trabajo_no_hay_lugar_para_el_alcohol_ni_para_las_drogas.pdf" />
+    <Content Include="Content\Common\static-files\loss-control\spanish\Estiramientos_para_la_espalda.pdf" />
+    <Content Include="Content\Common\static-files\loss-control\spanish\Haga_el_esfuerzo_con_sus_piernas_no_con_su_espalda.pdf" />
+    <Content Include="Content\Common\static-files\loss-control\spanish\Higiene_en_la_cocina.pdf" />
+    <Content Include="Content\Common\static-files\loss-control\spanish\Informacion_fundamental_sobre_el_almacenamiento_de_alimentos.pdf" />
+    <Content Include="Content\Common\static-files\loss-control\spanish\Informacion_relativa_a_los_extinguidores_de_incendio.pdf" />
+    <Content Include="Content\Common\static-files\loss-control\spanish\Inspecciones_de_seguridad_de_alimentos_en_los_lugares_de_trabajo.pdf" />
+    <Content Include="Content\Common\static-files\loss-control\spanish\Lavese_las_manos.pdf" />
+    <Content Include="Content\Common\static-files\loss-control\spanish\La_importancia_del_aseo_personal.pdf" />
+    <Content Include="Content\Common\static-files\loss-control\spanish\La_manera_correcta_de_asear.pdf" />
+    <Content Include="Content\Common\static-files\loss-control\spanish\La_seguridad_en_el_comedor.pdf" />
+    <Content Include="Content\Common\static-files\loss-control\spanish\La_seguridad_y_el_manejo_de_cuchillos.pdf" />
+    <Content Include="Content\Common\static-files\loss-control\spanish\Lista_para_verificar_la_seguridad_en_el_sitio_de_trabajo.pdf" />
+    <Content Include="Content\Common\static-files\loss-control\spanish\Los_Alimentos_calientes_se_deben_mantener_140F--Los_alimentos_frios.pdf" />
+    <Content Include="Content\Common\static-files\loss-control\spanish\Lo_que_se_debe_saber_sobre_el_control_de_plagas.pdf" />
+    <Content Include="Content\Common\static-files\loss-control\spanish\Maneras_correctas_para_cargar_y_mover_objetos.pdf" />
+    <Content Include="Content\Common\static-files\loss-control\spanish\No_haga_bromas_pesadas.pdf" />
+    <Content Include="Content\Common\static-files\loss-control\spanish\Primeros_auxilios_en_casos_de_cortadas_y_heridas.pdf" />
+    <Content Include="Content\Common\static-files\loss-control\spanish\Principios_basicos_sobre_como_lavarse_las_manos.pdf" />
+    <Content Include="Content\Common\static-files\loss-control\spanish\Proteja_su_lugar_de_trabajo_contra_robos.pdf" />
+    <Content Include="Content\Common\static-files\loss-control\spanish\Prueba_sobre_bacterias.pdf" />
+    <Content Include="Content\Common\static-files\loss-control\spanish\Prueba_sobre_seguridad_en_caso_de_incendio.pdf" />
+    <Content Include="Content\Common\static-files\loss-control\spanish\Reporte_las_situaciones_que_comprometan_la_seguridad.pdf" />
+    <Content Include="Content\Common\static-files\loss-control\spanish\Salmonella_Que_es_la_salmonella_y_como_debe_evitarse.pdf" />
+    <Content Include="Content\Common\static-files\loss-control\spanish\Seguridad_al_cocinar_y_al_utilizar_estufas.pdf" />
+    <Content Include="Content\Common\static-files\loss-control\spanish\Sugerencias_para_fomentar_buena_higiene.pdf" />
+    <Content Include="Content\Common\static-files\loss-control\spanish\Usted_puede_evitar_los_robos_cometidos_por_los_empleados.pdf" />
+    <Content Include="Content\Common\static-files\loss-control\spanish\Usted_puede_evitar_resbalones_tropiezos_y_caidas.pdf" />
+    <Content Include="Content\Common\static-files\loss-control\spanish\Ejercicios_para_la_espalda_1.pdf" />
+    <Content Include="Content\Common\static-files\loss-control\spanish\Ejercicios_para_la_espalda_2.pdf" />
+    <Content Include="Content\Common\static-files\loss-control\spanish\Sabe_donde_esta_el_extinguidor_1.pdf" />
+    <Content Include="Content\Common\static-files\loss-control\spanish\Sabe_donde_esta_el_extinguidor_2.pdf" />
+    <Content Include="Content\Common\static-files\loss-control\spanish\Tecnicas_basicas_para_levantar_cargas_1.pdf" />
+    <Content Include="Content\Common\static-files\loss-control\spanish\Tecnicas_basicas_para_levantar_cargas_2.pdf" />
+    <Content Include="Content\Common\static-files\loss-control\english\Bloodborne_Pathogens--HIV_and_Hepatitis_B.pdf" />
+    <Content Include="Content\Common\static-files\loss-control\english\Bloodborne_Pathogens--Universal_Precautions.pdf" />
+    <Content Include="Content\Common\static-files\loss-control\english\Blood_Alcohol_Concentration_and_You.pdf" />
+    <Content Include="Content\Common\static-files\loss-control\english\Call_for_help_before_you_try_to_put_it_out.pdf" />
+    <Content Include="Content\Common\static-files\loss-control\english\But_they_were_just_horsing_around.pdf" />
+    <Content Include="Content\Common\static-files\CA_MPN_Employee_Notification-English.pdf" />
+    <Content Include="Content\Common\static-files\CA_MPN_Employee_Notification-Spanish.pdf" />
+    <Content Include="Content\Common\static-files\CA_DWCForm7-anthem.pdf" />
+    <Content Include="Content\Common\static-files\Employee Notification of Rights Materials ENGLISH-CYB.pdf" />
+    <Content Include="Content\Common\static-files\Employee Notification of Rights Materials SPANISH-CYB.pdf" />
+    <Content Include="Content\Common\static-files\Storm Safety.pdf" />
+    <None Include="Properties\PublishProfiles\CDNPreProd.pubxml" />
+    <None Include="Properties\PublishProfiles\CDNProduction.pubxml" />
+    <Content Include="Content\Common\static-files\BOPClaimForms.zip" />
+    <None Include="Properties\PublishProfiles\CDNQA.pubxml" />
+    <None Include="Properties\PublishProfiles\CDNUAT.pubxml" />
+    <None Include="Web.PreProd.config">
+      <DependentUpon>Web.config</DependentUpon>
+    </None>
+    <None Include="Web.Production.config">
+      <DependentUpon>Web.config</DependentUpon>
+    </None>
+    <None Include="Web.QA.config">
+      <DependentUpon>Web.config</DependentUpon>
+    </None>
+    <None Include="Web.UAT.config">
+      <DependentUpon>Web.config</DependentUpon>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="App_Data\" />
+    <Folder Include="Configuration\" />
+    <Folder Include="Content\CA\images\" />
+    <Folder Include="Content\CA\themes\" />
+    <Folder Include="Content\Common\themes\_sharedFiles\" />
+    <Folder Include="Content\PolicyCentre\data\" />
+    <Folder Include="Content\PolicyCentre\resources\" />
+    <Folder Include="Content\PolicyCentre\scripts\filters\" />
+    <Folder Include="Content\PolicyCentre\static-files\" />
+    <Folder Include="Content\PolicyCentre\upload-documents\" />
+    <Folder Include="Content\WC\images\" />
+    <Folder Include="Content\WC\resources\" />
+    <Folder Include="Content\WC\scripts\filters\" />
+    <Folder Include="Models\" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Views\Home\Index.cshtml" />
+    <Content Include="Views\_ViewStart.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Content\Common\scripts\angular\angular-route.min.js.map" />
+    <Content Include="Content\Common\scripts\angular\angular.min.js.map" />
+    <Content Include="Content\Common\scripts\jquery-1.10.2.min.map" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\BHIC.Common\BHIC.Common.csproj">
+      <Project>{35bc1847-77a6-44db-bbeb-25a99a5f700e}</Project>
+      <Name>BHIC.Common</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <PropertyGroup>
+    <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
+    <VSToolsPath Condition="'$(VSToolsPath)' == ''">$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)</VSToolsPath>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'QA|AnyCPU'">
+    <OutputPath>bin\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <Optimize>true</Optimize>
+    <DebugType>pdbonly</DebugType>
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <ErrorReport>prompt</ErrorReport>
+    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'UAT|AnyCPU'">
+    <OutputPath>bin\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <Optimize>true</Optimize>
+    <DebugType>pdbonly</DebugType>
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <ErrorReport>prompt</ErrorReport>
+    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'UAT_Security|AnyCPU'">
+    <OutputPath>bin\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <Optimize>true</Optimize>
+    <DebugType>pdbonly</DebugType>
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <ErrorReport>prompt</ErrorReport>
+    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'PreProd|AnyCPU'">
+    <OutputPath>bin\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <Optimize>true</Optimize>
+    <DebugType>pdbonly</DebugType>
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <ErrorReport>prompt</ErrorReport>
+    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Production|AnyCPU'">
+    <OutputPath>bin\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <Optimize>true</Optimize>
+    <DebugType>pdbonly</DebugType>
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <ErrorReport>prompt</ErrorReport>
+    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'UAT_BOP|AnyCPU'">
+    <OutputPath>bin\</OutputPath>
+  </PropertyGroup>
+  <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
+  <Import Project="$(VSToolsPath)\WebApplications\Microsoft.WebApplication.targets" Condition="'$(VSToolsPath)' != ''" />
+  <Import Project="$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v10.0\WebApplications\Microsoft.WebApplication.targets" Condition="false" />
+  <Target Name="MvcBuildViews" AfterTargets="AfterBuild" Condition="'$(MvcBuildViews)'=='true'">
+    <AspNetCompiler VirtualPath="temp" PhysicalPath="$(WebProjectOutputDir)" />
+  </Target>
+  <ProjectExtensions>
+    <VisualStudio>
+      <FlavorProperties GUID="{349c5851-65df-11da-9384-00065b846f21}">
+        <WebProjectProperties>
+          <UseIIS>True</UseIIS>
+          <AutoAssignPort>True</AutoAssignPort>
+          <DevelopmentServerPort>52539</DevelopmentServerPort>
+          <DevelopmentServerVPath>/</DevelopmentServerVPath>
+          <IISUrl>http://localhost/BHIC.CDN</IISUrl>
+          <OverrideIISAppRootUrl>True</OverrideIISAppRootUrl>
+          <IISAppRootUrl>http://localhost/BHIC.CDN</IISAppRootUrl>
+          <NTLMAuthentication>False</NTLMAuthentication>
+          <UseCustomServer>False</UseCustomServer>
+          <CustomServerUrl>
+          </CustomServerUrl>
+          <SaveServerSettingsInUserFile>False</SaveServerSettingsInUserFile>
+        </WebProjectProperties>
+      </FlavorProperties>
+    </VisualStudio>
+  </ProjectExtensions>
+  <Import Project="$(SolutionDir)\.nuget\NuGet.targets" Condition="Exists('$(SolutionDir)\.nuget\NuGet.targets')" />
+  <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
+    <PropertyGroup>
+      <ErrorText>This project references NuGet package(s) that are missing on this computer. Enable NuGet Package Restore to download them.  For more information, see http://go.microsoft.com/fwlink/?LinkID=322105. The missing file is {0}.</ErrorText>
+    </PropertyGroup>
+    <Error Condition="!Exists('$(SolutionDir)\.nuget\NuGet.targets')" Text="$([System.String]::Format('$(ErrorText)', '$(SolutionDir)\.nuget\NuGet.targets'))" />
+  </Target>
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target> -->
+  <UsingTask TaskName="TransformXml" AssemblyFile="$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)\Web\Microsoft.Web.Publishing.Tasks.dll" />
+  <Target Name="AfterCompile" Condition="Exists('Web.$(Configuration).config')">
+    <!--Generate transformed app config in the intermediate directory-->
+    <TransformXml Source="Web.config" Destination="$(IntermediateOutputPath)$(TargetFileName).config" Transform="Web.$(Configuration).config" />
+    <!--Force build process to use the transformed configuration file from now on.-->
+    <ItemGroup>
+      <AppConfigWithTargetPath Remove="Web.config" />
+      <AppConfigWithTargetPath Include="$(IntermediateOutputPath)$(TargetFileName).config">
+        <TargetPath>$(TargetFileName).config</TargetPath>
+      </AppConfigWithTargetPath>
+    </ItemGroup>
+  </Target>
+  <!--Override After Publish to support ClickOnce AfterPublish. Target replaces the untransformed config file copied to the deployment directory with the transformed one.-->
+  <Target Name="AfterPublish">
+    <PropertyGroup>
+      <DeployedConfig>$(_DeploymentApplicationDir)$(TargetName)$(TargetExt).config$(_DeploymentFileMappingExtension)</DeployedConfig>
+    </PropertyGroup>
+    <!--Publish copies the untransformed App.config to deployment directory so overwrite it-->
+    <Copy Condition="Exists('$(DeployedConfig)')" SourceFiles="$(IntermediateOutputPath)$(TargetFileName).config" DestinationFiles="$(DeployedConfig)" />
+  </Target>
+</Project>

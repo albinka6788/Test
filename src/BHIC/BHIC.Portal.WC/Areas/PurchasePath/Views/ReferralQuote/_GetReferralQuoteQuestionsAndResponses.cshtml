@@ -1,0 +1,182 @@
+﻿@using BHIC.Domain.QuestionEngine;
+@using BHIC.ViewDomain;
+@using BHIC.Common.XmlHelper;
+@using BHIC.Common.Configuration;
+@model Tuple<CustomSession, QuestionsResponse, List<Question>>
+
+@{
+    var questionRules = Model.Item2.QuestionRules;
+    var questionsAndResponses = Model.Item2.Questions;
+    var questionsAndResponsesInHistory = Model.Item3;
+    var currentQuestionSetQuoteStatus = Model.Item2.QuoteStatus ?? string.Empty;
+
+    //Comment : Here question rule [] have values/count
+    bool hasQuestionRule = questionRules != null && questionRules.Count > 0 ? true : false;
+
+    //Comment : Here to get question rule
+    QuestionRule questionRule = null;
+
+    bool showCurrentQuestionSetLabel = false;
+}
+
+<style>
+    .questionText {
+        margin-top: 10px;
+        margin-bottom: 5px;
+        margin-right: 0;
+        margin-left: 0;
+        font-family: verdana;
+        font-size: 12px;
+        font-weight: bold;
+    }
+
+    .questionResponse {
+        margin-top: 0;
+        margin-bottom: 15px;
+        margin-right: 0;
+        margin-left: 0;
+        font-family: verdana;
+        font-size: 12px;
+    }
+</style>
+
+
+<table id="tblQuestionsAndResponsesInfo" cellpadding="0" cellspacing="0" style="border-collapse:collapse;width:100%;">
+    <tbody>
+        <tr>
+            <td style="border-collapse:collapse;padding:2px 0px;border-bottom:1px solid #ccc;" colspan="4">
+                <p style="margin:0px;font-size:13px; font-weight:bold;line-height:16px;color:#009483;font-family:verdana;margin-bottom:10px;margin-top:10px;">
+                    Questions / Responses
+                </p>
+            </td>
+        </tr>
+
+        @if (questionsAndResponses.ToList().Any())
+        {
+            bool hasNegativeRuleResponse;
+            ReferralHistory referralHisotry = new ReferralHistory();
+
+            //Comment : Here To make Prior-Reason QuestioSet (in Yellow highlight) which made ""Refer/Decline" on the QuestionPage in ReferralHistory
+            var sessionQuestionnaireVM = Model.Item1 != null ? Model.Item1.QuestionnaireVM : null;
+            if (sessionQuestionnaireVM != null)
+            {
+                referralHisotry = sessionQuestionnaireVM.ReferralHistory;
+
+                //Comment : Here if History have "MULTIPLE" referral reason in list then
+                if (referralHisotry.ReferralScenarioIdsList.Any() && referralHisotry.ReferralScenarioIdsList.Count > 1)
+                {
+                    //Comment : Here first try to figure-out that "Is that first reason was due to DECLINE in referral history"
+                    var firstReferralDeclineIds = referralHisotry.ReferralScenarioIdsList.First();
+
+                    //Referral reasons scenario ids (8, 12, 13) denotes that Referral/Decline happened because of -ve responded Questions
+                    if (firstReferralDeclineIds.Intersect(new List<int> { 8, 12, 13 }).Any())
+                    {
+                        foreach (var question in questionsAndResponsesInHistory.ToList())
+                        {
+                            //Reset everytime
+                            questionRule = null;
+                            hasNegativeRuleResponse = false;
+
+                            //Comment : Here only add QuestionAndResponse Html if "CorrectResponse='N'"
+                            hasNegativeRuleResponse = (question != null && !string.IsNullOrEmpty(question.CorrectResponse) && question.CorrectResponse.Equals("N", StringComparison.OrdinalIgnoreCase));
+
+                            if (hasNegativeRuleResponse)
+                            {
+                                //Add only once/first time during iteration
+                                if (!showCurrentQuestionSetLabel)
+                                {
+                                    <tr>
+                                        <td style="padding:2px 0px;" colspan="4">
+                                            <p style="margin:0px;font-size:11px; font-weight:bold;line-height:16px;color:#009483;font-family:verdana;margin-bottom:10px;margin-top:10px;">
+                                                Prior Question Set
+                                            </p>
+                                        </td>
+                                    </tr>
+                                }
+
+                                //Comment : Here if any one found then set this FLAG
+                                showCurrentQuestionSetLabel = true;
+
+                                <tr>
+                                    <td style="border-collapse:collapse;padding:2px 0px;" colspan="4">
+                                        <!-- Comment : Here if question rule found for this/iterating question then based on user-reponse value set RED & BOLD -->
+                                        <p style="color: #FAD000" class="questionText">
+                                            @Html.Raw(question.questionText ?? string.Empty)
+                                        </p>
+                                        <p style="color: #FAD000" class="questionResponse">
+                                            @(question.UserResponse ?? string.Empty)
+                                        </p>
+                                    </td>
+                                </tr>
+                            }
+                        }
+                    }
+                }
+            }
+
+            //Comment : Here this labrl has to shown only when "Prior Referral QuestionSet" condition/FLAG found
+            if (showCurrentQuestionSetLabel)
+            {
+                <tr>
+                    <td style="padding:2px 0px;" colspan="4">
+                        <p style="margin:0px;font-size:11px; font-weight:bold;line-height:16px;color:#009483;font-family:verdana;margin-bottom:10px;margin-top:10px;">
+                            Current Question Set
+                        </p>
+                    </td>
+                </tr>
+            }
+
+            <!-- Comment : Here show all question & answers/responses ROWs attempted by user on questionnaire page -->
+            foreach (var question in questionsAndResponses.ToList())
+            {
+                //Reset everytime
+                questionRule = null;
+                hasNegativeRuleResponse = false;
+
+                //Comment : Here check only when have set of rules returned in QuestioResponse object
+                //Comment : Here [GUIN-313-Prem] in case when referral is not due to "Guard API QuoteStatus" (currently submitted Questions POST API) then don't process QuestionRule Logic to highlight questions in "RED" (On basis of QuestionRules returned from POST API response)
+                //Comment : Here [GUIN-313-Prem] new implementation on 24.08.2016 in case when "Guard API QuoteStatus" (for currently submitted Questions POST API) returned "Quote" but one of the Question "No. Of Claims In Past Three Years" has Xceedance custom condition and that made this referral happen then "For this specific scenario check custom condition to highlight this Question in RED" 
+                if (hasQuestionRule & !currentQuestionSetQuoteStatus.Equals("Quote", StringComparison.OrdinalIgnoreCase))
+                {
+                    //questionRule = questionRules.Where(m => m.questionId.Equals(question.questionId)).First() ?? new QuestionRule();
+                    if (questionRules.Any(m => m.questionId.Equals(question.questionId)))
+                    {
+                        questionRule = questionRules.FirstOrDefault(m => m.questionId.Equals(question.questionId) && !string.IsNullOrEmpty(m.correctResponse) && m.correctResponse.Equals("N", StringComparison.OrdinalIgnoreCase));
+                    }
+                }
+                //Comment : Here currently have Atleast one referral reason
+                else if (question.questionId == ConfigCommonKeyReader.TotalNumbeOfClaimInPastThreeYears && 
+                    referralHisotry.ReferralScenarioIdsList.Any() && referralHisotry.ReferralScenarioIdsList.Count > 0)
+                {
+                    //Comment : Here first try to figure-out that "Is that 'No. Of Claims In Past Three Years' question is reason of REFERRAL in referral history" then
+                    var lastOrCurrentReferralDeclineIds = referralHisotry.ReferralScenarioIdsList.Last();
+
+                    //Referral reasons scenario id (7) denotes that Referral/Decline happened because of -ve value responded in above mentioned Questions
+                    if (lastOrCurrentReferralDeclineIds.Contains(7))
+                    {
+                         //Comment : Here set some Flag/object property value for below code processing for all scenarios
+                        hasQuestionRule = true;
+                        questionRule = new QuestionRule() { correctResponse = "N" };
+                    }
+                }
+
+                <tr>
+                    <td style="border-collapse:collapse;padding:2px 0px;" colspan="4">
+                        @{
+                            hasNegativeRuleResponse = (hasQuestionRule && questionRule != null && !string.IsNullOrEmpty(questionRule.correctResponse));
+                        }
+
+                        <!-- Comment : Here if question rule found for this/iterating question then based on user-reponse value set RED & BOLD -->
+                        <p style="@(hasNegativeRuleResponse ? "color: red" : "color: #5c666f");" class="questionText">
+                            @Html.Raw(question.questionText ?? string.Empty)
+                        </p>
+                        <p style="@(hasNegativeRuleResponse ? "color: red" : "color: #5c666f");" class="questionResponse">
+                            @(question.UserResponse ?? string.Empty)
+                        </p>
+                    </td>
+                </tr>
+            }
+        }
+
+    </tbody>
+</table>

@@ -1,0 +1,75 @@
+﻿@using BHIC.Common.Html;
+<div>
+    <div class="alert alert-success info-panel" ng-if="successMessage">
+        <p class="text-bold alert-text">Thank you for initiating request for a Policy Change</p>
+        <p class="alert-text"> One of our customer representative will contact you shortly to provide assistance with the Policy Change process. </p>
+    </div>
+    <span class="error" ng-if="!status" ng-bind="errorMessage"></span>
+    <div class="row">
+        <div class="lg-col-12 md-col-12">
+            <form class="form-horizontal" ng-submit="requestPolicyChangeModel.$valid && submitModel();" name="requestPolicyChangeModel" onerrorfocus-form novalidate>
+
+                <div class="the-box box-no-heading">
+                    <div class=" form-group">
+                        <label class="lg-col-3 fulllabel">Effective Date</label>
+                        <div class="lg-col-9">
+                            <span class="error" ng-show="effectivedate.option.value == 'option1' && requestPolicyChangeModel.dtpicker.$error.required && submitted">
+                                Effective date is required.
+                            </span>
+                            <label class="radio" style="float:left;margin-top:18px;margin-bottom:10px;">
+                                <input type="radio" name="effectivedate" ng-model="effectivedate" ng-checked="effectivedate.value == 'option1'" ng-value='{ "desc":"" , "value":"option1" }' /> <span></span>
+                            </label>
+                            <div class="with-icon field-change-policy">
+
+                                <input type="text"
+                                       id="dtpicker"
+                                       name="dtpicker"
+                                       class="input-group-input field radioTxtFeild datepicker field-sm"
+                                       date-control
+                                       startdate="{{minDate}}"
+                                       enddate="{{maxDate}}"
+                                       ng-model="selectedDate"
+                                       format="mm/dd/yy"
+                                       date-parser="MM/dd/yyyy"
+                                       placeholder="mm/dd/yyyy"
+                                       ng-required="effectivedate.option.value == 'option1'"
+                                       ng-disabled="effectivedate.value == 'option2' || effectivedate.value == 'option3' "
+                                       changepolicy="true" />
+                                <span class="icon-calendar"></span>
+                            </div>
+                            <label class="radio extraMarginRow" style="margin-top:15px;">
+                                <input type="radio" name="effectivedate" ng-model="effectivedate" ng-checked="effectivedate.value == 'option2'" ng-value='{ "desc":"As soon as possible" , "value":"option2" }'> <span></span> As soon as possible
+                            </label>
+                            <label class="radio extraMarginRow">
+                                <input type="radio" name="effectivedate" ng-model="effectivedate" ng-checked="effectivedate.value == 'option3'" ng-value='{ "desc":"Not sure" , "value":"option3" }'> <span></span> Not Sure
+                            </label>
+                            <div ng-if="effectivedate.value == 'option1'">
+                                <span class="error" ng-show="(!requestPolicyChangeModel.dtpicker.$error.required && requestPolicyChangeModel.dtpicker.$error.invalidFormat)">Date format is not valid</span>
+                                <span class="error" ng-if="(!requestPolicyChangeModel.dtpicker.$pristine || submitted) &&  requestPolicyChangeModel.dtpicker.$error.invalidRange"> Date should be between {{minDate}} and {{maxDate}}</span>
+                                <span class="error" ng-if=" submitted && requestPolicyChangeModel.dtpicker.$error.required">Date is not selected</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="lg-col-3 fulllabel">Type of Change</label>
+                        <div class="lg-col-9">
+                            <select class="dk field-lg field" data-ng-model="selectedItem" ng-options="industry.value for industry in changeOption"></select>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="lg-col-3 fulllabel">Add Description</label>
+                        <div class="lg-col-9">
+                            <textarea ng-model="description" class="field field-lg" name="descriptionModel" maxlength="250" required ng-model-options="{updateOn:'blur focusout'}"></textarea>
+                            <span class="error" ng-show='requestPolicyChangeModel.descriptionModel.$error.required && (submitted || !requestPolicyChangeModel.descriptionModel.$pristine)'>
+                                Description is required.
+                            </span>
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group right">
+                    <button class="btn btn-primary" ng-click="submitted=true">Submit</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>

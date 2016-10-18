@@ -1,0 +1,2 @@
+alter table PolicyPaymentDetail drop column CreditCardNumber
+alter table PolicyPaymentDetail drop column CardExpiryDate

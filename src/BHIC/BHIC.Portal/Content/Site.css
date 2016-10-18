@@ -1,0 +1,189 @@
+﻿body {
+    padding-top: 50px;
+    padding-bottom: 20px;
+}
+
+/* Set padding to keep content from hitting the edges */
+.body-content {
+    padding-left: 15px;
+    padding-right: 15px;
+}
+
+/* Set width on the form input elements since they're 100% wide by default */
+input,
+select,
+textarea {
+    max-width: 280px;
+}
+
+/* styles for validation helpers */
+.field-validation-error {
+    color: #b94a48;
+}
+
+.field-validation-valid {
+    display: none;
+}
+
+input.input-validation-error {
+    border: 1px solid #b94a48;
+}
+
+input[type="checkbox"].input-validation-error {
+    border: 0 none;
+}
+
+.validation-summary-errors {
+    color: #b94a48;
+}
+
+.validation-summary-valid {
+    display: none;
+}
+
+/* New styles added */
+    hr 
+    {
+        background-color: #cabeac;
+        height: 1px;
+    }
+
+    img 
+    {
+        border: 0 none;
+        margin: 0;
+        padding: 0;
+    }
+
+    input[type="text"], input[type="number"], input[type="date"], input[type="password"], select, textarea ,input[type="email"]
+    {
+        border: 1px solid #e3e3e3;
+        border-radius: 3.5px;
+        color: #555;
+        padding: 5px;
+    }
+
+    input[type="text"]:focus, input[type="number"]:focus, input[type="date"]:focus, input[type="password"]:focus, select:focus, textarea 
+    {
+        border: 1px solid #ffe6b2;
+        box-shadow: 0 0 5px #ffc299;
+        color: #231f20;
+    }
+
+    .panel 
+    {
+        background-color: #fff;
+        border: 1px solid transparent;
+        border-radius: 4px;
+        box-shadow: 0 1px 1px rgba(0, 0, 0, 0.05);
+        margin-bottom: 20px;
+    }
+
+    .panel-body 
+    {
+        padding: 15px;
+    }
+
+    button, input[type="submit"], .dsbutton 
+    {
+        background-color: #e3b956 !important;
+        border: 1px solid #ffe6b2;
+        border-radius: 5px;
+        box-sizing: border-box;
+        color: #fff !important;
+        cursor: pointer;
+        font-size: 14px;
+        line-height: normal !important;
+        padding: 4px 8px;
+        text-transform: uppercase;
+    }
+
+    button.ds-button-activecommand, input.ds-button-activecommand[type="submit"], .dsbutton.ds-button-activecommand 
+    {
+        background-color: #eb502d !important;
+        border-color: #f28a73;
+    }
+    
+    .ui-slider .ui-widget-header 
+    {
+        background: #eb502d none repeat-x scroll 50% 50%;
+        border: 1px solid #f28a73;
+        color: #231f20;
+        font-weight: bold;
+    }
+    /*    
+    .ui-widget-header a 
+    {
+        color: #231f20;
+    }
+    .ui-slider
+    {
+        position: relative;
+        text-align: left;
+    }
+    .ui-slider .ui-slider-handle
+    {
+        cursor: default;
+        height: 1.2em;
+        position: absolute;
+        width: 1.2em;
+        z-index: 2;
+    }
+    .ui-slider .ui-slider-range
+    {
+        background-position: 0 0;
+        border: 0 none;
+        display: block;
+        font-size: 0.7em;
+        position: absolute;
+        z-index: 1;
+    }
+    .ui-slider.ui-state-disabled .ui-slider-handle, .ui-slider.ui-state-disabled .ui-slider-range {
+        filter: inherit;
+    }
+    .ui-slider-horizontal
+    {
+        height: 0.8em;
+    }
+    .ui-slider-horizontal .ui-slider-handle
+    {
+        margin-left: -0.6em;
+        top: -0.3em;
+    }
+    .ui-slider-horizontal .ui-slider-range
+    {
+        height: 100%;
+        top: 0;
+    }
+    .ui-slider-horizontal .ui-slider-range-min
+    {
+        left: 0;
+    }
+    .ui-slider-horizontal .ui-slider-range-max
+    {
+        right: 0;
+    }
+    .ui-slider-vertical
+    {
+        height: 100px;
+        width: 0.8em;
+    }
+    .ui-slider-vertical .ui-slider-handle
+    {
+        left: -0.3em;
+        margin-bottom: -0.6em;
+        margin-left: 0;
+    }
+    .ui-slider-vertical .ui-slider-range
+    {
+        left: 0;
+        width: 100%;
+    }
+    .ui-slider-vertical .ui-slider-range-min
+    {
+        bottom: 0;
+    }
+    .ui-slider-vertical .ui-slider-range-max
+    {
+        top: 0;
+    }*/

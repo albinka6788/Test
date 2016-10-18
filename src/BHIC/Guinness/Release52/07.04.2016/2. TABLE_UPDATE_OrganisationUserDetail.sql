@@ -1,0 +1,1 @@
+UPDATE [dbo].[OrganisationUserDetail] SET IsSaveForLaterMailSent=1

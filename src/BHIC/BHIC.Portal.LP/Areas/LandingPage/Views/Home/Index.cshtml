@@ -1,0 +1,85 @@
+﻿@model BHIC.Portal.LP.Areas.LandingPage.Models.HomeViewModel
+@{
+    ViewBag.Title = "Home";
+    Layout = "~/Areas/LandingPage/Views/Shared/_Layout.cshtml";
+}
+<br />
+@using (Html.BeginForm("Index", "Home", new { area = "LandingPage" }))
+{
+    @Html.ValidationSummary(true)
+    @Html.HiddenFor(model => model.landingPageTransaction.Id)
+    <div class="row">
+        <div class="col-lg-12">
+            <div class="well bs-component">
+                <form class="form-horizontal">
+                    <fieldset>
+                        <legend>Landing Page</legend>
+                        <div class="form-group">
+                            @Html.LabelFor(model => model.landingPageTransaction.lob, new { @class = "control-label col-md-2" })
+                            <div class="col-lg-10">
+                                @Html.DropDownListFor(m => m.landingPageTransaction.lob, new SelectList(Model.masterCollection.Lob, "Value", "Text"), "Select LOB", new { @class = "form-control" })
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            @Html.LabelFor(model => model.landingPageTransaction.State, new { @class = "control-label col-md-2" })
+                            <div class="col-lg-10">
+                                @Html.DropDownListFor(m => m.landingPageTransaction.State, new SelectList(Model.masterCollection.State, "Value", "Text"), "Select State", new { @class = "form-control" })
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            @Html.LabelFor(model => model.landingPageTransaction.Comment, new { @class = "control-label col-md-2" })
+                            <div class="col-lg-10">
+                                @Html.TextAreaFor(m => m.landingPageTransaction.Comment, new { @class = "form-control", @placeholder = "Business Tagline" })
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            @Html.LabelFor(model => model.landingPageTransaction.logo, new { @class = "control-label col-md-2" })
+                            <div class="col-lg-10">
+                                @Html.DropDownListFor(m => m.landingPageTransaction.logo, new SelectList(Model.masterCollection.Logo, "Value", "Text"), "Select Logo", new { @class = "form-control" })
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            @Html.LabelFor(model => model.landingPageTransaction.MainImage, new { @class = "control-label col-md-2" })
+                            <div class="col-lg-10">
+                                @Html.DropDownListFor(m => m.landingPageTransaction.MainImage, new SelectList(Model.masterCollection.MainImage, "Value", "Text"), "Select Main Image", new { @class = "form-control" })
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <div class="col-lg-10 col-lg-offset-2">
+                                <button type="submit" name="submitButton" value="Generate" class="btn btn-primary">Genrate Landing Page</button>
+                                <button type="submit" name="submitButton" value="Preview" class="btn btn-primary">Preview Landing Page</button>
+                            </div>
+                        </div>
+                    </fieldset>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal">
+        <div class="modal-dialog" id="dialog1">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&close;</button>
+                    <h4 class="modal-title">Modal title</h4>
+                </div>
+                <div class="modal-body">
+                    <p>One fine body…</p>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                    <button type="button" class="btn btn-primary">Save changes</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script type="text/javascript">
+        $(document).ready(function () {
+            //alert('@ViewBag.successMessage');
+            if ('@ViewBag.successMessage' != "") {
+                $('#dialog1').dialog("open");
+            }
+        });
+    </script>
+}

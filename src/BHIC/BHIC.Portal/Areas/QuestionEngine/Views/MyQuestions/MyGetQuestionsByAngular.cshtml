@@ -1,0 +1,45 @@
+﻿
+@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<!DOCTYPE html>
+<html ng-app="questionEngineApp" ng-controller="questionCtrl">
+<head>
+    <meta name="viewport" content="width=device-width" />
+
+    <!-- Comment : Here ng-bind => {this directive binds the value of the input field to the application variable name.} -->
+    <title ng-bind="ModuleTitle"></title>
+</head>
+<body>
+
+    <!-- Comment : Here ng-model => {this directive binds the value of the input field to the application variable name.} -->
+    <input type="text" ng-model="model.MsgAngular" style="display:none" />
+
+    <h3>{{model.MsgAngular}}</h3><br />
+
+    <!-- Comment : Here some routing to QuestionEngine module QuestionController -->
+    <div style="width:450px;background-color:gray;font-weight:bold;color:#fff;margin-bottom:10px">
+        Below links will execute action through angular routing
+    </div>
+    <ul>
+        <li><a href="#/QuestionEngine/GetQuestions">Default Questions</a></li>
+        <li><a href="#/QuestionEngine/GetQuestions/1">Get Question Variant 1</a></li>
+        <li><a href="#/QuestionEngine/GetQuestions/2">Get Question Variant 2</a></li>
+        <li><a href="#/QuestionEngine/GetQuestions/3">Get Question Variant 3</a></li>
+    </ul>
+
+    <!-- Comment : Here container div to our landing page(To show content from routed controller action ResultView) -->
+    <div ng-view></div>
+
+    <!-- Comment : Here Include angular CDN library -->
+    @*<script src="https://code.angularjs.org/1.3.13/angular.js"></script>*@
+    <script src="~/Scripts/angular/angular.js"></script>
+    <script src="~/Scripts/angular/angular-route.js"></script>
+
+    <!-- Comment : Here Include our custome angular js files/dir script bundle on page -->
+    <script src="~/Scripts/controllers/questionsCtrl.js"></script>      <!-- Comment : Here must include/load controller Js before angularApp js callled/loaded -->
+    <script src="~/Scripts/applications/questionEngineApp.js"></script>
+
+</body>
+</html>

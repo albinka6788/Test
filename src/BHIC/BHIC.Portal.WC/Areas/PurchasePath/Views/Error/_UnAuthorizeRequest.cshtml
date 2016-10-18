@@ -1,0 +1,43 @@
+﻿@model BHIC.ViewDomain.UnAurhorizeRequestViewModel
+@using BHIC.Common.XmlHelper;
+@using BHIC.Common.Configuration;
+@if (!String.IsNullOrWhiteSpace(ConfigCommonKeyReader.InspectletWid))
+{
+    <script type="text/javascript">
+        var inspectletWid = '@ConfigCommonKeyReader.InspectletWid';
+        var inspectletQuoteid = '@BHIC.Common.Quote.QuoteCookieHelper.Cookie_GetQuoteId(new HttpContextWrapper(HttpContext.Current))'
+        var inspectletSessionid = '@Session.SessionID'
+    </script>
+    <script src="@CDN.Path/Content/Common/scripts/inspectlet.js?v=@ConfigCommonKeyReader.CdnVersion"></script>
+}
+<section class="progress-bar bg-blue">
+    <div class="container">
+        <ul class="steps clear">
+            <li class="step1">Business Information</li>
+            <li class="step2">Your Quote</li>
+            <li class="step3">Contact Information</li>
+            <li class="step4">Buy</li>
+        </ul>
+    </div>
+</section>
+<section class="page-content">
+    @*@Html.AntiForgeryToken()*@
+    <div class="container">
+        <div class="row">
+            <div class="lg-col-8">
+                <div class="content">
+                    <h1 class="text-bold">Un-Authorized Request</h1>
+                    <div class="alert alert-warning" style="color:#000">
+                        <p>
+                            @Model.ErrorMessage
+                        </p>
+                    </div>
+                    <br />
+                    <br />
+                    <br />
+                    <br />
+                </div>
+            </div>
+        </div>
+    </div>
+</section>

@@ -1,0 +1,115 @@
+﻿@using BHIC.Common.Html;
+@using BHIC.Common.XmlHelper;
+@using BHIC.Common.Configuration;
+
+@if (!String.IsNullOrWhiteSpace(ConfigCommonKeyReader.InspectletWid))
+{
+    <script type="text/javascript">
+        var inspectletWid = '@ConfigCommonKeyReader.InspectletWid';
+        var resetSession = false;
+        var inspectletQuoteid = '@BHIC.Common.Quote.QuoteCookieHelper.Cookie_GetQuoteId(new HttpContextWrapper(HttpContext.Current))'
+        var inspectletSessionid = '@Session.SessionID'
+        var googleAdId = '@Session["googleAdId"]';
+        window.recordSession(inspectletWid, inspectletQuoteid, inspectletSessionid, resetSession, googleAdId)
+    </script>
+}
+
+@{
+    <script type="text/javascript">
+        var enableBOP = '@ConfigCommonKeyReader.EnableBOP';
+        var enableCA = '@ConfigCommonKeyReader.EnableCommercialAuto';
+    </script>
+}
+<style>
+    [ng\:cloak], [ng-cloak], [data-ng-cloak], [x-ng-cloak], .ng-cloak, .x-ng-cloak {
+        display: none !important;
+    }
+</style>
+<div class="container">
+    <div class="row">
+        <div class="lg-col-6 lg-pull-right">
+            <div class="tagline sm-center md-center owl-carousel">
+                <div>
+                    <h1>Insurance for your Business with <strong>Maximum Control</strong> and <strong>Minimum Hassle</strong>.</h1>
+                </div>
+                <div>
+                    <h1>Protect your Business with an <strong>A++ financial strength</strong> insurance company.</h1>
+                </div>
+                <div>
+                    <h1>An <strong>easy</strong>, <strong>reliable</strong>, and <strong>quick</strong> way to Cover Your Business.</h1>
+                </div>
+            </div>
+        </div>
+        <div class="lg-col-5">
+            <div class="cta md-center neon-glow">
+                <div class="cta-inner">
+                    <h3 class="h4">Get a Quote</h3>
+                    <form name="landingForm" ng-submit="landingForm.$valid && landingModel.isValidLob && !isComingSoonProduct && submitModel() ;" novalidate>
+                        @Html.AntiForgeryToken()
+                        <div class="form-group with-icon relative">
+                            <label for="txtZipCode" class="enterZipCode">Enter your zip code</label>
+                            <input id="txtZipCode" type="text" class="field marker" name="zip" ng-model="landingModel.zip" autocomplete="off"
+                                   ng-minlength="5" maxlength="5" validate-zip required ng-change="submitted=false;isComingSoonProduct=false;" />
+                            <span class="icon-marker"></span>
+
+                            <div class="error" data-ng-cloak=" ">
+                                <span class="error" ng-show="((landingForm.zip.$invalid && !landingForm.zip.$pristine && landingForm.zip.$error.invalidZip)|| (landingForm.zip.$invalid && submitted))">Please enter a valid Zip Code to get a quote</span>
+                            </div>
+                        </div>
+                        <div class="relative form-group" ng-show="landingModel.isStateVisible" data-ng-cloak=" ">
+                            <select class="field" ng-model="selectedItem" name="state" ng-options="county.StateCode for county in landingModel.county" ng-change="changeState(); submitted=false" required>
+                                <option value="">Select State</option>
+                            </select>
+                            <div class="error" data-ng-cloak=" ">
+                                <span class="error" data-ng-show="landingForm.state.$invalid && submitted">Invalid State</span>
+                            </div>
+                        </div>
+                        <p class="text-teal text-big {{landingModel.hideElement}}" data-ng-cloak=" ">Pick a Product to Continue</p>
+                        <div class="products-list">
+                            <ul class="clear md-center lg-center no-style">
+                                <li ng-click="submitted=true">
+                                    <a href="javascript:void(0)" id="1" class="wc {{landingModel.availableWC}}" ng-click="validateLob(1);">
+                                        <svg xmlns="http://www.w3.org/2000/svg" version="1.1" x="0" y="0" viewBox="10.8 18.7 61.5 59" width="50" height="50" xml:space="preserve">
+                                        <path class="st0" d="M50.8 75c-0.2 0-0.5 0-0.7-0.1 -1.9-0.3-3.4-1.8-3.6-3.7 -0.2-1.6-0.4-3.3-0.7-4.9 -0.2-1.6-0.4-3.2-0.6-4.7 -2.2-0.6-4.7-1.4-7.5-2.3 -2.4-0.7-4.1-2.5-4.6-5.2 -0.5-2.2-0.8-4.5-1.2-6.7 -0.1-0.5-0.2-1-0.2-1.5 -0.5 0.6-0.9 1.1-1.4 1.7 -1.8 2.3-2.3 2.4-5 2.1l-8-0.9c-0.3-0.1-0.5 0-0.8 0 -0.2 0-0.4 0-0.6 0h-0.2c-1.4-0.3-2.6-1.4-2.9-2.9 -0.3-1.3 0.4-2.9 1.6-3.7 0.4-0.3 1.1-0.5 1.7-0.5h0.1c2.9 0.3 5.9 0.7 8.7 1.1 0.2 0 0.2 0 0.2 0s0.1 0 0.2-0.2c2.1-3 4.4-5.9 6.5-8.8 0.6-0.7 1.2-1.4 2-1.9 2.9-1.7 5.8-3.5 8.8-5.2 2.9-1.7 5.9-3.5 8.8-5.2 1.5-0.9 3.3-0.7 4.5 0.5 1.2 1.1 1.5 3 0.6 4.3 -0.5 0.8-1.5 1.5-1.8 1.6 -3.6 2.2-7.4 4.4-11.2 6.5l0 0 0 0c0.3 1.9 0.6 3.8 0.9 5.6 0.2 1.4 0.5 2.8 0.7 4.2 0.7-0.4 1.4-0.9 2.1-1.3 1.5-0.9 2.9-1.8 4.3-2.7 1.6-1 3.3-1.1 5.1-0.4 1.9 0.9 3.7 1.7 5.5 2.5 2.2 1 4.5 2 6.7 3 1.7 0.7 2.8 2.5 2.6 4.5 -0.1 1.9-1.6 3.5-3.4 3.7 -0.9 0.1-2.1 0-2.9-0.4 -3.7-1.6-7.1-3.1-10.4-4.6 -0.2-0.1-0.2-0.1-0.4 0 -1.5 1-3.1 1.9-4.7 2.9 -0.6 0.4-1.2 0.7-1.8 1.1 0.8 0.2 1.6 0.5 2.3 0.7 2 0.5 3.1 1.8 3.3 3.8 0.5 3.9 1 8 1.6 12 0.2 1.6-0.2 3.1-1.3 4.1C53.1 74.5 52 75 50.8 75zM33.6 44c0.2 1 0.4 2.1 0.5 3.1 0.4 2.2 0.7 4.5 1.2 6.7 0.4 1.8 1.4 3 3 3.4 2.9 0.9 5.4 1.7 7.6 2.3 1.1 0.2 1.4 1 1.5 1.7 0.2 1.7 0.4 3.3 0.7 4.9 0.2 1.6 0.5 3.3 0.7 4.9 0.1 0.9 0.8 1.6 1.7 1.7 0.7 0.1 1.4-0.1 1.9-0.6s0.8-1.3 0.6-2.2c-0.6-4-1.1-8.1-1.6-12 -0.1-1.1-0.6-1.7-1.7-2 -0.9-0.3-1.9-0.5-2.9-0.8 -0.6-0.2-1.2-0.4-1.8-0.6l-2.2-0.6 1.8-1.3c0.5-0.3 0.8-0.6 1.1-0.7 0.9-0.6 1.9-1.2 2.9-1.8 1.6-1 3.2-1.9 4.7-2.9 0.8-0.5 1.6-0.5 2.4-0.2 3.4 1.6 6.8 3.1 10.4 4.6 0.5 0.2 1.2 0.3 1.7 0.2 0.7-0.1 1.4-0.8 1.4-1.7 0.1-1.1-0.4-1.9-1.3-2.3 -2.2-1.1-4.5-2.1-6.7-3 -1.8-0.8-3.7-1.6-5.5-2.5 -1-0.4-1.9-0.4-2.9 0.2 -1.4 0.9-2.9 1.8-4.4 2.7 -0.9 0.5-1.8 1.1-2.7 1.6 -0.3 0.2-0.6 0.4-0.8 0.5l-0.1 0.1 -1.5 0.8v-1.5l-0.1-0.4c-0.3-1.9-0.6-3.8-0.9-5.6 -0.3-1.9-0.6-3.8-0.9-5.7 -0.3-1.5 0.8-2.1 1.1-2.3 3.8-2.1 7.6-4.3 11.2-6.5 0.4-0.3 0.8-0.6 1-0.9 0.3-0.4 0.1-1.1-0.3-1.5 -0.5-0.5-1.1-0.6-1.8-0.2 -3 1.8-5.9 3.5-8.9 5.2 -2.9 1.7-5.8 3.4-8.8 5.2 -0.5 0.3-1 0.8-1.4 1.4 -2.1 2.8-4.4 5.7-6.5 8.6 -0.6 0.9-1.4 1.3-2.6 1.2 -2.8-0.4-5.7-0.8-8.6-1.1 -0.2 0-0.4 0.1-0.4 0.1 -0.4 0.3-0.7 0.9-0.6 1.3 0.1 0.5 0.5 1 1 1.1 0.1 0 0.2 0 0.3 0 0.4 0 0.8-0.1 1.3 0l7.9 0.9c1.7 0.2 1.7 0.2 3-1.3 0.9-1.1 1.7-2.1 2.6-3.3l2.6-3.3V43C33.7 43.3 33.8 43.6 33.6 44zM29.5 35.1c-3.5 0-6.4-2.9-6.4-6.4 0-1.7 0.7-3.4 2-4.6 1.2-1.2 2.8-1.8 4.4-1.7l0 0c1.7 0 3.5 0.7 4.7 2 1.2 1.2 1.8 2.8 1.8 4.4C35.9 32.3 33 35.1 29.5 35.1zM29.3 24.6c-1 0-1.9 0.4-2.6 1.1 -0.8 0.8-1.3 1.9-1.3 3 0 2.3 1.8 4.2 4.2 4.2 2.3 0 4.2-1.8 4.2-4.1 0-1-0.4-2-1.1-2.8 -0.8-0.9-2-1.4-3.1-1.4C29.4 24.6 29.3 24.6 29.3 24.6z" />
+                                        <path class="st0" d="M45.7 75.6h-0.5c-3.8 0-7.3 0-11-0.1 -1.3-0.1-2.7-0.6-3.9-1.4 -1.7-1-2.3-2.9-1.6-4.9 0.7-1.7 2.2-2.7 4.1-2.7 0.7 0 1.7 0.1 2.6 0.5 1.8 1 3.6 2.1 5.3 3.1 1.7 1 3.5 2 5.2 3l0.6 0.3v0.7c0 0.3 0 0.8-0.4 1.2L45.7 75.6zM32.7 68.7c-0.7 0-1.5 0.2-1.9 1.3 -0.2 0.5-0.4 1.6 0.6 2.2 0.9 0.6 2.1 1 2.9 1 2.5 0.1 5 0.1 7.5 0.1 -0.8-0.4-1.5-0.9-2.3-1.3 -1.7-1-3.5-2-5.2-3C33.9 68.8 33.4 68.7 32.7 68.7z" />
+                                        </svg>
+                                        <span>Workers' Compensation</span>
+                                    </a>
+                                </li>
+                                <li ng-click="submitted=true">
+                                    <a href="javascript:void(0)" id="2" class="bop {{landingModel.availableBOP}}" ng-click="validateLob(2);">
+                                        <svg xmlns="http://www.w3.org/2000/svg" version="1.1" x="0" y="0" viewBox="10.8 21.7 56.5 51.7" width="50" height="50" xml:space="preserve">
+                                        <path class="st0" d="M52.6 71.3H42.3c-0.6 0-1.1-0.5-1.1-1.1V51.1c0-0.6 0.5-1.1 1.1-1.1h10.4c0.6 0 1.1 0.5 1.1 1.1v19.1C53.8 70.8 53.3 71.3 52.6 71.3zM43.3 69.1h8.1V52.2h-8.1C43.3 52.2 43.3 69.1 43.3 69.1zM59.7 71.2H18c-0.6 0-1.1-0.5-1.1-1.1V45.9c0-0.6 0.5-1.1 1.1-1.1s1.1 0.5 1.1 1.1V69h39.3V45.9c0-0.6 0.5-1.1 1.1-1.1s1.1 0.5 1.1 1.1v24.2C60.8 70.7 60.3 71.2 59.7 71.2zM37 62.6H24.9c-0.6 0-1.1-0.5-1.1-1.1V51.1c0-0.6 0.5-1.1 1.1-1.1H37c0.6 0 1.1 0.5 1.1 1.1v10.4C38.1 62.1 37.6 62.6 37 62.6zM26 60.4h9.8v-8.1H26V60.4zM58.3 47c-2.7 0-5.2-1.5-6.5-3.6C50.5 45.6 48 47 45.3 47s-5.2-1.5-6.5-3.6C37.5 45.6 35 47 32.3 47s-5.2-1.5-6.5-3.6C24.5 45.6 22 47 19.3 47c-4.2 0-7.6-3.4-7.6-7.6 0-0.2 0.1-0.4 0.1-0.6l8.1-14.3c0.2-0.4 0.6-0.6 1-0.6h35.7c0.4 0 0.8 0.2 1 0.6l8.2 14.3c0.1 0.2 0.1 0.4 0.1 0.6C65.9 43.6 62.5 47 58.3 47zM51.8 38.3c0.6 0 1.1 0.5 1.1 1.1 0 3 2.4 5.4 5.4 5.4 2.9 0 5.2-2.3 5.4-5.1L56 26.2H21.6L14 39.7c0.1 2.8 2.5 5.1 5.4 5.1 3 0 5.4-2.4 5.4-5.4 0-0.6 0.5-1.1 1.1-1.1s1.1 0.5 1.1 1.1c0 3 2.4 5.4 5.4 5.4s5.4-2.4 5.4-5.4c0-0.6 0.5-1.1 1.1-1.1s1.1 0.5 1.1 1.1c0 3 2.4 5.4 5.4 5.4s5.4-2.4 5.4-5.4C50.8 38.8 51.3 38.3 51.8 38.3zM63.9 40H13.6c-0.6 0-1.1-0.5-1.1-1.1s0.5-1.1 1.1-1.1h50.3c0.6 0 1.1 0.5 1.1 1.1S64.5 40 63.9 40zM38.8 40.5c-0.6 0-1.1-0.5-1.1-1.1V25.1c0-0.6 0.5-1.1 1.1-1.1s1.1 0.5 1.1 1.1v14.3C39.9 40 39.4 40.5 38.8 40.5zM25.8 40.5c-0.1 0-0.2 0-0.3 0 -0.6-0.2-0.9-0.8-0.8-1.4L29 24.8c0.2-0.6 0.8-0.9 1.4-0.8 0.6 0.2 0.9 0.8 0.8 1.4L27 39.7C26.7 40.2 26.3 40.5 25.8 40.5zM51.8 40.5c-0.5 0-0.9-0.3-1.1-0.8l-4.3-14.3c-0.2-0.6 0.2-1.2 0.8-1.4 0.6-0.2 1.2 0.2 1.4 0.8l4.3 14.3c0.2 0.6-0.2 1.2-0.8 1.4C51.9 40.5 51.8 40.5 51.8 40.5z" />
+                                        </svg>
+                                        <span>Business Owner's Policy</span>
+                                    </a>
+                                </li>
+                                <li ng-click="submitted=true">
+                                    <a href="javascript:void(0)" id="3" class="{{landingModel.availableCA}}" ng-click="validateLob(3);">
+                                        <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" version="1.1" id="Layer_1" x="0px" y="0px" viewBox="-17 17.7 60.8 66.8" width="50" height="50" xml:space="preserve" enable-background="new -17 17.7 60.8 66.8">
+                                        <path class="st0" d="M-14.2 73.7c-0.1 0-0.3 0-0.4-0.1 -0.6-0.2-0.9-0.9-0.7-1.4L3.8 19.4c0.2-0.6 0.9-0.9 1.4-0.7 0.6 0.2 0.9 0.9 0.7 1.4l-19.1 52.8C-13.3 73.4-13.8 73.7-14.2 73.7z" />
+                                        <path class="st0" d="M41 73.6c-0.5 0-0.9-0.3-1.1-0.7L20.8 20.2c-0.2-0.6 0.1-1.2 0.7-1.4 0.6-0.2 1.2 0.1 1.4 0.7l19.2 52.7c0.2 0.6-0.1 1.2-0.7 1.4C41.3 73.6 41.2 73.6 41 73.6z" />
+                                        <rect x="12.2" y="26.6" class="st0" width="2.3" height="8.5" />
+                                        <rect x="12.2" y="42.4" class="st0" width="2.3" height="8.5" />
+                                        <rect x="12.2" y="58.2" class="st0" width="2.3" height="8.5" />
+                                        <rect x="12.2" y="73.9" class="st0" width="2.3" height="8.5" />
+                                        </svg>
+                                        <span>Commercial Auto</span>
+                                    </a>
+                                </li>
+                            </ul>
+                            <div class="error" data-ng-cloak=" ">
+                                <span class="error" data-ng-show="!landingForm.zip.$invalid && !landingModel.isValidLob && submitted">{{landingModel.lobErrorMsg}}</span>
+                            </div>
+                            @*<div class="error" data-ng-cloak=" " ng-init="setProductAvailability('@(ConfigCommonKeyReader.EnableBOP.ToString().ToLower())','@(ConfigCommonKeyReader.EnableCommercialAuto.ToString().ToLower())')">
+                                    <span class="error" data-ng-show="!landingForm.zip.$invalid && !landingModel.isValidLob && submitted">Coming Soon.</span>
+                                </div>*@
+                        </div>
+                        <p class="{{landingModel.hideElement}} mb0" data-ng-cloak=" "><a href="/PurchasePath/Home/SiteContents/products" class="td-underline">Not sure which product is right for you?</a></p>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="scroll-down"></div>

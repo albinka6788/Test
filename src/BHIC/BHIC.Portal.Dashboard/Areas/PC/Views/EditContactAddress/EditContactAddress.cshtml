@@ -1,0 +1,107 @@
+﻿@using BHIC.Common.Html;
+@using BHIC.Common.Configuration;
+@using BHIC.Common.XmlHelper;
+
+<div ng-init="editContactAddressController">
+    <div class="row" id="contactAdd">
+        <div class="alert alert-danger info-panel" ng-if="errormsg">
+            <p class="text-bold alert-text">{{errormsg}} </p>
+        </div>
+        <div class="alert alert-danger info-panel" ng-if="hasErrorMain">
+            <p class="text-bold alert-text">
+                This option is currently not available for your policy. Feel free to call us at
+                <a href="" class="sysPhoneAnchor" style="white-space:nowrap;"></a> if you have any questions.
+                <a href='@string.Concat(HttpContext.Current.Request.Url.Scheme, "://",
+                            HttpContext.Current.Request.Url.Host,"/" ,ConfigCommonKeyReader.BaseUrlPath)'>Click here</a> to go back to policy dashboard.
+
+        </div>
+        <div class="lg-col-12 md-col-12">
+            <div class="alert alert-success info-panel" ng-if="changeNotification">
+                <p class="alert-text"> We have received your request for change of address. Someone from Customer Service will be in touch soon if we need any additional information. If you want to speak to someone about your change of address urgently, please call <a href="" class="sysPhoneAnchor"></a> or send an email to <a href="mailto:CustomerService@CoverYourBusiness.com">CustomerService@CoverYourBusiness.com</a> </p>
+                <p class="alert-text"> Thank You! </p>
+            </div>
+            <h3>Policy Number <span ng-bind="PolicyCode"></span></h3>
+            <form name="contactInfoAddressForm" data-ng-submit="contactInfoAddressForm.$valid && updateContactAddressInfo();" onerrorfocus-form novalidate>                
+                <div class="the-box form-middle box-no-heading">
+                    <div class="form-group">
+                        <span class="error">{{checkboxerror}}</span>
+                        <p class="mb1"> I want to change the following address: </p>
+                        <div class="radio-group">
+                            <label class="radio mb0">
+                                <input ng-change="getSelectedAddress(value)" value="P" ng-model="value" type="radio" name="aep"><span></span> Physical Address
+                            </label>
+                            <label class="radio mb0">
+                                <input ng-change="getSelectedAddress(value)" value="M" ng-model="value" type="radio" name="aep"><span></span> Mailing Address
+                            </label>
+                            <label class="radio mb0">
+                                <input ng-change="getSelectedAddress(value)" value="B" ng-model="value" type="radio" name="aep"><span></span> Billing Address
+                            </label>
+                            <label class="radio mb0">
+                                <input ng-change="getSelectedAddress(value)" value="A" ng-model="value" type="radio" name="aep"><span></span> All
+                            </label>
+                        </div>
+                    </div>
+                </div>
+                <h3>This is your existing Address for this policy. Please provide the new Address below:</h3>
+                <div class="the-box form-container">
+                    <div class="row">
+                        <div class="md-col-12 lg-col-12 form-box-1 form-horizontal">
+                            <div class="form-group">
+                                <label class="lg-col-3 fulllabel">Address 1</label>
+                                <div class="lg-col-9">
+                                    <input type="text" class="field field-lg" ng-model="address1" name="address1Model" maxlength="50" required placeholder="Address 1" ng-model-options="{updateOn:'blur focusout'}">
+                                    <span class="error" ng-show="contactInfoAddressForm.address1Model.$error.required && (submitted|| !contactInfoAddressForm.address1Model.$pristine)">Address is required.</span>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="lg-col-3 fulllabel">Address 2</label>
+                                <div class="lg-col-9">
+                                    <input type="text" class="field field-lg" ng-model="address2" name="address2Model" maxlength="50" placeholder="Address 2">
+                                    @*<span class="error" ng-show="contactInfoAddressForm.address2Model.$error.required && submitted">Additional Address is required!</span>*@
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="lg-col-3 fulllabel">City</label>
+                                <div class="lg-col-9">
+                                    <input type="text" class="field field-sm" ng-model="city" name="cityModel" maxlength="30" required placeholder="City" ng-model-options="{updateOn:'blur focusout'}">
+                                    <span class="error" ng-show="contactInfoAddressForm.cityModel.$error.required && (submitted|| !contactInfoAddressForm.cityModel.$pristine)">City is required.</span>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="lg-col-3 fulllabel">State</label>
+                                <div class="lg-col-9">
+                                    <input type="text" class="field field-sm" ng-model="state" name="stateModel" minlength="2" maxlength="2" required placeholder="State" ng-pattern="/^[a-zA-Z\s]*$/" ng-model-options="{updateOn:'blur focusout'}">
+                                    <span class="error" ng-show="contactInfoAddressForm.stateModel.$error.required && (submitted|| !contactInfoAddressForm.stateModel.$pristine)">State is required.</span>
+                                    <span class="error" ng-show="contactInfoAddressForm.stateModel.$error.pattern &&  !contactInfoAddressForm.stateModel.$pristine">Invalid State.</span>
+                                    <span class="error" ng-show="contactInfoAddressForm.stateModel.$error.minlength &&  !contactInfoAddressForm.stateModel.$pristine">State should be minimum of 2 characters. </span>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="lg-col-3 fulllabel">Zip Code</label>
+                                <div class="lg-col-9">
+                                    <input type="text" class="field field-sm" ng-model="zipCode" name="zipCodeModel" minlength="5" maxlength="5" ng-pattern="/^\d+$/" required placeholder="Zip Code" ng-model-options="{updateOn:'blur focusout'}">
+                                    <span class="error" ng-show="contactInfoAddressForm.zipCodeModel.$error.required && (submitted|| !contactInfoAddressForm.zipCodeModel.$pristine)">Zip Code is required.</span>
+                                    <span class="error" ng-show="contactInfoAddressForm.zipCodeModel.$error.pattern &&  !contactInfoAddressForm.zipCodeModel.$pristine">Invalid Zip Code.</span>
+                                    <span class="error" ng-show="contactInfoAddressForm.zipCodeModel.$error.minlength &&  !contactInfoAddressForm.zipCodeModel.$pristine">ZipCode should be minimum 5 Digits.</span>
+                                </div>
+                            </div>
+                            <hr>
+                            <div class="form-group">
+                                <label class="lg-col-3 fulllabel">Additional Instructions</label>
+                                <div class="lg-col-9">
+                                    <textarea class="field field-lg" ng-model="additional" name="additionalModel" maxlength="255" placeholder="Additional Instructions" ng-model-options="{updateOn:'blur focusout'}"></textarea>
+                                    @*<span class="error" ng-show="contactInfoAddressForm.additionalModel.$error.required && (submitted|| !contactInfoAddressForm.additionalModel.$pristine)">Additional Instructions are required.</span>*@
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group right">
+                    <button class="btn btn-primary" ng-click="submitted=true">Submit</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+</div>
+@CDN.RenderScripts("/bundles/scripts/common-system-variables")

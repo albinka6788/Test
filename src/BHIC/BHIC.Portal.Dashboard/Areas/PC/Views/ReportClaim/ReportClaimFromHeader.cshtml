@@ -1,0 +1,73 @@
+﻿@using BHIC.Common.Html;
+@using BHIC.Common.Configuration;
+@using BHIC.Common.XmlHelper;
+
+<div class="row" ng-init="loadUrl();">
+    <div class="alert alert-danger info-panel" ng-if="hasErrorMain">
+        <p class="text-bold alert-text">
+            This option is currently not available for your policy. Feel free to call us at
+            <a href="" class="sysPhoneAnchor" style="white-space:nowrap;"></a> if you have any questions.
+            <a href='@string.Concat(HttpContext.Current.Request.Url.Scheme, "://",
+                            HttpContext.Current.Request.Url.Host,"/" ,ConfigCommonKeyReader.BaseUrlPath)'>Click here</a> to go back to policy dashboard.
+
+    </div>
+    <div class="lg-col-7 md-col-12 form-horizontal">        
+        <form name="rptFrm" data-ng-submit="rptFrm.$valid && GoTo();" onerrorfocus-form novalidate="novalidate">
+            <div class="the-box box-no-heading">
+                <div class="form-group">
+                    <label class="lg-col-3 md-col-12 fulllabel left">Select Line of Business</label>
+                    <div class="lg-col-9 fulllabel">
+                        <select class="dk field-lg field" ng-model="lineType" name="lineTypeModel" ng-options="t.Type for t in drpTypeList" ng-change="FilterByLineOfBusiness()" required>
+                            <option value="" disabled="disabled">--- Select Line of Business ---</option>
+                        </select>
+                        <span class="error" ng-show="rptFrm.lineTypeModel.$error.required && submitted">Please select a line of business</span>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="lg-col-3 md-col-12 fulllabel left">Choose Policy</label>
+                    <div class="lg-col-9 fulllabel">
+                        <select class="dk field-lg field" name="policyTypeModel" ng-model="policyType" ng-options="p.PolicyCode for p in drpPolicyList" required>
+                            <option value="" disabled="disabled">--- Select Policy Code ---</option>
+                        </select>
+                        <span class="error" ng-show="rptFrm.policyTypeModel.$error.required && submitted">Please select a policy code.</span>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <div class="row">
+                        <div class="col-lg-12 right">
+                            <button ng-click="submitted=true" class="btn btn-primary">Submit</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </form>
+    </div>
+    <div class="lg-col-5 md-col-12">
+        <h3>Contact Information for Claims Support</h3>
+        <div class="the-box contact-info-box">
+            <div class="report-claim-box">
+                <p class="contactNo contact-phone">
+                    <span>
+                        <svg xmlns="http://www.w3.org/2000/svg" version="1.1" x="0" y="0" viewBox="-293 384 25 25" xml:space="preserve">
+<path class="stroke-teal" d="M-274 399.5c-0.4-0.3-1.5-0.6-2.4 0.5 -0.9 1.1-1.9 2.9-6-1.2 -4.1-4.1-2.3-5.1-1.2-6 1.1-0.9 0.8-2 0.5-2.4 -0.3-0.4-2.2-3.4-2.5-3.8 -0.3-0.5-0.8-1.3-1.8-1.1 -0.8 0.1-3.7 1.7-3.7 5s2.6 7.4 6.2 11c3.6 3.6 7.6 6.2 11 6.2 3.3 0 4.9-2.9 5-3.7 0.1-1-0.6-1.5-1.1-1.8C-270.6 401.7-273.5 399.8-274 399.5z"></path>
+</svg>
+                    </span> Toll Free: <a href="" class="mailingClaims_NewClaimPhone"> </a>
+                </p>
+                <p class="contactNo">
+                    <span>
+                        <svg xmlns="http://www.w3.org/2000/svg" version="1.1" x="0" y="0" viewBox="-293 384 25 25" xml:space="preserve">
+<path class="stroke-teal" d="M-283.6 402.3c0.2 0 0.6-0.3 0.5-0.8 -0.1-0.5-0.3-1.3 2-1.3 2.2 0 2 0.8 2 1.3 -0.1 0.5 0.3 0.7 0.5 0.8 0.2 0 1.5 0.3 1.7 0.4 0.2 0 0.6 0.1 0.8-0.2 0.2-0.2 0.6-1.5-0.4-2.4 -0.9-0.9-2.7-1.3-4.7-1.3 -2 0-3.8 0.4-4.7 1.3 -0.9 0.9-0.5 2.1-0.4 2.4 0.2 0.3 0.6 0.2 0.8 0.2C-285.1 402.6-283.8 402.3-283.6 402.3z"></path><rect x="-286.4" y="388.8" class="stroke-teal" width="10.6" height="7.4"></rect><line class="stroke-teal" x1="-284.2" y1="391.4" x2="-277.9" y2="391.4"></line><line class="stroke-teal" x1="-284.2" y1="393.9" x2="-277.9" y2="393.9"></line><path class="stroke-teal" d="M-274.5 404.9h-13.2c-1.1 0-2-0.9-2-2v-2.2c0-2.5 2-4.5 4.5-4.5h8.7c2.2 0 4.1 1.8 4.1 4.1v2.6C-272.5 404-273.4 404.9-274.5 404.9z"></path>
+</svg>
+                    </span> Fax: <a href="javascript:void(0);" ><span class="faxNumber_Claims"></span> </a>
+                </p>
+                <p class="contactNo">
+                    <span>
+                        <svg xmlns="http://www.w3.org/2000/svg" version="1.1" x="0" y="0" viewBox="-293 384 25 25" xml:space="preserve">
+<rect x="-291" y="390.4" class="stroke-teal" width="21.1" height="14.1"></rect><polyline class="stroke-teal" points="-291 390.4 -280.5 400.8 -269.9 390.4 "></polyline><line class="stroke-teal" x1="-276.9" y1="397.3" x2="-269.9" y2="404.5"></line><line class="stroke-teal" x1="-291" y1="404.5" x2="-284" y2="397.3"></line></svg>
+                    </span> <a href="mailto:Claims@CoverYourBusiness.com"> Claims@CoverYourBusiness.com </a>
+                </p>
+            </div>
+        </div><!-- /.contact-info-box-->
+    </div>
+</div>
+@CDN.RenderScripts("/bundles/scripts/common-system-variables")

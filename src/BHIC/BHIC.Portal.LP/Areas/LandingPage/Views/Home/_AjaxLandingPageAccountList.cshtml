@@ -1,0 +1,101 @@
+﻿@using MvcPaging
+@model BHIC.Portal.LP.Areas.LandingPage.Models.HomeViewModel
+
+@using (Html.BeginForm("LandingPageAccount", "Home", FormMethod.Post, new { id = "LandingPageAccount" }))
+{
+
+    @Html.HiddenFor(m => m.PageIndex)
+    @Html.HiddenFor(m => m.SelectedUser, new { @id = "SelectedUser" })
+
+    <div class="row_search">
+        <div class="relative">
+            @Html.TextBoxFor(m => m.SearchFilter, new { @class = "w250_res" })
+            <input type="submit" class="search" name="Search" id="btnsearch" value="Search" />
+        </div>
+
+    </div>
+
+    <table width="100%" border="0" cellpadding="0" cellspacing="0">
+        <thead>
+            <tr class="heading">
+                <th width="5%" align="center">Select</th>
+                <th width="20%" align="left" valign="top">Lob</th>
+                <th width="20%" align="left" valign="top">State</th>
+                <th width="20%" align="left" valign="top">TransactionCounter</th>
+                <th width="15%" align="left" valign="top">Created On</th>
+                <th width="20%" align="left" valign="top">Panding Page Url</th>
+            </tr>
+
+        </thead>
+        <tbody>
+            @if (Model.landingPageTransactionlist.Any())
+            {
+                foreach (var item in Model.landingPageTransactionlist)
+                {
+                    <tr>
+                        <td class="center">
+                            <input type="radio" name="radioOption" id=@item.Id value="radio">
+                        </td>
+                        <td>@item.lob</td>
+                        <td>@item.State</td>
+                        <td>@item.TransactionCounter</td>
+                        <td>@item.CreatedOn</td>
+                        <td>@Html.ActionLink("Click Here", "GetAd", "Home",new { area = "LandingPage" , @AdId = @item.TokenId },null)</td>
+                      
+
+                    </tr>
+                }
+
+                <tr>
+                    <td class="grey_bg" colspan="8">
+                        <div class="floatR" id="pagination">
+                            @Html.Raw(Ajax.Pager(
+                                new Options
+                                {
+                                    PageSize = Model.landingPageTransactionlist.PageSize,
+                                    TotalItemCount = Model.landingPageTransactionlist.TotalItemCount,
+                                    CurrentPage = Model.landingPageTransactionlist.PageNumber,
+                                    ItemTexts = new ItemTexts() { Next = "Next", Previous = "Previous", Page = "P" },
+                                    ItemIcon = new ItemIcon() { First = "icon-backward", Previous = "icon-chevron-left", Next = "icon-chevron-right", Last = "icon-forward" },
+                                    TooltipTitles = new TooltipTitles() { Next = "Next page", Previous = "Previous page", Page = "Page {0}." },
+                                    Size = Size.normal,
+                                    Alignment = Alignment.centered,
+                                    IsShowControls = true,
+                                    IsShowFirstLast = true,
+                                    CssClass = ""
+                                },
+                                new AjaxOptions
+                                {
+                                    UpdateTargetId = "grid-list",
+                                    OnBegin = "beginPaging",
+                                    OnSuccess = "successPaging",
+                                    OnFailure = "failurePaging"
+                                }, new { controller = "Hone", action = "LandingPageAccount", searchfilter = Model.SearchFilter }))
+
+                        </div>
+
+                    </td>
+                </tr>
+
+
+
+            }
+            else
+            {
+                <tr><td colspan="7"><div class="color_red bold size16">Records Not Found.</div></td></tr>
+            }
+
+        </tbody>
+    </table>
+    <span class="displayNone text-danger" id="span_SelectUserId"></span>
+    <div class="btns_container marT20">
+        <input type="submit" name="Edit" class="btn btn-default" id="btnEdit" value="Edit Patient" />
+    </div>
+
+}
+
+
+
+
+
+

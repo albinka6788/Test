@@ -1,0 +1,28 @@
+﻿@model System.Web.Mvc.HandleErrorInfo
+
+@{
+    ViewBag.Title = "Error";
+    Layout = "~/Areas/Landing/Views/Shared/_Layout.cshtml";
+}
+
+<div class="row">
+    <div class="col-lg-12">
+
+        @* **************************************** *@
+        @* friendly message to display re: unrecoverable processing error *@
+        @* **************************************** *@
+
+        <h2>We're currently unable to respond to your request - sorry!</h2>
+        <p>
+            We are aware of the issue, and are working to resolve it for you.
+        </p>
+        <p>
+            We apologize for the inconvenience.
+        </p>
+        <p>
+            Please try again later, or feel free to @Html.ActionLink("Start Over", "Index", "WcHome"), and try entering different values.
+        </p>
+
+    </div>
+</div>
+

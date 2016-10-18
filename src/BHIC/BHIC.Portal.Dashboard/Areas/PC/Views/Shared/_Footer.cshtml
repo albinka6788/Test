@@ -1,0 +1,37 @@
+﻿@using BHIC.Common.XmlHelper;
+
+@{
+    var appBaseUrl = string.Concat(ConfigCommonKeyReader.AppBaseUrl, HttpContext.Current.Request.Url.Host == "localhost" ? ConfigCommonKeyReader.WcBaseUrlPath : "");
+
+    <!-- Prepare SEO url by add trailing "/" during deployment and blank for localhost -->
+    var appendSlash = (appBaseUrl.EndsWith("/") ? string.Empty : "/");
+
+    <!-- GUIN-166: Albin - Prepare PP Base url -->
+    var WcAppBaseUrl = string.Concat(appBaseUrl, appendSlash);
+}
+
+<ul class="footerNavigation">
+    <li>
+        <a href='@string.Concat(WcAppBaseUrl, "privacy-policy")' target="_blank">Privacy Policy</a>
+    </li>
+
+    <li>
+        <a href='@string.Concat(WcAppBaseUrl, "terms-conditions")' target="_blank">Terms &amp; Conditions</a>
+    </li>
+
+    <li>
+        <a href='@string.Concat(WcAppBaseUrl, "other-disclosures")' target="_blank">Other Disclosures</a>
+    </li>
+    <li>
+        <a href='@string.Concat(WcAppBaseUrl, "resources")' target="_blank">Resources</a>
+    </li>
+    <li>
+        <a href='@string.Concat(WcAppBaseUrl, "loss-control")' target="_blank">Loss Control</a>
+    </li>
+</ul>
+
+
+<p class="copyright">
+    &copy; @DateTime.Now.Year <span class="sysCompany"></span> <br>
+    &copy; @DateTime.Now.Year <span class="sysCompanyNENATI20"></span>
+</p>

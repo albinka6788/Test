@@ -1,0 +1,85 @@
+﻿
+@{
+    ViewBag.Title = "Register";
+    Layout = "~/Areas/Account/Views/Shared/_Layout.cshtml";
+}
+
+<style type="text/css">
+    
+</style>
+<link href="~/Content/Custom/user-registration.css" rel="stylesheet" />
+
+<div id="div-userRegister" data-ng-app="bhic-app" data-ng-controller="registrationCtrl as registerCtrl" class="ds-page-container">
+    <div class="ds-wrap">
+        <div class="ds-content-container">
+            <div class="ds-content-region">
+                <h2>Create Your Account</h2>
+                <h4>If you already have a policy code, you can register an account to access your policy by using the form below.</h4>
+
+                <div class="ds-row">
+                    <div class="ds-col-12">
+                        <form id="register_user" name="register_user" novalidate data-ng-submit="register_user.$valid && registerCtrl.submitUser(registerCtrl.userModel);">
+                            <div class="control-group" data-ng-class="{true: 'error'}[submitted && register_user.firstname.$invalid]">
+                                <div class="controls">
+                                    <input type="text" placeholder="First Name" data-ng-model="registerCtrl.userModel.firstname" name="firstname" ng-required="true" />
+                                    <span data-ng-show="submitted && register_user.firstname.$error.required" class="has-error">First Name is required.</span>
+                                </div>
+                            </div>
+                            <div class="control-group" data-ng-class="{true: 'error'}[submitted && register_user.lastname.$invalid]">
+                                <div class="controls">
+                                    <input type="text" placeholder="Last Name" data-ng-model="registerCtrl.userModel.lastname" name="lastname" ng-required="true" />
+                                    <span data-ng-show="submitted && register_user.lastname.$error.required" class="has-error">Last Name is required.</span>
+                                </div>
+                            </div>
+                            <div class="control-group" data-ng-class="{true: 'error'}[submitted && register_user.phonenumber.$invalid]">
+                                <div class="controls">
+                                    <input type="text" placeholder="Phone Number" data-ng-model="registerCtrl.userModel.phonenumber" maxlength="10" name="phonenumber" ng-required="true" numeric-validation />
+                                    <span data-ng-show="submitted && register_user.phonenumber.$error.required" class="has-error">Phone Number is required.</span>
+                                </div>
+                            </div>
+                            <div class="control-group" data-ng-class="{true: 'error'}[submitted && register_user.policycode.$invalid]">
+                                <div class="controls">
+                                    <input type="text" placeholder="Policy Code" data-ng-model="registerCtrl.userModel.policycode" name="policycode" ng-required="true" />
+                                    <span data-ng-show="submitted && register_user.policycode.$error.required" class="has-error">Policy Code is required.</span>
+                                </div>
+                            </div>
+                            <hr />
+                            <div class="control-group" data-ng-class="{true: 'error'}[submitted && register_user.email.$invalid]">
+                                <div class="controls">
+                                    <input type="email" placeholder="Email" data-ng-model="registerCtrl.userModel.email" name="email" ng-required="true" />
+                                    <span data-ng-show="submitted && register_user.email.$error.required" class="has-error">Email is required.</span>
+                                    <span data-ng-show="submitted && register_user.email.$error.email" class="has-error">Invalid email address.</span>
+                                </div>
+                            </div>
+                            <div class="control-group" data-ng-class="{true: 'error'}[submitted && register_user.password.$invalid]">
+                                <div class="controls">
+                                    <input type="password" placeholder="Password" data-ng-model="registerCtrl.userModel.password" name="password" ng-required="true" />
+                                    <span data-ng-show="submitted && register_user.password.$error.required" class="has-error">Password is required.</span>
+                                </div>
+                            </div>
+                            <div class="control-group" data-ng-class="{true: 'error'}[submitted && register_user.confirmpassword.$invalid]">
+                                <div class="controls">
+                                    <input type="password" placeholder="Confirm Password" data-ng-model="registerCtrl.userModel.confirmpassword" name="confirmpassword" ng-required="true" confirm-password="registerCtrl.userModel.password" />
+                                    <span data-ng-show="submitted && register_user.confirmpassword.$error.required" class="has-error">Confirm Password is required.</span>
+                                    <span data-ng-show="submitted && register_user.confirmpassword.$error.unique" class="has-error">Password does not match.</span>
+                                </div>
+                            </div>
+                            <br/>
+                            <div class="div-row">
+                                <input type="submit" value="Submit" ng-click="submitted=true" class="ds-button-activecommand" />
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!--Comment : Here related scripts files-->
+    <script src="~/Scripts/bhic/controllers/wc/registrationCtrl.js"></script>
+    <script src="~/Scripts/bhic/services/wc/userProfileService.js"></script>
+    <script src="~/Scripts/bhic/directives/wc/numericValidationDirective.js"></script>
+    <script src="~/Scripts/bhic/directives/wc/confirmPasswordDirective.js"></script>
+    <script src="~/Scripts/bhic/directives/wc/passwordStrengthDirective.js"></script>
+</div>
+

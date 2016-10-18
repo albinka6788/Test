@@ -1,0 +1,22 @@
+﻿@using BHIC.Common.Html;
+@using BHIC.Common.Configuration;
+@using BHIC.Common.XmlHelper;
+@{
+    var cdnVersion = BHIC.Portal.Dashboard.BaseController.GetAssemblyVersion();
+}
+
+@CDN.RenderStyles("/bundles/styles/dashboard")
+<section data-ng-init="errorController">
+    @Html.AntiForgeryToken()
+    <div>
+        <div class="alert alert-warning alert-big">
+           
+            <p class="alert-text mb0">This option is currently not available for your policy. Feel free to call us at  
+            <a href="tel:8444720967" style="white-space:nowrap;">844-472-0967</a> if you have any questions.   
+            <a href='@string.Concat(HttpContext.Current.Request.Url.Scheme, "://",
+                            HttpContext.Current.Request.Url.Host,"/" ,ConfigCommonKeyReader.BaseUrlPath)'>Click here</a> to go back to policy dashboard.
+</p>
+           
+        </div>
+    </div>
+</section>

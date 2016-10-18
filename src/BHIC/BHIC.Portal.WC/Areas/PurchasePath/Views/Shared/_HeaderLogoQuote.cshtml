@@ -1,0 +1,96 @@
+﻿@using BHIC.Common.Html;
+@using System.Configuration;
+@using BHIC.Domain.Dashboard;
+@using BHIC.Common.Quote;
+@using Newtonsoft.Json;
+@using BHIC.Common;
+@using BHIC.Common.XmlHelper;
+
+
+@{
+    <!-- Get request URL scheme and host details -->
+    var baseSchemeAndHostUrl = string.Concat(HttpContext.Current.Request.Url.Scheme, "://", HttpContext.Current.Request.Url.Host);
+
+    <!-- PC logged user handling -->
+    var loggedUser = new UserRegistration();
+
+    <!-- PC lof-out path -->
+    var pcLogoutUrl = "";
+
+    try
+    {
+        //Comment : Here get this request context base for cookies retrieval
+        var context = this.Request.RequestContext.HttpContext;
+
+        string pcUserEncrypted = QuoteCookieHelper.Cookie_GetPcUserId(context);
+
+        //Comment : Here validate is request came from PC then must
+        if (pcUserEncrypted == string.Empty && Session["user"] != null)
+        {
+            BHIC.Common.Logging.LoggingService.Instance.Trace("Found User Session but cookie missing");
+            loggedUser = (UserRegistration)Session["user"];
+        }
+        else
+        {
+            //Comment : Here request has encypted
+            if (pcUserEncrypted != string.Empty)
+            {
+                BHIC.Common.Logging.LoggingService.Instance.Trace("User Session Cookie Found");
+                UserRegistration user = JsonConvert.DeserializeObject<UserRegistration>(pcUserEncrypted);
+
+                //Comment : Here able to get user details then set session from here onwards in PurchasePath application flow
+                if (user != null && user.Id > 0)
+                {
+                    BHIC.Common.Logging.LoggingService.Instance.Trace("User Session ID exist");
+                    //Comment : Here finally store this logged user details into application custom session for future refernces
+                    Session["user"] = user;
+                    loggedUser = (UserRegistration)Session["user"];
+                }
+            }
+        }
+
+        <!-- Prepare PC log-out url -->
+        //pcLogoutUrl = string.Concat(baseSchemeAndHostUrl, ConfigCommonKeyReader.PolicyCentreURL, "#/Login");
+        pcLogoutUrl = string.Concat(baseSchemeAndHostUrl, ConfigCommonKeyReader.PolicyCentreURL, "Dashboard/Index#/GlobalSignOut");
+    }
+    catch { }
+}
+
+<div id="pageHeaderNavigation" data-ng-controller="logoutController" data-ng-init="init('@pcLogoutUrl')">
+    <div class="header-top clear">
+        <div class="container">
+            <span class="brand-tagline">Cover Your Business with Warren Buffett's Berkshire Hathaway Insurance Group</span>
+
+            <!-- Comment : Here must check for user session if exist then only show user account DIV otherwise none -->
+            @if (loggedUser != null && loggedUser.Id > 0)
+            {
+                <div class="dropdown user-logged-in pull-right">
+                    <a href="#" oncontextmenu="return false;" class="dropdown-toggle">Hi, @string.Concat(loggedUser.FirstName ?? "") <span class="icon-arrow-down icon-white"></span></a>
+                    <ul class="dropdown-menu no-style">
+                        <li><a href='@string.Concat(baseSchemeAndHostUrl, ConfigCommonKeyReader.PolicyCentreDashboardURL, "#/YourPolicies")'>Your Policies</a></li>
+                        <li><a id="anchorLogOut" style="cursor:pointer" ng-click="logOutUser()">Logout</a></li>
+                    </ul>
+                </div>
+            }
+        </div>
+    </div>
+    <div class="container">
+        <div class="topbar clear">
+            <div class="dropdown helpline-dropdown">
+                <p class="talk-to-expert"> Talk to our Licensed Experts </p>
+                <a class="sysPhoneHref helpline">
+                    <svg class="icon-phone-white" xmlns="http://www.w3.org/2000/svg" version="1.1" x="0" y="0" viewBox="0 0 52.5 52.5" xml:space="preserve"><path d="M40.3 33.3c-1-0.7-3.6-1.4-5.6 1.1 -2 2.5-4.5 6.6-13.8-2.8 -9.3-9.3-5.2-11.8-2.8-13.8 2.5-2 1.8-4.5 1.1-5.6 -0.7-1-5-7.7-5.8-8.8 -0.8-1.1-1.8-2.9-4.2-2.6C7.5 1.1 0.8 4.7 0.8 12.3s6 17 14.2 25.2c8.2 8.2 17.6 14.2 25.2 14.2 7.6 0 11.2-6.8 11.5-8.5 0.3-2.4-1.5-3.4-2.6-4.2C48 38.3 41.3 33.9 40.3 33.3z" /></svg>
+                    <span class="sysPhone"></span>
+                </a>
+                <span class="call-time"> (Mon - Fri 8am - 8pm EST) </span>
+            </div>
+        </div>
+        <div class="clear">
+            <h1 class="logo lg-pull-left sm-center md-center">
+                <a href='@ConfigCommonKeyReader.AppBaseUrl'>
+                    @Html.ThemeImage("logo", "img-responsive", new { alt = "Cover Your Business" })
+                </a>
+            </h1>
+        </div>
+    </div>
+</div>

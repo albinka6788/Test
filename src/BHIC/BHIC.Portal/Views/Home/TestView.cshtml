@@ -1,0 +1,46 @@
+﻿
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>TestView</title>
+
+    <link href="http://code.jquery.com/ui/1.10.3/themes/smoothness/jquery-ui.css" rel="stylesheet">
+    <script src="http://code.jquery.com/jquery-1.9.1.js"></script>
+    <script src="http://code.jquery.com/ui/1.10.3/jquery-ui.js"></script>
+    <style>
+        #slider {
+            width: 30%;
+        }
+    </style>
+
+</head>
+<body>
+    <!-- Start of FORM -->
+    <div id="wrapper">
+        <form action="somelink" method="post">
+            <div id="slider"></div><br>
+            <div id="info"></div>
+        </form>
+    </div>
+    <script>
+        $(document).ready(function () {
+            $("#slider").slider({
+                min: 1,
+                max: 6,
+                step: .5,
+                change: function (event, ui) {
+                    //console.log(ui.value);
+                    $("#info").text('Slider = ' + ui.value);
+                }
+            });
+
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,4 @@
+
+ALTER TABLE OrganisationUserDetail ALTER COLUMN Tin	 VARCHAR(256)
+ALTER TABLE OrganisationUserDetail ALTER COLUMN Ssn	 VARCHAR(256)
+ALTER TABLE OrganisationUserDetail ALTER COLUMN Fein VARCHAR(256)

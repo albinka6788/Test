@@ -1,0 +1,10 @@
+
+/****** Object:  Sequence [dbo].[SEQUENCEZipCodeStates]    Script Date: 06-11-2015 AM 11:26:28 ******/
+CREATE SEQUENCE [dbo].[SEQUENCEZipCodeStates] 
+ AS [INT]
+ START WITH 1
+ INCREMENT BY 1
+ MINVALUE -2147483648
+ MAXVALUE 2147483647
+ CACHE 
+GO

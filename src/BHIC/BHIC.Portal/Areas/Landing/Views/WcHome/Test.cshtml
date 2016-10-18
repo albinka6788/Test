@@ -1,0 +1,111 @@
+﻿
+@{
+    ViewBag.Title = "Test";
+    //Layout = "~/Views/Shared/_Layout.cshtml";
+    Layout = null;
+}
+
+<h2>Test</h2>
+
+<link href="~/Content/jquery-ui.css" rel="stylesheet" />
+<style type="text/css">
+    .sliderExample {
+            width: 640px;
+            padding: 2em;
+            background-color: #f5f5f5;
+            border: 1px solid #f0f0f0;
+            margin: 2em;
+        }
+
+            .sliderExample > div {
+                margin: 1em 0;
+            }
+    .ui-slider-tick {
+  position: absolute;
+  background-color: #aaa;
+  width: 2px;
+  height: 8px;
+  top: 16px;
+}
+
+.ui-slider {
+  position: relative;
+}
+
+.ui-slider-out-of-bounds {
+  position: absolute;
+  background-color: #EEE;
+  height: 100%;
+}
+</style>
+
+
+@*<div ng-app="sliderDemoApp" ng-controller="sliderDemoCtrl">*@
+<div data-ng-app="bhic-app" data-ng-controller="questionsPageCtrl as questionsCtrl">
+
+    @*<div class="question-text">
+            3
+            .
+            Question 3 text ?
+            <br>
+            Percentage
+            <br>
+
+            <input type="text" value="" style="border: 0px; font-weight: bold; width:30px; text-align:right;padding:0px;" readonly="readonly" name="TypePercentage" id="slider-step-value3" data-val-required="Response is required." data-val-range-min="1" data-val-range-max="100" data-val-range="Percentage value acceptable range." data-val="true"> %
+            <div style="margin-left:15px;">
+                <div class="ui-slider ui-slider-horizontal ui-widget ui-widget-content ui-corner-all" id="slider-step3" aria-disabled="false"><div class="ui-slider-range ui-widget-header ui-corner-all ui-slider-range-min" style="width: 0%;"></div><a href="#" class="ui-slider-handle ui-state-default ui-corner-all" style="left: 0%;"></a></div>
+            </div>
+        </div>
+
+        <link href="http://code.jquery.com/ui/1.10.3/themes/smoothness/jquery-ui.css" rel="stylesheet">
+        <script src="http://code.jquery.com/jquery-1.9.1.js"></script>
+        <script src="http://code.jquery.com/ui/1.10.3/jquery-ui.js"></script>
+        <script src="~/Scripts/questionRender.js"></script>*@
+
+    <h1>AngularUI Slider demo</h1>
+    <ol>
+        <li>
+            <div class="sliderExample">
+                <a name="ex1"></a>
+                <strong>Step slider with event listeners (see console log)</strong>
+                <div ui-slider min="0" max="50" ng-model="sliderExample1"></div>
+                <input type="text" ng-model="sliderExample1" />
+            </div>
+        </li>
+    </ol>
+
+    @*<script src="http://code.jquery.com/jquery-1.9.1.js"></script>
+        <script src="http://code.jquery.com/ui/1.10.3/jquery-ui.js"></script>*@
+
+    <script src="~/Scripts/jquery-1.10.2.js"></script>
+    <script src="~/Scripts/jquery-ui-1.10.2.js"></script>
+
+    <script src="~/Scripts/angular/angular.js"></script>
+    <script src="~/Scripts/bhic/modules/root/slider.js"></script>
+
+    <script src="~/Scripts/angular/angular-sanitize.js"></script>
+    <script src="~/Scripts/bhic/services/restServiceConsumer.js"></script>
+    <script src="~/Scripts/bhic/services/wc/landingPageDataProvider.js"></script>
+    <script src="~/Scripts/bhic/bhic-app.js"></script>
+    <script src="~/Scripts/bhic/modules/wc/bhic-app.wc.js"></script>
+    <script src="~/Scripts/bhic/modules/root/bhic-app.constant.js"></script>
+
+    <script>
+        //var app = angular.module('sliderDemoApp', ['ui.slider']);
+
+        //app.controller('sliderDemoCtrl', function ($scope) {
+
+        //});
+        (
+            function ()
+            {
+                'use strict';
+
+                angular
+               .module('bhic-app.wc')
+               .controller('questionsPageCtrl', ['$scope', '$filter', function () { }]);
+            }
+        )();
+    </script>
+
+</div>

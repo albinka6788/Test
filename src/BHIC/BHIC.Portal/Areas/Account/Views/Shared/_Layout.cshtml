@@ -1,0 +1,127 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>@ViewBag.Title - Landing/Home page</title>
+    @Styles.Render("~/Content/css")
+    @Scripts.Render("~/bundles/modernizr")
+
+    <style type="text/css">
+        [ng\:cloak], [ng-cloak], [data-ng-cloak], [x-ng-cloak], .ng-cloak, .x-ng-cloak, .ng-hide {
+            display: none !important;
+        }
+
+       
+        .ds-logo img {
+            height: auto;
+            /*max-height: 60px;*/
+            width: 100%;
+        }
+
+        img {
+            border: 0 none;
+            margin: 0;
+            padding: 0;
+        }
+
+        img {
+            vertical-align: middle;
+        }
+
+        .ds-hdrLink {
+            float: right;
+        }
+
+        .ds-logo {
+            float: left;
+            width: 33.3333%;
+            float: left;
+            min-height: 1px;
+            padding: 5px;
+            position: relative;
+        }
+
+        .navbar-brand {
+            color: #fff;
+        }
+
+        .panel {
+            background-color: #fff;
+            border: 1px solid transparent;
+            border-radius: 4px;
+            box-shadow: 0 1px 1px rgba(0, 0, 0, 0.05);
+            margin-bottom: 20px;
+        }
+
+        .panel-body {
+            padding: 15px;
+        }
+    </style>
+
+    <!-- Comment : Scripts block which will be added later in script bundle -->
+    <script src="~/Scripts/jquery-1.10.2.js"></script>
+    <script src="~/Scripts/jquery-ui-1.10.2.js"></script>
+    <script src="~/Scripts/bootstrap-datepicker.js"></script>
+
+    <!-- Comment : Angularjs Modules,Directives,etc -->
+    <script src="~/Scripts/angular/angular.js"></script>
+    <script src="~/Scripts/angular/angular-sanitize.js"></script>
+    <script src="~/Scripts/angular/angular-messages.js"></script>
+
+    <!-- Comment : Custome BHIC application scripts files -->
+    <script src="~/Scripts/bhic/services/restServiceConsumer.js"></script>
+    <script src="~/Scripts/bhic/services/wc/landingPageDataProvider.js"></script>
+    <script src="~/Scripts/bhic/bhic-app.js"></script>
+    <script src="~/Scripts/bhic/modules/wc/bhic-app.wc.js"></script>
+    <script src="~/Scripts/bhic/modules/root/bhic-app.constant.js"></script>
+    <script src="~/Scripts/bhic/controls/bhic-app.wc.controls.js"></script>
+    <script src="~/Scripts/bhic/controls/currencyDirective.js"></script>
+    <script src="~/Scripts/bhic/controls/dateControlDirective.js"></script>
+    <script src="~/Scripts/bhic/controls/maskInputDirective.js"></script>
+    <script src="~/Scripts/bhic/controls/validNumberDirective.js"></script>
+
+    <!-- Comment : Here inclusded files (scripts) for JquerySlider -->
+    <script src="~/Scripts/bhic/modules/root/slider.js"></script>
+
+    <meta name="description" content="The description of my page" />
+</head>
+<body>
+
+    @*@Html.ActionLink("Get Quotes & Buy Now!", "SaveLandingPage", "/WcHome")
+        <br /><br />
+        @Html.ActionLink("Test Api Services", "Index", "/WebApiTestClient")*@
+
+    <div class="navbar navbar-inverse navbar-fixed-top">
+        <div class="container">
+            <div class="navbar-header">
+                <div class="ds-logo">
+                    <a href="/"><img alt="National Liability &amp; Fire, a Berkshire Hathaway Co." src="https://www.bhdwc.com/cdn/Images/logo.png"></a>
+                </div>
+                @*<div class="ds-hdrLink">
+                        @Html.ActionLink("Back To Home", "Index", "Home", new { area = "" }, new { @class = "navbar-brand" })
+                    </div>*@
+            </div>
+            <div class="navbar-collapse collapse">
+                <ul class="nav navbar-nav"></ul>
+            </div>
+        </div>
+    </div>
+
+    <div class="container body-content">
+        @RenderBody()
+        <hr />
+        <footer>
+            <div style="width:100%;text-align:right">
+                <p style="width:100%;text-align:right">&copy; Direct Sales v1.01</p>
+            </div>
+        </footer>
+    </div>
+
+    @*@Scripts.Render("~/bundles/jquery")*@
+    @Scripts.Render("~/bundles/bootstrap")
+    @RenderSection("scripts", required: false)
+
+</body>
+</html>

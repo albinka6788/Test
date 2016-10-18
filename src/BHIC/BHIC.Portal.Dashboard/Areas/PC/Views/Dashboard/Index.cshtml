@@ -1,0 +1,152 @@
+﻿@using BHIC.Common.Html;
+@using BHIC.Common.Configuration;
+@using BHIC.Common.XmlHelper;
+
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Cover Your Business</title>
+    <link rel="icon"  href='@string.Concat(ConfigCommonKeyReader.CdnPath, "Content/", ConfigCommonKeyReader.CdnDefaultCommonFolder, "/images/favicon.ico")'>
+    <link rel="shortcut icon" sizes="192x192" type="image/png" href='@string.Concat(ConfigCommonKeyReader.CdnPath, "Content/", ConfigCommonKeyReader.CdnDefaultCommonFolder, "/appicon-highres.png")'>
+    <link rel="shortcut icon" sizes="128x128" type="image/png" href='@string.Concat(ConfigCommonKeyReader.CdnPath, "Content/", ConfigCommonKeyReader.CdnDefaultCommonFolder, "/appicon.png")'>
+
+    @*<link href="~/Content/Common/styles/font-awesome.css" rel="stylesheet" />*@
+    <link rel="stylesheet" type="text/css" href="@ConfigCommonKeyReader.CloudTypographyUrl" />
+
+    @CDN.RenderStyles("/bundles/styles/dashboard")
+    @*@Styles.Render(CDN.Path + "/bundles/fonts" + cdnVersion)
+        @Styles.Render(CDN.Path + "/bundles/font-awesome" + cdnVersion)*@
+
+    @*@CDN.RenderScripts("/bundles/scripts/jquery")
+        @CDN.RenderScripts("/bundles/scripts/jqueryui")
+        @CDN.RenderScripts("/bundles/scripts/wc-dashboard-input-mask")
+        @CDN.RenderStyles("/bundles/styles/dashboard")
+        @CDN.RenderScripts("/bundles/scripts/dashboard")*@
+
+
+    @*@CDN.RenderScripts("/bundles/scripts/angular")
+        @CDN.RenderScripts("/bundles/scripts/wc-landing-modules")
+
+        @CDN.RenderScripts("/bundles/scripts/wc_common")
+
+        @CDN.RenderScripts("/bundles/scripts/wc-dashboard-modules")
+
+        @CDN.RenderScripts("/bundles/scripts/wc-main-modules")
+        @CDN.RenderScripts("/bundles/scripts/wc-loading_pc")
+        @CDN.RenderScripts("/bundles/scripts/wc-dashboard-captcha")
+        @CDN.RenderScripts("/bundles/scripts/wc-dashboard-header")*@
+
+
+
+</head>
+<body ng-app="BHIC.Dashboard">
+    <div class="container-fluid">
+        <div id="divLoader" class="loader-overlay" style="top:0;">
+            <div class="loader">
+                <div class="loader-content">
+                    <p class="text-teal text-big text-medium mb-half">One moment please...</p>
+                    @Html.ThemeImage("loading-lg.gif", new { alt = "loading..." })
+                </div>
+                <div class="loader-progress"></div>
+            </div>
+        </div>
+        <div class="top-navbar">
+            @Html.Partial("_Header")
+        </div>
+        <script>baseUrl=@ConfigCommonKeyReader.BaseUrlPath;</script>
+        <script>sessionTimeOut=@Session.Timeout;</script>
+        <div class="sidebar-left sidebar-nicescroller" style="display:none;">
+            @Html.Partial("_Sidemenu")
+        </div>
+
+        <div class="page-content page-content-full">
+            <div class="pageHeading">
+                <h2 class="rootText" ng-cloak ng-bind="HeaderText"></h2>
+            </div>
+            @Html.AntiForgeryToken()
+            <div id="pagecontents" ng-view></div>
+        </div>
+
+        <div class="footer">
+            @Html.Partial("_Footer")
+        </div>
+
+    </div>
+    <div class="overlay"></div>
+    @*@CDN.RenderScripts("/bundles/scripts/wc-dashboard-account-registration")*@
+    @*@CDN.RenderScripts("/bundles/scripts/wc-dashboard-shared-service")*@
+    @*@CDN.RenderScripts("/bundles/scripts/wc-dashboard-cancel-policy")*@
+    @*@CDN.RenderScripts("/bundles/scripts/wc-dashboard-contact-info")*@
+    @*@CDN.RenderScripts("/bundles/scripts/wc-dashboard-physician-panel")*@
+    @*@CDN.RenderScripts("/bundles/scripts/wc-dashboard-policy-document")*@
+    @*@CDN.RenderScripts("/bundles/scripts/wc-dashboard-policy-info")*@
+
+    @*@CDN.RenderScripts("/bundles/scripts/wc-report-claim")*@
+    @*@CDN.RenderScripts("/bundles/scripts/wc-dashboard-request-certificate")*@
+    @*@CDN.RenderScripts("/bundles/scripts/wc-dashboard-request-policy-change")*@
+    @*@CDN.RenderScripts("/bundles/scripts/wc-dashboard-saved-quotes")*@
+    @*@CDN.RenderScripts("/bundles/scripts/wc-dashboard-your-policies")
+        @CDN.RenderScripts("/bundles/scripts/wc-dashboard-change-password")
+        @CDN.RenderScripts("/bundles/scripts/wc-dashboard-edit-contact")
+        @CDN.RenderScripts("/bundles/scripts/wc-dashboard-make-payment")*@
+
+    @*@CDN.RenderScripts("/bundles/scripts/wc-dashboard-authorised")*@
+    @*@CDN.RenderScripts("/bundles/scripts/wc-dashboard-session-controller")*@
+    @*@CDN.RenderScripts("/bundles/scripts/wc-dashboard-policy-payment")*@
+
+    @*Directive*@
+    @*@CDN.RenderScripts("/bundles/scripts/wc-dashboard-file-upload")
+        @CDN.RenderScripts("/bundles/scripts/wc-dashboard-util")
+        @CDN.RenderScripts("/bundles/scripts/wc-dashboard-util-ext")
+        @CDN.RenderScripts("/bundles/scripts/wc-dashboard-auto-focus")*@
+    @*@CDN.RenderScripts("/bundles/scripts/wc-dashboard-PolicyCentre-Error")*@
+    @*@CDN.RenderScripts("/bundles/scripts/wc-dashboard-request-loss-run")
+        @CDN.RenderScripts("/bundles/scripts/wc-dashboard-helpful-resources")*@
+
+    @CDN.RenderScripts("/bundles/scripts/wc-dashboard-services")
+    @CDN.RenderScripts("/bundles/scripts/wc-dashboard-directives")
+    @CDN.RenderScripts("/bundles/scripts/wc-dashboard-loggedInUserControllers")
+</body>
+
+</html>
+
+<script>
+    // Start LiveChat Embedded Icon/Tracking Code
+    var __lc = {};
+    __lc.license = @ConfigCommonKeyReader.LCLicense;
+    __lc.group = '@ConfigCommonKeyReader.LCGroup';
+    __lc.params = [
+        { name: '@ConfigCommonKeyReader.LCServerName', value: '@ConfigCommonKeyReader.LCServerValue' },
+    ];
+
+    (function() {
+        var flag='@ConfigCommonKeyReader.EnvironmentName';
+
+        if(!(flag.toUpperCase() == 'DEV'))
+        {
+            var lc = document.createElement('script'); lc.type = 'text/javascript'; lc.async = true;
+            lc.src = '@ConfigCommonKeyReader.LCSrc';;
+            var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(lc, s);
+        }
+    })();
+
+</script>
+<script>
+
+    phoneNumber_CSR ='@BHIC.Common.XmlHelper.ConfigCommonKeyReader.ApplicationContactInfo["PhoneNumber_CSR"]';
+    companyDomain = '@BHIC.Common.XmlHelper.ConfigCommonKeyReader.ApplicationContactInfo["Company_Domain"]';
+    companyName = '@BHIC.Common.XmlHelper.ConfigCommonKeyReader.ApplicationContactInfo["SysVarCompanyName"]';
+    companyName_NENATI20 ='@BHIC.Common.XmlHelper.ConfigCommonKeyReader.ApplicationContactInfo["CompanyName_NENATI20"]';
+    physical_Address1 ='@BHIC.Common.XmlHelper.ConfigCommonKeyReader.ApplicationContactInfo["Physical_Address1"]';
+    physical_Address2 ='@BHIC.Common.XmlHelper.ConfigCommonKeyReader.ApplicationContactInfo["Physical_Address2"]';
+    physical_AddressCSZ ='@BHIC.Common.XmlHelper.ConfigCommonKeyReader.ApplicationContactInfo["Physical_AddressCSZ"]';
+    mailingClaims_NewClaimPhone ='@BHIC.Common.XmlHelper.ConfigCommonKeyReader.ApplicationContactInfo["MailingClaims_NewClaimPhone"]';
+    faxNumber_Claims = '@BHIC.Common.XmlHelper.ConfigCommonKeyReader.ApplicationContactInfo["FaxNumber_Claims"]';
+    company_WebsiteURL ='@BHIC.Common.XmlHelper.ConfigCommonKeyReader.ApplicationContactInfo["Company_WebsiteURL"]';
+</script>
+
+@CDN.RenderScripts("/bundles/scripts/script_auth")
+@CDN.RenderScripts("/bundles/scripts/common-system-variables")

@@ -1,0 +1,46 @@
+﻿<script type="text/javascript">
+    $(document).ready(function () {
+        // Handle custom triggering of clicks for browse button in IE
+        if (navigator.userAgent.indexOf("MSIE") > 0) {
+            $(".file-upload").mousedown(function () {
+                $(this).trigger('click');
+            });
+        }
+    });
+</script>
+<div>
+    <div class="pageHeading">
+        <p> This is an easy way for you to send us information we have requested. </p>
+    </div>
+    <div class="alert alert-success info-panel" ng-if="responseMsg">
+        <p class="text-bold alert-text"> Thank you for sending us this information. We will review it &amp; get back to you within one business day. </p>
+    </div>
+    <div class="alert alert-danger info-panel" ng-if="errorMessage.length > 0">
+        <p class="text-bold alert-text">{{errorMessage}} </p>
+    </div>
+    <div class="the-box">
+        <form class="form-horizontal" name="uploadForm" data-ng-submit="submituploadForm();">
+            <div class="form-group">
+                <label class="lg-col-3">
+                    Upload Documents
+                </label>
+                <div class="lg-col-7">
+                    <input type="file" tabindex="1" id="filesel" name="file" multiple files-upload="getTheFiles($files)" class="field file-upload field-lg" ng-model="fileselected" placeholder="Browse" onkeydown="this.blur()" oncontextmenu="return false;">
+                    <span class="error">{{fileException}}</span>
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="lg-col-3 fulllabel">Description</label>
+                <div class="lg-col-7">
+                    <div class=" field-lg">
+                        <textarea class="field" tabindex="2" ng-model="description" maxlength="250" name="descriptionModel"></textarea>
+                        <p class="text-small2"> Please provide a short description of the documents you are uploading. Example: Copy of current policy declarations, loss runs, state mandated documents, or any other forms, etc. </p>
+                    </div>
+                </div>
+            </div>
+            <div class="form-group right">
+                <button tabindex="3" class="btn btn-primary">Submit</button>
+            </div>
+        </form>
+    </div>
+</div>

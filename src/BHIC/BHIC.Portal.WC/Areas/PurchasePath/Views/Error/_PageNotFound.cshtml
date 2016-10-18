@@ -1,0 +1,57 @@
+﻿@using BHIC.Common.Html;
+@using BHIC.Common.XmlHelper;
+@using BHIC.Common.Configuration;
+@using BHIC.Common.Client;
+@using BHIC.Core.Background;
+@using BHIC.Contract.Background;
+@{
+    ViewBag.Title = "Page Not Found";
+    Layout = "~/Areas/PurchasePath/Views/Shared/_Layout.cshtml";
+
+    ServiceProvider guardServiceProvider = new GuardServiceProvider() { ServiceCategory = ServiceProviderConstants.GuardServiceCategoryWC };
+    ISystemVariableService systemVariable = new SystemVariableService(guardServiceProvider);
+
+    var phoneNumber_CSR = systemVariable.GetSystemVariableByKey(ConfigCommonKeyReader.ApplicationContactInfo["PhoneNumber_CSR"]);
+}
+@if (!String.IsNullOrWhiteSpace(ConfigCommonKeyReader.InspectletWid))
+{
+    <script type="text/javascript">
+        var inspectletWid = '@ConfigCommonKeyReader.InspectletWid';
+        var resetSession = false;
+        var inspectletQuoteid = '@BHIC.Common.Quote.QuoteCookieHelper.Cookie_GetQuoteId(new HttpContextWrapper(HttpContext.Current))'
+        var inspectletSessionid = '@Session.SessionID'
+        var googleAdId = '@Session["googleAdId"]';
+        window.recordSession(inspectletWid, inspectletQuoteid, inspectletSessionid, resetSession, googleAdId)
+    </script>
+}
+
+
+@{
+    Dictionary<string, string> resources = ThemeManager.ThemeResources(this.Context);
+
+    var coverBusiness = ThemeManager.GetResourceKeyValue(resources, "CoverYourBusinessTitle");
+    var convenient = ThemeManager.GetResourceKeyValue(resources, "Convenient");
+    var easy = ThemeManager.GetResourceKeyValue(resources, "Easy");
+    var convenientSubText = ThemeManager.GetResourceKeyValue(resources, "ConvenientSubText");
+    var affordable = ThemeManager.GetResourceKeyValue(resources, "Affordable");
+    var affordable2 = ThemeManager.GetResourceKeyValue(resources, "Affordable2");
+    var affordableSubText = ThemeManager.GetResourceKeyValue(resources, "AffordableSubText");
+    var twentyFourBySeven = ThemeManager.GetResourceKeyValue(resources, "TwentyFourBySeven");
+    var support = ThemeManager.GetResourceKeyValue(resources, "Support");
+    var support2 = ThemeManager.GetResourceKeyValue(resources, "Support2");
+    var supportSubText = ThemeManager.GetResourceKeyValue(resources, "SupportSubText");
+
+}
+<section class="page-content">
+    <div class="container">
+        <div class="alert alert-warning alert-big">
+            <p class="text-bold alert-text-big"> Sorry, we couldn't find the page you are looking for. </p>
+            <p class="alert-text">
+                Please use the top navigation to find the page you are looking for or you can simply go to <a href='@ConfigCommonKeyReader.AppBaseUrl'>Homepage.</a>
+            </p>
+            @*<p class="alert-text">
+                    Please use the top navigation to find the page you are looking for. Or you can simply go to <a href='@string.Concat(HttpContext.Current.Request.Url.Scheme, "://",HttpContext.Current.Request.Url.Host, BHIC.Common.XmlHelper.ConfigCommonKeyReader.PurchasePathAppBaseURL)'>Homepage.</a>
+                </p>*@
+        </div>
+    </div>
+</section>

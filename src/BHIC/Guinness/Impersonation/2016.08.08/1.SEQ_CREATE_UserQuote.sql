@@ -1,0 +1,11 @@
+/****** Object:  Sequence [dbo].[SEQUENCEUserQuote]    Script Date: 8/29/2016 12:18:54 PM ******/
+CREATE SEQUENCE [dbo].[SEQUENCEUserQuote] 
+ AS [int]
+ START WITH 1
+ INCREMENT BY 1
+ MINVALUE -2147483648
+ MAXVALUE 2147483647
+ CACHE 
+GO
+
+

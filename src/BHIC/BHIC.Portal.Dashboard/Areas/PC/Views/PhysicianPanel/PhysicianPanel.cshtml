@@ -1,0 +1,21 @@
+﻿@using BHIC.Common.Html;
+<div ng-init="physicianPanelController">
+    <div class="the-box form-container" ng-if="physicianStatus">
+        <div class="row contentRow" ng-repeat="doc in physicianDocuments">
+            <div class="md-col-6 lg-col-6">
+                <div class="downloaddocName lh50">
+                    <span class="icon">
+                        <svg xmlns="http://www.w3.org/2000/svg" version="1.1" x="0" y="0" viewBox="-293 384 25 25" xml:space="preserve">
+                        <polygon class="stroke-teal" points="-273 407.2 -288.9 407.2 -288.9 385.8 -279.4 385.8 -273 392.1 "></polygon><polyline class="stroke-teal" points="-279.4 385.8 -279.4 392.1 -273 392.1 "></polyline><path class="stroke-teal stroke-thin" d="M-275.3 397.8c-0.4-0.4-1.4-0.3-2.1-0.2 -0.4 0.1-0.9 0.2-1.3 0.3 -0.4-0.1-0.7-0.3-1.1-0.5 -0.8-0.4-1.5-1.3-2.1-2.4 0-0.8 0.2-3.9-1.1-3.6 -1.3 0.3-0.2 2.6 0.3 3.8 -0.1 1-0.3 2.1-0.7 3.2 -0.3 1-0.7 2.2-0.7 2.2s-3.2 2.7-1.9 3.4c0.9 0.5 2-1.3 2.8-3.5 1.2-0.6 2.8-1.3 4.3-1.7 1.1 0.3 3.2 0.7 3.7-0.3C-275.1 398-275.2 397.9-275.3 397.8zM-285.3 403.1c0 0-0.9-0.1 0.9-1.6C-284.4 401.4-284.7 403-285.3 403.1zM-283 392c0 0 0.7-0.6 0.5 1.9C-282.5 393.9-283.4 392.5-283 392zM-282.7 399.4c0.1-0.3 0.2-0.6 0.3-0.9 0.2-0.7 0.4-1.4 0.5-2 0.4 0.6 1 1.1 1.5 1.5 0.1 0.1 0.2 0.1 0.3 0.2C-281 398.5-281.9 398.9-282.7 399.4zM-277.8 398.1c0 0 1.5-0.6 1.9-0.1C-275.9 398.1-275.5 398.8-277.8 398.1z"></path></svg>
+                    </span> {{doc.FileName}}
+                </div>
+            </div>
+            <div class="md-col-6 lg-col-6 right">
+                <span><button class="btn btn-primary btn-sm" data-ng-click="DownloadDocument(doc.EncryptedDocumentId)">Download</button></span>
+            </div>
+        </div>
+    </div>
+    <div class="alert alert-success info-panel" ng-if="!physicianStatus">
+        <p class="alert-text"> Hi! Your physician documents are in the process of being generated. This process usually happens within a minute but once in a while, it may take a little longer.   We will email you when they are ready but you are welcome to check back when convenient for you.  If you have any questions or if you need your physician documents urgently, please call us at <a href="tel:8444720967"> 844-472-0967 </a> or email us at <a href="mailto:CustomerService@CoverYourBusiness.com">CustomerService@CoverYourBusiness.com</a> </p>
+    </div>
+</div>

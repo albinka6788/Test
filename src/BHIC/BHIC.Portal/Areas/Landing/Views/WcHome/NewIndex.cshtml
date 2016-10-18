@@ -1,0 +1,216 @@
+﻿@using BHIC.Portal.Code.Html;
+
+@{
+    ViewBag.Title = "NewIndex";
+    Layout = "~/Areas/Account/Views/Shared/_Layout.cshtml";
+}
+
+<style type="text/css">
+    html {
+        height: 100%;
+    }
+
+    body {
+        height: 100%;
+    }
+
+    #div-getQuote {
+        margin: 20px auto;
+    }
+
+    .div-row {
+        width: 100%;
+        clear: both;
+        margin: 5px auto;
+    }
+
+    input, select {
+        width: 180px !important;
+    }
+
+        input[type="radio"], input[type="checkbox"] {
+            margin: 4px 0 0;
+            width: 20px !important;
+            height: 10px;
+            margin-top: 1px \9;
+            line-height: normal;
+        }
+
+    .getQuote {
+        background-color: #e3b956 !important;
+        border: 1px solid #ffe6b2;
+        border-radius: 5px;
+        box-sizing: border-box;
+        color: #fff !important;
+        cursor: pointer;
+        font-size: 14px;
+        line-height: normal !important;
+        padding: 4px 8px;
+        text-transform: uppercase;
+        text-decoration: none;
+    }
+
+        .getQuote a:active, a:hover {
+            text-decoration: none;
+        }
+
+    .help-block {
+        display: block;
+        margin-top: 5px;
+        margin-bottom: 10px;
+        color: #737373;
+    }
+
+    .has-error {
+        color: #b94a48;
+    }
+
+    .top-buffer {
+        padding-top: 20px;
+    }
+
+    .tags-wrapper {
+        position: relative;
+    }
+
+    .tags-cloud .tag {
+        float: left;
+        padding: 4px 6px;
+        font-size: 1em;
+        margin-right: 5px;
+        margin-bottom: 5px;
+        background: #f2f2f2;
+        font-weight: 600;
+        -webkit-border-radius: 4px;
+        -moz-border-radius: 4px;
+        border-radius: 4px;
+        -moz-background-clip: padding;
+        -webkit-background-clip: padding-box;
+        background-clip: padding-box;
+        border: 1px solid #dddddd;
+    }
+
+        .tags-cloud .tag:hover {
+            border: 1px solid #cccccc;
+        }
+
+            .tags-cloud .tag:hover .cross {
+                opacity: 1;
+            }
+
+        .tags-cloud .tag .cross {
+            margin-left: 5px;
+            margin-right: 3px;
+            font-size: 1em;
+            color: #20a28e;
+            opacity: .7;
+            cursor: pointer;
+        }
+
+    .suggestions-list {
+        position: absolute;
+        list-style-type: none;
+        margin: 0;
+        padding: 0;
+        overflow: auto;
+        -webkit-border-radius: 4px;
+        -moz-border-radius: 4px;
+        border-radius: 4px;
+        -moz-background-clip: padding;
+        -webkit-background-clip: padding-box;
+        background-clip: padding-box;
+        font-size: 14px;
+    }
+
+        .suggestions-list li {
+            color: #333333;
+            font-weight: 600;
+            padding: 4px 25px;
+            font-size: 1em;
+            cursor: pointer;
+            background: #f2f2f2;
+            border-bottom: 1px solid #dddddd;
+        }
+
+            .suggestions-list li:hover {
+                background: #dddddd;
+            }
+
+            .suggestions-list li:active,
+            .suggestions-list li.active {
+                color: #20a28e;
+                background: #dddddd;
+            }
+
+        .suggestions-list:focus {
+            outline: none;
+        }
+
+    [ng\:cloak], [ng-cloak], [data-ng-cloak], [x-ng-cloak], .ng-cloak, .x-ng-cloak, .ng-hide {
+        display: none !important;
+    }
+
+
+    .ds-logo img {
+        height: auto;
+        /*max-height: 60px;*/
+        width: 100%;
+    }
+
+    img {
+        border: 0 none;
+        margin: 0;
+        padding: 0;
+    }
+
+    img {
+        vertical-align: middle;
+    }
+
+    .ds-hdrLink {
+        float: right;
+    }
+
+    .ds-logo {
+        float: left;
+        width: 33.3333%;
+        float: left;
+        min-height: 1px;
+        padding: 5px;
+        position: relative;
+    }
+
+    .navbar-brand {
+        color: #fff;
+    }
+
+    .panel {
+        background-color: #fff;
+        border: 1px solid transparent;
+        border-radius: 4px;
+        box-shadow: 0 1px 1px rgba(0, 0, 0, 0.05);
+        margin-bottom: 20px;
+    }
+
+    .panel-body {
+        padding: 15px;
+    }
+</style>
+
+<ng-form id="div-getQuote" novalidate="novalidate" name="quoteInputForm" data-ng-app="bhic-app">
+
+    @{ 
+        var ladingPageHtml = TempData["landingPageHtml"].ToString().Trim();
+        
+        <!-- Comment : Here in case business class based landing not found then return default view to user -->
+        if (string.IsNullOrEmpty(ladingPageHtml))
+        {
+            ladingPageHtml = TempData["defaultLandingPageHtml"].ToString().Trim();
+        }
+    }
+
+    <!-- Comment : Here load dynamic view html content -->
+    @Html.ThemeSharedContent(ladingPageHtml)
+
+</ng-form>
+

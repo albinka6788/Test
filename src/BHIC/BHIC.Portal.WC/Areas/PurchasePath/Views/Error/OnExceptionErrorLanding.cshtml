@@ -1,0 +1,22 @@
+﻿@{
+    ViewBag.Title = "SessionExpired";
+    Layout = "~/Areas/PurchasePath/Views/Shared/_LayoutQuote.cshtml";
+}
+
+<!--Comment : Here MetaTag Information For AppSession Handling -->
+<meta name="AppErrorOccured" content="true">
+@Html.AntiForgeryToken()
+@*<header class="with-nav"></header>*@
+<section class="page-content">
+    <div class="container">
+        <div class="alert alert-warning alert-big">
+            <p class="text-bold alert-text-big"> We're currently unable to respond to your request - Sorry! </p>
+            <p class="alert-text mb0"> We are aware of the issue and are working to resolve it for you. </p>
+            <p class="alert-text mb0"> We apologize for the inconvenience. </p>
+            <p class="alert-text">
+                Please try again later or feel free to <a href='@string.Concat(HttpContext.Current.Request.Url.Scheme, "://",
+                            HttpContext.Current.Request.Url.Host, BHIC.Common.XmlHelper.ConfigCommonKeyReader.PurchasePathAppBaseURL)'>Start Over</a> and try entering different values.
+            </p>
+        </div>
+    </div>
+</section>

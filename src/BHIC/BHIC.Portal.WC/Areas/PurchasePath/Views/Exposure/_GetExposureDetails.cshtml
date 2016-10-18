@@ -1,0 +1,316 @@
+﻿@using BHIC.Common.Html;
+@using BHIC.Common.XmlHelper;
+@using BHIC.Common.Configuration;
+@model BHIC.ViewDomain.Landing.QuoteViewModel
+
+@if (!String.IsNullOrWhiteSpace(ConfigCommonKeyReader.InspectletWid))
+{
+    <script type="text/javascript">
+        var inspectletWid = '@ConfigCommonKeyReader.InspectletWid';
+        var resetSession = false;
+        if (inspectletQuoteid == null || inspectletQuoteid == undefined) {
+            var inspectletQuoteid = '@Session["quoteId"].ToString()';
+        }
+        else if (inspectletQuoteid != '@Session["quoteId"].ToString()') {
+            resetSession = true;
+            inspectletQuoteid = '@Session["quoteId"].ToString()';
+        }
+
+        var inspectletQuoteStatus = '';
+        var inspectletSessionid = '@Session.SessionID'
+        var googleAdId = '@Session["googleAdId"]';
+        window.recordSession(inspectletWid, inspectletQuoteid, inspectletSessionid, resetSession, googleAdId)
+    </script>
+}
+
+<section class="progress-bar bg-blue">
+    <div class="container">
+        <ul class="no-style steps clear">
+            <li ng-repeat="link in quoteViewModel.NavLinks" class="{{link.ClassName}}"><a oncontextmenu="return false;" ng-href="{{link.Href}}" url="{{link.NavigationLink}}" ng-click="goTo($event)" target="_self">{{link.DisplayText}}</a></li>
+        </ul>
+    </div>
+</section>
+<section class="page-content">
+    <div class="container">
+        <div class="row no-gutter">
+            <div class="lg-col-8">
+                <div class="content">
+                    <div class="page-title">
+                        <h2>Workers' Compensation</h2>
+                    </div>
+                    <div error-messages-control errormessagelist="listOfErrors"></div>
+
+                    <form name="frmExposureInput" novalidate data-ng-init="init(@Newtonsoft.Json.JsonConvert.SerializeObject(Model));">
+                        <div class="questions">
+                            <div class="question">
+                                <div class="form-group relative" id="">
+                                    <label>Please describe your business:</label>
+                                    <!--<div class="radio-toggle radio-toggle-lg">
+                                        <div class="btn-radio">
+                                            <input type="radio" ng-model="quoteViewModel.SelectedSearch" ng-value="0" name="business" id="profession">
+                                            <label for="profession">Start Typing</label>
+                                        </div>
+                                        <span class="text-blue text-medium ph15 sm-hide">Or</span>
+                                        <div class="btn-radio">
+                                            <input type="radio" ng-model="quoteViewModel.SelectedSearch" ng-value="1" name="business" id="industry">
+                                            <label for="industry">Pick an Industry</label>
+                                        </div>
+                                    </div>-->
+                                    <div ng-if="quoteViewModel.SelectedSearch==0">
+                                        <div class="input-group with-tooltip with-icon">
+                                            <input name="businessName"
+                                                   id="business" class="d-tcell field" type="text" placeholder="e.g. builder, landscape gardening, etc."
+                                                   ng-model="quoteViewModel.BusinessName"
+                                                   @*minlength="2"*@
+                                                   ng-minlength="2"
+                                                   ng-model-options="{updateOn:'blur focusout'}"
+                                                   ng-blur="validateBusinessName()"
+                                                   business-search
+                                                   focus="true"
+                                                   required>
+                                            <span class="icon-search"></span>
+                                        </div>      
+                                        @*Removed below 3 validation as per mail from Adam on 30-05-2016 at 10:37 AM with subject RE: Assigned to you CRF:  C35962 - CYB - Keyword Typo Correction*@
+                                        @*<span class="error" ng-if="(submitted ||!frmExposureInput.businessName.$pristine) && frmExposureInput.businessName.$error.required">Business/trade description is required</span>*@
+                                        <span class="error" ng-if="(businessBlured || submitted ) && frmExposureInput.businessName.$error.required">Business/trade description is required</span>
+                                        <span class="error" ng-if="(businessBlured || submitted ) && frmExposureInput.businessName.$error.minlength && !frmExposureInput.businessName.$error.required">Please enter at least 2 letters to search business</span>
+                                        @*<span class="error" ng-if="!frmExposureInput.businessName.$error.minlength && !frmExposureInput.businessName.$error.required && dataNotFound">No records found!!</span>*@
+                                        @*<span class="error" ng-if="!frmExposureInput.businessName.$error.minlength && !frmExposureInput.businessName.$error.required && !dataNotFound && (quoteViewModel.ClassDescriptionId ==='')" )>Please select item from list!!</span>*@
+                                        <span class="error" ng-if="businessBlured && !frmExposureInput.businessName.$error.required && !frmExposureInput.businessName.$error.minlength && !dataNotFound && quoteViewModel.ClassDescriptionId ===''">Please select item from list!!</span>
+                                    </div>
+                                    <div class="input-group" ng-if="quoteViewModel.ClassDescriptionId=='-1'">
+                                        <div class="form-group">
+                                            <br />
+                                            <label>Tell us in your own words what your business does: </label>
+                                            <textarea rows="3" style="resize:none"
+                                                      class="input-group-input field field-lg"
+                                                      data-ng-model="quoteViewModel.OtherClassDesc"
+                                                      name="otherBusinessName"
+                                                      required />
+                                            <br />
+                                            <span class="error" style="margin-top:4px;" ng-if="(!frmExposureInput.otherBusinessName.$pristine || submitted) && frmExposureInput.otherBusinessName.$error.required">Please describe your business in your own words</span>
+                                        </div>
+                                    </div>
+                                    <div ng-if="quoteViewModel.SelectedSearch=='1'">
+                                        <div class="select-group">
+                                            <div class="select-group">
+                                                <select id="ddlIndustries"
+                                                        data-ng-model="quoteViewModel.Industry"
+                                                        class="field field-lg"
+                                                        name="industry"
+                                                        focus="true"
+                                                        data-ng-options="industry.Description for industry in ::quoteViewModel.Industries track by industry.IndustryId"
+                                                        data-ng-change="getSubIndustries(quoteViewModel.Industry.IndustryId)"
+                                                        required>
+                                                    <option value="" disabled selected>Please Select an Industry</option>
+                                                </select>
+                                                <span class="error" ng-if="(submitted || !frmExposureInput.industry.$pristine) && frmExposureInput.industry.$error.required">Please Select Industry</span>
+                                                <div ng-if="showSubIndustry">
+                                                    <select id="ddlSubIndustries"
+                                                            class="field field-lg"
+                                                            data-ng-model="quoteViewModel.SubIndustry"
+                                                            name="subIndustry"
+                                                            data-ng-options="subIndustry.Description for subIndustry in quoteViewModel.SubIndustries track by subIndustry.SubIndustryId"
+                                                            data-ng-change="getClass(quoteViewModel.SubIndustry.SubIndustryId)"
+                                                            required>
+                                                        <option value="" disabled selected>Please Select a Sub-Industry</option>
+                                                    </select>
+                                                    <span class="error" ng-if="(!frmExposureInput.subIndustry.$pristine || submitted) && frmExposureInput.subIndustry.$error.required">Please Select SubIndustry</span>
+                                                </div>
+                                                <div ng-if="showClass">
+                                                    <select id="ddlClass"
+                                                            class="field field-lg"
+                                                            data-ng-model="quoteViewModel.Class"
+                                                            name="class"
+                                                            data-ng-options="class.Description for class in quoteViewModel.Classes track by class.ClassDescriptionId"
+                                                            data-ng-change="setCompanionClassData(class.ClassDescriptionId,'ddlClass',class.DirectOK)"
+                                                            required>
+                                                        <option value="" disabled selected>Please Select a Class</option>
+                                                    </select>
+                                                    <span class="error" ng-if="(!frmExposureInput.class.$pristine || submitted) && frmExposureInput.class.$error.required">Please Select Business</span>
+                                                </div>
+                                                <div class="input-group" ng-if="quoteViewModel.SubIndustry.SubIndustryId=='-1' || quoteViewModel.Industry.IndustryId=='-1' || quoteViewModel.Class.ClassDescriptionId=='-1'">
+                                                    <input type="text"
+                                                           maxlength="50"
+                                                           class="input-group-input field field-lg"
+                                                           data-ng-model="quoteViewModel.OtherClassDesc"
+                                                           name="otherBusinessName"
+                                                           required />
+                                                    <br />
+                                                    <span class="error" style="margin-top:4px;" ng-if="(!frmExposureInput.otherBusinessName.$pristine || submitted) && frmExposureInput.otherBusinessName.$error.required">Please Enter Other Business Name</span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <!-- <label class="checkbox d-iblock">
+                                      <input type="checkbox">
+                                      <span>
+                                        <svg class="icon-check" xmlns="http://www.w3.org/2000/svg" version="1.1" x="0" y="0" viewBox="-124 239.2 281 242" xml:space="preserve">
+                                          <path class="fill-teal--dark" d="M130.5 257.9c-9.3-9.3-24.4-9.3-33.7 0.7L-37.5 397l-35.1-35.1c-8.6-8.6-23-9.3-32.3-0.7l-11.5 10c-10 8.6-10 24.4-0.7 33.7l56.7 56.7c0 0 0 0 0.7 0l5.7 6.5c9.3 9.3 24.4 9.3 33.7-0.7l162.2-167c8.6-9.3 8.6-23.7-0.7-32.3L130.5 257.9z"/>
+                                        </svg>
+                                      </span>
+                                      I run another business that doesn’t really fit any of the descriptions above.
+                                    </label> -->
+                                    <label class="checkbox d-iblock">
+                                        <input ng-model="quoteViewModel.IsMultiStateApplicable" type="checkbox">
+                                        <span>
+                                            <svg class="icon-check" xmlns="http://www.w3.org/2000/svg" version="1.1" x="0" y="0" viewBox="-124 239.2 281 242" xml:space="preserve"> 
+                                            <path class="fill-teal--dark" d="M130.5 257.9c-9.3-9.3-24.4-9.3-33.7 0.7L-37.5 397l-35.1-35.1c-8.6-8.6-23-9.3-32.3-0.7l-11.5 10c-10 8.6-10 24.4-0.7 33.7l56.7 56.7c0 0 0 0 0.7 0l5.7 6.5c9.3 9.3 24.4 9.3 33.7-0.7l162.2-167c8.6-9.3 8.6-23.7-0.7-32.3L130.5 257.9z" />
+                            </svg>
+                                        </span>
+                                        I have locations in more than one state.
+                                    </label>
+                                </div>
+                            </div>
+                            <div class="question" ng-if="true">
+                                <div class="form-group">
+                                    <label>When do you want your policy to start? </label>
+                                    <div class="with-icon">
+                                        <input type="text"
+                                               autocomplete="off"
+                                               id="policyStartDate"
+                                               disable-date-picker="false"
+                                               name="policyStartDate"
+                                               date-control
+                                               class="datepicker field field-sm"
+                                               ng-model-options="{updateOn:'blur focusout'}"
+                                               startdate="+1"
+                                               enddate="+60"
+                                               ng-model="quoteViewModel.InceptionDate"
+                                               format="mm/dd/yy"
+                                               date-parser="MM/dd/yyyy"
+                                               placeholder="mm/dd/yyyy"
+                                               required>
+                                        <span class="icon-calendar"></span>
+                                    </div>
+                                    <span class="error" ng-if="(!frmExposureInput.policyStartDate.$error.required && frmExposureInput.policyStartDate.$error.invalidFormat)">Date format not valid</span>
+                                    <span class="error" ng-if="(!frmExposureInput.policyStartDate.$pristine || submitted) && !frmExposureInput.policyStartDate.$error.invalidFormat && !frmExposureInput.policyStartDate.$error.required && frmExposureInput.policyStartDate.$error.invalidRange">Policy Start Date should be between {{minDate | date:'MM/dd/yyyy' : 'UTC'}} and {{maxDate | date:'MM/dd/yyyy' : 'UTC'}}</span>
+                                    <span class="error" ng-if="(!frmExposureInput.policyStartDate.$pristine || submitted) && frmExposureInput.policyStartDate.$error.required">Policy Start Date not selected</span>
+                                </div>
+                            </div>
+                            <div class="question">
+                                <div class="form-group">
+                                    <label>How long have you been in business? </label>
+                                    <select class="field field-lg"
+                                            ng-class="(!frmExposureInput.businessYear.$pristine && frmExposureInput.businessYear.$error.required)?'error':''"
+                                            name="businessYear"
+                                            data-ng-model="quoteViewModel.SelectedYearInBusiness"
+                                            data-ng-options="businessYear.text for businessYear in quoteViewModel.YearsInBusinessList track by businessYear.value"
+                                            required>
+                                        <option value="" disabled selected>Please Select Years In Business</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="question" id="minPayrollAlerts">
+                                <div class="form-group">
+                                    <label>How much is the total annual employee payroll? </label>
+                                    <div ng-if="showMinPayRollFirstWarning" class="alert alert-warning relative">
+                                        <p class="alert-text">Hi, we just want to make sure we got your payroll right, you entered <strong>${{quoteViewModel.TotalPayroll}}</strong> and in most states, one full-time employee will earn at least <strong>{{25000| currency: "$" : 0}}</strong> annually. Did you mean to enter <strong>${{quoteViewModel.TotalPayroll}}</strong>?</p>
+                                        <div class="radio-group" ng-focus="showMinPayRollFirstWarning">
+                                            <label class="radio"><input type="radio" name="aep" ng-value="true" ng-click="updateMinPayRollFirstAlertResponse(true)"><span></span> Yes</label>
+                                            <label class="radio"><input type="radio" name="aep" ng-value="false" ng-click="updateMinPayRollFirstAlertResponse(false)"><span></span> No</label>
+                                        </div>
+                                    </div>
+                                    <div ng-if="showMinPayRollSecondWarning" class="alert alert-warning">
+                                        <p class="alert-text">Unfortunately for your type of business, the minimum payroll we are able to use is <strong>{{quoteViewModel.MinExpValidationAmount| currency: "$" : 0}}</strong>. Want to keep going?</p>
+                                        <div class="radio-group">
+                                            <label class="radio"><input type="radio" name="gmt" ng-click="updateMinPayRollSecondAlertResponse(true)"><span></span> Yes, update for me</label>
+                                            <label class="radio"><input type="radio" name="gmt" ng-click="updateMinPayRollSecondAlertResponse(false)"><span></span> No</label>
+                                        </div>
+                                    </div>
+                                    <div class="input-group with-tooltip with-icon field-sm">
+                                        <input type="text"
+                                               autocomplete="off"
+                                               id="txtMinPayrollExposureAmount"
+                                               name="TotalPayroll"
+                                               class="d-tcell field"
+                                               ng-keyup="voidValidity()"
+                                               ng-model-options="{updateOn : 'change blur'}"
+                                               ng-model="quoteViewModel.TotalPayroll"
+                                               max-length="11"
+                                               format="number"
+                                               currency-control
+                                               placeholder="e.g. 100,000" required />
+                                        <span class="icon-dollar"></span>
+                                    </div>
+                                    <span class="error" ng-if="(!frmExposureInput.TotalPayroll.$pristine || submitted) && frmExposureInput.TotalPayroll.$error.required">Annual Employee Payroll is required</span>
+                                    <span class="error" ng-if="!frmExposureInput.TotalPayroll.$error.required && (coreUtils.GetValidAmount(quoteViewModel.TotalPayroll) <= 0)">Amount should be greater than 0</span>
+                                    <div class="pt15">
+                                        <p class="field-help">Please give us your best estimate of what you'll pay to workers over the next 12 months.  This includes salaries, hourly wages, paid-time-off, commissions, and bonuses paid to employees that are covered under the policy.  Don’t include tips, or pay to your company’s officers or business owner(s).</p>
+                                        <p class="field-help">If you use independent contractors (1099 workers), include what you pay them unless you know that they have their own workers' compensation insurance.</p>
+                                        <p class="field-help">We only need your best estimate because next year, we will work with you in an audit to get the actual number.</p>
+                                    </div>
+                                </div>
+                                <div class="sub-question" ng-if="(quoteViewModel.CompClassData && quoteViewModel.CompClassData.length>0)">
+                                    <div class="question" ng-repeat="compClass in quoteViewModel.CompClassData">
+                                        <div class="form-group">
+                                            <label>{{compClass.PromptText}}<abbr bhic-tooltip ng-if="compClass.HelpText" data-tooltip="{{compClass.HelpText}}" class="tooltip">?</abbr></label>
+                                            <div class="radio-toggle">
+                                                <div class="btn-radio">
+                                                    <input type="radio" ng-model="compClass.IsExposureAmountRequired" required name="res_{{compClass.ClassCode}}" ng-value="true" id="Yes_{{compClass.ClassCode}}">
+                                                    <label for="Yes_{{compClass.ClassCode}}">Yes</label>
+                                                </div>
+                                                <div class="btn-radio">
+                                                    <input type="radio" ng-model="compClass.IsExposureAmountRequired" required name="res_{{compClass.ClassCode}}" ng-value="false" id="No_{{compClass.ClassCode}}">
+                                                    <label for="No_{{compClass.ClassCode}}">No</label>
+                                                </div>
+                                            </div>
+
+                                            @*<div class="row" ng-if="coreUtils.GetValidAmount(quoteViewModel.TotalPayroll) >= 50000 && compClass.IsExposureAmountRequired && (minExpValidation || (quoteViewModel.IsGoodStateApplicable && quoteViewModel.IsGoodState)) && directSales != 'N'">*@
+                                            <div class="row" ng-if="coreUtils.GetValidAmount(quoteViewModel.TotalPayroll) >= 50000 && compClass.IsExposureAmountRequired && directSales != 'N'">
+                                                <label class=" lg-col-4 text-normal">
+                                                    Please enter their payroll
+                                                </label>
+                                                <div class="lg-col-4">
+                                                    <div class="with-icon">
+                                                        <input type="text"
+                                                               ng-model="compClass.PayrollAmount"
+                                                               class="field field-lg"
+                                                               format="number"
+                                                               ng-blur="IsValidCompanionPayroll(compClass)"
+                                                               ng-model-options="{updateOn:'blur focusout'}"
+                                                               required
+                                                               currency-control>
+                                                        <span class="icon-dollar"></span>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <span class="error" ng-if="compClass.IsExposureAmountRequired && !companionErrors[compClass.ClassCode].sumExceedingTotalPayroll && companionErrors[compClass.ClassCode].amountExceedingTotalPayroll">The payroll for special employee descriptions should already be counted within the total.  The amount entered is too large.</span>
+                                            <span class="error" ng-if="compClass.IsExposureAmountRequired && companionErrors[compClass.ClassCode].sumExceedingTotalPayroll && !companionErrors[compClass.ClassCode].amountExceedingTotalPayroll">The payroll for special employee descriptions should already be counted within the total.  The amount entered is too large.</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="btn-actions clear">
+                            @*<button type="button" onclick="window.location.href = '@ConfigCommonKeyReader.AppBaseUrl'" class="btn btn-secondary">Back &amp; Modify</button>*@
+                            <button type="button" data-ng-click="navigateToBusinessInfo()" class="btn btn-secondary">Back &amp; Modify</button>
+                            <button type="submit" ng-click="submit()" class="btn btn-primary pull-right">Continue</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+
+            <!-- Comment : Here common SaveForLater directive for all pages -->
+            <div id="ModelSaveForLater" save-for-later-div-control currentquoteid="quoteViewModel.QuoteId" pagename="GetExposureDetails" isvalidform="{{frmExposureInput.$valid}}"
+                 submit-validated-form="submitSaveForLater(argument1)"></div>
+
+            @*<div id="ModelSaveForLater" save-for-later-div-control pagename="GetExposureDetails"></div>*@
+
+            <div class="lg-offset-1 lg-col-3">
+                <div class="sidebar"></div>
+            </div>
+
+        </div>
+    </div>
+</section>
+
+<script>
+    $(document).ready(function () {
+        $('.progress-bar').click(function (event) {
+            event.preventDefault();
+        });
+    });
+</script>

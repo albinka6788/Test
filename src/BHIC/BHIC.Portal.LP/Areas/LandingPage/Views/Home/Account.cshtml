@@ -1,0 +1,63 @@
+﻿@model BHIC.Portal.LP.Areas.LandingPage.Models.HomeViewModel
+@{
+    ViewBag.Title = "Account";
+    Layout = "~/Areas/LandingPage/Views/Shared/_Layout.cshtml";
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>Account</title>
+</head>
+<body style="margin-top:20px">
+    <p>
+        @Html.ActionLink("Add New Landing Page", "Index")
+    </p>
+        @if (Model.landingPageTransactions.Any())
+        {
+            <table class ="table table-striped table-hover">
+                <tr>
+                    <th>
+                        @Html.DisplayNameFor(model => model.landingPageTransaction.lob)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.landingPageTransaction.State)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.landingPageTransaction.TransactionCounter)
+                    </th>
+                    <th>
+                        @Html.DisplayName("Landing Page Url")
+                    </th>
+
+                </tr>
+
+                @foreach (var item in Model.landingPageTransactions)
+                {
+                    <tr class="info">
+                        <td>
+                            @Html.DisplayFor(modelItem => item.lob)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.State)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.TransactionCounter)
+                        </td>
+                        <td>
+                            @Html.ActionLink("Click Here", "GetAd", "Home", new { @AdId = @item.TokenId }, null)
+                        </td>
+
+                    </tr>
+                }
+
+                </table>
+        }
+        else
+        {
+            <span class="alert-danger">No Record Found!</span>
+        }
+</body>
+</html>

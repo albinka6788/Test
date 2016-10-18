@@ -1,0 +1,99 @@
+﻿@using BHIC.Common.Configuration;
+@using BHIC.Common.XmlHelper;
+@using BHIC.Common.Html;
+
+@{
+    var cdnVersion = BHIC.Portal.WC.BaseController.GetAssemblyVersion();
+}
+<!DOCTYPE html>
+<html>
+<head>
+
+    <title>Cover Your Business</title>
+
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="keywords" content="Workers' Compensation, Workers' Compensation Insurance, Business Owner's Policy Insurance, Commerical Auto Insurance, Cover Your Business, Free Insurance quote, www.coveryourbusiness.com" />
+    <meta name="description" content="CoverYourBusiness.com provides coverage to commercial insurance buyers for their businesses from insurers of the Berkshire Hathaway group of Insurance Companies." />
+    <link rel="icon" href="@CDN.Path/Content/Common/images/favicon.ico">
+    <link rel="shortcut icon" sizes="192x192" href="@CDN.Path/Content/Common/images/appicon-highres.png">
+    <link rel="shortcut icon" sizes="128x128" href="@CDN.Path/Content/Common/images/appicon.png">
+    <link rel="stylesheet" type="text/css" href="@ConfigCommonKeyReader.CloudTypographyUrl" />
+
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
+
+    @CDN.RenderStyles("/bundles/styles/ca")
+    @{
+        var loadingImage = string.Concat(ThemeManager.ThemeSharedCommonImagesBaseUrl(), "loading-lg.gif");
+    }
+    @if (!String.IsNullOrWhiteSpace(ConfigCommonKeyReader.InspectletWid))
+    {
+        @*@CDN.RenderScripts("/bundles/scripts/inspectlet")*@
+        <script src='@CDN.Path/Content/Common/scripts/inspectlet.js?v=@ConfigCommonKeyReader.CdnVersion'></script>
+    }
+
+</head>
+<body>
+
+    <!-- Comment : Here page level section -->
+    @*<div id="divLoader" class="loader-overlay" style="top:0;">
+        <div class="loader">
+            <img src='@loadingImage' alt="Loading...">
+        </div>
+    </div>*@
+    <div id="divLoader" class="loader-overlay" style="top:0;">
+        <div class="loader">
+            <div class="loader-content">
+                <p class="text-teal text-big text-medium mb-half">One moment please...</p>                
+                <img src='@loadingImage' alt="Loading...">
+            </div>
+            <div class="loader-progress"></div>
+        </div>
+    </div>
+
+    <header class="no-border commercial-auto">
+            <!-- Comment : Here header section -->
+            @Html.Partial("_HeaderLogoCA")
+    </header>
+    <!-- Comment : Here main central body section -->
+    <div class="main">
+        <section class="page-content">
+            <div class="container">
+                @RenderBody()
+            </div>
+        </section>
+    </div>
+
+    <!-- Comment : Here footer section -->
+    <footer class="bg-blue sm-center">
+        @Html.Partial("_Footer")
+    </footer>
+
+    <div class="overlay"></div>
+    @CDN.RenderScripts("/bundles/scripts/jquery")
+    @CDN.RenderScripts("/bundles/scripts/ca")
+
+    @RenderSection("scripts", required: false)
+
+</body>
+</html>
+<script>
+
+    companyName = '@BHIC.Common.XmlHelper.ConfigCommonKeyReader.ApplicationContactInfo["SysVarCompanyName"]';
+    companyName_NENATI20 = '@BHIC.Common.XmlHelper.ConfigCommonKeyReader.ApplicationContactInfo["CompanyName_NENATI20"]';
+
+</script>
+
+<script>
+    (function (i, s, o, g, r, a, m) {
+        i['GoogleAnalyticsObject'] = r; i[r] = i[r] || function () {
+            (i[r].q = i[r].q || []).push(arguments)
+        }, i[r].l = 1 * new Date(); a = s.createElement(o),
+        m = s.getElementsByTagName(o)[0]; a.async = 1; a.src = g; m.parentNode.insertBefore(a, m)
+    })(window, document, 'script', '//www.google-analytics.com/analytics.js', 'ga');
+
+    ga('create', '@ConfigCommonKeyReader.GACode', 'auto');
+    ga('send', 'pageview');
+
+</script>

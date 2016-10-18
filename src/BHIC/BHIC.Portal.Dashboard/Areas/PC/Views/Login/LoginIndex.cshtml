@@ -1,0 +1,118 @@
+﻿@using BHIC.Common.Html;
+@using BHIC.Common.Configuration;
+@using BHIC.Common.XmlHelper;
+
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Cover Your Business</title>
+    <link rel="icon" href='@string.Concat(ConfigCommonKeyReader.CdnPath, "Content/", ConfigCommonKeyReader.CdnDefaultCommonFolder, "/images/favicon.ico")'>
+    <link rel="shortcut icon" sizes="192x192" type="image/png" href='@string.Concat(ConfigCommonKeyReader.CdnPath, "Content/", ConfigCommonKeyReader.CdnDefaultCommonFolder, "/appicon-highres.png")'>
+    <link rel="shortcut icon" sizes="128x128" type="image/png" href='@string.Concat(ConfigCommonKeyReader.CdnPath, "Content/", ConfigCommonKeyReader.CdnDefaultCommonFolder, "/appicon.png")'>
+
+    <link rel="stylesheet" type="text/css" href="@ConfigCommonKeyReader.CloudTypographyUrl" />
+    @*@Styles.Render(CDN.Path + "/bundles/fonts" + cdnVersion)
+        @Styles.Render(CDN.Path + "/bundles/font-awesome" + cdnVersion)*@
+
+    @CDN.RenderScripts("/bundles/scripts/jquery")
+    @CDN.RenderScripts("/bundles/scripts/jqueryui")
+    @CDN.RenderStyles("/bundles/styles/Login")
+    @CDN.RenderScripts("/bundles/scripts/dashboard")
+    <script>baseUrl=@ConfigCommonKeyReader.BaseUrlPath;</script>
+    <script>appCdnDomain='@CDN.Path';</script>
+    <script>appBaseDomain=@ConfigCommonKeyReader.WcBaseUrlPath;</script>
+    @CDN.RenderScripts("/bundles/scripts/wc-dashboard-input-mask")   
+    @CDN.RenderScripts("/bundles/scripts/angular")
+    @CDN.RenderScripts("/bundles/scripts/wc-landing-modules")
+    @CDN.RenderScripts("/bundles/scripts/wc-login-modules")
+    @CDN.RenderScripts("/bundles/scripts/wc-main-modules")
+    @CDN.RenderScripts("/bundles/scripts/wc-loading_pc")
+    @CDN.RenderScripts("/bundles/scripts/wc-dashboard-captcha")
+    @CDN.RenderScripts("/bundles/scripts/wc-dashboard-account-registration")
+    @CDN.RenderScripts("/bundles/scripts/wc-dashboard-shared-service")
+    @CDN.RenderScripts("/bundles/scripts/wc-dashboard-forgot-password")
+    @CDN.RenderScripts("/bundles/scripts/wc-dashboard-reset-password")
+    @CDN.RenderScripts("/bundles/scripts/wc-dashboard-report-claim")
+    @CDN.RenderScripts("/bundles/scripts/wc-dashboard-file-upload")
+    @CDN.RenderScripts("/bundles/scripts/wc-dashboard-util")
+    @CDN.RenderScripts("/bundles/scripts/wc-dashboard-unauthorised")
+    @CDN.RenderScripts("/bundles/scripts/wc-dashboard-auto-focus")
+    @CDN.RenderScripts("/bundles/scripts/common-system-variables")
+</head>
+<body ng-app="Login">
+    <div id="divLoader" class="loader-overlay" style="top:0;">
+        <div class="loader">   
+            <div class="loader-content">
+                <p class="text-teal text-big text-medium mb-half">One moment please...</p>
+                @Html.ThemeImage("loading-lg.gif", new { alt = "loading..." })
+            </div>
+            <div class="loader-progress"></div>
+        </div>
+    </div>
+    <header class="with-nav">
+        @Html.Partial("_LoginHeader")
+    </header>
+
+    <div class="main">
+        @Html.AntiForgeryToken()
+        <div ng-view></div>
+    </div>
+
+    <footer class="bg-blue sm-center">
+        @Html.Partial("_LoginFooter")
+    </footer>
+    <div class="remodal remodal-full" id="headerScheduleCall" data-remodal-id="scheduleCallModel" data-remodal-options="hashTracking: false">
+        <button data-remodal-action="close" class="remodal-close"></button>
+        <div class="container">
+            <div class="row">
+                <div class="lg-col-6 center">
+                    <div class="mb2">
+                        <div class="mb1 clockImg">
+                            @Html.ThemeImage("schedule_a_call_icon.png", "img-responsive", new { alt = "" })
+                        </div>
+                        <p class="left"> If now is not a convenient time, we are happy to talk to you at a time that works better. We are available from <span class="text-medium"> Monday - Friday, 8:00 am - 7:30 pm EST.</span> Pick a time and we’ll give you a call back to discuss your insurance then. </p>
+                    </div>
+                </div>
+                <schedule-call></schedule-call>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
+<script>
+    // Start LiveChat Embedded Icon/Tracking Code
+    var __lc = {};
+    __lc.license = @ConfigCommonKeyReader.LCLicense;
+    __lc.group = '@ConfigCommonKeyReader.LCGroup';
+    __lc.params = [
+        { name: '@ConfigCommonKeyReader.LCServerName', value: '@ConfigCommonKeyReader.LCServerValue' },
+    ];
+
+    (function() {
+        var flag='@ConfigCommonKeyReader.EnvironmentName';
+
+        if(!(flag.toUpperCase() =='DEV'))
+        {
+            var lc = document.createElement('script'); lc.type = 'text/javascript'; lc.async = true;
+            lc.src = '@ConfigCommonKeyReader.LCSrc';
+            var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(lc, s);
+        }
+    })();
+
+</script>
+<script>
+
+    phoneNumber_CSR ='@BHIC.Common.XmlHelper.ConfigCommonKeyReader.ApplicationContactInfo["PhoneNumber_CSR"]';
+    companyDomain = '@BHIC.Common.XmlHelper.ConfigCommonKeyReader.ApplicationContactInfo["Company_Domain"]';
+    companyName = '@BHIC.Common.XmlHelper.ConfigCommonKeyReader.ApplicationContactInfo["SysVarCompanyName"]';
+    companyName_NENATI20 ='@BHIC.Common.XmlHelper.ConfigCommonKeyReader.ApplicationContactInfo["CompanyName_NENATI20"]';
+    physical_Address1 ='@BHIC.Common.XmlHelper.ConfigCommonKeyReader.ApplicationContactInfo["Physical_Address1"]';
+    physical_Address2 ='@BHIC.Common.XmlHelper.ConfigCommonKeyReader.ApplicationContactInfo["Physical_Address2"]';
+    physical_AddressCSZ ='@BHIC.Common.XmlHelper.ConfigCommonKeyReader.ApplicationContactInfo["Physical_AddressCSZ"]';
+    mailingClaims_NewClaimPhone ='@BHIC.Common.XmlHelper.ConfigCommonKeyReader.ApplicationContactInfo["MailingClaims_NewClaimPhone"]';
+    faxNumber_Claims = '@BHIC.Common.XmlHelper.ConfigCommonKeyReader.ApplicationContactInfo["FaxNumber_Claims"]';
+    company_WebsiteURL ='@BHIC.Common.XmlHelper.ConfigCommonKeyReader.ApplicationContactInfo["Company_WebsiteURL"]';
+</script>

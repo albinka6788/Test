@@ -1,0 +1,92 @@
+﻿@model BHIC.Portal.LP.Areas.LandingPage.Models.HomeViewModel
+@{
+    ViewBag.Title = "Landing Page Account";
+    Layout = "~/Areas/LandingPage/Views/Shared/_Layout.cshtml";
+    <link href="~/Content/stylesheet.css" rel="stylesheet" />
+    Html.EnableClientValidation(true);
+}
+<br />
+@Html.AntiForgeryToken()
+@Html.ValidationSummary(true)
+<div id="mmsi_container" class="container">
+    <div class="row">
+        <div class="col-sm-12 relative">
+            <h2><span>Landing Page</span> Accounts</h2>
+        </div>
+
+    </div>
+    <div class="right marB10">
+        @Html.ActionLink("Add Landing Page", "Index", "Home", new { area = "LandingPage" }, new { @class = "btn btn-success" })
+    </div>
+
+    <div id="table_container">
+        <div class="table_title">Landing Page List</div>
+        <div class="pad_table clearfix">
+            @{ Html.RenderPartial("_AjaxLandingPageAccountList", Model); }
+
+            <!-- end container -->
+        </div>
+
+    </div>
+</div>
+
+
+@{
+    <script type="text/javascript">
+    $(function () {
+        $("input:radio[name=radioOption]").click(function () {
+            var value = $(this).attr("id");
+            $('#SelectedUser').val(value);
+        });
+
+    });
+
+    $(function () {
+        $('input[type="submit"]').click(function () {
+
+            if ($(this).attr("id") == "btnEdit" || $(this).attr("id") == "btnView" || $(this).attr("id") == "btnformd2" || $(this).attr("id") == "btnformd1") {
+
+
+                    // Submit the form
+                    var value = $('#SelectedUser').val();
+
+                    if (value == 0) {
+                        $('#span_SelectUserId').text("Please select any one User.");
+                        $('#span_SelectUserId').show();
+                        event.preventDefault();
+                    }
+                    else
+                    {
+                        $('#span_SelectUserId').text("");
+                        $('#span_SelectUserId').hide();
+                        $("#PatientAccount").submit();
+                    }
+
+
+
+            }
+        }
+        );
+    });
+
+    $("#PatientAccount").submit(function (event) {
+        var value = $('input:radio[name=radioOption]').is(':checked');
+        var val = $("#btnsearch").attr("value");
+
+        if (value == false && val != "Search") {
+            $('#span_SelectUserId').text("Please select any one User.");
+            $('#span_SelectUserId').show();
+            event.preventDefault();
+
+
+        }
+        else {
+            $('#span_SelectUserId').text("");
+            $('#span_SelectUserId').hide();
+        }
+
+    });
+
+    </script>
+}
+

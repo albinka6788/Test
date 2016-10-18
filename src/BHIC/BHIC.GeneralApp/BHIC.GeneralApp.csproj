@@ -1,0 +1,107 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="12.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{80B9C8FA-2099-43E8-821D-6A1D300897FA}</ProjectGuid>
+    <OutputType>Exe</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>BHIC.GeneralApp</RootNamespace>
+    <AssemblyName>BHIC.GeneralApp</AssemblyName>
+    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="NLog, Version=4.0.0.0, Culture=neutral, PublicKeyToken=5120e14c03d0593c, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\NLog.4.1.2\lib\net45\NLog.dll</HintPath>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Program.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="App.config" />
+    <Content Include="NLog.config">
+      <SubType>Designer</SubType>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <None Include="NLog.xsd">
+      <SubType>Designer</SubType>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\BHIC.Common.Client\BHIC.Common.Client.csproj">
+      <Project>{797663fa-3772-47c1-9e2c-6d2ea3be2a11}</Project>
+      <Name>BHIC.Common.Client</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\BHIC.Common.DataAccess\BHIC.Common.DataAccess.csproj">
+      <Project>{f69d09cc-9732-4bcf-b95f-8f9a4c47663e}</Project>
+      <Name>BHIC.Common.DataAccess</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\BHIC.Common.Logging\BHIC.Common.Logging.csproj">
+      <Project>{1127c27c-68f5-4525-a68a-72367147a4cb}</Project>
+      <Name>BHIC.Common.Logging</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\BHIC.Common\BHIC.Common.csproj">
+      <Project>{35bc1847-77a6-44db-bbeb-25a99a5f700e}</Project>
+      <Name>BHIC.Common</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\BHIC.Contract\BHIC.Contract.WC.csproj">
+      <Project>{7c5c6d0f-90ab-41d6-9863-468ae3f96cb6}</Project>
+      <Name>BHIC.Contract.WC</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\BHIC.Core\BHIC.Core.WC.csproj">
+      <Project>{55f05b0d-b992-4eb1-91a5-9274adcfaaaa}</Project>
+      <Name>BHIC.Core.WC</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\BHIC.DML.WC\BHIC.DML.WC.csproj">
+      <Project>{cafa6ace-09bc-4f38-ad61-641576f3333d}</Project>
+      <Name>BHIC.DML.WC</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\BHIC.Domain\BHIC.Domain.WC.csproj">
+      <Project>{a3b360bc-6d15-4da6-bb04-551e6be45965}</Project>
+      <Name>BHIC.Domain.WC</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\BHIC.ViewDomain\BHIC.ViewDomain.WC.csproj">
+      <Project>{3733bf06-dab1-4264-9892-b2095c7b5636}</Project>
+      <Name>BHIC.ViewDomain.WC</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>

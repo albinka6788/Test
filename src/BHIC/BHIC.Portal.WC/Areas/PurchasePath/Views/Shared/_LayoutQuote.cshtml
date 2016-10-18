@@ -1,0 +1,201 @@
+﻿@using BHIC.Common.Html;
+@using BHIC.Common.Configuration;
+@using BHIC.Common.XmlHelper;
+@using BHIC.Domain.Dashboard;
+@using BHIC.Common.Client;
+@using BHIC.Core.Background;
+@using BHIC.Contract.Background;
+@using BHIC.Common.Quote;
+
+@{
+
+    var cdnVersion = BHIC.Portal.WC.BaseController.GetAssemblyVersion();
+
+    <!-- Get request URL scheme and host details -->
+    var baseSchemeAndHostUrl = string.Concat(HttpContext.Current.Request.Url.Scheme, "://", HttpContext.Current.Request.Url.Host);
+
+    <!-- Prepare PP Base url -->
+    var AppBaseUrl = string.Concat(baseSchemeAndHostUrl, ConfigCommonKeyReader.PurchasePathAppBaseURL);
+
+    <!-- Prepare PP Base url withour last trailing slash -->
+    AppBaseUrl = AppBaseUrl.EndsWith("/") ? AppBaseUrl.Substring(0, AppBaseUrl.Length - 1) : AppBaseUrl;
+
+    ServiceProvider guardServiceProvider = new GuardServiceProvider() { ServiceCategory = ServiceProviderConstants.GuardServiceCategoryWC };
+    ISystemVariableService systemVariable = new SystemVariableService(guardServiceProvider);
+
+    var pNumber = systemVariable.GetSystemVariableByKey(ConfigCommonKeyReader.ApplicationContactInfo["PhoneNumber_CSR"]);
+    var bHours = systemVariable.GetSystemVariableByKey(ConfigCommonKeyReader.ApplicationContactInfo["BusinessHours"]);
+
+    var appSesson = Session["CustomSession"] != null ? (BHIC.ViewDomain.CustomSession)Session["CustomSession"] : null;
+}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+
+    <title>Cover Your Business</title>
+
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="keywords" content="Workers' Compensation, Workers' Compensation Insurance, Business Owner's Policy Insurance, Commerical Auto Insurance, Cover Your Business, Free Insurance quote, www.coveryourbusiness.com" />
+    <meta name="description" content="CoverYourBusiness.com provides coverage to commercial insurance buyers for their businesses from insurers of the Berkshire Hathaway group of Insurance Companies." />
+    <link rel="icon" href="@CDN.Path/Content/Common/images/favicon.ico">
+    <link rel="shortcut icon" sizes="192x192" href="@CDN.Path/Content/Common/images/appicon-highres.png">
+    <link rel="shortcut icon" sizes="128x128" href="@CDN.Path/Content/Common/images/appicon.png">
+    <link rel="stylesheet" type="text/css" href="@ConfigCommonKeyReader.CloudTypographyUrl" />
+
+    @*@CDN.RenderStyles("/bundles/jquery-ui")
+        @CDN.RenderStyles("/bundles/styles")*@
+    @CDN.RenderStyles("/bundles/style-quotepage")
+
+    <style type="text/css">
+        .field.btn-loading {
+            background-position: 98% center;
+        }
+    </style>
+    @if (!String.IsNullOrWhiteSpace(ConfigCommonKeyReader.InspectletWid))
+    {
+        @*@CDN.RenderScripts("/bundles/scripts/inspectlet")*@
+        <script src='@CDN.Path/Content/Common/scripts/inspectlet.js?v=@ConfigCommonKeyReader.CdnVersion'></script>
+    }
+
+    <!-- Comment : Here add this custome CSS only when DEV environment -->
+    @if (!(ConfigCommonKeyReader.EnvironmentName.ToUpper() == "DEV"))
+    {
+        @CDN.RenderStyles("/bundles/wc-custom-other")
+    }
+
+    <!-- Comment : Here script bundles links -->
+    @CDN.RenderScripts("/bundles/scripts/jquery")
+    @CDN.RenderScripts("/bundles/scripts/jqueryui")
+
+</head>
+
+<body ng-app="BHIC.WC">
+
+    <header class="no-nav no-border">
+        @Html.Partial("_HeaderLogoQuote")
+    </header>
+
+    @RenderBody()
+
+    <footer class="bg-blue sm-center">
+        @Html.Partial("_FooterQuote")
+    </footer>
+
+    <!-- Comment : Here ScheduleACall(Remodel) DIV -->
+    <div class="remodal remodal-full" data-remodal-id="scheduleCallModel">
+        <button ng-click="closeThankyouForm();" class="remodal-close"></button>
+        <div class="container">
+            <div class="row">
+                <div class="lg-col-6 center">
+                    <div class="mb2">
+                        <div class="mb1 clockImg">
+                            @Html.ThemeImage("schedule_a_call_icon.png", "img-responsive", new { alt = "" })
+                        </div>
+                        <p class="left"> If now is not a convenient time, we are happy to talk to you at a time that works better. We are available from <span class="text-medium hoursBusiness"></span>. Pick a time and we’ll give you a call back to discuss your insurance then. </p>
+                    </div>
+                </div>
+                <schedule-call></schedule-call>
+            </div>
+        </div>
+    </div>
+
+    <div class="remodal" data-remodal-id="navigationModel">
+        <navigation-div-control></navigation-div-control>
+    </div>
+
+    <!-- Comment : Here script bundles links -->
+
+    <script>
+
+        phoneNumber_CSR = '@BHIC.Common.XmlHelper.ConfigCommonKeyReader.ApplicationContactInfo["PhoneNumber_CSR"]';
+        companyDomain = '@BHIC.Common.XmlHelper.ConfigCommonKeyReader.ApplicationContactInfo["Company_Domain"]';
+        companyName = '@BHIC.Common.XmlHelper.ConfigCommonKeyReader.ApplicationContactInfo["SysVarCompanyName"]';
+        companyName_NENATI20 = '@BHIC.Common.XmlHelper.ConfigCommonKeyReader.ApplicationContactInfo["CompanyName_NENATI20"]';
+        physical_Address1 = '@BHIC.Common.XmlHelper.ConfigCommonKeyReader.ApplicationContactInfo["Physical_Address1"]';
+        physical_Address2 = '@BHIC.Common.XmlHelper.ConfigCommonKeyReader.ApplicationContactInfo["Physical_Address2"]';
+        physical_AddressCSZ = '@BHIC.Common.XmlHelper.ConfigCommonKeyReader.ApplicationContactInfo["Physical_AddressCSZ"]';
+        mailingClaims_NewClaimPhone = '@BHIC.Common.XmlHelper.ConfigCommonKeyReader.ApplicationContactInfo["MailingClaims_NewClaimPhone"]';
+        faxNumber_Claims = '@BHIC.Common.XmlHelper.ConfigCommonKeyReader.ApplicationContactInfo["FaxNumber_Claims"]';
+        company_WebsiteURL = '@BHIC.Common.XmlHelper.ConfigCommonKeyReader.ApplicationContactInfo["Company_WebsiteURL"]';
+        businessHours = '@BHIC.Common.XmlHelper.ConfigCommonKeyReader.ApplicationContactInfo["BusinessHours"]';
+
+    </script>
+
+    @*@CDN.RenderScripts("/bundles/scripts/wc-custom-other")
+        @CDN.RenderScripts("/bundles/scripts/remodal")
+        @CDN.RenderScripts("/bundles/scripts/main")*@
+
+    <!-- Comment : Here explicitly navigate user to application HOME page after SaveForLater submission -->
+    <script>
+        $(document).on('closed', '.remodal', function (e) {
+            var triggeredElementRemodelId = e.target.attributes['data-remodal-id'].value;
+            var modelName = triggeredElementRemodelId;
+
+            //Comment : Here only when ModelSaveForLaterThankYou is closed
+            if (modelName != null && modelName != '')
+            {
+                if (modelName == 'ModelSaveForLaterThankYou')
+                {
+                    location.href = '@ConfigCommonKeyReader.AppBaseUrl';
+                      
+
+
+                    @*location.href = '@string.Concat(HttpContext.Current.Request.Url.Scheme, "://", HttpContext.Current.Request.Url.Host,ConfigCommonKeyReader.PurchasePathAppBaseURL, "Home")';*@
+                }
+                else if (modelName == 'navigationModel') {
+                    //reset global varibale
+                    navigation = {};
+                }
+            }
+        });
+</script>
+
+    <!-- Comment : Here get PC user session after Header load -->
+    @{
+        var appSessonPcUser = Session["user"] != null ? (UserRegistration)Session["user"] : null;        
+    }
+
+    <script>
+        var appBaseDomain = '@AppBaseUrl';
+        var appCdnDomain = '@CDN.Path';
+        
+        var loggedUserEmailId = '@((appSessonPcUser != null && !string.IsNullOrEmpty(appSessonPcUser.Email)) ? appSessonPcUser.Email : "")';
+        @*var loggedUserEmailId = '@(Session["user"] != null ? ((UserRegistration)Session["user"]).Email : "")'; //Old Line *@
+
+        var prospectInfoEmailId =
+              '@((appSesson != null && appSesson.BusinessInfoVM != null && !string.IsNullOrEmpty(appSesson.BusinessInfoVM.Email)) ? appSesson.BusinessInfoVM.Email : "")';
+
+        var phoneNumber = '@pNumber';
+        var hoursBusiness = '@bHours';
+        var quoteId = '@QuoteCookieHelper.Cookie_GetQuoteId(this.Request.RequestContext.HttpContext)';
+        var appBaseUrl = '@ConfigCommonKeyReader.AppBaseUrl';
+        var navigation = {};
+    </script>
+    <script>
+        (function (w, d, t, r, u)
+        {
+            var f, n, i;
+            w[u] = w[u] || [], f = function () {
+                var o = { ti: "5320905" };
+                o.q = w[u],
+                w[u] = new UET(o),
+                w[u].push("pageLoad")
+            },
+            n = d.createElement(t),
+            n.src = r,
+            n.async = 1,
+            n.onload = n.onreadystatechange = function () {
+                var s = this.readyState;
+                s && s !== "loaded" && s !== "complete" || (f(), n.onload = n.onreadystatechange = null)
+            },
+            i = d.getElementsByTagName(t)[0],
+            i.parentNode.insertBefore(n, i)
+        })(window, document, "script", "//bat.bing.com/bat.js", "uetq");
+    </script>
+    <noscript>
+    <img src="//bat.bing.com/action/0?ti=5320905&Ver=2" height="0" width="0" style="display:none; visibility: hidden;" /></noscript>
+</body>
+</html>

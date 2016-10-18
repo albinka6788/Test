@@ -1,0 +1,407 @@
+﻿@using BHIC.Portal.Code.Html;
+
+@{
+    ViewBag.Title = "VerifyOrderGet";
+    Layout = "~/Areas/Account/Views/Shared/_Layout.cshtml";
+}
+
+<style type="text/css">
+    #div-verifyPurchaseOrderForm {
+        /*margin: 20px auto;*/
+        background-color: #e1d4c0;
+        padding-top: 10px;
+        font-family: "Open Sans","Segoe UI",Tahoma,sans-serif;
+        font-size: 14px;
+        text-rendering: auto;
+        color: #574f43;
+    }
+
+    h4 {
+        font-size: 18px;
+    }
+
+    .info-panel {
+        background-color: #fff;
+        border-color: #eee;
+        border-radius: 4px;
+        border-style: solid;
+        border-width: 1px 1px 1px 1px;
+        margin: 20px 10px 0px 10px;
+        padding: 10px;
+    }
+
+    #referralHeader {
+        padding: 10px;
+    }
+
+    .div-row {
+        width: 100%;
+        clear: both;
+        margin: 9px 0;
+        padding: 7px;
+    }
+
+    .row-label {
+        width: 20%;
+        font-weight: bold;
+        text-align: left;
+        float: left;
+    }
+
+    .row-control {
+        /*width:70%;*/
+        text-align: left;
+    }
+
+    .verify-purcahseOrder-form-submit {
+        margin: 20px 10px 0px 10px;
+        padding-bottom: 10px;
+        opacity: 0.3;
+    }
+
+    .pad-left {
+        padding-left: 10px;
+        color: red;
+    }
+
+    .policy-terms {
+        background-color: #fff;
+        border: 1px solid #555;
+        height: 250px;
+        overflow-x: auto;
+        padding: 10px;
+    }
+
+    .ds-button-activecommand {
+        background-color: #eb502d !important;
+        border-color: #F28a73;
+    }
+
+    .active {
+        opacity: 100;
+    }
+
+    .bottomGap {
+        margin: 20px 10px 0px 10px;
+        padding-bottom: 10px;
+    }
+</style>
+
+<div id="div-verifyPurchaseOrderForm" data-ng-app="bhic-app" data-ng-controller="verifyPurchaseOrderPageCtrl as verifyOrderCtrl" data-ng-init="">
+    <!--Comment : Here form for collect referral process user information -->
+    <form name="form_verifyPurchaseOrder" novalidate>
+        <h4>Please Confirm the Details of Your Order Below</h4>
+        <!--Comment : Here Policy Information -->
+        <div class="info-panel">
+
+            <h4>Policy Information</h4>
+            <hr />
+            <div class="div-row">
+                <label class="row-label">Business Type</label>
+                <div class="row-control">
+                    <span data-ng-bind="verifyOrderCtrl.purchaseModel.BusinessInfo.BusinessName" />
+                </div>
+            </div>
+            <div class="div-row">
+                <label class="row-label">Effective Date</label>
+                <div class="row-control">
+                    <span data-ng-bind="verifyOrderCtrl.purchaseModel.Policy.PolicyDate" />
+                </div>
+            </div>
+            <div class="div-row">
+                <label class="row-label">Due Now</label>
+                <div class="row-control">
+                    <span data-ng-bind="verifyOrderCtrl.resultQuote.CurrentDue" />
+                </div>
+            </div>
+            <div class="div-row">
+                <label class="row-label">Future Installment Amount</label>
+                <div class="row-control">
+                    <span data-ng-bind="verifyOrderCtrl.resultQuote.FutureInstallmentAmount" />
+                </div>
+            </div>
+            <div class="div-row">
+                <label class="row-label">Number of Installments</label>
+                <div class="row-control">
+                    <span data-ng-bind="verifyOrderCtrl.resultQuote.NoOfInstallment" />
+                </div>
+            </div>
+            <div class="div-row">
+                <label class="row-label">Installment Fee</label>
+                <div class="row-control">
+                    <span data-ng-bind="verifyOrderCtrl.resultQuote.InstallmentFee" />
+                </div>
+            </div>
+            <hr />
+            <div class="div-row">
+                <label class="row-label">Total Due</label>
+                <div class="row-control">
+                    <span data-ng-bind="verifyOrderCtrl.resultQuote.Premium" />
+                </div>
+            </div>
+
+        </div>
+
+        <!--Comment : Here Contact Information -->
+        <div class="info-panel">
+
+            <h4>Your Contact Information</h4>
+            <hr />
+            <div class="div-row">
+                <label class="row-label">Email Address</label>
+                <div class="row-control">
+                    <span data-ng-bind="verifyOrderCtrl.purchaseModel.PersonalContact.Email" />
+                </div>
+            </div>
+            <div class="div-row">
+                <label class="row-label">First Name</label>
+                <div class="row-control">
+                    <span data-ng-bind="verifyOrderCtrl.purchaseModel.PersonalContact.FirstName" />
+                </div>
+            </div>
+            <div class="div-row">
+                <label class="row-label">Last Name</label>
+                <div class="row-control">
+                    <span data-ng-bind="verifyOrderCtrl.purchaseModel.PersonalContact.LastName" />
+                </div>
+            </div>
+            <div class="div-row">
+                <label class="row-label">Contact Phone</label>
+                <div class="row-control">
+                    <span data-ng-bind="verifyOrderCtrl.purchaseModel.PersonalContact.PhoneNumber" />
+                </div>
+            </div>
+
+        </div>
+
+        <!--Comment : Here Business Contact Information -->
+        <div class="info-panel">
+
+            <h4>Covered Business Contact Information</h4>
+            <hr />
+            <div class="div-row">
+                <label class="row-label">Email Address</label>
+                <div class="row-control">
+                    <a href="mailto:prem@gmail.com">{{verifyOrderCtrl.purchaseModel.BusinessContact.Email}}</a>
+                </div>
+            </div>
+            <div class="div-row">
+                <label class="row-label">First Name</label>
+                <div class="row-control">
+                    <span data-ng-bind="verifyOrderCtrl.purchaseModel.BusinessContact.FirstName" />
+                </div>
+            </div>
+            <div class="div-row">
+                <label class="row-label">Last Name</label>
+                <div class="row-control">
+                    <span data-ng-bind="verifyOrderCtrl.purchaseModel.BusinessContact.LastName" />
+                </div>
+            </div>
+            <div class="div-row">
+                <label class="row-label">Contact Phone</label>
+                <div class="row-control">
+                    <span data-ng-bind="verifyOrderCtrl.purchaseModel.BusinessContact.PhoneNumber" />
+                </div>
+            </div>
+
+        </div>
+
+        <!--Comment : Here Additional Business Information -->
+        <div class="info-panel">
+
+            <h4>Additional Business Information</h4>
+            <hr />
+            <div class="div-row">
+                <label class="row-label">Business Name</label>
+                <div class="row-control">
+                    <span data-ng-bind="verifyOrderCtrl.purchaseModel.BusinessInfo.BusinessName" />
+                </div>
+            </div>
+            <div class="div-row">
+                <label class="row-label">Business Type</label>
+                <div class="row-control">
+                    <span data-ng-bind="verifyOrderCtrl.purchaseModel.BusinessInfo.BusinessType.Description" />
+                </div>
+            </div>
+            <div class="div-row">
+                <label class="row-label">Tax ID Type</label>
+                <div class="row-control">
+                    <span data-ng-bind="verifyOrderCtrl.purchaseModel.BusinessInfo.TaxIdType.Text" />
+                </div>
+            </div>
+            <div class="div-row">
+                <label class="row-label">Tax ID or SSN</label>
+                <div class="row-control">
+                    <span data-ng-bind="verifyOrderCtrl.purchaseModel.BusinessInfo.TaxIdOrSSN" />
+                </div>
+            </div>
+
+        </div>
+
+        <!--Comment : Here Mailing Address Information -->
+        <div class="info-panel">
+
+            <h4>Business Mailing Address</h4>
+            <hr />
+            <div class="div-row">
+                <label class="row-label">Address Line 1</label>
+                <div class="row-control">
+                    <span data-ng-bind="verifyOrderCtrl.purchaseModel.MailingAddress.AddressLine1" />
+                </div>
+            </div>
+            <div class="div-row">
+                <label class="row-label">Address Line 2</label>
+                <div class="row-control">
+                    <span data-ng-bind="verifyOrderCtrl.purchaseModel.MailingAddress.AddressLine2" />
+                </div>
+            </div>
+            <div class="div-row">
+                <label class="row-label">City</label>
+                <div class="row-control">
+                    <span data-ng-bind="verifyOrderCtrl.purchaseModel.MailingAddress.City" />
+                </div>
+            </div>
+            <div class="div-row">
+                <label class="row-label">State</label>
+                <div class="row-control">
+                    <span data-ng-bind="verifyOrderCtrl.purchaseModel.MailingAddress.State" />
+                </div>
+            </div>
+            <div class="div-row">
+                <label class="row-label">Zip</label>
+                <div class="row-control">
+                    <span data-ng-bind="verifyOrderCtrl.purchaseModel.MailingAddress.Zip" />
+                </div>
+            </div>
+
+        </div>
+
+        <!-- Comment : Here form submit controls -->
+        <div class="bottomGap">
+            <button type="submit" data-ng-click="verifyOrderCtrl.redirectToPurchase()">EDIT THE ABOVE</button>
+            &nbsp;&nbsp;Or, continue below...
+        </div>
+
+        <!-- Comment : Here "Terms and Conditions" -->
+        <div class="info-panel">
+
+            <h4>Terms and Conditions</h4>
+            <div class="div-row">
+                <span>Please review the terms and conditions below:</span>
+                <br />
+                <div id="policy-terms" class="policy-terms">@Html.ThemeSharedContent("checkbox-terms-and-conditions")</div>
+            </div>
+            <div class="div-row">
+                <input name="AgreeToTermsOfService" type="checkbox" data-ng-model="verifyOrderCtrl.iAccept" value="" />
+                &nbsp;<label>I accept the above terms and conditions.</label>
+            </div>
+
+        </div>
+
+        <!-- Comment : Here "Credit Card Payment" -->
+        <div class="info-panel verify-purcahseOrder-form-submit" data-ng-class="{active:verifyOrderCtrl.iAccept}">
+
+            <h4>Credit Card Payment</h4>
+            <hr />
+            <div style="font-weight:bold;padding:5px;background-color:#cabeac;color:#000">This is a secure SSL encrypted payment. You are safe.</div>
+            <div class="div-row">
+                <label class="row-label">Credit Card Number</label>
+                <div class="row-control">
+                    <input name="creditCardNumber" type="text" data-ng-model="verifyOrderCtrl.paymentInfo.ccNumber" data-ng-required="true" credit-card-number data-ng-pattern="/^[0-9]+$/" minlength="15" maxlength="19" />
+                    <span data-ng-show="form_verifyPurchaseOrder.creditCardNumber.$error && (form_verifyPurchaseOrder.creditCardNumber.$dirty || verifyOrderCtrl.formSubmitted)" class="pad-left" data-ng-cloak="">
+                        <span data-ng-show="form_verifyPurchaseOrder.creditCardNumber.$error.required">
+                            {{verifyOrderCtrl.validationMessage.ccNumRequired}}
+                        </span>
+                        @*<span ng-show="form_verifyPurchaseOrder.creditCardNumber.$error.minlength">Credit card must be 15-19 digits</span>*@
+                        <span ng-show="form_verifyPurchaseOrder.creditCardNumber.$error.pattern">Credit card must consist of only numbers</span>
+                        <span data-ng-show="!form_verifyPurchaseOrder.creditCardNumber.$error.required && form_verifyPurchaseOrder.creditCardNumber.$error.invalid">
+                            Invalid CC Number
+                        </span>
+                    </span>
+                </div>
+            </div>
+            <div class="div-row">
+                <label class="row-label">Name on Card</label>
+                <div class="row-control">
+                    <input name="creditCardName" type="text" data-ng-model="verifyOrderCtrl.paymentInfo.ccName" data-ng-required="true" />
+                    <span data-ng-show="form_verifyPurchaseOrder.creditCardName.$error" class="pad-left" data-ng-cloak="">
+                        <span data-ng-show="form_verifyPurchaseOrder.creditCardName.$error.required && (form_verifyPurchaseOrder.creditCardName.$dirty || verifyOrderCtrl.formSubmitted)">
+                            {{verifyOrderCtrl.validationMessage.ccNameRequired}}
+                        </span>
+                    </span>
+                </div>
+            </div>
+            <div class="div-row">
+                <label class="row-label">Expiration Date</label>
+                <div class="row-control">
+                    <select name="ddlCCardMonth" id="ccMonth" data-ng-model="verifyOrderCtrl.paymentInfo.ccExpireMonth" data-ng-required="true">
+                        <option value="">Month</option>
+                        <option value="01">January</option>
+                        <option value="02">February</option>
+                        <option value="03">March</option>
+                        <option value="04">April</option>
+                        <option value="05">May</option>
+                        <option value="06">June</option>
+                        <option value="07">July</option>
+                        <option value="08">August</option>
+                        <option value="09">September</option>
+                        <option value="10">October</option>
+                        <option value="11">November</option>
+                        <option value="12">December</option>
+                    </select>
+                    <select name="ddlCCardYear" id="ccYear" data-ng-model="verifyOrderCtrl.paymentInfo.ccExpireYear" data-ng-required="true">
+                        <option value="">Year</option>
+                        <option value="15">2015</option>
+                        <option value="16">2016</option>
+                        <option value="17">2017</option>
+                        <option value="18">2018</option>
+                        <option value="19">2019</option>
+                        <option value="20">2020</option>
+                        <option value="21">2021</option>
+                        <option value="22">2022</option>
+                        <option value="23">2023</option>
+                        <option value="24">2024</option>
+                        <option value="25">2025</option>
+                        <option value="26">2026</option>
+                        <option value="27">2027</option>
+                        <option value="28">2028</option>
+                        <option value="29">2029</option>
+                        <option value="30">2030</option>
+                        <option value="31">2031</option>
+                        <option value="32">2032</option>
+                        <option value="33">2033</option>
+                        <option value="34">2034</option>
+                        <option value="35">2035</option>
+                    </select>
+                    <span data-ng-show="form_verifyPurchaseOrder.ddlCCardMonth.$error" class="pad-left" data-ng-cloak="">
+                        <span data-ng-show="form_verifyPurchaseOrder.ddlCCardMonth.$error.required && (form_verifyPurchaseOrder.ddlCCardMonth.$dirty || verifyOrderCtrl.formSubmitted)">
+                            {{verifyOrderCtrl.validationMessage.ccExpMonthRequired}}
+                        </span>
+                    </span>
+                    <span data-ng-show="form_verifyPurchaseOrder.ddlCCardYear.$error" class="pad-left" data-ng-cloak="">
+                        <span data-ng-show="form_verifyPurchaseOrder.ddlCCardYear.$error.required && (form_verifyPurchaseOrder.ddlCCardYear.$dirty || verifyOrderCtrl.formSubmitted)">
+                            {{verifyOrderCtrl.validationMessage.ccExpYearRequired}}
+                        </span>
+                    </span>
+                </div>
+            </div>
+            <div class="div-row">
+                <button type="submit" class="ds-button-activecommand" data-ng-click="verifyOrderCtrl.formSubmitted=true;verifyOrderCtrl.createPolicy()">Pay Now</button>
+            </div>
+
+        </div>
+
+        <div class="bottomGap">
+            &nbsp;&nbsp;
+        </div>
+
+    </form>
+
+    <!-- Comment : Here included files (styles) for JquerySlider -->
+    <link href="~/Content/jquery-ui.css" rel="stylesheet" />
+
+    <!-- Comment : Here included scripts files for page functionality -->
+    <script src="~/Scripts/bhic/services/wc/purchaseApi.js"></script>
+    <script src="~/Scripts/bhic/controllers/wc/verifypurchaseorderpageCtrl.js"></script>
+
+</div>

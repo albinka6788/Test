@@ -1,0 +1,83 @@
+﻿<div class="table-responsive form-group">
+    <table>
+        <thead>
+            <tr>
+                <th width="20%">State</th>
+                <th width="40%">Class</th>
+                <th width="40%">Annual Payroll</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td data-title="State">{{msmcdata.primaryClassData.state}}</td>
+                <td data-title="Class">{{msmcdata.primaryClassData.description}}</td>
+                <td data-title="Annual Payroll">
+                    <div class="input-group with-icon with-tooltip">
+                        <!--<div class="input-group-addon"><img src="{{appCdnDomain}}/Content/Common/images/dollar.png" alt=""></div>-->
+                        <input type="text" class="d-tcell field" ng-model="payrollamount" placeholder="Enter Payroll" readonly>
+                        <span class="icon-dollar"></span>
+                        <div class="d-tcell">
+                            <abbr data-tooltip="This payroll will automatically update after changing the payrolls below. If you want to change the total payroll please hit Back & Modify below to return to the previous screen." class="tooltip">?</abbr>
+                        </div>
+                    </div>
+                </td>
+            </tr>
+            <tr class="additional-info">
+                <!--<td colspan="4">Based on your business, the following classes may also apply. Please enter any payroll if it applies. We’ll automatically change the amount for {{msmcdata.primaryClassData.description}} above based on your previously entered total annual payroll estimate. If you are unsure, <a href="#" onclick="LC_API.open_chat_window(); return false">let's chat!</a></td>-->
+                <td colspan="3">Because your business description is {{msmcdata.primaryClassData.description}}, you might have employees that fit the description(s) below. Please enter their payroll, if any.</td>
+            </tr>
+            <tr ng-repeat="option in msmcdata.companionCodeData">
+                <td data-title="State">{{msmcdata.primaryClassData.state}}</td>
+                <td data-title="Class">
+                    {{option.FriendlyLabel}}
+                    <abbr ng-if="option.HelpText" data-tooltip="{{option.HelpText}}" class="tooltip">?</abbr>
+                    <!--<div class="input-group">
+                        <div class="input-group-input"></div>
+                        <div class="input-group-tooltip">
+                           
+                        </div>
+                    </div>-->
+                </td>
+                <td data-title="Annual Payroll">
+                    <div class="input-group with-icon">
+                        <!--<div class="input-group-addon"><img src="{{appCdnDomain}}/Content/Common/images/dollar.png" alt=""></div>-->
+                        <input ng-model="option.PayrollAmount" currency-control placeholder="Enter Payroll" ng-blur="updatePayrollAmounts(option)" type="text" class="field">
+                        <span class="icon-dollar"></span>
+                    </div>
+                    <span ng-if="error_[option.ClassCode] == 1" class="error">You cannot provide a payroll amount greater than or equal to your annual employee payroll. Please provide the correct payroll amount.</span>
+                    <span ng-if="error_[option.ClassCode] == 2" class="error">The minimum payroll for {{msmcdata.primaryClassData.description}} cannot be less than {{minExpValidationAmount | currency: "$" : 0}}</span>
+                </td>
+
+            </tr>
+            <tr>
+                <td></td>
+                <td class="text-bold sm-hide md-hide text-big">Total </td>
+                <td data-title="Total" class="text-bold text-big">$ {{totalpayrollamount}}</td>
+            </tr>
+            <tr class="additional-info">
+                <td colspan="3"> If you have any questions about your payroll by class or are not sure then click chat below or call  and we can help you through it. All these classification issues do get worked out in the end as which payroll goes into which class is actually subject to audit by law.  So after your policy expiries we will be contacting you to make sure we have the correct information.  So take your best shot and we’ll figure it out together over time. </td>
+            </tr>
+
+        </tbody>
+    </table>
+</div>
+<div ng-if="msmcdata.isMultiClass" class="form-group">
+    <label class="checkbox">
+        <input type="checkbox" ng-model="msmcdata.moreClassRequired">
+        <span>
+            <svg class="icon-check" xmlns="http://www.w3.org/2000/svg" version="1.1" x="0" y="0" viewBox="-124 239.2 281 242" xml:space="preserve"> 
+            <path class="fill-teal" d="M130.5 257.9c-9.3-9.3-24.4-9.3-33.7 0.7L-37.5 397l-35.1-35.1c-8.6-8.6-23-9.3-32.3-0.7l-11.5 10c-10 8.6-10 24.4-0.7 33.7l56.7 56.7c0 0 0 0 0.7 0l5.7 6.5c9.3 9.3 24.4 9.3 33.7-0.7l162.2-167c8.6-9.3 8.6-23.7-0.7-32.3L130.5 257.9z" />
+                            </svg>
+        </span>
+        I run another business that doesn’t really fit any of the descriptions above.
+    </label>
+</div>
+<div class="btn-actions clear">
+    <button ng-click="goToCapturePage()" class="btn btn-secondary">Back &amp; Modify</button>
+    <button id="getQuestions" class="btn btn-primary pull-right" ng-click="submitTotalData()">Continue</button>
+</div>
+<script>
+    $(window).on('beforeunload', function () {
+        $(window).scrollTop(0);
+    });
+</script>

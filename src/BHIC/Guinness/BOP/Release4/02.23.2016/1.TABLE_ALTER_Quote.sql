@@ -1,0 +1,2 @@
+ALTER TABLE [dbo].[Quote]
+ ADD RetrieveQuoteURL VARCHAR(500) NULL

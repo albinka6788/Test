@@ -1,0 +1,298 @@
+﻿@model BHIC.ViewDomain.Landing.WcQuoteViewModel
+
+@using BHIC.Portal.Code.Html;
+@using Newtonsoft.Json;
+
+@{
+    ViewBag.Title = "Referral page for user contact details";
+    Layout = "~/Areas/Landing/Views/Shared/_Layout.cshtml"; ;
+}
+
+<style type="text/css">
+
+    #div-quoteReferralForm 
+    {
+        margin: 20px auto;
+        background-color: #e1d4c0;
+        padding-top:10px;
+        
+        font-family: "Open Sans","Segoe UI",Tahoma,sans-serif;
+        font-size: 14px;
+        text-rendering: auto;
+        color:#574f43;
+    }
+    h4 {
+        font-size: 18px;        
+    }
+    .info-panel 
+    {
+        /*background-color: #fff;
+        border: 1px solid transparent;
+        border-radius: 4px;
+        box-shadow: 0 1px 1px rgba(0, 0, 0, 0.05);
+        margin:0px 0px 20px 20px;
+        width:95%;*/
+        background-color: #fff;
+        border-color: #eee;
+        border-radius: 4px;
+        border-style: solid;
+        border-width: 1px 1px 1px 1px;
+        margin: 20px 10px 0px 10px;
+        padding:10px;
+    }
+    #referralHeader {
+        padding:10px;
+    }
+    .div-row {
+        width: 100%;
+        clear: both;
+        margin: 9px 0;
+        padding: 7px;
+    }
+    .row-label {
+        width:20%;
+        font-weight:bold;        
+        text-align:left;
+        float:left
+    }
+    .row-control {
+        /*width:70%;*/
+        text-align:left
+    }
+    .quote-referral-form-submit {
+        margin: 20px 10px 0px 10px;
+        padding-bottom:10px;        
+    }
+    .pad-left {
+        padding-left:10px;
+        color: red;
+    }
+    /*Comment : Here callout/messages related styles*/
+    .bs-callout 
+    {
+        border-color: #eee;
+        border-radius: 4px;
+        border-style: solid;
+        border-width: 0px 0px 0px 5px;
+        /*margin: 20px 0;
+        padding: 15px 30px 15px 15px;*/
+    }
+    .bs-callout code, .bs-callout .highlight 
+    {
+        background-color: #fff;
+    }
+    .bs-callout-danger 
+    {
+        background-color: #f2dede;
+        border-color: #ce4844;
+    }
+    .bs-callout-warning 
+    {
+        background-color: #fcf8e3;
+        border-color: #ec971f;
+    }
+    .bs-callout-info 
+    {
+        background-color: #d9edf7;
+        border-color: #1b809e;
+    }
+    .bs-callout-success 
+    {
+        background-color: #dff0d8;
+        border-color: #3c763d;
+    }    
+</style>
+
+<br />
+
+<div id="div-quoteReferralForm" data-ng-app="bhic-app" data-ng-controller="quoteReferralPageCtrl as referralCtrl" data-ng-init="referralCtrl.getWcQuoteModel(@JsonConvert.SerializeObject(Model))">
+
+    @Html.AntiForgeryToken()
+
+    <!--Comment : Here View html part & included files -->
+    <div id="referralHeader">
+        @Html.ThemeSharedContent("referral")
+    </div>
+
+    <!--Comment : Here form for collect referral process user information -->
+    <form name="form_quoteReferral" novalidate>
+
+        <div class="info-panel">
+
+            <h4>Business Information</h4>
+            <hr />
+            @*<div ng-include src="'http://localhost:60793/Areas/Landing/Views/WcHome/_businessInfoRefer.html'"></div>*@
+            <div class="div-row" data-ng-class="{'bs-callout bs-callout-danger':form_quoteReferral.businessType.$error.required && (form_quoteReferral.businessType.$dirty || referralCtrl.formSubmitted),
+                 'bs-callout bs-callout-success':!(form_quoteReferral.businessType.$error.required) && form_quoteReferral.businessType.$dirty}">
+                <label class="row-label">Business Type</label>
+                <div class="row-control">
+                    <select name="businessType" data-ng-options="listItem.BusinessTypeCode as listItem.Description for listItem in referralCtrl.businessTypes" data-ng-model="referralCtrl.quoteReferralInfo.businessInfo.businessType" data-ng-required="true">
+                        <option value="">--Please Select--</option>
+                    </select>
+                    @*<select name="businessType" data-ng-model="referralCtrl.quoteReferralInfo.businessInfo.businessType" data-ng-required="true">
+                        <option value="">--Please Select--</option>
+                        <option value="C">Corporation</option>
+                        <option value="P">Partnership</option>
+                        <option value="I">Individual</option>
+                        <option value="O">Other</option>
+                        <option value="L">Limited Liability Co. (LLC)</option>
+                        <option value="J">Joint Venture</option>
+                    </select>*@
+                    <span data-ng-show="form_quoteReferral.businessType.$error" class="pad-left" data-ng-cloak="">
+                        <span data-ng-show="form_quoteReferral.businessType.$error.required && (form_quoteReferral.businessType.$dirty || referralCtrl.formSubmitted)">
+                            {{referralCtrl.modelErrors.businessType}}
+                        </span>
+                    </span>
+                </div>
+            </div>
+            <div class="div-row" data-ng-class="{'bs-callout bs-callout-danger':form_quoteReferral.businessName.$error.required && (form_quoteReferral.businessName.$dirty || referralCtrl.formSubmitted),
+                 'bs-callout bs-callout-success':!(form_quoteReferral.businessName.$error.required) && form_quoteReferral.businessName.$dirty}">
+                <label class="row-label">Business Name</label>
+                <div class="row-control">
+                    <input type="text" name="businessName" data-ng-model="referralCtrl.quoteReferralInfo.businessInfo.businessName" placeholder="Your Business Name" data-ng-maxlength="150" data-ng-required=" true" />
+                    <span data-ng-show="form_quoteReferral.businessName.$error" class="pad-left" data-ng-cloak="">
+                        <span data-ng-show="form_quoteReferral.businessName.$error.required && (form_quoteReferral.businessName.$dirty || referralCtrl.formSubmitted)">
+                            {{referralCtrl.modelErrors.businessName}}
+                        </span>
+                    </span>
+                </div>
+            </div>
+        </div>
+
+        <div class="info-panel">
+            <h4>Business Contact Information</h4>
+            <hr />
+            @*<div ng-include="_businessContactInfoRefer.html"></div>*@
+            <div class="div-row" data-ng-class="{'bs-callout bs-callout-danger':(form_quoteReferral.businessContactEmail.$error.required || form_quoteReferral.businessContactEmail.$error.email) && (form_quoteReferral.businessContactEmail.$dirty || referralCtrl.formSubmitted),
+                 'bs-callout bs-callout-success':!(form_quoteReferral.businessContactEmail.$error.required) && !form_quoteReferral.businessContactEmail.$error.email && form_quoteReferral.businessContactEmail.$dirty}">
+                <label class="row-label">Email Address</label>
+                <div class="row-control">
+                    <input type="email" name="businessContactEmail" data-ng-model="referralCtrl.quoteReferralInfo.businessContactInfo.businessContactEmail" autocomplete="off" data-ng-required="true" />
+                    <span data-ng-show="form_quoteReferral.businessContactEmail.$error" class="pad-left" data-ng-cloak="">
+                        <span data-ng-show="form_quoteReferral.businessContactEmail.$error.required && (form_quoteReferral.businessContactEmail.$dirty || referralCtrl.formSubmitted)">
+                            Please provide a email address
+                        </span>
+                        <span data-ng-show="form_quoteReferral.businessContactEmail.$error.email && (form_quoteReferral.businessContactEmail.$dirty || referralCtrl.formSubmitted)">
+                            {{referralCtrl.modelErrors.businessContactEmail}}
+                        </span>
+                    </span>
+                </div>
+            </div>
+            <div class="div-row" data-ng-class="{'bs-callout bs-callout-danger':form_quoteReferral.businessContactFName.$error.required && (form_quoteReferral.businessContactFName.$dirty || referralCtrl.formSubmitted),
+                 'bs-callout bs-callout-success':!(form_quoteReferral.businessContactFName.$error.required) && form_quoteReferral.businessContactFName.$dirty}">
+                <label class="row-label">First Name</label>
+                <div class="row-control">
+                    <input type="text" name="businessContactFName" data-ng-model="referralCtrl.quoteReferralInfo.businessContactInfo.businessContactFName" data-ng-maxlength="50" data-ng-required="true" />
+                    <span data-ng-show="form_quoteReferral.businessContactFName.$error" class="pad-left" data-ng-cloak="">
+                        <span data-ng-show="form_quoteReferral.businessContactFName.$error.required && (form_quoteReferral.businessContactFName.$dirty || referralCtrl.formSubmitted)">
+                            {{referralCtrl.modelErrors.businessContactFName}}
+                        </span>
+                    </span>
+                </div>
+            </div>
+            <div class="div-row" data-ng-class="{'bs-callout bs-callout-danger':form_quoteReferral.businessContactLName.$error.required && (form_quoteReferral.businessContactLName.$dirty || referralCtrl.formSubmitted),
+                 'bs-callout bs-callout-success':!(form_quoteReferral.businessContactLName.$error.required) && form_quoteReferral.businessContactLName.$dirty}">
+                <label class="row-label">Last Name</label>
+                <div class="row-control">
+                    <input type="text" name="businessContactLName" data-ng-model="referralCtrl.quoteReferralInfo.businessContactInfo.businessContactLName" data-ng-maxlength="50" data-ng-required="true" />
+                    <span data-ng-show="form_quoteReferral.businessContactLName.$error" class="pad-left" data-ng-cloak="">
+                        <span data-ng-show="form_quoteReferral.businessContactLName.$error.required && (form_quoteReferral.businessContactLName.$dirty || referralCtrl.formSubmitted)">
+                            {{referralCtrl.modelErrors.businessContactLName}}
+                        </span>
+                    </span>
+                </div>
+            </div>
+            <div class="div-row" data-ng-class="{'bs-callout bs-callout-danger':form_quoteReferral.businessContactPhone.$error.required && (form_quoteReferral.businessContactPhone.$dirty || referralCtrl.formSubmitted),
+                 'bs-callout bs-callout-success':!(form_quoteReferral.businessContactPhone.$error.required) && form_quoteReferral.businessContactPhone.$dirty}">
+                <label class="row-label">Phone</label>
+                <div class="row-control">
+                    <input type="text" mask-input mask-format="(999) 999-9999 x99999" name="businessContactPhone" data-ng-model="referralCtrl.quoteReferralInfo.businessContactInfo.businessContactPhone" data-ng-required="true" />
+                    <span data-ng-show="form_quoteReferral.businessContactPhone.$error" class="pad-left" data-ng-cloak="">
+                        <span data-ng-show="form_quoteReferral.businessContactPhone.$error.required && (form_quoteReferral.businessContactPhone.$dirty || referralCtrl.formSubmitted)">
+                            {{referralCtrl.modelErrors.businessContactPhone}}
+                        </span>
+                    </span>
+                </div>
+            </div>
+        </div>
+
+        <div class="info-panel">
+            <h4>Business Mailing Address</h4>
+            <hr />
+            @*<div ng-include="_businessMailingInfoRefer.html"></div>*@
+            <div class="div-row" data-ng-class="{'bs-callout bs-callout-danger':form_quoteReferral.businessMailAddressLine1.$error.required && (form_quoteReferral.businessMailAddressLine1.$dirty || referralCtrl.formSubmitted),
+                 'bs-callout bs-callout-success':!(form_quoteReferral.businessMailAddressLine1.$error.required) && form_quoteReferral.businessMailAddressLine1.$dirty}">
+                <label class="row-label">Address Line 1</label>
+                <div class="row-control">
+                    <input type="text" name="businessMailAddressLine1" data-ng-model="referralCtrl.quoteReferralInfo.businessMailingInfo.addressLine1" data-ng-required="true" />
+                    <span data-ng-show="form_quoteReferral.businessMailAddressLine1.$error" class="pad-left" data-ng-cloak="">
+                        <span data-ng-show="form_quoteReferral.businessMailAddressLine1.$error.required && (form_quoteReferral.businessMailAddressLine1.$dirty || referralCtrl.formSubmitted)">
+                            {{referralCtrl.modelErrors.businessMailAddressLine1}}
+                        </span>
+                    </span>
+                </div>
+            </div>
+            <div class="div-row">
+                <label class="row-label">Address Line 2</label>
+                <div class="row-control">
+                    <input type="text" name="businessMailAddressLine2" data-ng-model="referralCtrl.quoteReferralInfo.businessMailingInfo.addressLine2" />
+                </div>
+            </div>
+            <div class="div-row" data-ng-class="{'bs-callout bs-callout-danger':form_quoteReferral.businessMailCity.$error.required && (form_quoteReferral.businessMailCity.$dirty || referralCtrl.formSubmitted),
+                 'bs-callout bs-callout-success':!(form_quoteReferral.businessMailCity.$error.required) && form_quoteReferral.businessMailCity.$dirty}">
+                <label class="row-label">City</label>
+                <div class="row-control">
+                    <input type="text" name="businessMailCity" data-ng-model="referralCtrl.quoteReferralInfo.businessMailingInfo.city" data-ng-maxlength="30" data-ng-required="true" />
+                    <span data-ng-show="form_quoteReferral.businessMailCity.$error" class="pad-left" data-ng-cloak="">
+                        <span data-ng-show="form_quoteReferral.businessMailCity.$error.required && (form_quoteReferral.businessMailCity.$dirty || referralCtrl.formSubmitted)">
+                            {{referralCtrl.modelErrors.businessMailCity}}
+                        </span>
+                    </span>
+                </div>
+            </div>
+            <div class="div-row">
+                <label class="row-label">State</label>
+                <div class="row-control" data-ng-bind="referralCtrl.quoteReferralInfo.businessMailingInfo.state"></div>
+            </div>
+            <div class="div-row">
+                <label class="row-label">Zip</label>
+                <div class="row-control" data-ng-bind="referralCtrl.quoteReferralInfo.businessMailingInfo.zipCode"></div>
+            </div>
+
+            <br />
+            @*Complete Quote Referral Object : {{ referralCtrl.quoteReferralInfo }}*@
+        </div>
+
+        @*{{form_quoteReferral.$valid}}
+            <ul>
+                <li ng-repeat="(key, errors) in form_quoteReferral.$error track by $index">
+                    <strong>{{ key }}</strong> errors
+                    <ul>
+                        <li ng-repeat="e in errors">{{$index}}. {{ e.$name }} has an error: <strong>{{ key }}</strong>.</li>
+                    </ul>
+                </li>
+            </ul>*@
+
+        <!-- Comment : Here form submit controls -->
+        <div class="quote-referral-form-submit">
+            <button type="submit" data-ng-click="referralCtrl.formSubmitted=true;referralCtrl.submitQuoteReferralForm(form_quoteReferral.$valid,referralCtrl.quoteReferralInfo)">Please Contact Me!</button>
+            @Html.ActionLink("Or, Try Again!", "Index", "/WcHome")
+        </div>
+
+    </form>
+
+
+    <!-- Comment : Here included files (styles) for JquerySlider -->
+    <link href="~/Content/jquery-ui.css" rel="stylesheet" />
+    <script src="~/Scripts/jquery-1.10.2.js"></script>
+    <script src="~/Scripts/angular/angular.js"></script>
+    <script src="~/Scripts/bhic/services/restServiceConsumer.js"></script>
+    <script src="~/Scripts/jquery-2.1.4.js"></script>
+    <script src="~/Scripts/jquery.inputmask.bundle.js"></script>
+    <!-- Comment : Here included scripts files for page functionality -->
+    <script src="~/Scripts/bhic/services/wc/quotereferralApi.js"></script>
+    <script src="~/Scripts/bhic/controls/bhic-app.wc.controls.js"></script>
+    <script src="~/Scripts/bhic/controls/maskInputDirective.js"></script>
+    <script src="~/Scripts/bhic/controllers/wc/quotereferralpageCtrl.js"></script>
+
+</div>

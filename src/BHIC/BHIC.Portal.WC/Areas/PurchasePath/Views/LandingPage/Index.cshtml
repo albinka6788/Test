@@ -1,0 +1,36 @@
+﻿@model BHIC.ViewDomain.LP.LobUrlViewModel
+@using BHIC.Common.XmlHelper;
+@using BHIC.Common.Configuration;
+@if (!String.IsNullOrWhiteSpace(ConfigCommonKeyReader.InspectletWid))
+{
+    <script type="text/javascript">
+        var inspectletWid = '@ConfigCommonKeyReader.InspectletWid';
+        var inspectletQuoteid = '@BHIC.Common.Quote.QuoteCookieHelper.Cookie_GetQuoteId(new HttpContextWrapper(HttpContext.Current))'
+        var inspectletSessionid = '@Session.SessionID'
+    </script>
+    <script src="@CDN.Path/Content/Common/scripts/inspectlet.js?v=@ConfigCommonKeyReader.CdnVersion"></script>
+}
+@{
+    var cdnVersion = BHIC.Portal.WC.BaseController.GetAssemblyVersion();
+
+    @*<!-- Get request URL scheme and host details -->
+    var baseSchemeAndHostUrl = string.Concat(HttpContext.Current.Request.Url.Scheme, "://", HttpContext.Current.Request.Url.Host);
+
+    <!-- Prepare PP Base url -->
+    var appBaseUrl = string.Concat(ConfigCommonKeyReader.PurchasePathAppBaseURL);
+
+    <!-- Prepare PP Base url withour last trailing slash -->
+    appBaseUrl = appBaseUrl.EndsWith("/") ? appBaseUrl.Substring(0, appBaseUrl.Length - 1) : appBaseUrl;*@
+    
+}
+
+@CDN.RenderScripts("/bundles/scripts/jquery")
+
+<script>
+       $(document).ready(function () {
+           @*window.location.href = '@appBaseUrl'+'/Quote/Index';*@
+           window.location.href = '@Model.Url';
+       });
+</script>
+
+

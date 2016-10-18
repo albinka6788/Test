@@ -1,0 +1,34 @@
+﻿@using BHIC.Common.XmlHelper;
+@using BHIC.Common.Configuration;
+@if (!String.IsNullOrWhiteSpace(ConfigCommonKeyReader.InspectletWid))
+{
+    <script type="text/javascript">
+        var inspectletWid = '@ConfigCommonKeyReader.InspectletWid';
+        var inspectletQuoteid = '@BHIC.Common.Quote.QuoteCookieHelper.Cookie_GetQuoteId(new HttpContextWrapper(HttpContext.Current))'
+        var inspectletSessionid = '@Session.SessionID'
+        var inspectletQuoteStatus = 'Quote Displayed'
+        var resetSession = false;
+        var googleAdId = '@Session["googleAdId"]';
+        window.recordSession(inspectletWid, inspectletQuoteid, inspectletSessionid, resetSession, googleAdId)
+    </script>
+}
+
+<section class="page-content bt10">
+    <div class="container">
+        <div class="row">
+            <div class="col-10 col-centered">
+                <div class="content">
+                    <div class="alert alert-info">
+                        <p class="alert-text">Unfortunately we are unable to offer insurance for your business at this time. We respect your time, so we are telling you this as soon as we were able to determine we wouldn’t be able to offer you a quote today.  We are always working to be able to cover more businesses and we hope to be able to cover yours in the future as we grow ours.</p>
+                        <p class="alert-text"> If you think there was a mistake or have questions regarding why you received this message, please call us at <a href="" class="sysPhoneAnchor"></a>. We welcome any feedback you may have to help us improve our website or the products we offer. </p>
+                    </div>
+                    <div class="center">
+                        <a href='@string.Concat(HttpContext.Current.Request.Url.Scheme, "://",
+                            HttpContext.Current.Request.Url.Host, ConfigCommonKeyReader.PurchasePathAppBaseURL, "Home")' class="btn btn-primary">Go to Home</a>
+                    </div> 
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+@CDN.RenderScripts("/bundles/scripts/common-system-variables")

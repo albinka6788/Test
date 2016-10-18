@@ -1,0 +1,65 @@
+﻿{
+    "d":
+    [
+        {
+            "SrNo": 101,
+            "Id": 1,
+            "Type": "text",
+            "Value": "Enter Value",
+            "Text": "Do you engage in the sale, delivery, service, or repair of large trucks (commercial), tractor trailers, mobile homes, or boats?  ",
+            "Order": 1,
+            "WaterMarkText": "First Name",
+            "Render": true
+        },
+        {
+            "SrNo": 102,
+            "Id": 2,
+            "Type": "number",
+            "Value": null,
+            "Text": "What is the delivery/service radius (in miles)? ",
+            "Order": 2,
+            "Render": true
+        },
+        {
+            "SrNo": 103,
+            "Id": 3,
+            "Type": "radio",
+            "Value": "",
+            "Text": "Do you provide towing for AAA or for the police?  ",
+            "Order": 3,
+            "RadioValue": false,
+            "RadioLable": "Yes",
+            "Render": true
+        }
+        ,
+        {
+            "SrNo": 104,
+            "Id": 4,
+            "Type": "select",
+            "Value": "Omganesh",
+            "Text": "Do you provide BBB or other expenses for employee?  ",
+            "Order": 4,
+            "Render": true
+        },
+        {
+            "SrNo": 105,
+            "Id": 5,
+            "Type": "text",
+            "Value": "",
+            "Text": "Do you engage in the sale, delivery, service, or repair of large trucks (commercial), tractor trailers, mobile homes, or boats?  ",
+            "Order": 5,
+            "WaterMarkText": "",
+            "Render": true
+        },
+        {
+            "SrNo": 106,
+            "Id": 6,
+            "Type": "email",
+            "Value": "",
+            "Text": "Do you engage in the sale, delivery, service, or repair of large trucks (commercial), tractor trailers, mobile homes, or boats?  ",
+            "Order": 6,
+            "WaterMarkText": "",
+            "Render": true
+        }
+    ]
+}

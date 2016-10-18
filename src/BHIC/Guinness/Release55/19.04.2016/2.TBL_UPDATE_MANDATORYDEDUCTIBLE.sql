@@ -1,0 +1,3 @@
+--Update [DBO].[MandatoryDeductible] Script
+
+UPDATE [DBO].[MANDATORYDEDUCTIBLE]  SET STATEID=39 WHERE STATEID=9

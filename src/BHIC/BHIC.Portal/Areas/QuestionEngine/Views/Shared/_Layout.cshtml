@@ -1,0 +1,91 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Main - National Liability & Fire, a Berkshire Hathaway Co.</title>
+    @Styles.Render("~/Content/css")
+    @Scripts.Render("~/bundles/modernizr")
+    <style type="text/css">
+        body 
+        {
+            color: #574f43;
+            font-family: "Open Sans","Segoe UI",Tahoma,sans-serif;
+            font-size: 14px;
+            text-rendering: auto;
+        }
+        .ds-logo img 
+        {
+            height: auto;
+            /*max-height: 60px;*/
+            width: 100%;
+        }
+        img 
+        {
+            border: 0 none;
+            margin: 0;
+            padding: 0;
+        }
+        img 
+        {
+            vertical-align: middle;
+        }
+        .ds-hdrLink 
+        {
+            float: right;
+        }
+        .ds-logo 
+        {
+            float: left;
+            width: 33.3333%;
+            float: left;
+            min-height: 1px;
+            padding: 5px;
+            position: relative;
+        }
+        .navbar-brand 
+        {
+            color:#fff;
+        }
+        /*.container body-content
+        {
+            background-color: #e1d4c0;
+            clear: both;
+            display: block;
+            margin-bottom: 20px;
+            padding: 10px;
+        }*/
+    </style>
+
+</head>
+<body>
+    <div class="navbar navbar-inverse navbar-fixed-top">
+        <div class="container">
+            <div class="navbar-header">
+                <div class="ds-logo">
+                    <a href="/"><img alt="National Liability &amp; Fire, a Berkshire Hathaway Co." src="https://www.bhdwc.com/cdn/Images/logo.png"></a>
+                </div>
+                <div class="ds-hdrLink">
+                    @Html.ActionLink("Back To Home", "Index", "Home", new { area = "" }, new { @class = "navbar-brand" })
+                </div>                
+            </div>
+            <div class="navbar-collapse collapse">
+                <ul class="nav navbar-nav">
+                </ul>
+            </div>
+        </div>
+    </div>
+
+    <div class="container body-content" style="background-color: #e1d4c0;">
+        @RenderBody()
+        <hr />
+        <footer>
+            <p>&copy; @DateTime.Now.Year - Berkshire Hathaway Incorporation Company (BHIC)</p>
+        </footer>
+    </div>
+
+    @*@Scripts.Render("~/bundles/jquery")*@
+    @*@Scripts.Render("~/bundles/bootstrap")*@
+    @RenderSection("scripts", required: false)
+</body>
+</html>

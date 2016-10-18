@@ -1,0 +1,185 @@
+﻿@model BHIC.ViewDomain.QuoteSummaryViewModel
+@using BHIC.Common.XmlHelper;
+@using BHIC.Common.Configuration;
+
+@if (!String.IsNullOrWhiteSpace(ConfigCommonKeyReader.InspectletWid))
+{
+    <script type="text/javascript">
+        var inspectletWid = '@ConfigCommonKeyReader.InspectletWid';
+        var inspectletQuoteid = '@BHIC.Common.Quote.QuoteCookieHelper.Cookie_GetQuoteId(new HttpContextWrapper(HttpContext.Current))'
+        var inspectletSessionid = '@Session.SessionID'
+        var inspectletQuoteStatus = 'Quote Displayed'
+        var resetSession = false;
+        var googleAdId = '@Session["googleAdId"]';
+        window.recordSession(inspectletWid, inspectletQuoteid, inspectletSessionid, resetSession, googleAdId)
+    </script>
+}
+
+<section class="progress-bar bg-blue">
+    <div class="container">
+        <ul class="no-style steps clear">
+            <li ng-repeat="link in Navlinks" class="{{link.ClassName}}"><a oncontextmenu="return false;" ng-href="{{link.Href}}" url="{{link.NavigationLink}}" ng-click="goTo($event)" target="_self">{{link.DisplayText}}</a></li>
+        </ul>
+    </div>
+</section>
+<section class="page-content">
+    <div class="container" data-ng-init="quoteSummaryController.init(@Newtonsoft.Json.JsonConvert.SerializeObject(Model))">
+        <div class="row">
+            <div class="lg-col-8">
+                <div class="content">
+                    <div class="page-title">
+                        <h2>Your quote is ready for you!</h2>
+                    </div>
+                    <div error-messages-control errormessagelist="quoteSummaryController.listOfErrors"></div>
+
+                    <div class="bg-teal mb2 quote-down-payment">
+                        <div class="mb-half">Get your policy now with a down payment of</div>
+                        <h2 class="mb0" data-ng-bind-template="{{quoteSummaryController.quoteSummaryVm.lowestInstallmentPremium |currency }}"></h2>
+                    </div>
+                    <div class="quote-info block-info">
+                        <h3>Quote Information </h3>
+                        @*<div class="row">
+                            <div class="col-6 sm-col-12">Quote Reference Number</div>
+                            <div class="col-4 sm-col-12 md-right lg-right text-bold" data-ng-bind="quoteSummaryController.quoteSummaryVm.quoteReferenceNo"></div>
+                            </div>*@
+
+                        <div class="row">
+                            <div class="col-7 sm-col-12 text-medium">Total Estimated Policy Premium</div>
+                            <div class="col-5 sm-col-12 md-right lg-right text-bold text-teal"><div class="input-box" data-ng-bind-template="{{quoteSummaryController.quoteSummaryVm.totalEstimatedPremim | currency }}"></div></div>
+                        </div>
+                        @*<p data-ng-if="quoteSummaryController.quoteSummaryVm.xModValue >0">
+                            <span>{{xmodeText}}</span>
+                                Based on your FEIN, Your Experience/Merit Modification factor is {{quoteSummaryController.quoteSummaryVm.xModValue | number:3}}
+                                    <abbr bhic-tooltip data-tooltip="An Experience Mod (sometimes called a <strong> MOD </strong> or <strong> X-MOD </strong>) is an adjustment or modification to the pricing of your coverage that is specific to a particular business, and is based upon your previous claim experience as compared to other businesses of the same size and scope of operations. Generally, a business must be in operation a minimum of three years and have generated sufficient premium in a single year for a MOD to be assigned. Since MODs are unique to each business, the organization that calculates the number (either NCCI or the state's Workers' Compensation Bureau) will associate the factor with the Tax ID." class="tooltip">?</abbr>
+                            </p>*@
+                        <p class="text-small">As is industry standard among all insurance carriers and in accordance with applicable laws and your policy, your Annual Premium is an estimate determined by the information provided to us to date and the application of our manuals of rules, rates, rating plans and classifications. Your Annual Premium is subject to change after coverage has been bound. Please be aware that the information submitted to us by you is subject to verification via an annual audit in accordance with the terms of your policy. Also, additional charges may be applied in certain jurisdictions to address specific circumstances. If a check is returned due to insufficient funds, a fee will be assessed. Payments received after the due date may be subject to a late fee and policy cancellation. Please read your policy carefully. Coverage is only afforded by your policy and endorsements.</p>
+                        @*<p class="text-bold" data-ng-if="quoteSummaryController.quoteSummaryVm.mandatoryDeductibleApplicable">
+                            A deductible option might be available to be added to your quote.  Please call us if you are interested in the available deductible options in your state at <span class="sysPhone"></span>.
+                        </p>*@
+                    </div>
+                    <form name="frmQuoteSummary" class="payment-option-form" novalidate>
+                        @*Commented below section for GUIN-263 - Amit Kumar*@
+                        @*<div class="payment-option block-info" ng-show="showPaymentPlan">
+                                <h3>Payment Options</h3>
+                                <div class="row">
+                                    <div class="col-6 sm-col-12 pt15">Select a convenient payment option</div>
+                                    <div class="col-6 sm-col-12">
+                                        <select class="field" data-ng-options="paymentPlan as paymentPlan.Description for paymentPlan in quoteSummaryController.paymentPlans"
+                                                ng-model="quoteSummaryController.quoteSummaryVm.selectedPaymentPlan"
+                                                data-ng-change="quoteSummaryController.changePaymentPlan()"></select>
+                                    </div>
+                                </div>
+                                <div class="row bg-teal--dark">
+                                    <div class="col-6 sm-col-12">Due Now</div>
+                                    <div class="col-4 sm-col-12 md-right lg-right text-bold" data-ng-bind-template="{{quoteSummaryController.quoteSummaryVm.dueNow |currency }}"></div>
+                                </div>
+                                <div class="row" ng-hide="quoteSummaryController.isSinglePay">
+                                    <div class="col-6 sm-col-12">Future Installment Amount</div>
+                                    <div class="col-4 sm-col-12 md-right lg-right text-bold" data-ng-bind-template="{{quoteSummaryController.quoteSummaryVm.futureInstallmentAmount |currency }}"></div>
+                                </div>
+                                <div class="row" ng-hide="quoteSummaryController.isSinglePay">
+                                    <div class="col-6 sm-col-12">Number of Installments</div>
+                                    <div class="col-4 sm-col-12 md-right lg-right text-bold" data-ng-bind-template="{{quoteSummaryController.quoteSummaryVm.noOfInstallment}}"></div>
+                                </div>
+                                <div class="row" ng-hide="quoteSummaryController.isSinglePay">
+                                    <div class="col-6 sm-col-12">Per Installment Fee</div>
+                                    <div class="col-4 sm-col-12 md-right lg-right text-bold" data-ng-bind-template="{{quoteSummaryController.quoteSummaryVm.installmentFee |currency }}"></div>
+                                </div>
+                            </div>*@
+
+                        
+                     
+                            <div class="quote-info block-info mb1">
+                                <h3>Coverage Details</h3>
+                                <div class="row">
+                                    <div class="col-12 text-bold">
+                                        Workers' Compensation Insurance &nbsp; &nbsp; <span class="text-toggle text-toggle2">read more</span>
+                                        <div class="field-help hide text-light">
+                                            Workers' Compensation Insurance pays for lost income and medical benefits for employees that are injured on the job. The amount of coverage is set by state law. Worker's Compensation Insurance is usually required for all businesses with employees.
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-7 sm-col-12">Coverage terms set by state law in</div>
+                                    <div class="col-5 sm-col-12 md-right lg-right text-teal text-bold">{{stateName}}</div>
+                                </div>
+                                <div class="row" ng-if="deductibleList.length>0">
+                                    <div class="col-7 sm-col-12 pt15">Deductible</div>
+                                    <div class="col-5 sm-col-12 right">
+                                        <select name="deductiblesList" class="field w-auto" data-ng-options="item.DisplayText for item in deductibleList track by item.Vals " data-ng-model="deductiblesModel" data-ng-change="continueToCalculate(deductiblesModel)" ng-init="deductiblesModel = deductibleList[defaultSelectedDeductible] ">
+                                            <option value="" class="" selected="selected"> None </option>
+                                        </select>
+                                    </div>
+                                </div>
+                                <hr>
+                                <div class="row">
+                                    <div class="col-12 text-bold">
+                                        Employer's Liability Insurance &nbsp; &nbsp; <span class="text-toggle text-toggle2">read more</span>
+                                        <div class="field-help hide text-light">
+                                            Employer's Liability Insurance is part of the standard Workers' Compensation Policy, and typically pays for lawsuits about on-the-job injuries that are not covered by Workers' Compensation (one example being a claim for loss by a spouse when an employee is injured).
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                <div class="col-7 sm-col-12">{{employeeLimitText}}</div>
+                                <div class="col-5 sm-col-12 md-right lg-right text-teal text-bold">{{employeeLimitValue}}</div>
+                                </div>
+                            </div>
+                            <div class="mb2">
+                                <p> Have a question or don't see a coverage you are looking for? Call us at <a href="tel:844-472-0967">844-472-0967 </a> or <a href="#" onclick="LC_API.open_chat_window(); return false">chat</a>.</p>
+                            </div>
+                            <br> <br>
+                        <div class="btn-actions clear">
+                            <a id="backToQuestionnaire" type="button" class="btn  btn-secondary disable-navigate" href="#/GetQuestions">Back &amp; Modify</a>
+                            <input id="btn_Save" type="button" value="{{btnText}}" class="btn btn-primary pull-right disable-navigate"
+                                   data-ng-click="PerformAction()" />
+                        </div>
+                    </form>
+                </div>
+            </div>
+
+            <!-- Comment : Here common SaveForLater directive for all pages -->
+            <div id="ModelSaveForLater" save-for-later-div-control pagename="QuoteSummary" isvalidform="true" currentquoteid="@Convert.ToString(Session["quoteId"])"
+                 submit-validated-form="quoteSummaryController.submitSaveForLater(argument1)"></div>
+
+            @*<div id="ModelSaveForLater" save-for-later-div-control controllercontext="quoteSummaryController" formvalidationstatus="true" validate-save-for-later="quoteSummaryController.saveForLater(quoteSummaryController)"></div>
+
+                <!-- Comment : Here model pop-up-1 for ask user to fill emailId -->
+                <save-for-later-form-model-control controllercontext="quoteSummaryController" close-save-for-later-model="quoteSummaryController.closeSaveForLaterModel('ModelSaveForLater')">
+                </save-for-later-form-model-control>
+
+                <!-- Comment : Here model pop-up-2 to show user thanks text after successful submit -->
+                <thank-you-model-control controllercontext="quoteSummaryController" close-save-for-later-model="quoteSummaryController.closeSaveForLaterModel('ModelSaveForLaterThankYou')">
+                </thank-you-model-control>*@
+
+        </div>
+    </div>
+</section>
+
+<script>
+    $(document).ready(function () {
+        $('.progress-bar').click(function (event) {
+            event.preventDefault();
+        });
+    });
+
+    $('.benefits .read-more').click(function (e) {
+        e.preventDefault();
+        $(this).hide();
+        $(this).next('.hide').removeClass('hide');
+    });
+
+    $('.text-toggle1').click(function () {
+        $(this).next('p').toggleClass('hide');
+        $(this).text(($(this).text() == 'More about XMOD' ? 'Less about XMOD' : 'More about XMOD'))
+    });
+
+    $('.text-toggle2').click(function () {
+        $(this).next('div').toggleClass('hide');
+        $(this).text(($(this).text() == 'read more' ? 'read less' : 'read more'))
+    });
+
+</script>
+
+@CDN.RenderScripts("/bundles/scripts/common-system-variables")
+@CDN.RenderScripts("/bundles/scripts/navigation")

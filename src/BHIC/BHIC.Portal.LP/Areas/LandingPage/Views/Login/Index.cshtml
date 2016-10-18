@@ -1,0 +1,85 @@
+﻿@using BHIC.Common.Html;
+@using BHIC.Common.Configuration;
+@using BHIC.Common.XmlHelper;
+@{
+    var cdnVersion = BHIC.Portal.LP.Controllers.BaseController.GetAssemblyVersion();
+}
+<style>
+    [ng\:cloak], [ng-cloak], [data-ng-cloak], [x-ng-cloak], .ng-cloak, .x-ng-cloak {
+        display: none !important;
+    }
+</style>
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Landing Page</title>
+    @*<link name="bootstrap1" href="~/Content/bootstrap.css" rel="stylesheet" />*@
+    @*<link name="dyanamicCSS" href="~/Content/stylesheet.css" rel="stylesheet" />*@
+
+    <link name="dyanamicCSS1" href="~/Content/Template1.css" rel="stylesheet" />
+    <link name="dyanamicCSS2" href="~/Content/Template2.css" rel="stylesheet" />
+    <link name="site" href="~/Content/Site.css" rel="stylesheet" />
+      
+    <link rel="stylesheet" type="text/css" href="@ConfigCommonKeyReader.CloudTypographyUrl" />
+    <link rel="icon" type="image/png" href="@CDN.Path/Content/Common/images/favicon.ico">
+    @*<link rel="shortcut icon" sizes="192x192" href="@CDN.Path/Content/Common/images/appicon-highres.png">
+    <link rel="shortcut icon" sizes="128x128" href="@CDN.Path/Content/Common/images/appicon.png">*@
+    @CDN.RenderScripts("/bundles/scripts/jquery")
+    @*@CDN.RenderScripts("/bundles/scripts/jqueryui")*@
+    @CDN.RenderScripts("/bundles/scripts/angular")
+    @*@CDN.RenderScripts("/bundles/scripts/lp-main")
+    @CDN.RenderScripts("/bundles/scripts/lp-common-modules")
+    @CDN.RenderScripts("/bundles/scripts/lp-modules")
+    @CDN.RenderScripts("/bundles/scripts/lp-directives")
+    @CDN.RenderScripts("/bundles/scripts/lp-controllers")
+    @CDN.RenderScripts("/bundles/scripts/lp-services")*@
+    @CDN.RenderScripts("/bundles/scripts/lp-Complete")
+    <script> var baseUrl=@ConfigCommonKeyReader.LandingPageAppBaseURL;</script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/modernizr/2.8.3/modernizr.min.js"></script>
+</head>
+<body class="body-content" ng-app="Landing">
+    @*<div id="divLoader" class="loader-overlay">
+        <div class="loader">
+            <div class="loader-content">
+                <p class="text-teal text-big text-medium mb-half">One moment please...</p>
+                @Html.ThemeImage("loading-lg.gif", new { alt = "loading..." })
+            </div>
+        </div>
+    </div>*@
+    <div class="">
+        <div ng-view></div>
+    </div>
+</body>
+</html>
+<style type="text/css">
+    .loader-overlay {
+  position: fixed;
+  z-index: 9999;
+  background: rgba(255, 255, 255, 0.9);
+  width: 100%;
+  height: 100%;
+  top: 0;
+  left: 0;
+  /*display: none;*/
+}
+
+.loader {
+  position: absolute;
+  width: 250px;
+  height: 200px;
+  margin-top: -100px;
+  margin-left: -125px;
+  top: 50%;
+  left: 50%;
+  border-radius: 4px;
+}
+
+.loader-content {
+  text-align: center;
+  padding-top: 35px;
+}
+</style>
+

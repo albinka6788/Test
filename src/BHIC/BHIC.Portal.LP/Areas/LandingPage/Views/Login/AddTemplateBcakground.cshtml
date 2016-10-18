@@ -1,0 +1,33 @@
+﻿<div class="acc-box" ng-init="templateBackgroundController">
+    <div class="box-header">
+        <h2 style="margin-left:10px;">Upload Background Image</h2>
+    </div>
+    <div>
+        <form>
+            <center>
+                <table style="width:90%;  margin-top:5%;" cellpadding="0" cellspacing="0">
+                    <tr style="height:50px;">
+                        <td colspan="2" style="text-align:center;" class="error" >{{msg}}</td>
+                    </tr>
+                    <tr style="height:50px;">
+                        <td><span style="margin-left:10px;">Add Background Image :</span></td>
+                        <td>
+                            <input type="file" id="filesel" name="file" multiple files-upload="getTheFiles($files)" accept='image/png, image/gif, image/jpeg'
+                                   class="field file-upload" ng-model="fileselected" placeholder="Browse" onkeydown="this.blur()" oncontextmenu="return false;">
+                        </td>
+                    </tr>
+                    <tr>
+                        <td colspan="2">
+                            <center>
+                                <div class="btns_container marT20">
+                                    <input type="submit" style="width:100px;" name="btnAdd" class="btn btn-default" id="btnAdd" value="Submit" data-ng-click="AddTemplateLogo();" />
+                                    <input type="submit" style="width:100px;" name="btnCan" class="btn btn-default" id="btnCancel" value="Cancel" data-ng-click="GoToLandingPage();" />
+                                </div>
+                            </center>
+                        </td>
+                    </tr>
+                </table>
+            </center>
+        </form>
+    </div>
+</div>

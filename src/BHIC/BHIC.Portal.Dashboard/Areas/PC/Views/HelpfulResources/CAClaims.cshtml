@@ -1,0 +1,40 @@
+﻿@using BHIC.Common.Html;
+@using BHIC.Domain.Dashboard;
+@using BHIC.Common.CommonUtilities;
+@using BHIC.Common.Configuration;
+@{
+    Dictionary<string, object> document = StaticDocuments.GetStaticDocuments();
+    string form7NoMPNDoc = string.Empty, engPamhDoc = string.Empty, spanPamhDoc = string.Empty, dwcForm1Doc = string.Empty, form7NLFDoc = string.Empty;
+    if (document != null && document.Count > 0)
+    {
+        List<string> currentPageDocument = (List<string>)document["CaliforniaClaims"];
+        form7NoMPNDoc = currentPageDocument.Count > 0 ? Server.UrlEncode(currentPageDocument[0]) : "";
+        engPamhDoc = currentPageDocument.Count > 0 ? Server.UrlEncode(currentPageDocument[1]) : "";
+        spanPamhDoc = currentPageDocument.Count > 0 ? Server.UrlEncode(currentPageDocument[2]) : "";
+        dwcForm1Doc = currentPageDocument.Count > 0 ? Server.UrlEncode(currentPageDocument[3]) : "";
+        form7NLFDoc = currentPageDocument.Count > 0 ? Server.UrlEncode(currentPageDocument[4]) : "";
+    }
+}
+<div ng-controller="helpfulResourcesController">
+    <div class="text-block">
+        <p>California regulations require that the following information be made available to all employees (including those of policyholders that have not elected the MPN option).</p>
+        <ul>
+            <li>
+                <span style="cursor:pointer; color:#D49000; font-weight:500; " onclick="DownloadStaticDocument('@form7NoMPNDoc');">Notice to Employees – Injuries Caused By Work (DWC 7)</span>
+                <span>**</span>
+            </li>
+            <li> <span style="cursor:pointer; color:#D49000; font-weight:500; " onclick="DownloadStaticDocument('@engPamhDoc');"> English</span> and <span style="cursor:pointer; color:#D49000; font-weight:500; " onclick="DownloadStaticDocument('@spanPamhDoc');">Spanish</span> Time-of-Hire Pamphlet <span>*</span></li>
+            <li> <span style="cursor:pointer; color:#D49000; font-weight:500; " onclick="DownloadStaticDocument('@dwcForm1Doc');"> Workers' Compensation Claim Form and Notice of Potential Eligibility (DWC 1 and NOPE)</span> <span>*</span></li>
+        </ul>
+    </div>
+    <div class="text-block">
+        <h4> PROVIDING IMPORTANT WORKERS' COMPENSATION INFORMATION </h4>
+        <p> Be sure to complete the <span style="cursor:pointer; color:#D49000; font-weight:500;" onclick="DownloadStaticDocument('@form7NLFDoc');">Notice to Employees (DWC-7)</span> and post in a conspicuous location frequented by employees during the hours of the workday. All employees should receive a copy of the Time-of-Hire Pamphlet (available in <span style="cursor:pointer; color:#D49000; font-weight:500; " onclick="DownloadStaticDocument('@engPamhDoc');"> English</span> and <span style="cursor:pointer; color:#D49000; font-weight:500; " onclick="DownloadStaticDocument('@spanPamhDoc');">Spanish</span>). </p>
+        <p> If you have any questions, don't hesitate to call us at <a href="" class="mailingClaims_NewClaimPhone"></a>. </p>
+    </div>
+    <div class="bg-light-grey block-info p15">
+        <p class="mb0"> <span>*</span> Resource needs to be distributed to all employees. </p>
+        <p class="mb0"> <span>**</span> Resource needs to be posted (in a conspicuous location frequented by employees during the hours of the workday). </p>
+    </div>
+</div>
+@CDN.RenderScripts("/bundles/scripts/common-system-variables")

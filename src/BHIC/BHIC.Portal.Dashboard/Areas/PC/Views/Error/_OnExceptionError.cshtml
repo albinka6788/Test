@@ -1,0 +1,28 @@
+﻿@using BHIC.Common.Html;
+@using BHIC.Common.Configuration;
+@using BHIC.Common.XmlHelper;
+@{
+    var cdnVersion = BHIC.Portal.Dashboard.BaseController.GetAssemblyVersion();
+}
+
+@CDN.RenderStyles("/bundles/styles/dashboard")
+<script type="text/javascript">
+    $(document).ready(function () {
+        var wH = $(window).height() - 340;
+        $('.page-content').css('minHeight', wH);
+    });
+</script>
+<section data-ng-init="errorController">
+    @Html.AntiForgeryToken()
+    <div>        
+        <div class="alert alert-warning alert-big">            
+            <p class="text-bold alert-text-big"> We're currently unable to respond to your request - Sorry! </p>
+            <p class="alert-text mb0"> We are aware of the issue and are working to resolve it for you. </p>
+            <p class="alert-text mb0"> We apologize for the inconvenience. </p>
+            <p class="alert-text">
+                Please try again later or feel free to <a href='@string.Concat(HttpContext.Current.Request.Url.Scheme, "://",
+                            HttpContext.Current.Request.Url.Host,"/" ,ConfigCommonKeyReader.BaseUrlPath)'>Start Over</a> and try entering different values.
+            </p>
+        </div>
+    </div>
+</section>

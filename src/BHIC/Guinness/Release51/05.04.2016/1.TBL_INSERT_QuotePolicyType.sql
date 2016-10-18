@@ -1,0 +1,1 @@
+if not exists(select * from QuotePolicyType where id=2 and Name='BP') insert into QuotePolicyType values(NEXT VALUE FOR SEQUENCEQuotePolicyType,'BP', 'BOP Quote')

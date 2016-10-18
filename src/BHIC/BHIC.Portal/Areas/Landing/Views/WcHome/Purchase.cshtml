@@ -1,0 +1,73 @@
+﻿@{
+    ViewBag.Title = "Purchase";
+    Layout = "~/Areas/Landing/Views/Shared/_Layout.cshtml";
+}
+<link href="~/Content/bootstrap-datepicker.css" rel="stylesheet" />
+<link href="~/Content/bootstrap.min.css" rel="stylesheet" />
+<style>
+    .custom-button {
+        -moz-box-sizing: border-box;
+        -webkit-box-sizing: border-box;
+        box-sizing: border-box;
+        background-color: #e3b956 !important;
+        border: 1px solid #ffe6b2;
+        border-radius: 5px;
+        color: #fff !important;
+        cursor: pointer;
+        font-size: 14px;
+        line-height: normal !important;
+        padding: 4px 8px;
+        text-transform: uppercase;
+    }
+
+    a:hover, a:visited, a:link, a:active {
+        text-decoration: none;
+    }
+</style>
+
+<div id="div-purchaseRegistration" data-ng-app="bhic-app.wc.purchaseGet" data-ng-controller="purchaseGetCtrl as purchaseCtrl">
+
+    <h2>Purchase your Workers' Comp Policy</h2>
+    <form name="purchaseInputForm" class="form-horizontal" novalidate data-ng-submit="submitPurchase();">
+        @* **************************************** *@
+        @* policy information*@
+        @* **************************************** *@
+        <div class="panel">
+            <div class="panel-body">
+                <h4>Please Confirm Your Policy's Starting Date</h4>
+                <hr />
+                <div class="form-group">
+                    <label class="col-md-3">Effective Date</label>
+                    <div class="col-md-9">
+                        <input type='text' class="datepicker" data-ng-model="purchaseModel.policy.policyDate" start-date="+1d" end-date="+120d" date-control name="policyStartDate" required />
+                        <p data-ng-show="submitted && purchaseInputForm.policyStartDate.$error.required" class="help-block">The field Effective Date must be a date</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div contact-info-control></div>
+        <div password-info-control></div>
+        <div business-info-control></div>
+        <br />
+        <button class="ds-button-activecommand" type="submit" name="submitButton" ng-click="submitted=true" value="Next">Review Your Order</button>
+        @Html.ActionLink("Save For Later", "SaveForLater", "WcHome", new { @class = "custom-button" })
+        <a href="/">Or, Start Over</a>
+    </form>
+    <script src="~/Scripts/jquery-1.10.2.js"></script>
+    <script src="~/Scripts/angular/angular.js"></script>
+    <script src="~/Scripts/bhic/services/restServiceConsumer.js"></script>
+    <script src="~/Scripts/jquery-2.1.4.js"></script>
+    <script src="~/Scripts/jquery.inputmask.bundle.js"></script>
+    <script src="~/Scripts/bhic/services/wc/purchaseApi.js"></script>
+    <script src="~/Scripts/bootstrap-datepicker.js"></script>
+    <script src="~/Scripts/bhic/controls/bhic-app.wc.controls.js"></script>
+    <script src="~/Scripts/bhic/controls/dateControlDirective.js"></script>
+    <script src="~/Scripts/bhic/controls/maskInputDirective.js"></script>
+    <script src="~/Scripts/bhic/controllers/wc/purchaseGetCtrl.js"></script>
+    <script src="~/Scripts/bhic/directives/wc/quoteInput/contactInputControl/contactInfoControlDirective.js"></script>
+    <script src="~/Scripts/bhic/directives/wc/passwordInput/passwordInfoControlDirective.js"></script>
+    <script src="~/Scripts/bhic/directives/wc/businessInput/businessInfoControlDirective.js"></script>
+    <script src="~/Scripts/bhic/directives/wc/numericValidationDirective.js"></script>
+    <script src="~/Scripts/bhic/directives/wc/ssnFormatterDirective.js"></script>
+    <script src="~/Scripts/bhic/directives/wc/confirmPasswordDirective.js"></script>
+

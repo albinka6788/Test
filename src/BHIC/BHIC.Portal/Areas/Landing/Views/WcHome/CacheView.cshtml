@@ -1,0 +1,28 @@
+﻿@{
+    ViewBag.Title = "CacheView";
+    Layout = "~/Areas/Account/Views/Shared/_Layout.cshtml";
+}
+
+<h2>CacheView</h2>
+
+
+<div id="div-cacheDemo" data-ng-app="bhic-app.wc.cacheDemo" data-ng-controller="cacheDemoCtrl as cacheCtrl">
+    <div class="pull-right"><b>Updated : {{isUpdated}}</b></div>
+    <h3><b>Last Updated</b> :  @ViewBag.Timer</h3>
+    <h3>Clock: <div class="jclock"></div></h3>
+    <br />
+    Industry : {{industryModel}}
+
+    <script src="~/Scripts/jquery-1.10.2.js"></script>
+    <script src="~/Scripts/angular/angular.js"></script>
+    <script src="~/Scripts/bhic/services/restServiceConsumer.js"></script>
+    <script src="~/Scripts/jquery-2.1.4.js"></script>
+    <script src="~/Scripts/bhic/services/wc/cacheApi.js"></script>
+    <script src="~/Scripts/bhic/controllers/wc/cacheDemoCtrl.js"></script>
+    <script src="~/Scripts/clock/jquery.jclock.js"></script>
+    <script type="text/javascript">
+        $(function ($) {
+            $('.jclock').jclock();
+        });
+    </script>
+</div>

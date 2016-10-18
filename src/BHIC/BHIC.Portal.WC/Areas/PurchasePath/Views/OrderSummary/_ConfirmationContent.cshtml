@@ -1,0 +1,104 @@
+﻿@using System.Web.Mvc;
+@using System.Web;
+@using BHIC.ViewDomain;
+@using BHIC.Common.XmlHelper;
+@using BHIC.Common.Configuration;
+
+@{
+    var targetUrl = ConfigCommonKeyReader.AppBaseUrl;
+
+    <!-- Get request URL scheme and host details -->
+    var loadingImage = string.Concat(ThemeManager.ThemeSharedCommonImagesBaseUrl(), "loading-lg.gif");
+}
+
+@*@CDN.RenderScripts("/bundles/scripts/disable-browser-back")*@
+
+<div class="main bt10">
+    <div class="page-content">
+        <div class="container" ng-show="order.IsProcessing">
+            <div class="row">
+                <div class="lg-col-8 col-centered">
+                    <div class="center payment-process">
+                        <img src='@loadingImage' alt="Loading..." class="mb1 d-iblock">
+                        <h3 class="mb-half">Please wait while your payment is being processed.</h3>
+                        <h6>And please do not press back button and do not refresh the page.</h6>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="placeHolderContent" ng-show="order.IsSuccess" data-ng-cloak=" ">
+            <section class="purchased-confirm clear">
+                <div class="container">
+                    <div class="row equalize">
+                        <div class="lg-col-6 center">
+                            <div class="content-box">
+                                <div class="thank-you">
+                                    <h1 class="mb0 text-bold">Thank you</h1>
+                                    <p class="text-teal text-big">Welcome to the Berkshire Hathaway Family</p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="lg-col-6">
+                            <ng-form>
+                                <div error-messages-control errormessagelist="listOfErrors"></div>
+                                <div ng-if="order.IsPaymentSuccess == 2">
+                                    <div class="content-box">
+                                        <table>
+                                            <tr>
+                                                <th colspan="2">Your Order Summary</th>
+                                            </tr>
+                                            <tr>
+                                                <td class="text-bold">Product</td>
+                                                <td>{{order.ProductName}}</td>
+                                            </tr>
+                                            <tr>
+                                                <td class="text-bold">Policy Number</td>
+                                                <td>{{order.MgaCode}}</td>
+                                            </tr>
+                                            <tr>
+                                                <td class="text-bold">Payment Confirmation Number</td>
+                                                <td>{{order.PaymentConfirmationNumber}}</td>
+                                            </tr>
+                                            <tr>
+                                                <td class="additional-info" colspan="2">
+                                                    <p class="mb0">You'll receive an email from us soon to confirm your email address then you’ll be able to access the policy center. If you have bought a policy before from {{order.CompanyDomain}}, you can go to the <a href="{{order.PolicyCentreURL}}">policy center</a> right now.</p>
+                                                </td>
+                                            </tr>
+                                        </table>
+                                    </div>
+                                </div>
+                                <div ng-if="order.IsPaymentSuccess != 2">
+                                    <div class="alert alert-info mb2">
+                                        <p class="alert-text text-bold">Your payment has been initiated.</p>
+                                        <p class="alert-text"> Typically a policy will get processed in a few minutes but every so often it can take a little bit longer. We will email you when the policy is available in the Policy Center. If you want to talk to someone right away, we can be reached during business hours via on-line <a href="#" onclick="LC_API.open_chat_window(); return false">chat</a> on <a href="@targetUrl">{{order.CompanyDomain}}</a> or at <a href="tel:{{order.PhoneNumber}}"> {{order.PhoneNumber}}</a>. </p>
+                                    </div>
+                                </div>
+                            </ng-form>
+                        </div>
+                    </div>
+                </div>
+            </section>
+            <hr>
+            <section class="purchased-suggest">
+                <div class="container">
+                    <div class="row">
+                        <div class="lg-col-12 md-col-6">
+                            <form action="#" class="form-inline lg-center">
+                                <div class="form-group mb0">
+                                    <label for="">Purchase Another Policy</label>
+                                    <select class="field">
+                                        <option value="1">Business Owner's Policy</option>
+                                        <option value="2">Commercial Auto</option>
+                                        <option value="3">Workers' Compensation</option>
+                                    </select>
+                                </div>
+                                @*<button type="submit" class="btn btn-primary">Get Quote and Buy Now</button>*@
+                                <a id="getBackPuechasePathHomePage" type="button" class="btn btn-primary" href='@ConfigCommonKeyReader.AppBaseUrl'>Get a Quote and Buy Now</a>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,123 @@
+﻿
+@{
+    //Layout = "~/Areas/QuestionEngine/Views/Shared/_Layout.cshtml";
+    //Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html data-ng-app="bhic-app" data-ng-controller="questionEngineController">
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>{{pageTitle}}</title>
+    <style type="text/css">
+        [ng\:cloak], [ng-cloak], [data-ng-cloak], [x-ng-cloak], .ng-cloak, .x-ng-cloak, .ng-hide 
+        {
+            display: none !important;
+        }
+        .float-left {
+            float:left
+        }
+        .row-highlight {
+            color:black;font-weight:bold
+        }
+    </style>
+</head>
+<body data-ng-cloak="">
+    <br /><br />
+    <div style="margin-top:20px">
+        &nbsp;
+        Application Vendor Name : {{appVersionHistory}}
+    </div>
+
+    <div>Dynamic Json Data {{questionJson}}</div>
+
+    <div clas="secondTable" style="float:left;width:50%;margin-top:10px">
+
+        <!-- Comment : Here Using $even and $odd -->
+        <table cellpadding="4" border="1" id="">
+            <tr style="color:#000;font-weight:bold">
+                <td>Sr. No.</td>
+                <td>IndustryId</td>
+                <td>Description</td>
+            </tr>
+            <tbody>
+                <tr ng-repeat="industry in industries | orderBy : 'Description' : false  " data-ng-class="{'row-highlight': ($index+1) % 2 == 0}">
+                    <td data-ng-bind="$index+100"></td>
+                    <td data-ng-bind="industry.IndustryId"></td>
+                    <td data-ng-bind="industry.Description"></td>
+                </tr>
+            </tbody>
+        </table>
+
+    </div>
+
+    <div id="div_FormContianer">
+        <form name="form_Questions" novalidate>
+            <div class="panel panel-body" style="clear:both;" data-ng-repeat="question in questions.d" data-ng-init="ctrlType = question.Type">
+                <data-ng-form name="userFieldForm">
+                    <div class="question-text">
+                        {{question.Id + "." + question.Text}}
+                        <br />
+                        {{question.Type}}
+                        <br />
+
+                        <div data-ng-if="ctrlType == 'text'">
+                            @*<input name="{{'Question' + question.Id}}" type="{{question.Type}}" data-ng-model="question.Value" placeholder="{{question.WaterMarkText}}" required />
+                            <span style="color:red" ng-show="{{ 'form_Questions.Question' + question.Id + '.$dirty && form_Questions.Question' + question.Id + '.$invalid'}}">
+                                <span ng-show="{{ 'form_Questions.Question' + question.Id + '.$error.required'}}">A response is required for this question !</span>
+                            </span>*@
+                            <input name="textQuestion" type="{{question.Type}}" data-ng-model="question.Value" placeholder="{{question.WaterMarkText}}" required />
+                            <span style="color:red" ng-show="userFieldForm.textQuestion.$dirty && userFieldForm.textQuestion.$invalid">
+                                <span ng-show="userFieldForm.textQuestion.$error.required">A response is required for this question !</span>
+                            </span>
+
+                            <!-- Comment : here just for checking purpose -->
+                            <p>$pristine = {{userFieldForm.textQuestion.$pristine}}</p>
+                            <p>$dirty = {{userFieldForm.textQuestion.$dirty}}</p>
+                            <p>$invalid = {{userFieldForm.textQuestion.$invalid}}</p>
+                            <p>$error text = {{userFieldForm.textQuestion.$error}}</p>
+
+                        </div>
+                        <div data-ng-if="ctrlType == 'email'">
+                            <input name="emailQuestion" type="{{question.Type}}" data-ng-model="question.Value" placeholder="{{question.WaterMarkText}}" />
+                            <span style="color:red" ng-show="userFieldForm.emailQuestion.$dirty && userFieldForm.emailQuestion.$invalid">
+                                <span ng-show="userFieldForm.emailQuestion.$error.email">Invalid email id !</span>
+                            </span>
+                        </div>
+                        <div data-ng-if="ctrlType == 'number'">
+                            <input name="QuestionNumber" type="{{question.Type}}" data-ng-model="question.Value" data-ng-pattern="/^(\d)+$/" />
+                            @*<p style="color:red" ng-show="userFieldForm.QuestionNumber.$error.pattern">Numbers only !</p>*@
+                        </div>
+                        <div data-ng-if="ctrlType == 'radio'">
+                            <input name="rbtn_YesNo" type="{{question.Type}}" value="{{question.RadioValue}}" />&nbsp;<label data-ng-bind="question.RadioLable"></label>
+                            <input name="rbtn_YesNo" type="{{question.Type}}" value="false" />&nbsp;<label>No</label>
+                        </div>
+                        <div data-ng-if="ctrlType == 'select'">
+                            <select>
+                                <option selected>--Select--</option>
+                                <option>Item1</option>
+                                <option>Item2</option>
+                            </select>
+                        </div>
+                    </div>
+                </data-ng-form>
+
+            </div>
+            <div>
+                Show Value : {{question.Value}}
+            </div>
+
+        </form>        
+    </div>
+    
+
+    <!-- Comment : Scripts block which will be added later in script bundle -->
+    <script src="~/Scripts/angular/angular.js"></script>
+    <script src="~/Scripts/bhic/bhic-app.js"></script>
+    <script src="~/Scripts/bhic/modules/wc/bhic-app.wc.js"></script>
+    <script src="~/Scripts/bhic/modules/root/bhic-app.constant.js"></script>
+    <script src="~/Scripts/bhic/controllers/wc/questionEngineCtrl.js"></script>    
+
+</body>
+</html>

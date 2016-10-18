@@ -1,0 +1,409 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="12.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{A3B360BC-6D15-4DA6-BB04-551E6BE45965}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>BHIC.Domain</RootNamespace>
+    <AssemblyName>BHIC.Domain</AssemblyName>
+    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <SolutionDir Condition="$(SolutionDir) == '' Or $(SolutionDir) == '*Undefined*'">..\</SolutionDir>
+    <RestorePackages>true</RestorePackages>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <UseVSHostingProcess>false</UseVSHostingProcess>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'QA|AnyCPU'">
+    <OutputPath>bin\QA\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <Optimize>true</Optimize>
+    <DebugType>pdbonly</DebugType>
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <ErrorReport>prompt</ErrorReport>
+    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'UAT|AnyCPU'">
+    <OutputPath>bin\UAT\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <Optimize>true</Optimize>
+    <DebugType>pdbonly</DebugType>
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <ErrorReport>prompt</ErrorReport>
+    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'UAT_Security|AnyCPU'">
+    <OutputPath>bin\UAT_Security\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <Optimize>true</Optimize>
+    <DebugType>pdbonly</DebugType>
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <ErrorReport>prompt</ErrorReport>
+    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'PreProd|AnyCPU'">
+    <OutputPath>bin\PreProd\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <Optimize>true</Optimize>
+    <DebugType>pdbonly</DebugType>
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <ErrorReport>prompt</ErrorReport>
+    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Production|AnyCPU'">
+    <OutputPath>bin\Production\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <Optimize>true</Optimize>
+    <DebugType>pdbonly</DebugType>
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <ErrorReport>prompt</ErrorReport>
+    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'UAT_BOP|AnyCPU'">
+    <OutputPath>bin\UAT_BOP\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <Optimize>true</Optimize>
+    <DebugType>pdbonly</DebugType>
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <ErrorReport>prompt</ErrorReport>
+    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="System" />
+    <Reference Include="System.ComponentModel.DataAnnotations" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Web" />
+    <Reference Include="System.Web.Extensions" />
+    <Reference Include="System.Web.Mvc, Version=4.0.0.1, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\Microsoft.AspNet.Mvc.4.0.30506.0\lib\net40\System.Web.Mvc.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Account\Login.cs" />
+    <Compile Include="Account\UserPolicy.cs" />
+    <Compile Include="Account\UserPolicyRequestParms.cs" />
+    <Compile Include="Account\UserPolicyResponse.cs" />
+    <Compile Include="Account\UserProfile.cs" />
+    <Compile Include="Account\UserProfilePostType.cs" />
+    <Compile Include="Account\UserProfilePostTypeEnum.cs" />
+    <Compile Include="Account\UserProfileRequestParms.cs" />
+    <Compile Include="Account\UserProfileResponse.cs" />
+    <Compile Include="BackEnd\Contact.cs" />
+    <Compile Include="BackEnd\WCLimit.cs" />
+    <Compile Include="BackEnd\WCLimitRequestParms.cs" />
+    <Compile Include="BackEnd\WCLimitResponse.cs" />
+    <Compile Include="Background\AvailableCarriersRequestParms.cs" />
+    <Compile Include="Background\AvailableCarriersResponse.cs" />
+    <Compile Include="Background\BusinessType.cs" />
+    <Compile Include="Background\BusinessTypeRequestParms.cs" />
+    <Compile Include="Background\BusinessTypeResponse.cs" />
+    <Compile Include="Background\CityStateZipCode.cs" />
+    <Compile Include="Background\CityStateZipCodeSearchRequestParms.cs" />
+    <Compile Include="Background\CityStateZipCodeSearchResponse.cs" />
+    <Compile Include="Background\CityStateZipCodeSearchTypeEnum.cs" />
+    <Compile Include="Background\ClassCode.cs" />
+    <Compile Include="Background\ClassCodeRequestParms.cs" />
+    <Compile Include="Background\ClassCodeResponse.cs" />
+    <Compile Include="Background\ClassDescKeyword.cs" />
+    <Compile Include="Background\ClassDescKeywordRequestParms.cs" />
+    <Compile Include="Background\ClassDescKeywordResponse.cs" />
+    <Compile Include="Background\ClassDescription.cs" />
+    <Compile Include="Background\ClassDescriptionRequestParms.cs" />
+    <Compile Include="Background\ClassDescriptionResponse.cs" />
+    <Compile Include="Background\CompanionClass.cs" />
+    <Compile Include="Background\CompanionClassRequestParms.cs" />
+    <Compile Include="Background\CompanionClassResponse.cs" />
+    <Compile Include="Background\ContactGroup.cs" />
+    <Compile Include="Background\ContactType.cs" />
+    <Compile Include="Background\ContactTypeRequestParms.cs" />
+    <Compile Include="Background\ContactTypeResponse.cs" />
+    <Compile Include="Background\County.cs" />
+    <Compile Include="Background\CountyRequestParms.cs" />
+    <Compile Include="Background\CountyResponse.cs" />
+    <Compile Include="Background\FEINType.cs" />
+    <Compile Include="Background\FEINTypeResponse.cs" />
+    <Compile Include="Background\FieldData.cs" />
+    <Compile Include="Background\FieldDataRequestParms.cs" />
+    <Compile Include="Background\FieldDataResponse.cs" />
+    <Compile Include="Background\FieldLabel.cs" />
+    <Compile Include="Background\FieldLabelTypeEnum.cs" />
+    <Compile Include="Background\GuardCDNBundle.cs" />
+    <Compile Include="Background\GuardCDNBundleRequestParms.cs" />
+    <Compile Include="Background\GuardCDNBundleTypeEnum.cs" />
+    <Compile Include="Background\Industry.cs" />
+    <Compile Include="Background\IndustryRequestParms.cs" />
+    <Compile Include="Background\IndustryResponse.cs" />
+    <Compile Include="Background\LocationType.cs" />
+    <Compile Include="Background\LocationTypeRequestParms.cs" />
+    <Compile Include="Background\LocationTypeResponse.cs" />
+    <Compile Include="Background\Lookup.cs" />
+    <Compile Include="Background\LookupRequestParms.cs" />
+    <Compile Include="Background\LookupResponse.cs" />
+    <Compile Include="Background\PaymentPlan.cs" />
+    <Compile Include="Background\PaymentPlanRequestParms.cs" />
+    <Compile Include="Background\PaymentPlanResponse.cs" />
+    <Compile Include="Background\PhoneType.cs" />
+    <Compile Include="Background\PhoneTypeRequestParms.cs" />
+    <Compile Include="Background\PhoneTypeResponse.cs" />
+    <Compile Include="Background\SoapieMailMessageRequestParms.cs" />
+    <Compile Include="Background\SoapieMailMessageResponse.cs" />
+    <Compile Include="Background\State.cs" />
+    <Compile Include="Background\StateRequestParms.cs" />
+    <Compile Include="Background\StateResponse.cs" />
+    <Compile Include="Background\SubIndustry.cs" />
+    <Compile Include="Background\SubIndustryRequestParms.cs" />
+    <Compile Include="Background\SubIndustryResponse.cs" />
+    <Compile Include="Background\SystemVariable.cs" />
+    <Compile Include="Background\SystemVariableRequestParms.cs" />
+    <Compile Include="Background\SystemVariableResponse.cs" />
+    <Compile Include="Background\VCityStateZipCodeRequestParms.cs" />
+    <Compile Include="Background\VCityStateZipCodeResponse.cs" />
+    <Compile Include="Background\WCDeductibleResponse.cs" />
+    <Compile Include="Background\WCDeductibles.cs" />
+    <Compile Include="Background\WCDeductiblesRequestParms.cs" />
+    <Compile Include="Background\WCDeductibleType.cs" />
+    <Compile Include="CommercialAuto\CAModel.cs" />
+    <Compile Include="Dashboard\AccountRegistration.cs" />
+    <Compile Include="Dashboard\ChangePasswordDTO.cs" />
+    <Compile Include="Dashboard\AddressInformation.cs" />
+    <Compile Include="Dashboard\ContactInformation.cs" />
+    <Compile Include="Dashboard\CancellationRequestcustom.cs" />
+    <Compile Include="Dashboard\CertificateOfInsuranceDTO.cs" />
+    <Compile Include="Dashboard\PolicyInformation.cs" />
+    <Compile Include="Dashboard\PolicyUser.cs" />
+    <Compile Include="Dashboard\ReportClaim.cs" />
+    <Compile Include="Dashboard\RequestPolicyChangeDTO.cs" />
+    <Compile Include="Dashboard\ResetPasswordDTO.cs" />
+    <Compile Include="Dashboard\SecondaryAccountRegistration.cs" />
+    <Compile Include="Dashboard\UpdatePayment.cs" />
+    <Compile Include="Dashboard\UploadDocumentDTO.cs" />
+    <Compile Include="Dashboard\UserRegistration.cs" />
+    <Compile Include="Demo\User.cs" />
+    <Compile Include="Document\Document.cs" />
+    <Compile Include="FileType\FileType.cs" />
+    <Compile Include="LP\CTAMessage.cs" />
+    <Compile Include="LP\LandingPageTransaction.cs" />
+    <Compile Include="LP\MasterCollection.cs" />
+    <Compile Include="PolicyCentre\DropDownOptions.cs" />
+    <Compile Include="PolicyCentre\UserQuotes.cs" />
+    <Compile Include="PolicyImport\AdditionalName.cs" />
+    <Compile Include="PolicyImport\AddProspectRequest.cs" />
+    <Compile Include="PolicyImport\AddProspectResponse.cs" />
+    <Compile Include="PolicyImport\Contact.cs" />
+    <Compile Include="PolicyImport\LiabilityLimits.cs" />
+    <Compile Include="PolicyImport\Location.cs" />
+    <Compile Include="PolicyImport\Modifier.cs" />
+    <Compile Include="PolicyImport\Question.cs" />
+    <Compile Include="PolicyImport\RateClass.cs" />
+    <Compile Include="PolicyImport\SchedMod.cs" />
+    <Compile Include="PolicyImport\WcState.cs" />
+    <Compile Include="Policy\Address.cs" />
+    <Compile Include="Policy\AddressRequestParms.cs" />
+    <Compile Include="Policy\AddressResponse.cs" />
+    <Compile Include="Policy\Agency.cs" />
+    <Compile Include="Policy\Billing.cs" />
+    <Compile Include="Policy\BillingDetails.cs" />
+    <Compile Include="Policy\BillingDetailsRequestParms.cs" />
+    <Compile Include="Policy\BillingDetailsResponse.cs" />
+    <Compile Include="Policy\BillingRequestParms.cs" />
+    <Compile Include="Policy\BillingResponse.cs" />
+    <Compile Include="Policy\BillingStatementRequestParms.cs" />
+    <Compile Include="Policy\BillingStatementResponse.cs" />
+    <Compile Include="Policy\BillingSummary.cs" />
+    <Compile Include="Policy\BillingSummaryRequestParms.cs" />
+    <Compile Include="Policy\BillingSummaryResponse.cs" />
+    <Compile Include="Policy\CancellationRequest.cs" />
+    <Compile Include="Policy\CancellationRequestParms.cs" />
+    <Compile Include="Policy\CancellationResponse.cs" />
+    <Compile Include="Policy\CertificateOfInsurance.cs" />
+    <Compile Include="Policy\CertificateOfInsuranceRequestParms.cs" />
+    <Compile Include="Policy\CertificateOfInsuranceResponse.cs" />
+    <Compile Include="Policy\CertRequest.cs" />
+    <Compile Include="Policy\CertRequestParms.cs" />
+    <Compile Include="Policy\CertRequestResponse.cs" />
+    <Compile Include="Policy\Contact.cs" />
+    <Compile Include="Policy\ContactRequestParms.cs" />
+    <Compile Include="Policy\ContactResponse.cs" />
+    <Compile Include="Policy\CoverageState.cs" />
+    <Compile Include="Policy\CoverageStateRequestParms.cs" />
+    <Compile Include="Policy\CoverageStateResponse.cs" />
+    <Compile Include="Policy\DeductibleInvoiceRequestParms.cs" />
+    <Compile Include="Policy\DeductibleInvoiceResponse.cs" />
+    <Compile Include="Policy\Document.cs" />
+    <Compile Include="Policy\DocumentGroupingEnum.cs" />
+    <Compile Include="Policy\DocumentRequestParms.cs" />
+    <Compile Include="Policy\DocumentResponse.cs" />
+    <Compile Include="Policy\Exposure.cs" />
+    <Compile Include="Policy\ExposureRequestParms.cs" />
+    <Compile Include="Policy\ExposureResponse.cs" />
+    <Compile Include="Policy\FutureBill.cs" />
+    <Compile Include="Policy\FutureBillRequestParms.cs" />
+    <Compile Include="Policy\FutureBillResponse.cs" />
+    <Compile Include="Policy\Insured.cs" />
+    <Compile Include="Policy\InsuredName.cs" />
+    <Compile Include="Policy\InsuredNameRequestParms.cs" />
+    <Compile Include="Policy\InsuredNameResponse.cs" />
+    <Compile Include="Policy\LobData.cs" />
+    <Compile Include="Policy\LobDataRequestParms.cs" />
+    <Compile Include="Policy\LobDataResponse.cs" />
+    <Compile Include="Policy\Location.cs" />
+    <Compile Include="Policy\LocationRequestParms.cs" />
+    <Compile Include="Policy\LocationResponse.cs" />
+    <Compile Include="Policy\Modifier.cs" />
+    <Compile Include="Policy\ModifierRequestParms.cs" />
+    <Compile Include="Policy\ModifierResponse.cs" />
+    <Compile Include="Policy\Officer.cs" />
+    <Compile Include="Policy\OfficerRequestParms.cs" />
+    <Compile Include="Policy\OfficerResponse.cs" />
+    <Compile Include="Policy\Payment.cs" />
+    <Compile Include="Policy\PaymentRequestParms.cs" />
+    <Compile Include="Policy\PaymentResponse.cs" />
+    <Compile Include="Policy\PaymentTerms.cs" />
+    <Compile Include="Policy\PaymentTermsRequestParms.cs" />
+    <Compile Include="Policy\PaymentTermsResponse.cs" />
+    <Compile Include="Policy\PCQuoteInformation.cs" />
+    <Compile Include="Policy\PCQuoteInformationRequestParms.cs" />
+    <Compile Include="Policy\PCQuoteInformationResponse.cs" />
+    <Compile Include="Policy\Phone.cs" />
+    <Compile Include="Policy\PhoneRequestParms.cs" />
+    <Compile Include="Policy\PhoneResponse.cs" />
+    <Compile Include="Policy\PhysicianPanelRequestParms.cs" />
+    <Compile Include="Policy\PhysicianPanelResponse.cs" />
+    <Compile Include="Policy\Policy.cs" />
+    <Compile Include="Policy\PolicyCodeRequest.cs" />
+    <Compile Include="Policy\PolicyCodeResponse.cs" />
+    <Compile Include="Policy\PolicyCreate.cs" />
+    <Compile Include="Policy\PolicyData.cs" />
+    <Compile Include="Policy\PolicyDataRequestParms.cs" />
+    <Compile Include="Policy\PolicyDataResponse.cs" />
+    <Compile Include="Policy\PolicyDetails.cs" />
+    <Compile Include="Policy\PolicyDetailsRequestParms.cs" />
+    <Compile Include="Policy\PolicyDetailsResponse.cs" />
+    <Compile Include="Policy\PolicyDocumentRequestParms.cs" />
+    <Compile Include="Policy\PolicyDocumentResponse.cs" />
+    <Compile Include="Policy\PolicyRequestParms.cs" />
+    <Compile Include="Policy\PolicyResponse.cs" />
+    <Compile Include="Policy\ProspectInfo.cs" />
+    <Compile Include="Policy\ProspectInfoRequestParms.cs" />
+    <Compile Include="Policy\ProspectInfoResponse.cs" />
+    <Compile Include="Policy\QuickQuoteRequestParms.cs" />
+    <Compile Include="Policy\QuickQuoteResponse.cs" />
+    <Compile Include="Policy\Quote.cs" />
+    <Compile Include="Policy\QuoteRequestParms.cs" />
+    <Compile Include="Policy\QuoteResponse.cs" />
+    <Compile Include="Policy\QuoteStatus.cs" />
+    <Compile Include="Policy\QuoteStatusRequestParms.cs" />
+    <Compile Include="Policy\QuoteStatusResponse.cs" />
+    <Compile Include="Policy\RatingData.cs" />
+    <Compile Include="Policy\RatingDataRequestParms.cs" />
+    <Compile Include="Policy\RatingDataResponse.cs" />
+    <Compile Include="Policy\RatingRequestParms.cs" />
+    <Compile Include="Policy\RatingResponse.cs" />
+    <Compile Include="Policy\RenewDetails.cs" />
+    <Compile Include="Policy\SavedQuote.cs" />
+    <Compile Include="Policy\SavedQuoteRequestParms.cs" />
+    <Compile Include="Policy\SavedQuoteResponse.cs" />
+    <Compile Include="Policy\UserPolicyCode.cs" />
+    <Compile Include="Policy\UserPolicyCodeRequestParms.cs" />
+    <Compile Include="Policy\UserPolicyCodeResponse.cs" />
+    <Compile Include="Policy\VExposuresMinPayrollRequestParms.cs" />
+    <Compile Include="Policy\VExposuresMinPayrollResponse.cs" />
+    <Compile Include="Policy\ViewDocument.cs" />
+    <Compile Include="Policy\ViewDocumentRequestParms.cs" />
+    <Compile Include="Policy\ViewDocumentResponse.cs" />
+    <Compile Include="Policy\VInsuredNameFEINRequestParms.cs" />
+    <Compile Include="Policy\VInsuredNameFEINResponse.cs" />
+    <Compile Include="Policy\Walkthrough.cs" />
+    <Compile Include="Policy\WalkThroughRequestParms.cs" />
+    <Compile Include="Policy\WalkthroughResponse.cs" />
+    <Compile Include="Policy\WalkThroughStatusEnum.cs" />
+    <Compile Include="Policy\WcLocNamCertificateResult.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="PurchasePath\ReferralProcessing.cs" />
+    <Compile Include="PurchasePath\ReferralReason.cs" />
+    <Compile Include="PurchasePath\UserDetail.cs" />
+    <Compile Include="QuestionEngine\Account.cs" />
+    <Compile Include="QuestionEngine\BillingDefaults.cs" />
+    <Compile Include="QuestionEngine\BusinessContact.cs" />
+    <Compile Include="QuestionEngine\BusinessInfo.cs" />
+    <Compile Include="QuestionEngine\CarrierPricing.cs" />
+    <Compile Include="QuestionEngine\ClassItem.cs" />
+    <Compile Include="QuestionEngine\DSQuestionRule.cs" />
+    <Compile Include="QuestionEngine\MailingAddress.cs" />
+    <Compile Include="QuestionEngine\Modifier.cs" />
+    <Compile Include="QuestionEngine\MyQuestion.cs" />
+    <Compile Include="QuestionEngine\PersonalContact.cs" />
+    <Compile Include="QuestionEngine\Policy.cs" />
+    <Compile Include="QuestionEngine\PricingMod.cs" />
+    <Compile Include="QuestionEngine\Question.cs" />
+    <Compile Include="QuestionEngine\MyQuestionObject.cs" />
+    <Compile Include="QuestionEngine\MyQuestionParameters.cs" />
+    <Compile Include="QuestionEngine\QuestionRequestParms.cs" />
+    <Compile Include="QuestionEngine\MyQuestionResponse.cs" />
+    <Compile Include="QuestionEngine\QuestionResponseLimit.cs" />
+    <Compile Include="QuestionEngine\QuestionRule.cs" />
+    <Compile Include="QuestionEngine\QuestionRulePricing.cs" />
+    <Compile Include="QuestionEngine\QuestionsHistoryRequestParms.cs" />
+    <Compile Include="QuestionEngine\QuestionsHistoryResponse.cs" />
+    <Compile Include="QuestionEngine\QuestionsRequest.cs" />
+    <Compile Include="QuestionEngine\QuestionsResponse.cs" />
+    <Compile Include="QuestionEngine\MyQuestionType.cs" />
+    <Compile Include="RatingEngine\RatingEngineRequestParms.cs" />
+    <Compile Include="RatingEngine\RatingEngineResponse.cs" />
+    <Compile Include="Service\BatchAction.cs" />
+    <Compile Include="Service\BatchActionFlags.cs" />
+    <Compile Include="Service\BatchActionList.cs" />
+    <Compile Include="Service\BatchActionParameter.cs" />
+    <Compile Include="Service\BatchResponse.cs" />
+    <Compile Include="Service\BatchResponseList.cs" />
+    <Compile Include="Service\OperationStatus.cs" />
+    <Compile Include="Service\ServiceEventLog.cs" />
+    <Compile Include="Service\ServiceEventLogRequestParms.cs" />
+    <Compile Include="Service\ServiceEventLogResponse.cs" />
+    <Compile Include="Service\ServiceStatusModel.cs" />
+    <Compile Include="TransactionTrace\ApiTransaction.cs" />
+    <Compile Include="TransactionTrace\DbTransaction.cs" />
+    <Compile Include="TransactionTrace\TransactionLog.cs" />
+    <Compile Include="XMod\RatingValuesInformation.cs" />
+    <Compile Include="XMod\RiskHeaderInformation.cs" />
+    <Compile Include="XMod\RiskXmodFactorResponse.cs" />
+    <Compile Include="XMod\XModRequestParms.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Alert\" />
+    <Folder Include="Profile\" />
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <Import Project="$(SolutionDir)\.nuget\NuGet.targets" Condition="Exists('$(SolutionDir)\.nuget\NuGet.targets')" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>

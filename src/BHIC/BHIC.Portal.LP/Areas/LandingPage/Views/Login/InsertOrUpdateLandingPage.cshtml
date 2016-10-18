@@ -1,0 +1,122 @@
+﻿<div class="acc-box" ng-init="init();">
+    <div class="box-header">
+        <h2 style="margin-left:10px;">{{HeaderText}}</h2>
+    </div>
+    <div>
+        <form name="acctForm" onerrorfocus-form novalidate="novalidate" data-ng-submit="accForm.$valid">
+            <center>
+                <table style="width:95%; margin-top:5%; display: block;" cellpadding="0" cellspacing="0">
+                    <tbody>
+                        <tr><td colspan="3" style=" width:88%; height:30px; font-size:20px; background-color:#99ccff;"><span style="margin-left:15px;">General Information</span></td> </tr>
+                        <tr>
+                            <td><span style="margin-left:10px;">Page Name :</span></td>
+                            <td><input  ng-model="txtPageName" name="txtHeadingModel" class="field" style=" margin-left:5px; margin-top:5px; padding-top:5px; padding-bottom:5px; width:100%; " type="text" cols="35" wrap="HARD"  /></td>
+                            <td name="dynamicError" id="ÏdtxtPageName" width="5%"></td>
+                        </tr>
+                        <tr>
+                            <td width="40%;"><span style="margin-left:10px;">Select LOB :</span></td>
+                            <td>
+                                <select id="soflow" class="dk field-lg field" ng-model="lineTypeModel" name="lineTypeMod" ng-init="lineTypeModel = drpTypeList[defaultLOB]"
+                                        ng-options="t.Text for t in drpTypeList" ng-change="drpChange(lineTypeModel, '#IdLob');" required>
+                                    <option value="" disabled="disabled">--- Please select a line of business ---</option>
+                                </select>
+                            </td>
+                            <td name="dynamicError" id="IdLob" width="5%"></td>
+                        </tr>
+                        <tr>
+                            <td><span style="margin-left:10px;">Select State :</span></td>
+                            <td>
+                                <select id="soflow" class="dk field-lg field" ng-model="stateModel" name="stateMod" ng-init="stateModel = drpStateList[defaultState]"
+                                        ng-options="s.Text for s in drpStateList" ng-change="drpChange(stateModel, '#IdState');" required>
+                                    <option value="" disabled="disabled">--- Please select state ---</option>
+                                </select>
+                            </td>
+                            <td name="dynamicError" id="IdState" width="5%"></td>
+                        </tr>
+                        <tr>
+                            <td><span style="margin-left:10px;">Select Template :</span></td>
+                            <td>
+                                <select id="soflow" class="dk field-lg field" ng-model="templatesModel" name="templatesMod" ng-init="templatesModel = drpTemplateList[defaultLOB]"
+                                        ng-options="t.Text for t in drpTemplateList" ng-change="drpChange(templatesModel, '#IdTemp');" required>
+                                    <option value="" disabled="disabled">--- Please select Template ---</option>
+                                </select>
+                            </td>
+                            <td name="dynamicError" id="IdTemp" width="5%"></td>
+                        </tr>
+                        <tr>
+                            <td><span style="margin-left:10px;">Select Background Image :</span></td>
+                            <td>
+                                <select id="soflow" class="dk field-lg field" ng-model="mainImageModel" name="mainImageMod" ng-init="mainImageModel = drpImageList[defaultLOB]"
+                                        ng-options="t.Text for t in drpImageList" ng-change="drpChange(mainImageModel, '#IdbkImg');" required>
+                                    <option value="" disabled="disabled">--- Please select background image ---</option>
+                                </select>
+                            </td>
+                            <td name="dynamicError" id="IdbkImg" width="5%"></td>
+                        </tr>
+                        <tr>
+                            <td><span style="margin-left:10px;">Heading :</span></td>
+                            <td><textarea ng-model="txtHeading" name="txtHeadingModel" class="field" type=" text" cols="35"  wrap="HARD" style="height:50px;" /></td>
+                            <td name="dynamicError" id="ÏdtxtHeading" width="5%"></td>
+                        </tr>
+                        <tr>
+                            <td><span style="margin-left:10px;">Sub Heading :</span></td>
+                            <td><textarea ng-model="txtSubHeading" name="txtSubHeadingModel" class="field"  type=" text" cols="35"  wrap="HARD" style="height:50px;" /></td>
+                            <td name="dynamicError" id="ÏdtxtSubHeading" width="5%"></td>
+                        </tr>
+                        <tr>
+                            <td><span style="margin-left:10px;">Product Name :</span></td>
+                            <td><textarea ng-model="productName" name="productNameModel" class="field" type=" text" cols="35"   wrap="HARD" style="height:50px;" /></td>
+                            <td name="dynamicError" id="ÏdproductName" width="5%"></td>
+                        </tr>
+                        <tr>
+                            <td><span style="margin-left:10px;">Product HighLight :</span></td>
+                            <td><textarea ng-model="productHighlight" name="productHighlightModel" class="field" type=" text" cols="35"   wrap="HARD" style="height:50px;" /></td>
+                            <td name="dynamicError" id="ÏdproductHighlight" width="5%"></td>
+                        </tr>
+                        <tr>
+                            <td><span style="margin-left:10px;">Button Text :</span></td>
+                            <td><textarea ng-model="BTNText" name="BTNTextModel" class="field" ng-change="drpChange(BTNText,'#ÏdCBTNText')" type=" text" cols="35" rows="5" maxlength="100" wrap="HARD" style="height:50px;" /></td>
+                            <td name="dynamicError" id="ÏdCBTNText" width="5%"></td>
+                        </tr>
+                        <tr>
+                           <td><span style="margin-left:10px;">Callout Text:</span></td>
+                            <td><textarea ng-model="calloutText" name="calloutTextModel" class="field" type=" text" cols="35"   wrap="HARD" style="height:50px;" /></td>
+                            <td name="dynamicError" id="ÏdcalloutText" width="5%"></td>
+                        </tr>
+                        <tr>
+                            <td colspan="3"><table id="staticTable" style="width:100%; margin-left:14px; overflow-y: scroll; display: block;" cellpadding="0" cellspacing="0"></table></td>
+                        </tr>
+                       
+                        <tr>
+                            <td><span style="margin-left:10px;">Is Deployed :</span></td>
+                            <td>
+                                <input ng-model="IsDeployed" class="field" name="DesDeployed" type="checkbox" cols="35">
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+
+                <div class="btns_container marT20" style="margin-left: 38%;">
+                    <input type="submit" style="width:100px;" name="AddorEdit" class="btn btn-default" id="btnAddOrEdit" value="{{btnText}}" data-ng-click="InsertOrUpdateLandingPage();" />
+                    <input type="submit" style="width:100px;" name="Cancel" class="btn btn-default" id="btnCancel" value="Cancel" data-ng-click="GoToLandingPage();" />
+                    <input type="submit" style="width:100px;" name="Preview" class="btn btn-default" id="btnPreview" value="Preview" ng-disabled="enable" data-ng-click="GoToLandingPagePreview();" />
+                </div>
+
+            </center>
+        </form>
+    </div>
+</div>
+
+<div style="display:none;">
+    <table id="dynamicTemplate">
+        <tr class="dynamicTR">
+            <td width="34%;"><span style="margin-left:0px;">CTA Message :</span></td>
+            <td width="35%;">
+                <textarea name="CTAMsg" class="field" type="text" cols="35"  wrap="HARD" style="height:50px; margin-left:15px;" />
+                <img onclick="RemoveCATTemplate(this)" src="~/Images/minus.png" style="text-align:right; margin-left:10px; width:30px; margin-top:-35px; height:30px; " />
+            </td>
+            <td width="5%;" name="errorBlock"></td>
+        </tr>
+    </table>
+</div>
+

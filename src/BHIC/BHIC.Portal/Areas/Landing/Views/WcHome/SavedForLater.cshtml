@@ -1,0 +1,39 @@
+﻿@{
+    ViewBag.Title = "SavedForLater";
+    Layout = "~/Areas/Landing/Views/Shared/_Layout.cshtml";
+}
+
+<link href="~/Content/Custom/user-registration.css" rel="stylesheet" />
+
+<div id="div-userRegister" data-ng-app="bhic-app" data-ng-controller="questionsPageCtrl as saveForLaterCtrl" class="ds-page-container">
+    <div class="ds-wrap">
+        <div class="ds-content-container">
+            <div class="ds-content-region">
+                <h2>Your quote email is on its way!</h2>
+                <div class="row">
+                    <div class="col-lg-12">
+                        <div class="panel">
+                            <div class="panel-body">
+                                <div class="row">
+                                    <div class="col-lg-12">
+                                        <p>You should receive an email from us within the next few minutes.</p>
+                                        <p>If you find that you haven't received an email within a reasonable amount of time, please check your junk email folder.</p>
+                                        <p><strong>Important:</strong> Please remember that this offer is only available for a limited time.  Terms may change if you revisit this quote at a later date.</p>
+                                    </div>
+                                </div>
+                                <!-- Link for test -->
+                                <div class="row">
+                                    @Html.Raw(@ViewBag.EmailLink)
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div>
+
+
+

@@ -1,0 +1,2 @@
+
+ALTER TABLE OraganisationAddress ALTER COLUMN Address2 VARCHAR(200) NULL

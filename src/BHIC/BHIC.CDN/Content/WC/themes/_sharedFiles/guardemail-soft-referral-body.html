@@ -1,0 +1,396 @@
+﻿<!--**************************************** -->
+<!-- TEMPLATE FORMATTING INSTRUCTIONS -->
+<!--**************************************** -->
+<!--
+The following variables can optionally be included in the associated email message below.  Place the variables (including #'s) anywhere within valid html markup below.
+
+Website Contact Info:       ##WebsiteUrlHref##
+Website Contact Info:       ##WebsiteUrlText##
+Website Contact Info:       ##SupportPhoneNumberHref##
+Website Contact Info:       ##SupportPhoneNumber##
+Website Contact Info:       ##SupportEmailText##
+Website Contact Info:       ##SupportEmailHref##
+
+Decision Status:            ##ReferralStatus## <br />
+Referral Reason:	        ##ReferralReason## <br />
+Decline Reason:	            ##DeclineReason## <br />
+Referral Description:	    ##ReferralDescription## <br />
+Import Status:	            ##ReferralImportStatus## <br />
+Quote ID:	                ##QuoteId##
+
+Business Name:	            ##BusinessName## <br />
+Governing State:            ##StateCode## <br />
+Class Description Lookup:   ##BusinessLookupType## <br />
+Class Description:	        ##ClassDescription## <br />
+Effective Date:	            ##PolicyInceptionDate## <br />
+Total Payroll:	            ##AnnualPayroll## <br />
+When did business Start:    ##BusinessYears## <br />
+FEIN/Tax ID:	            ##FeinOrSSNumber## <br />
+xMOD:	                    ##XModValueMessage## <br />
+Estimated Total Premium :   ##EstimatedTotalPremium## <br />
+
+Name:	                    ##ContactName## <br />
+Phone:	                    ##PhoneNumber## <br />
+Email:	                    ##Email## <br />
+State:	                    ##StateCode## <br />
+Zip:	                    ##ZipCode## <br />
+
+-->
+<!--**************************************** -->
+<!-- message body -->
+<!--**************************************** -->
+
+
+<table cellpadding="0" cellspacing="0" border="0" width="100%" style="border-collapse:collapse;">
+    <tr>
+        <td style="border-collapse:collapse;">
+            <table cellpadding="0" cellspacing="0" border="0" width="600" style="max-width:600px;margin-top:0;margin-bottom:0;margin-right:auto;margin-left:auto;border-width:1px;border-style:solid;border-color:#e5e5e5;border-collapse:collapse;">
+                <tr>
+                    <td align="center" style="border-collapse:collapse;">
+
+                        <!-- Comment : Here header-top template section -->
+                        <table align="center" style="border-collapse:collapse;" cellpadding="0" cellspacing="10">
+                            <tbody>
+                                <tr>
+                                    <td align="center" style="border-collapse:collapse;">
+                                        <a href="##WebsiteUrlHref##" target="_blank">
+                                            <img alt="" height="100" src="##AbsoulteURL##logo.png" style="display:block;margin-top:25px;margin-bottom:25px;margin-right:0;margin-left:0;outline-style:none;text-decoration:none;-ms-interpolation-mode:bicubic;">
+                                        </a>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+
+                        <!-- Comment : Here header template section -->
+                        <table style="border-bottom-width:5px;border-bottom-style:solid;border-bottom-color:#5ac1a5;width:100%;border-collapse:collapse;">
+                            <tbody>
+                                <tr>                                    
+                                    <td align="right" style="padding-top:0;padding-bottom:0;padding-right:2px;padding-left:15px;border-collapse:collapse;">
+                                        <img src="##AbsoulteURL##mail.png" alt="" style="vertical-align:middle;outline-style:none;text-decoration:none;-ms-interpolation-mode:bicubic;">
+                                    </td>
+                                    <td align="left" style="padding-top:0;padding-bottom:0;padding-right:20px;padding-left:2px;border-collapse:collapse;">
+                                        <p style="font-size:10px;font-weight:bold;color:#009483;font-family:verdana;margin-top:1em;margin-bottom:1em;margin-right:0;margin-left:0;">
+                                            <a href="##SupportEmailHref##" style="color:#009483;-webkit-text-decoration:none;text-decoration:none"> ##SupportEmailText##</a>
+                                        </p>
+                                    </td>
+                                    <td align="right" style="padding-top:0;padding-bottom:0;padding-right:2px;padding-left:15px;border-collapse:collapse;">
+                                        <img src="##AbsoulteURL##phone.png" alt="" style="vertical-align:middle;outline-style:none;text-decoration:none;-ms-interpolation-mode:bicubic;">
+                                    </td>
+                                    <td align="left" style="padding-top:0;padding-bottom:0;padding-right:0;padding-left:2px;border-collapse:collapse;">
+                                        <p style="font-size:10px;font-weight:bold;color:#009483;font-family:verdana;margin-top:1em;margin-bottom:1em;margin-right:0;margin-left:0;"> <a href="##SupportPhoneNumberHref##" style="color:#009483;-webkit-text-decoration:none;text-decoration:none"> ##SupportPhoneNumber##</a></p>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+
+                        <!-- Comment : Here main body template section -->
+                        <table cellpadding="0" cellspacing="0" style="border-collapse:collapse;width:100%;">
+                            <tbody>
+                                <tr>
+                                    <td style="border-collapse:collapse;padding:0 25px">
+                                        <table style="border-collapse:collapse;width:100%;" width="100%">
+                                            <tbody>
+                                                <tr align="center">
+                                                    <td colspan="2" style="border-collapse:collapse;">
+                                                        <p style="margin-bottom:25px;margin-top:25px;font-size:17px;color:#182a54;font-family:verdana;margin-right:0;margin-left:0;"><strong>Direct Sales - Referral</strong></p>
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td colspan="3" style="border-collapse:collapse;">
+                                                        <p style="margin-top:0;margin-bottom:5px;font-size:12px;line-height:22px;font-weight:bold;color:#182a54;font-family:verdana;"> Action Required: Referral from Direct Sales System </p>
+                                                        <p style="margin-top:0;margin-bottom:20px;font-size:12px;line-height:22px;color:#5c666f;font-family:verdana;"> The quote below was generated by Direct Sales system.</p>
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td colspan="3" style="border-collapse:collapse;">
+                                                        <p style="margin-top:0;margin-bottom:5px;font-size:12px;line-height:22px;font-weight:bold;color:#182a54;font-family:verdana;"> Additional Instructions </p>
+                                                        <p style="margin-top:0;margin-bottom:5px;font-size:12px;line-height:22px;color:#5c666f;font-family:verdana;"> <strong>Step 1:</strong> Quick Search for underwriting-eligible. Consult Work Flow Outline, UW Appetite, and brief Google search. </p>
+                                                        <p style="margin-top:0;margin-bottom:5px;font-size:12px;line-height:22px;color:#5c666f;font-family:verdana;">
+                                                            <strong>Step 2:</strong> Enter the lead in Epic, and pay close attention to coding:
+                                                            <br /> <span style="color:#182a54;"> Agy </span> = ##ReferralAgyValue##
+                                                            <br /> <span style="color:#182a54;"> Branch</span> = ##ReferralBranchValue##
+                                                            <br /> <span style="color:#182a54;">Lead Source </span> = ##ReferralLeadSourceValue##
+                                                        </p>
+                                                        <p style="margin-top:0;margin-bottom:5px;font-size:12px;line-height:22px;color:#5c666f;font-family:verdana;"> <strong>Step 3:</strong> Contact the client as requested, and proceed according to potential for underwriting success.</p>
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td colspan="2" height="5" style="height:5px;">&nbsp;</td>
+                                                </tr>
+                                                <tr>
+                                                    <td colspan="2">
+                                                        <!-- Comment : Here Quote-Status information section/table -->
+                                                        <table id="tblQuoteStatusInfo" cellpadding="0" cellspacing="0" style="border-collapse:collapse;width:100%;">
+                                                            <tr>
+                                                                <td style="border-collapse:collapse;padding:2px 0px;border-bottom:1px solid #ccc;" colspan="2">
+                                                                    <p style="margin:0px;font-size:13px; font-weight:bold;line-height:16px;color:#009483;font-family:verdana;margin-bottom:10px;"> Quote Status </p>
+                                                                </td>
+                                                            </tr>
+                                                            <tr>
+                                                                <td style="border-collapse:collapse;padding:2px 0px;">
+                                                                    <p style="margin-bottom:0;margin-right:0;margin-left:0;color:#182a54;font-family:verdana;font-size:12px;margin-top:10px;">Decision Status:</p>
+                                                                </td>
+                                                                <td style="border-collapse:collapse;padding:2px 0px;">
+                                                                    <p style="margin-top:0;margin-bottom:0;margin-right:0;margin-left:0;color:#5c666f;font-family:verdana;font-size:12px;margin-top:10px;">##ReferralStatus##</p>
+                                                                </td>
+                                                            </tr>
+                                                            <tr>
+                                                                <td style="border-collapse:collapse;padding:2px 0px;">
+                                                                    <p style="margin-top:0;margin-bottom:0;margin-right:0;margin-left:0;color:#182a54;font-family:verdana;font-size:12px;">Referral Reason:</p>
+                                                                </td>
+                                                                <td style="border-collapse:collapse;padding:2px 0px;">
+                                                                    <p style="margin-top:0;margin-bottom:0;margin-right:0;margin-left:0;color:#5c666f;font-family:verdana;font-size:12px;">##ReferralReason##</p>
+                                                                </td>
+                                                            </tr>
+                                                            <!-- Comment : Here newly added for DECLINE Reason -->
+                                                            <tr>
+                                                                <td style="border-collapse:collapse;padding:2px 0px;">
+                                                                    <p style="margin-top:0;margin-bottom:0;margin-right:0;margin-left:0;color:#182a54;font-family:verdana;font-size:12px;">Decline Reason:</p>
+                                                                </td>
+                                                                <td style="border-collapse:collapse;padding:2px 0px;">
+                                                                    <p style="margin-top:0;margin-bottom:0;margin-right:0;margin-left:0;color:#5c666f;font-family:verdana;font-size:12px;">##DeclineReason##</p>
+                                                                </td>
+                                                            </tr>
+                                                            <tr>
+                                                                <td style="border-collapse:collapse;padding:2px 0px;">
+                                                                    <p style="margin-top:0;margin-bottom:0;margin-right:0;margin-left:0;color:#182a54;font-family:verdana;font-size:12px;">Referral Description:</p>
+                                                                </td>
+                                                                <td style="border-collapse:collapse;padding:2px 0px;">
+                                                                    <p style="margin-top:0;margin-bottom:0;margin-right:0;margin-left:0;color:#5c666f;font-family:verdana;font-size:12px;">##ReferralDescription##</p>
+                                                                </td>
+                                                            </tr>
+                                                            <tr>
+                                                                <td style="border-collapse:collapse;padding:2px 0px;">
+                                                                    <p style="margin-top:0;margin-bottom:0;margin-right:0;margin-left:0;color:#182a54;font-family:verdana;font-size:12px;">Import Status:</p>
+                                                                </td>
+                                                                <td style="border-collapse:collapse;padding:2px 0px;">
+                                                                    <p style="margin-top:0;margin-bottom:0;margin-right:0;margin-left:0;color:#5c666f;font-family:verdana;font-size:12px;">##ReferralImportStatus##</p>
+                                                                </td>
+                                                            </tr>
+                                                            <tr>
+                                                                <td style="border-collapse:collapse;padding:2px 0px;">
+                                                                    <p style="margin-top:0;margin-bottom:0;margin-right:0;margin-left:0;color:#182a54;font-family:verdana;font-size:12px;">Quote ID:</p>
+                                                                </td>
+                                                                <td style="border-collapse:collapse;padding:2px 0px;">
+                                                                    <p style="margin-top:0;margin-bottom:0;margin-right:0;margin-left:0;color:#5c666f;font-family:verdana;font-size:12px;">##QuoteId##</p>
+                                                                </td>
+                                                            </tr>
+                                                        </table>
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td colspan="2" height="10" style="height:10px;">&nbsp;  </td>
+                                                </tr>
+                                                <tr>
+                                                    <td colspan="2">
+                                                        <!-- Comment : Here General-Policy information section/table -->
+                                                        <table id="tblGeneralPolicyInfo" cellpadding="0" cellspacing="0" style="border-collapse:collapse;width:100%;">
+                                                            <tr>
+                                                                <td style="border-collapse:collapse;padding:2px 0px;border-bottom:1px solid #ccc;" colspan="2">
+                                                                    <p style="margin:0px;font-size:13px; font-weight:bold;line-height:16px;color:#009483;font-family:verdana;margin-bottom:10px;margin-top:10px;"> General Policy Information </p>
+                                                                </td>
+                                                            </tr>
+                                                            <tr>
+                                                                <td style="border-collapse:collapse;padding:2px 0px;">
+                                                                    <p style="margin-top:10px;margin-bottom:0;margin-right:0;margin-left:0;color:#182a54;font-family:verdana;font-size:12px;">Business Name:</p>
+                                                                </td>
+                                                                <td style="border-collapse:collapse;padding:2px 0px;">
+                                                                    <p style="margin-bottom:0;margin-right:0;margin-left:0;color:#5c666f;font-family:verdana;font-size:12px;margin-top:10px;">##BusinessName##</p>
+                                                                </td>
+                                                            </tr>
+                                                            <tr>
+                                                                <td style="border-collapse:collapse;padding:2px 0px;">
+                                                                    <p style="margin-top:0;margin-bottom:0;margin-right:0;margin-left:0;color:#182a54;font-family:verdana;font-size:12px;">Governing State:</p>
+                                                                </td>
+                                                                <td style="border-collapse:collapse;padding:2px 0px;">
+                                                                    <p style="margin-top:0;margin-bottom:0;margin-right:0;margin-left:0;color:#5c666f;font-family:verdana;font-size:12px;">##StateCode##</p>
+                                                                </td>
+                                                            </tr>
+                                                            <tr>
+                                                                <td style="border-collapse:collapse;padding:2px 0px;">
+                                                                    <p style="margin-top:0;margin-bottom:0;margin-right:0;margin-left:0;color:#182a54;font-family:verdana;font-size:12px;">Class Description Lookup:</p>
+                                                                </td>
+                                                                <td style="border-collapse:collapse;padding:2px 0px;">
+                                                                    <p style="margin-top:0;margin-bottom:0;margin-right:0;margin-left:0;color:#5c666f;font-family:verdana;font-size:12px;">##BusinessLookupType##</p>
+                                                                </td>
+                                                            </tr>
+                                                            <tr>
+                                                                <td style="border-collapse:collapse;padding:2px 0px;">
+                                                                    <p style="margin-top:0;margin-bottom:0;margin-right:0;margin-left:0;color:#182a54;font-family:verdana;font-size:12px;">Class Description:</p>
+                                                                </td>
+                                                                <td style="border-collapse:collapse;padding:2px 0px;">
+                                                                    <p style="margin-top:0;margin-bottom:0;margin-right:0;margin-left:0;color:#5c666f;font-family:verdana;font-size:12px;">##ClassDescription##</p>
+                                                                </td>
+                                                            </tr>
+                                                            <tr>
+                                                                <td style="border-collapse:collapse;padding:2px 0px;">
+                                                                    <p style="margin-top:0;margin-bottom:0;margin-right:0;margin-left:0;color:#182a54;font-family:verdana;font-size:12px;">Effective Date:</p>
+                                                                </td>
+                                                                <td style="border-collapse:collapse;padding:2px 0px;">
+                                                                    <p style="margin-top:0;margin-bottom:0;margin-right:0;margin-left:0;color:#5c666f;font-family:verdana;font-size:12px;">##PolicyInceptionDate##</p>
+                                                                </td>
+                                                            </tr>
+                                                            <tr>
+                                                                <td style="border-collapse:collapse;padding:2px 0px;">
+                                                                    <p style="margin-top:0;margin-bottom:0;margin-right:0;margin-left:0;color:#182a54;font-family:verdana;font-size:12px;">Total Payroll:</p>
+                                                                </td>
+                                                                <td style="border-collapse:collapse;padding:2px 0px;">
+                                                                    <p style="margin-top:0;margin-bottom:0;margin-right:0;margin-left:0;color:#5c666f;font-family:verdana;font-size:12px;">##AnnualPayroll##</p>
+                                                                </td>
+                                                            </tr>
+                                                            <tr>
+                                                                <td style="border-collapse:collapse;padding:2px 0px;">
+                                                                    <p style="margin-top:0;margin-bottom:0;margin-right:0;margin-left:0;color:#182a54;font-family:verdana;font-size:12px;">
+                                                                        When did business Start:
+                                                                    </p>
+                                                                </td>
+                                                                <td style="border-collapse:collapse;padding:2px 0px;">
+                                                                    <p style="margin-top:0;margin-bottom:0;margin-right:0;margin-left:0;color:#5c666f;font-family:verdana;font-size:12px;">##BusinessYears##</p>
+                                                                </td>
+                                                            </tr>
+                                                            <tr>
+                                                                <td style="border-collapse:collapse;padding:2px 0px;">
+                                                                    <p style="margin-top:0;margin-bottom:0;margin-right:0;margin-left:0;color:#182a54;font-family:verdana;font-size:12px;">FEIN/Tax ID:</p>
+                                                                </td>
+                                                                <td style="border-collapse:collapse;padding:2px 0px;">
+                                                                    <p style="margin-top:0;margin-bottom:0;margin-right:0;margin-left:0;color:#5c666f;font-family:verdana;font-size:12px;">##FeinOrSSNumber##</p>
+                                                                </td>
+                                                            </tr>
+                                                            <tr>
+                                                                <td style="border-collapse:collapse;padding:2px 0px;">
+                                                                    <p style="margin-top:0;margin-bottom:0;margin-right:0;margin-left:0;color:#182a54;font-family:verdana;font-size:12px;">xMOD:</p>
+                                                                </td>
+                                                                <td style="border-collapse:collapse;padding:2px 0px;">
+                                                                    <p style="margin-top:0;margin-bottom:0;margin-right:0;margin-left:0;color:#5c666f;font-family:verdana;font-size:12px;">##XModValueMessage##</p>
+                                                                </td>
+                                                            </tr>
+                                                            <tr>
+                                                                <td style="border-collapse:collapse;padding:2px 0px;">
+                                                                    <p style="margin-top:0;margin-bottom:0;margin-right:0;margin-left:0;color:#182a54;font-family:verdana;font-size:12px;">Estimated Total Premium:</p>
+                                                                </td>
+                                                                <td style="border-collapse:collapse;padding:2px 0px;">
+                                                                    <p style="margin-top:0;margin-bottom:0;margin-right:0;margin-left:0;color:#5c666f;font-family:verdana;font-size:12px;">##EstimatedTotalPremium##</p>
+                                                                </td>
+                                                            </tr>
+                                                        </table>
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td colspan="2" height="10" style="height:10px;">&nbsp;</td>
+                                                </tr>
+                                                <tr>
+                                                    <td colspan="2">
+                                                        <!-- Comment : Here dynamically append all class primary as well as companion classes html -->
+                                                        ##ClassInformationHtml##
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td colspan="2" height="10" style="height:10px;">&nbsp;</td>
+                                                </tr>
+                                                <tr>
+                                                    <td colspan="2">
+                                                        <!-- Comment : Here dynamically append all question/responses attempted by User html -->
+                                                        ##QuestionsAndResponsesHtml##
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td colspan="2" height="10" style="height:10px;">&nbsp;</td>
+                                                </tr>
+                                                <tr>
+                                                    <td colspan="2">
+                                                        <!-- Comment : Here Business-Contact information section/table -->
+                                                        <table cellpadding="0" cellspacing="0" style="border-collapse:collapse;width:100%;">
+                                                            <tr>
+                                                                <td style="border-collapse:collapse;padding:2px 0px;border-bottom:1px solid #ccc;" colspan="2">
+                                                                    <p style="margin:0px;font-size:13px; font-weight:bold;line-height:16px;color:#009483;font-family:verdana;margin-bottom:10px;"> Business Contact Information </p>
+                                                                </td>
+                                                            </tr>
+                                                            <tr>
+                                                                <td style="border-collapse:collapse;padding:2px 0px;">
+                                                                    <p style="margin-top:10px;margin-bottom:0;margin-right:0;margin-left:0;color:#182a54;font-family:verdana;font-size:12px;">Name:</p>
+                                                                </td>
+                                                                <td style="border-collapse:collapse;padding:2px 0px;">
+                                                                    <p style="margin-top:10px;margin-bottom:0;margin-right:0;margin-left:0;color:#5c666f;font-family:verdana;font-size:12px;">##ContactName##</p>
+                                                                </td>
+                                                            </tr>
+                                                            <tr>
+                                                                <td style="border-collapse:collapse;padding:2px 0px;">
+                                                                    <p style="margin-top:0;margin-bottom:0;margin-right:0;margin-left:0;color:#182a54;font-family:verdana;font-size:12px;">Phone:</p>
+                                                                </td>
+                                                                <td style="border-collapse:collapse;padding:2px 0px;">
+                                                                    <p style="margin-top:0;margin-bottom:0;margin-right:0;margin-left:0;color:#5c666f;font-family:verdana;font-size:12px;">##PhoneNumber##</p>
+                                                                </td>
+                                                            </tr>
+                                                            <tr>
+                                                                <td style="border-collapse:collapse;padding:2px 0px;">
+                                                                    <p style="margin-top:0;margin-bottom:0;margin-right:0;margin-left:0;color:#182a54;font-family:verdana;font-size:12px;">Email:</p>
+                                                                </td>
+                                                                <td style="border-collapse:collapse;padding:2px 0px;">
+                                                                    <p style="margin-top:0;margin-bottom:0;margin-right:0;margin-left:0;color:#5c666f;font-family:verdana;font-size:12px;"><a href="#" style="color:#14478c;"> ##Email## </a> </p>
+                                                                </td>
+                                                            </tr>
+                                                            <tr>
+                                                                <td style="border-collapse:collapse;padding:2px 0px;">
+                                                                    <p style="margin-top:0;margin-bottom:0;margin-right:0;margin-left:0;color:#182a54;font-family:verdana;font-size:12px;">State:</p>
+                                                                </td>
+                                                                <td style="border-collapse:collapse;padding:2px 0px;">
+                                                                    <p style="margin-top:0;margin-bottom:0;margin-right:0;margin-left:0;color:#5c666f;font-family:verdana;font-size:12px;">##StateCode##</p>
+                                                                </td>
+                                                            </tr>
+                                                            <tr>
+                                                                <td style="border-collapse:collapse;padding:2px 0px;">
+                                                                    <p style="margin-top:0;margin-bottom:0;margin-right:0;margin-left:0;color:#182a54;font-family:verdana;font-size:12px;">Zip:</p>
+                                                                </td>
+                                                                <td style="border-collapse:collapse;padding:2px 0px;">
+                                                                    <p style="margin-top:0;margin-bottom:0;margin-right:0;margin-left:0;color:#5c666f;font-family:verdana;font-size:12px;">##ZipCode##</p>
+                                                                </td>
+                                                            </tr>
+
+                                                        </table>
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td colspan="2" height="10" style="height:10px;">&nbsp;</td>
+                                                </tr>
+                                                <tr>
+                                                    <!-- Comment : Here Sincerely row/td -->
+                                                    <td style="border-collapse:collapse;">
+                                                        <p style="margin-top:0px;margin-bottom:0;margin-right:0;margin-left:0;font-size:12px;line-height:22px;color:#182a54;font-family:verdana">Sincerely,</p>
+                                                        <p style="margin-top:0;margin-bottom:20px;margin-right:0;margin-left:0;font-size:12px;line-height:22px;font-family:verdana;font-weight:bold">
+                                                            Your <a href="##WebsiteUrlHref##" style="text-decoration:none;color:#d49000;font-family:verdana;font-weight:bold">##WebsiteUrlText##</a> Service Team
+                                                        </p>
+                                                    </td>
+                                                </tr>
+                                            </tbody>
+                                        </table>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+
+                        <!-- Comment : Here footer template section -->
+                        <table width="100%" style="border-collapse:collapse;border-spacing:0;margin-left:auto;margin-right:auto;background-color:#182a54;font-family:verdana">
+                            <tbody>
+                                <tr>
+                                    <td style="border-collapse:collapse;">
+                                        <table style="border-collapse:collapse;">
+                                            <tbody>
+                                                <tr>
+                                                    <td style="border-collapse:collapse;">
+                                                        <p style="margin-top:10px;margin-bottom:10px;margin-right:15px;margin-left:15px;font-size:10px;line-height:15px;font-family:verdana;color:#fff">
+                                                            You can reply to this email if you have any questions or we can be reached during business hours via ON-LINE CHAT at <a href=" ##WebsiteUrlHref##" target="_blank" style="color:#d49000;text-decoration:none;"> ##WebsiteUrlText## </a> or at <a href="##SupportPhoneNumberHref##" style="color:#d49000;text-decoration:none;">##SupportPhoneNumber##</a>.
+                                                        </p>
+                                                    </td>
+                                                </tr>
+                                            </tbody>
+                                        </table>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </td>
+                </tr>
+            </table>
+        </td>
+    </tr>
+</table>

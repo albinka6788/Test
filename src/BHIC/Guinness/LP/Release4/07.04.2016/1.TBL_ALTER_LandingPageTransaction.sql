@@ -1,0 +1,1 @@
+Alter Table [dbo].[LandingPageTransaction] Add IsDeployed bit

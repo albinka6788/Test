@@ -1,0 +1,187 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="12.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{CAFA6ACE-09BC-4F38-AD61-641576F3333D}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>BHIC.DML.WC</RootNamespace>
+    <AssemblyName>BHIC.DML.WC</AssemblyName>
+    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <UseVSHostingProcess>false</UseVSHostingProcess>
+    <NoWarn>1066</NoWarn>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <NoWarn>1066</NoWarn>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'QA|AnyCPU'">
+    <OutputPath>bin\QA\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <Optimize>true</Optimize>
+    <DebugType>pdbonly</DebugType>
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <ErrorReport>prompt</ErrorReport>
+    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
+    <NoWarn>1066</NoWarn>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'UAT|AnyCPU'">
+    <OutputPath>bin\UAT\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <Optimize>true</Optimize>
+    <DebugType>pdbonly</DebugType>
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <ErrorReport>prompt</ErrorReport>
+    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
+    <NoWarn>1066</NoWarn>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'UAT_Security|AnyCPU'">
+    <OutputPath>bin\UAT_Security\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <Optimize>true</Optimize>
+    <DebugType>pdbonly</DebugType>
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <ErrorReport>prompt</ErrorReport>
+    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
+    <NoWarn>1066</NoWarn>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'PreProd|AnyCPU'">
+    <OutputPath>bin\PreProd\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <Optimize>true</Optimize>
+    <NoWarn>1066</NoWarn>
+    <DebugType>pdbonly</DebugType>
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <ErrorReport>prompt</ErrorReport>
+    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Production|AnyCPU'">
+    <OutputPath>bin\Production\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <Optimize>true</Optimize>
+    <NoWarn>1066</NoWarn>
+    <DebugType>pdbonly</DebugType>
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <ErrorReport>prompt</ErrorReport>
+    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'UAT_BOP|AnyCPU'">
+    <OutputPath>bin\UAT_BOP\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <Optimize>true</Optimize>
+    <NoWarn>1066</NoWarn>
+    <DebugType>pdbonly</DebugType>
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <ErrorReport>prompt</ErrorReport>
+    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="System" />
+    <Reference Include="System.ComponentModel.DataAnnotations" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Web" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="BaseClass.cs" />
+    <Compile Include="DataContract\IAPIDataServiceProvider.cs" />
+    <Compile Include="DataContract\IBackgroundProcessDataProvider.cs" />
+    <Compile Include="DataContract\ICustomSession.cs" />
+    <Compile Include="DataContract\ILandingPageDataService.cs" />
+    <Compile Include="DataContract\ILineOfBusinessProvider.cs" />
+    <Compile Include="DataContract\IMultipleStateDataProvider.cs" />
+    <Compile Include="DataContract\IOraganisationDataProvider.cs" />
+    <Compile Include="DataContract\IOrganisationAddress.cs" />
+    <Compile Include="DataContract\IOrganisationUserDetailDataProvider.cs" />
+    <Compile Include="DataContract\IPolicyDataProvider.cs" />
+    <Compile Include="DataContract\IPolicyPaymentDetailProvider.cs" />
+    <Compile Include="DataContract\IPrimaryClassCodeDataProvider.cs" />
+    <Compile Include="DataContract\IQuoteDataProvider.cs" />
+    <Compile Include="DataContract\IStateTypeService.cs" />
+    <Compile Include="DataContract\ITransactionLogDataService.cs" />
+    <Compile Include="DataService\APIDataServiceProvider.cs" />
+    <Compile Include="DataService\BackgroundProcessDataProvider.cs" />
+    <Compile Include="DataService\BaseDataProvider.cs" />
+    <Compile Include="DataService\CacheHelper.cs" />
+    <Compile Include="DataService\CustomSessionService.cs" />
+    <Compile Include="DataService\LandingPageDataService.cs" />
+    <Compile Include="DataService\LineOfBusinessProvider.cs" />
+    <Compile Include="DataService\MultipleStateDataProvider.cs" />
+    <Compile Include="DataService\OrganisationAddressService.cs" />
+    <Compile Include="DataService\OrganisationUserDetailDataProvider.cs" />
+    <Compile Include="DataService\PolicyDataProvider.cs" />
+    <Compile Include="DataService\PolicyPaymentDetailProvider.cs" />
+    <Compile Include="DataService\OraganisationDataProvider.cs" />
+    <Compile Include="DataService\PrimaryClassCodeDataProvider.cs" />
+    <Compile Include="DataService\QuoteDataProvider.cs" />
+    <Compile Include="DataService\TransactionLogDataService.cs" />
+    <Compile Include="DTO\AttachPolicyDTO.cs" />
+    <Compile Include="DTO\CustomSession.cs" />
+    <Compile Include="DTO\DeleteAccountDTO.cs" />
+    <Compile Include="DTO\DetachPolicyDTO.cs" />
+    <Compile Include="DTO\EmailUpdateDTO.cs" />
+    <Compile Include="DTO\LineOfBusiness.cs" />
+    <Compile Include="DTO\LinkPolicyDTO.cs" />
+    <Compile Include="DTO\OAuthDTO.cs" />
+    <Compile Include="DTO\OrganisationAddress.cs" />
+    <Compile Include="DTO\OrganisationUserDetailDTO.cs" />
+    <Compile Include="DTO\PolicyDTO.cs" />
+    <Compile Include="DTO\PolicyPaymentDetailDTO.cs" />
+    <Compile Include="DTO\OraganisationDTO.cs" />
+    <Compile Include="DTO\PrimaryClassCodeDTO.cs" />
+    <Compile Include="DTO\QuoteDTO.cs" />
+    <Compile Include="DTO\SaveQuoteRequestDTO.cs" />
+    <Compile Include="DTO\StateType.cs" />
+    <Compile Include="DTO\UserPolicyDTO.cs" />
+    <Compile Include="DTO\UserQuoteDTO.cs" />
+    <Compile Include="DTO\ZipCodeStates.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\BHIC.Common.DataAccess\BHIC.Common.DataAccess.csproj">
+      <Project>{f69d09cc-9732-4bcf-b95f-8f9a4c47663e}</Project>
+      <Name>BHIC.Common.DataAccess</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\BHIC.Common.Logging\BHIC.Common.Logging.csproj">
+      <Project>{1127c27c-68f5-4525-a68a-72367147a4cb}</Project>
+      <Name>BHIC.Common.Logging</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\BHIC.Common\BHIC.Common.csproj">
+      <Project>{35bc1847-77a6-44db-bbeb-25a99a5f700e}</Project>
+      <Name>BHIC.Common</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\BHIC.Domain\BHIC.Domain.WC.csproj">
+      <Project>{a3b360bc-6d15-4da6-bb04-551e6be45965}</Project>
+      <Name>BHIC.Domain.WC</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>

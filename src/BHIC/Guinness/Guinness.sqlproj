@@ -1,0 +1,715 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003" ToolsVersion="4.0">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <Name>Guinness</Name>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectVersion>4.1</ProjectVersion>
+    <ProjectGuid>{fed7d867-19b4-4f3e-8f2a-f3196c691a7b}</ProjectGuid>
+    <DSP>Microsoft.Data.Tools.Schema.Sql.Sql120DatabaseSchemaProvider</DSP>
+    <OutputType>Database</OutputType>
+    <RootPath>
+    </RootPath>
+    <RootNamespace>Guinness</RootNamespace>
+    <AssemblyName>Guinness</AssemblyName>
+    <ModelCollation>1033,CI</ModelCollation>
+    <DefaultFileStructure>BySchemaAndSchemaType</DefaultFileStructure>
+    <DeployToDatabase>True</DeployToDatabase>
+    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
+    <TargetLanguage>CS</TargetLanguage>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <SqlServerVerification>False</SqlServerVerification>
+    <IncludeCompositeObjects>True</IncludeCompositeObjects>
+    <TargetDatabaseSet>True</TargetDatabaseSet>
+    <DefaultCollation>SQL_Latin1_General_CP1_CI_AS</DefaultCollation>
+    <DefaultFilegroup>PRIMARY</DefaultFilegroup>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <BuildScriptName>$(MSBuildProjectName).sql</BuildScriptName>
+    <TreatWarningsAsErrors>False</TreatWarningsAsErrors>
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <DefineDebug>false</DefineDebug>
+    <DefineTrace>true</DefineTrace>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <OutputPath>bin\Debug\</OutputPath>
+    <BuildScriptName>$(MSBuildProjectName).sql</BuildScriptName>
+    <TreatWarningsAsErrors>false</TreatWarningsAsErrors>
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <DefineDebug>true</DefineDebug>
+    <DefineTrace>true</DefineTrace>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup>
+    <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">11.0</VisualStudioVersion>
+    <!-- Default to the v11.0 targets path if the targets file for the current VS version is not found -->
+    <SSDTExists Condition="Exists('$(MSBuildExtensionsPath)\Microsoft\VisualStudio\v$(VisualStudioVersion)\SSDT\Microsoft.Data.Tools.Schema.SqlTasks.targets')">True</SSDTExists>
+    <VisualStudioVersion Condition="'$(SSDTExists)' == ''">11.0</VisualStudioVersion>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'QA|AnyCPU' ">
+    <OutputPath>bin\Release\</OutputPath>
+    <BuildScriptName>$(MSBuildProjectName).sql</BuildScriptName>
+    <TreatWarningsAsErrors>False</TreatWarningsAsErrors>
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <DefineDebug>false</DefineDebug>
+    <DefineTrace>true</DefineTrace>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'UAT_Security|AnyCPU' ">
+    <BuildScriptName>$(MSBuildProjectName).sql</BuildScriptName>
+    <TreatWarningsAsErrors>False</TreatWarningsAsErrors>
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <DefineDebug>false</DefineDebug>
+    <DefineTrace>true</DefineTrace>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'PreProd|AnyCPU' ">
+    <BuildScriptName>$(MSBuildProjectName).sql</BuildScriptName>
+    <TreatWarningsAsErrors>False</TreatWarningsAsErrors>
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <DefineDebug>false</DefineDebug>
+    <DefineTrace>true</DefineTrace>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Production|AnyCPU' ">
+    <BuildScriptName>$(MSBuildProjectName).sql</BuildScriptName>
+    <TreatWarningsAsErrors>False</TreatWarningsAsErrors>
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <DefineDebug>false</DefineDebug>
+    <DefineTrace>true</DefineTrace>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'UAT_BOP|AnyCPU' ">
+    <BuildScriptName>$(MSBuildProjectName).sql</BuildScriptName>
+    <TreatWarningsAsErrors>False</TreatWarningsAsErrors>
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <DefineDebug>false</DefineDebug>
+    <DefineTrace>true</DefineTrace>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'UAT|AnyCPU' ">
+    <OutputPath>bin\UAT\</OutputPath>
+  </PropertyGroup>
+  <Import Condition="'$(SQLDBExtensionsRefPath)' != ''" Project="$(SQLDBExtensionsRefPath)\Microsoft.Data.Tools.Schema.SqlTasks.targets" />
+  <Import Condition="'$(SQLDBExtensionsRefPath)' == ''" Project="$(MSBuildExtensionsPath)\Microsoft\VisualStudio\v$(VisualStudioVersion)\SSDT\Microsoft.Data.Tools.Schema.SqlTasks.targets" />
+  <ItemGroup>
+    <Folder Include="Properties" />
+    <Folder Include="dbo\" />
+    <Folder Include="dbo\Tables\" />
+    <Folder Include="Security\" />
+    <Folder Include="dbo\Stored Procedures\" />
+    <Folder Include="dbo\Sequences\" />
+    <Folder Include="Release2" />
+    <Folder Include="Release2\12.10.2015" />
+    <Folder Include="Release2\13.10.2015" />
+    <Folder Include="Release2\16.10.2015" />
+    <Folder Include="Release2\19.10.2015" />
+    <Folder Include="Release2\20.10.2015" />
+    <Folder Include="Release3" />
+    <Folder Include="Release3\23.10.2013" />
+    <Folder Include="Release3\26.10.2015" />
+    <Folder Include="Release4" />
+    <Folder Include="Release4\27.10.2015" />
+    <Folder Include="Release5" />
+    <Folder Include="Release5\28.10.2015" />
+    <Folder Include="Release6" />
+    <Folder Include="Release6\28.10.2015" />
+    <Folder Include="Release7" />
+    <Folder Include="Release8" />
+    <Folder Include="Release8\30.10.2015" />
+    <Folder Include="Release8\01.11.2015" />
+    <Folder Include="Release8\04.11.2015" />
+    <Folder Include="Release8\06.11.2015" />
+    <Folder Include="Release9" />
+    <Folder Include="Release9\09.11.2015" />
+    <Folder Include="Release9\10.11.2015" />
+    <Folder Include="Release10" />
+    <Folder Include="Release10\10.11.2015" />
+    <Folder Include="Release10\13.11.2015" />
+    <Folder Include="Release10\16.11.2015" />
+    <Folder Include="Release11" />
+    <Folder Include="Release11\23.11.2015" />
+    <Folder Include="Release12" />
+    <Folder Include="Release12\24.11.2015" />
+    <Folder Include="Release13" />
+    <Folder Include="Release13\25.11.2015" />
+    <Folder Include="Release13\26.11.2015" />
+    <Folder Include="Release14" />
+    <Folder Include="Release15" />
+    <Folder Include="Release15\30.11.2015" />
+    <Folder Include="Release16" />
+    <Folder Include="Release16\02.12.2015" />
+    <Folder Include="Release17" />
+    <Folder Include="Release17\07.11.2015" />
+    <Folder Include="Release18" />
+    <Folder Include="Release18\08.12.2015" />
+    <Folder Include="Release19" />
+    <Folder Include="Release19\10.12.2015" />
+    <Folder Include="Release20\11.12.2015" />
+    <Folder Include="Release20" />
+    <Folder Include="Release21" />
+    <Folder Include="Release21\14.12.2015" />
+    <Folder Include="Release22" />
+    <Folder Include="Release22\15.12.2015" />
+    <Folder Include="Release23" />
+    <Folder Include="Release23\22.12.2015" />
+    <Folder Include="Release24" />
+    <Folder Include="Release24\23.12.2015" />
+    <Folder Include="Release25" />
+    <Folder Include="Release25\28.12.2015" />
+    <Folder Include="Release26" />
+    <Folder Include="Release26\31.12.2015" />
+    <Folder Include="Release27" />
+    <Folder Include="Release27\04.01.2016" />
+    <Folder Include="Release28" />
+    <Folder Include="Release28\05.01.2016" />
+    <Folder Include="Release29" />
+    <Folder Include="Release29\07.01.2016" />
+    <Folder Include="Release30" />
+    <Folder Include="Release30\07.01.2016" />
+    <Folder Include="Release31" />
+    <Folder Include="Release31\11.01.2016" />
+    <Folder Include="Release32" />
+    <Folder Include="Release32\13.01.2016" />
+    <Folder Include="Release33" />
+    <Folder Include="Release33\14.01.2016" />
+    <Folder Include="Release34" />
+    <Folder Include="Release34\15.01.2016" />
+    <Folder Include="Release35" />
+    <Folder Include="Release35\18.01.2016" />
+    <Folder Include="Release36" />
+    <Folder Include="Release36\19.01.2016" />
+    <Folder Include="Release37" />
+    <Folder Include="Release37\20.01.2016" />
+    <Folder Include="Release38" />
+    <Folder Include="Release38\25.01.2016" />
+    <Folder Include="Release39" />
+    <Folder Include="Release39\27.01.2016" />
+    <Folder Include="Release40" />
+    <Folder Include="Release40\28.01.2016" />
+    <Folder Include="Release41" />
+    <Folder Include="Release41\29.01.2016" />
+    <Folder Include="Release42" />
+    <Folder Include="Release42\01.02.2016" />
+    <Folder Include="Release43" />
+    <Folder Include="Release43\03.02.2016" />
+    <Folder Include="Release44" />
+    <Folder Include="Release44\04.02.2016" />
+    <Folder Include="BOP" />
+    <Folder Include="BOP\Release1" />
+    <Folder Include="BOP\Release1\02.10.2016" />
+    <Folder Include="Release45" />
+    <Folder Include="Release45\11.02.2016" />
+    <Folder Include="Release46" />
+    <Folder Include="BOP\Release2" />
+    <Folder Include="BOP\Release2\02.15.2016" />
+    <Folder Include="BOP\Release3" />
+    <Folder Include="BOP\Release3\02.19.2016" />
+    <Folder Include="BOP\Release4" />
+    <Folder Include="BOP\Release4\02.23.2016" />
+    <Folder Include="LP" />
+    <Folder Include="LP\Release1" />
+    <Folder Include="LP\Release1\24.02.2016" />
+    <Folder Include="BOP\Release5" />
+    <Folder Include="BOP\Release5\03.02.2016" />
+    <Folder Include="Release46\18.02.2016" />
+    <Folder Include="Release47" />
+    <Folder Include="Release47\22.02.2016" />
+    <Folder Include="Release48" />
+    <Folder Include="Release48\08.03.2016" />
+    <Folder Include="LP\Release2" />
+    <Folder Include="LP\Release2\08.03.2016" />
+    <Folder Include="Release49" />
+    <Folder Include="Release49\10.03.2016" />
+    <Folder Include="Release50" />
+    <Folder Include="BOP\Release6" />
+    <Folder Include="BOP\Release6\03.17.2016" />
+    <Folder Include="Release50\17.03.2016" />
+    <Folder Include="LP\Release3" />
+    <Folder Include="Release51" />
+    <Folder Include="Release51\05.04.2016" />
+    <Folder Include="Release52" />
+    <Folder Include="Release52\07.04.2016" />
+    <Folder Include="LP\Release3\05.04.2016" />
+    <Folder Include="LP\Release4" />
+    <Folder Include="LP\Release4\07.04.2016" />
+    <Folder Include="Release53" />
+    <Folder Include="Release53\14.04.2016" />
+    <Folder Include="Release54" />
+    <Folder Include="Release54\15.04.2015" />
+    <Folder Include="LP\Release5" />
+    <Folder Include="LP\Release5\18.04.2016" />
+    <Folder Include="Release55" />
+    <Folder Include="Release55\19.04.2016" />
+    <Folder Include="Release56" />
+    <Folder Include="Release56\22.04.2016" />
+    <Folder Include="LP\Release6" />
+    <Folder Include="LP\Release6\26.04.2016" />
+    <Folder Include="Release57" />
+    <Folder Include="Release57\05.05.2016" />
+    <Folder Include="LP\Release7" />
+    <Folder Include="LP\Release7\16.05.2016" />
+    <Folder Include="Release58" />
+    <Folder Include="Release58\2016.05.26" />
+    <Folder Include="Release59" />
+    <Folder Include="Release59\2016.05.27" />
+    <Folder Include="Release60" />
+    <Folder Include="Release60\2016.05.30" />
+    <Folder Include="Release61" />
+    <Folder Include="Release61\2016.06.03" />
+    <Folder Include="Release62" />
+    <Folder Include="Release62\2016.06.06" />
+    <Folder Include="Release63" />
+    <Folder Include="Release63\2016.06.11" />
+    <Folder Include="Release64" />
+    <Folder Include="Release64\2016.07.04" />
+    <Folder Include="Release65" />
+    <Folder Include="Release65\2016.07.21" />
+    <Folder Include="Release66" />
+    <Folder Include="Release66\2016.08.03" />
+    <Folder Include="Release67" />
+    <Folder Include="Release67\2016.08.08" />
+    <Folder Include="Impersonation" />
+    <Folder Include="Impersonation\2016.08.11" />
+    <Folder Include="Impersonation\2016.08.08" />
+    <Folder Include="Impersonation\2016.08.22" />
+    <Folder Include="LP\Release8" />
+    <Folder Include="LP\Release8\2016.08.25" />
+    <Folder Include="Impersonation\2016.08.26" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="dbo\Tables\LineOfBusiness.sql" />
+    <None Include="dbo\Tables\TypeOfState.sql" />
+    <None Include="dbo\Tables\Guiness_Test.sql" />
+    <None Include="dbo\Tables\FrequencyClass.sql" />
+    <None Include="dbo\Tables\StateMinimumPremium.sql" />
+    <None Include="dbo\Tables\StateLineOfBusinesses.sql" />
+    <None Include="dbo\Tables\OrganisationUserDetail.sql" />
+    <None Include="dbo\Tables\OraganisationAddress.sql" />
+    <None Include="dbo\Tables\FrequencyClaims.sql" />
+    <None Include="dbo\Tables\ScreenMaster.sql" />
+    <None Include="dbo\Tables\ExternalSystem.sql" />
+    <None Include="dbo\Tables\ControlMaster.sql" />
+    <None Include="dbo\Tables\QuotePolicyType.sql" />
+    <None Include="dbo\Tables\Quote.sql" />
+    <None Include="dbo\Tables\QuoteClasses.sql" />
+    <None Include="dbo\Tables\ScreenChronological.sql" />
+    <None Include="dbo\Tables\ControlChronological.sql" />
+    <None Include="dbo\Tables\Policy.sql" />
+    <None Include="dbo\Tables\PolicyPaymentDetail.sql" />
+    <None Include="dbo\Tables\FeinPremiumFactor.sql" />
+    <None Include="dbo\Tables\UserExternalSystemDetail.sql" />
+    <None Include="dbo\Tables\StateMaster.sql" />
+    <None Include="Security\Guinness.sql" />
+    <None Include="Security\Guinness_1.sql" />
+    <None Include="Security\XIPL_gurdarshan.singh.sql" />
+    <None Include="Security\RoleMemberships.sql" />
+    <None Include="dbo\Stored Procedures\GetStateMinimumPremium.sql" />
+    <None Include="dbo\Stored Procedures\GetFeinXModFactor.sql" />
+    <None Include="dbo\Stored Procedures\UpdateFeinXModFactor.sql" />
+    <None Include="dbo\Stored Procedures\GetReferralThresholdClaims.sql" />
+    <None Include="dbo\Stored Procedures\CreatePolicyPaymentDetail.sql" />
+    <None Include="dbo\Stored Procedures\CreatePolicy.sql" />
+    <None Include="dbo\Stored Procedures\GetStateType.sql" />
+    <None Include="dbo\Sequences\SEQUENCECUSTOMERS.sql" />
+    <None Include="dbo\Sequences\SEQUENCEEMP.sql" />
+    <None Include="dbo\Sequences\SEQUENCEStateMinimumPremium.sql" />
+    <None Include="dbo\Sequences\SEQUENCEFrequencyClass.sql" />
+    <None Include="dbo\Sequences\SEQUENCEOrganisationUserDetail.sql" />
+    <None Include="dbo\Sequences\SEQUENCEOraganisationAddress.sql" />
+    <None Include="dbo\Sequences\SEQUENCEFeinPremiumFactor.sql" />
+    <None Include="dbo\Sequences\SEQUENCEUserExternalSystemDetail.sql" />
+    <None Include="dbo\Sequences\SEQUENCETypeOfState.sql" />
+    <None Include="dbo\Sequences\SEQUENCEExternalSystem.sql" />
+    <None Include="dbo\Sequences\SEQUENCEQuotePolicyType.sql" />
+    <None Include="dbo\Sequences\SEQUENCEQuote.sql" />
+    <None Include="dbo\Sequences\SEQUENCEQuoteClasses.sql" />
+    <None Include="dbo\Sequences\SEQUENCEPolicy.sql" />
+    <None Include="dbo\Sequences\SEQUENCEPolicyPaymentDetail.sql" />
+    <None Include="Release2\12.10.2015\TBL_CREATE_TypeOfState.sql" />
+    <None Include="Release2\12.10.2015\SP_UPDATED_FienNoStoreInLocalDB.sql" />
+    <None Include="Release2\13.10.2015\SP_CREATE_Policy.sql" />
+    <None Include="Release2\13.10.2015\SP_CREATE_PolicyPaymentDetail.sql" />
+    <None Include="Release2\16.10.2015\TBL_CREATE_3NewTablesWithData.sql" />
+    <None Include="Release2\16.10.2015\SP_ALTER_TypeOfState.sql" />
+    <None Include="Release2\16.10.2015\SP_ALTER_StateMinimumPremium.sql" />
+    <None Include="Release2\19.10.2015\TBL_CREATE_4NewTablesSequnces.sql" />
+    <None Include="Release2\20.10.2015\SP_ALTER_StatePremium.sql" />
+    <None Include="Release3\23.10.2013\SP_CREATE_GetCustomSession.sql" />
+    <None Include="Release3\23.10.2013\SP_CREATE_StoreCustomSession.sql" />
+    <None Include="Release3\23.10.2013\SEQ_CREATE_PurchasePathCustomSession.sql" />
+    <None Include="Release3\23.10.2013\TBL_CREATE_PurchaePathCustomSession.sql" />
+    <None Include="Release3\26.10.2015\TBL_ALTER_AddedNewColumn.sql" />
+    <None Include="Release3\26.10.2015\TBL_INSERT_DefaultEntryInTables.sql" />
+    <None Include="Release4\27.10.2015\SEQ_CREATE_AddedNewSequence.sql" />
+    <None Include="Release4\27.10.2015\SEQ_CREATE_MandatoryDeductible.sql" />
+    <None Include="Release4\27.10.2015\SP_ALTER_CreatePolicy.sql" />
+    <None Include="Release4\27.10.2015\SP_ALTER_CreatePolicyPaymentDetails.sql" />
+    <None Include="Release4\27.10.2015\SP_CREATE_GetStateMandatoryDeductible.sql" />
+    <None Include="Release4\27.10.2015\SP_CREATE_OrganisationAddress.sql" />
+    <None Include="Release4\27.10.2015\SP_CREATE_Quote.sql" />
+    <None Include="Release4\27.10.2015\TBL_ALTER_QuoteTableChanges.sql" />
+    <None Include="Release4\27.10.2015\TBL_ALTER_ReplacedStateCodeByStateId.sql" />
+    <None Include="Release4\27.10.2015\TBL_CREATE_MandatoryDeductible.sql" />
+    <None Include="Release4\27.10.2015\TBL_CREATE_PolicyChangeOptionsWithData.sql" />
+    <None Include="Release4\27.10.2015\TBL_INSERT_DataPolicyChangeOptions.sql" />
+    <None Include="Release4\27.10.2015\TBL_INSERT_MandatoryDeductible.sql" />
+    <None Include="Release4\27.10.2015\SP_CREATE_GetPolicyChangeOptions.sql" />
+    <None Include="Release4\27.10.2015\SP_ALTER_FrequencyClaimChanged.sql" />
+    <None Include="Release4\27.10.2015\SP_CREATE_GetLineOfBusiness.sql" />
+    <None Include="Release5\28.10.2015\SP_ALTER_CreatePolicy.sql" />
+    <None Include="Release5\28.10.2015\SP_ALTER_CreateQuote.sql" />
+    <None Include="Release5\28.10.2015\SP_CREATE_CreateOraganisationUserDetail.sql" />
+    <None Include="Release5\28.10.2015\TBL_ALTER_Added2ColumnInMandatoryDeductible.sql" />
+    <None Include="Release6\28.10.2015\SP_ALTER_CreateQuoteData.sql" />
+    <None Include="Release6\28.10.2015\SP_ALTER_GetLineOfBusiness.sql" />
+    <None Include="Release6\28.10.2015\SP_CREATE_GetQuoteData.sql" />
+    <None Include="Release6\28.10.2015\TBL_ALTER_Added3NewColumns.sql" />
+    <None Include="Release6\28.10.2015\TBL_ALTER_QuoteData.sql" />
+    <None Include="Release7\1.SP_CREATE_GetPolicy.sql" />
+    <None Include="Release8\30.10.2015\1.SP_CREATE_GetPolicyID.sql" />
+    <None Include="Release8\30.10.2015\2.SP_ALTER_GetPolicyId.sql" />
+    <None Include="Release8\30.10.2015\3.SP_ALTER_GetPolicyId.sql" />
+    <None Include="Release8\30.10.2015\4.SP_ALTER_OrganizationDetailsCreation.sql" />
+    <None Include="Release8\30.10.2015\5.TBL_ALTER_OrganizationDetails.sql" />
+    <None Include="Release8\01.11.2015\1.SP_ALTER_GetStateType.sql" />
+    <None Include="Release8\01.11.2015\2.SP_ALTER_GetLobs.sql" />
+    <None Include="Release8\04.11.2015\1.SP_CREATE_UpdateQuoteOrgUserId.sql" />
+    <None Include="Release8\06.11.2015\1.SEQ_ALTER_StateMaster.sql" />
+    <None Include="Release8\06.11.2015\2.TBL_CREATE_ZipCodeStates.sql" />
+    <None Include="Release8\06.11.2015\3.SEQ_CREATE_ForTableZipCodeStates.sql" />
+    <None Include="Release8\06.11.2015\4.TBL_INSERT_Add1NewStateCode.sql" />
+    <None Include="Release8\06.11.2015\5.TBL_INSERT_DataInZipCodeStates.sql" />
+    <None Include="Release8\06.11.2015\6.TBL_CREATE_GetZipStatesDetails.sql" />
+    <None Include="Release9\09.11.2015\1.TBL_CREATE_MinimumClassPayrollThreshold.sql" />
+    <None Include="Release9\09.11.2015\2.SEQ_CREATE_MinimumClassPayrollThreshold.sql" />
+    <None Include="Release9\09.11.2015\3.TBL_INSERT_DataForClassPayrollThreshold.sql" />
+    <None Include="Release9\09.11.2015\4.SP_CREATE_GetPrimaryClassCode.sql" />
+    <None Include="Release9\09.11.2015\5.SP_ALTER_GetPrimaryClassCode.sql" />
+    <None Include="Release9\10.11.2015\1.TBL_ALTER_TruncatedDataOfZipCodeStates.sql" />
+    <None Include="Release9\10.11.2015\2.TBL_INSERT_Add1NewStateCode.sql" />
+    <None Include="Release9\10.11.2015\3.TBL_INSERT_DataInZipCodeStates.sql" />
+    <None Include="Release9\10.11.2015\4.SP_ALTER_CreateQuote.sql" />
+    <None Include="Release10\10.11.2015\1.TBL_ALTER_TruncatedDataOfZipCodeStates.sql" />
+    <None Include="Release10\10.11.2015\2.TBL_INSERT_Add1NewStateCode.sql" />
+    <None Include="Release10\10.11.2015\3.TBL_INSERT_DataInZipCodeStates.sql" />
+    <None Include="Release10\10.11.2015\4.SP_ALTER_CreateQuote.sql" />
+    <None Include="Release10\13.11.2015\1.SP_ALTER_AddUpdateSessionData.sql" />
+    <None Include="Release10\16.11.2015\1.SP_ALTER_Added1NewOptionalParams.sql" />
+    <None Include="Release10\16.11.2015\2.SP_ALTER_AlterationOfAddressInsert.sql" />
+    <None Include="Release10\16.11.2015\3.SP_CREATE_UpdateAddressIdInQuote.sql" />
+    <None Include="Release10\16.11.2015\4.TBL_ALTER_MadeSomeColumnNullableAndDefaultValue.sql" />
+    <None Include="Release10\16.11.2015\5.AP_ALTER_AddReturnParameter.sql" />
+    <None Include="Release10\16.11.2015\6.SP_ALTER_MutipleProcsAltered.sql" />
+    <None Include="Release11\23.11.2015\1.TBL_ALTER_TrasactionalDataTruncated.sql" />
+    <None Include="Release11\23.11.2015\2.TBL_ALTER_MadeSsnTinAsString.sql" />
+    <None Include="Release11\23.11.2015\3.SP_ALTER_MadeSsnTinAsString.sql" />
+    <None Include="Release11\23.11.2015\4.SP_ALTER_MadeSsnTinAsString.sql" />
+    <None Include="Release11\23.11.2015\5.TBL_ALTER_MadeAdd2Nullable.sql" />
+    <None Include="Release12\24.11.2015\1.TBL_CREATE_CertificateOfInsurance.sql" />
+    <None Include="Release12\24.11.2015\2.SEQ_CREATE_CertificateOfInsurance.sql" />
+    <None Include="Release12\24.11.2015\3.SP_CREATE_GetUserCredentialDetails.sql" />
+    <None Include="Release12\24.11.2015\4.SP_CREATE_MaintainOrgUserDetails.sql" />
+    <None Include="Release12\24.11.2015\5.SP_CREATE_MaintainOrgAddressDetails.sql" />
+    <None Include="Release13\25.11.2015\1.SP_ALTER_RemovedColumnFromUpdateStatement.sql" />
+    <None Include="Release13\25.11.2015\2.SP_ALTER_AddedColumns.sql" />
+    <None Include="Release13\26.11.2015\1.SP_CREATE_ActivateUserAccount.sql" />
+    <None Include="Release13\26.11.2015\2.TBL_CREATE_CertificateOfInsurance.sql" />
+    <None Include="Release13\26.11.2015\3.SEQ_CREATE_CertificateOfInsurance.sql" />
+    <None Include="Release13\26.11.2015\4.SP_ALTER_SomeChanges.sql" />
+    <None Include="Release13\26.11.2015\5.SP_CREATE_CertificateOfInsurence.sql" />
+    <None Include="Release13\26.11.2015\6.SP_CRAETE_GetCertificateOfInsurence.sql" />
+    <None Include="Release13\26.11.2015\7.SP_CREATE_UpdateOrganisationUserDetail.sql" />
+    <None Include="Release13\26.11.2015\8.SP_ALTER_InsertorUpdateOrganistionUserDetail.sql" />
+    <None Include="Release14\1.SP_ALTER_GetUserQuotes.sql" />
+    <None Include="Release15\30.11.2015\1.SP_Create_GetPolicyIDPolicyNumber.sql" />
+    <None Include="Release16\02.12.2015\1.SP_ALTER_GetCredentials.sql" />
+    <None Include="Release16\02.12.2015\2.TBL_ALTER_Added IsEmailverified Column.sql" />
+    <None Include="Release16\02.12.2015\3.SP_CREATE_UpdateVerificationEmail SP.sql" />
+    <None Include="Release16\02.12.2015\4.SP_ALTER_UpdateOraganisationUserDetail.sql" />
+    <None Include="Release16\02.12.2015\5.SP_ALTER_InsertOrUpdateOrganisationUserDetail.sql" />
+    <None Include="Release17\07.11.2015\1.SP_ALTER_IsPolicyExists.sql" />
+    <None Include="Release18\08.12.2015\1.SP_ALTER_GetCertificateOfInsurance.sql" />
+    <None Include="Release18\08.12.2015\2.SP_ALTER_GetUserDetails.sql" />
+    <None Include="Release19\10.12.2015\1.SP_ALTER_GetSavedUserQuotes.sql" />
+    <None Include="Release20\11.12.2015\SP_ALTER_GetCredentials.sql" />
+    <None Include="Release21\14.12.2015\1.TBL_ALTER_Quote.sql" />
+    <None Include="Release21\14.12.2015\2.SP_ALTER_DeleteQuote.sql" />
+    <None Include="Release21\14.12.2015\3.SP_ALTER_GetUserQuotes.sql" />
+    <None Include="Release22\15.12.2015\1.TBL_UPDATE_Lineofbusiness.sql" />
+    <None Include="Release23\22.12.2015\1.SP_ALTER_GetCredentials.sql" />
+    <None Include="Release23\22.12.2015\2.TBL_ALTER_MadePolicyNumberNullable.sql" />
+    <None Include="Release24\23.12.2015\1.SP_Create_CreateUserAndPolicy.sql" />
+    <None Include="Release24\23.12.2015\2.SP_Create_GetAPICredentials.sql" />
+    <None Include="Release25\28.12.2015\1.SP_ALTER_GetPolicyID.sql" />
+    <None Include="Release26\31.12.2015\1.SP_ALTER_GetCustomSession.sql" />
+    <None Include="Release27\04.01.2016\1.SP_ALTER_GetPolicyID.sql" />
+    <None Include="Release28\05.01.2016\1.TBL_CREATE_MutipleTables.sql" />
+    <None Include="Release28\05.01.2016\2.SP_CREATE_ForTransactionLogging.sql" />
+    <None Include="Release28\05.01.2016\3.SP_CREATE_ChangesBOPAPI.sql" />
+    <None Include="Release29\07.01.2016\1.TBL_ALTER_AddColumnTransactionLog.sql" />
+    <None Include="Release29\07.01.2016\2.SP_ALTER_AddTransactionLog.sql" />
+    <None Include="Release30\07.01.2016\1.TBL_ALTER_WithAddingColumn.sql" />
+    <None Include="Release30\07.01.2016\2.SP_ALTER_ChangePassword.sql" />
+    <None Include="Release30\07.01.2016\3.SP_CREATE_ForgotPwdRequstedDateTime.sql" />
+    <None Include="Release30\07.01.2016\4.SP_ALTER_DeleteQuote.sql" />
+    <None Include="Release31\11.01.2016\1.SP_ALTER_MaintainUserAccountDetails.sql" />
+    <None Include="Release32\13.01.2016\1.TBL_INSERT_StateLineofBusiness.sql" />
+    <None Include="Release33\14.01.2016\1.TABLE_ALTER_OrganisationUserDetail.sql" />
+    <None Include="Release33\14.01.2016\2.SP_ALTER_GetCredentials.sql" />
+    <None Include="Release33\14.01.2016\3.SP_CREATE_LockUser.sql" />
+    <None Include="Release34\15.01.2016\1. TABLE_ALTER_OrganisationUserDetail.sql" />
+    <None Include="Release34\15.01.2016\2. TABLE_ALTER_OrganisationUserDetail.sql" />
+    <None Include="Release34\15.01.2016\3. TABLE_ALTER_OrganisationUserDetail.sql" />
+    <None Include="Release35\18.01.2016\1.TBL_ALTER_OrganisationUserDetail.sql" />
+    <None Include="Release35\18.01.2016\2.TBL_ALTER_OrganisationUserDetail.sql" />
+    <None Include="Release35\18.01.2016\3.TBL_ALTER_OrganisationUserDetail.sql" />
+    <None Include="Release35\18.01.2016\4.TBL_ALTER_OrganisationUserDetail.sql" />
+    <None Include="Release35\18.01.2016\5.SP_ALTER_LockUser.sql" />
+    <None Include="Release36\19.01.2016\1.SP_ALTER_OrganizationUser_Activation.sql" />
+    <None Include="Release36\19.01.2016\2.TBL_ALTER_OrganisationUserDetail.sql" />
+    <None Include="Release36\19.01.2016\3.SP_ALTER_LockUser.sql" />
+    <None Include="Release36\19.01.2016\4.SP_CREATE_GetPolicyPaymentIdByTransactionCode.sql" />
+    <None Include="Release37\20.01.2016\1.SP_ALTER_GetOrganisationAddressId.sql" />
+    <None Include="Release38\25.01.2016\1.INDEX_CREATE_NonClusteredGuinnessDB.sql" />
+    <None Include="Release38\25.01.2016\2.SP_ALTER_ForPerformanceOptimizationProcsUpdates.sql" />
+    <None Include="Release38\25.01.2016\3.TBL_ALTER_RecordsTruncation.sql" />
+    <None Include="Release38\25.01.2016\4.SEQ_ALTER_AfterRecordsTruncation.sql" />
+    <None Include="Release38\25.01.2016\5.TBL_INSERT_RercordsReInserted.sql" />
+    <None Include="Release39\27.01.2016\1.SP_ALTER_ChangePassword.sql" />
+    <None Include="Release39\27.01.2016\2.SP_ALTER_ForgotPwdRequstedDateTime.sql" />
+    <None Include="Release39\27.01.2016\3.SP_ALTER_LockUser.sql" />
+    <None Include="Release39\27.01.2016\4.SP_ALTER_UpdateOraganisationUserDetail.sql" />
+    <None Include="Release39\27.01.2016\5.SP_ALTER_UpdateVerificationEmail.sql" />
+    <None Include="Release39\27.01.2016\6.TBL_ALTER_VinayIndexScript.sql" />
+    <None Include="Release39\27.01.2016\7.SP_ALTER_CreateUserPolicy.sql" />
+    <None Include="Release39\27.01.2016\8.INDEX_CREATE_VinayIndexScript.sql" />
+    <None Include="Release40\28.01.2016\1.SP_ALTER_LockUser.sql" />
+    <None Include="Release41\29.01.2016\1.SP_ALTER_LockUser.sql" />
+    <None Include="Release42\01.02.2016\1. TBL_ALTER_OrganisationUserDetail.sql" />
+    <None Include="Release43\03.02.2016\1.TBL_CREATE_PolicyCancelOptions.sql" />
+    <None Include="Release43\03.02.2016\2.SEQ_CREATE_SequencePolicyCancelOptions.sql" />
+    <None Include="Release43\03.02.2016\3.INSERT_TBL_PolicyCancelOptions.sql" />
+    <None Include="Release43\03.02.2016\4.SP_CREATE_GetOptions.sql" />
+    <None Include="Release44\04.02.2016\1.SP_Alter_CreateQuote.sql" />
+    <None Include="BOP\Release1\02.10.2016\1.INSERT_TBL_PolicyCancelOptions.sql" />
+    <None Include="BOP\Release1\02.10.2016\2.INSERT_TBL_PolicyChangeOptions.sql" />
+    <None Include="BOP\Release1\02.10.2016\3.SP_ALTER_GETPolicyID.sql" />
+    <None Include="Release45\11.02.2016\1.SP_ALTER_InsertOrUpdateUserDetail.sql" />
+    <None Include="BOP\Release2\02.15.2016\1. Update_TBL_PolicyChangeOptions.sql" />
+    <None Include="BOP\Release3\02.19.2016\1.SP_ALTER_CreateUserPolicy.sql" />
+    <None Include="BOP\Release3\02.19.2016\2.SP_ALTER_IsPolicyExists.sql" />
+    <None Include="BOP\Release4\02.23.2016\1.TABLE_ALTER_Quote.sql" />
+    <None Include="BOP\Release4\02.23.2016\2.SP_ALTER_CreateQuote.sql" />
+    <None Include="BOP\Release4\02.23.2016\3.SP_ALTER_GetUserQuotes.sql" />
+    <None Include="LP\Release1\24.02.2016\1.TBL_CREATE_tblTemplates.sql" />
+    <None Include="LP\Release1\24.02.2016\10.SP_CREATE_GetLandingPage.sql" />
+    <None Include="LP\Release1\24.02.2016\11.SP_CREATE_AddEditlandingPage.sql" />
+    <None Include="LP\Release1\24.02.2016\12.MasterDataSript.sql" />
+    <None Include="LP\Release1\24.02.2016\13.SP_ALTER_AddTransactionLog.sql" />
+    <None Include="LP\Release1\24.02.2016\2.TBL_CREATE_tblLandingPageUsers.sql" />
+    <None Include="LP\Release1\24.02.2016\3.TBL_CREATE_LandingPageTransaction.sql" />
+    <None Include="LP\Release1\24.02.2016\4.TBL_CREATE_InsertTemplates.sql" />
+    <None Include="LP\Release1\24.02.2016\5.TBL_CREATE_CTAMessages.sql" />
+    <None Include="LP\Release1\24.02.2016\6.SP_CREATE_InsertOrUpdateCTAMessages.sql" />
+    <None Include="LP\Release1\24.02.2016\7.SP_CREATE_GetLandingPageUser.sql" />
+    <None Include="LP\Release1\24.02.2016\8.SP_CREATE_GetLandingPages.sql" />
+    <None Include="LP\Release1\24.02.2016\9.SP_CREATE_GetLandingPageById.sql" />
+    <None Include="LP\Release1\24.02.2016\14.SP_CREATE_GetAllLandingPageMasterData.sql" />
+    <None Include="BOP\Release5\03.02.2016\1.TBL_Insert_MasterData.sql" />
+    <None Include="BOP\Release5\03.02.2016\2.SP_ALTER_CreateUserPolicy.sql" />
+    <None Include="Release46\18.02.2016\1.SP_ALTER_GetPolicyID.sql" />
+    <None Include="Release47\22.02.2016\1.TBL_INSERT_AdminUser.sql" />
+    <None Include="Release48\08.03.2016\1.TBL_CREATE_LobStatus.sql" />
+    <None Include="Release48\08.03.2016\2.TBL_CREATE_StateLobStatus.sql" />
+    <None Include="Release48\08.03.2016\3.SEQ_CREATE_SEQUENCELobStatus.sql" />
+    <None Include="Release48\08.03.2016\4.SEQ_CREATE_SEQUENCEStateLobStatus.sql" />
+    <None Include="Release48\08.03.2016\5.SP_CREATE_GetlobStatusForState.sql" />
+    <None Include="Release48\08.03.2016\6.SP_CREATE_InsertOrUpdateLobStatus.sql" />
+    <None Include="Release48\08.03.2016\7.TBL_INS_LobStatus.Table.sql" />
+    <None Include="Release48\08.03.2016\8.TBL_INS_StateLobStatus.Table.sql" />
+    <None Include="LP\Release2\08.03.2016\1.SP_CREATE_DeleteCTAMessages.sql" />
+    <None Include="LP\Release2\08.03.2016\2.SP_CREATE_InsertOrUpdateCTAMessages.sql" />
+    <None Include="Release49\10.03.2016\2. Insert_script_modified.sql" />
+    <None Include="Release49\10.03.2016\1. YYY3_modified_script.sql" />
+    <None Include="LP\Release2\08.03.2016\3.SP_CREATE_GetAllCTAMessagesByTokenId.sql" />
+    <None Include="BOP\Release6\03.17.2016\1.SP_ALTER_GetPolicyID.sql" />
+    <None Include="Release50\17.03.2016\1.TBL_Update_StateLobStatus.sql" />
+    <None Include="Release50\17.03.2016\2. SP_CREATE_GetOption.sql" />
+    <None Include="Release58\2016.05.26\1.TBL_Update_StateLobStatus.sql" />
+    <None Include="Release59\2016.05.27\1.SP_ALTER_GetCustomSession.sql" />
+    <None Include="Release61\2016.06.03\1.TBL_UPDATE_StateLobStatus.sql" />
+    <None Include="Impersonation\2016.08.26\SP_CREATE_IsUserEmailExists.sql" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Guinness.dbmdl" />
+    <None Include="Guinness.sqlproj.user" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Release51\05.04.2016\1.TBL_INSERT_QuotePolicyType.sql" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Release52\07.04.2016\1. TABLE_ALTER_OrganisationUserDetail.sql" />
+    <None Include="Release52\07.04.2016\2. TABLE_UPDATE_OrganisationUserDetail.sql" />
+    <None Include="Release52\07.04.2016\3.SP_CREATE_GetInActiveUsersAndQuote.sql" />
+    <None Include="Release52\07.04.2016\4.SP_CREATE_UpdateSaveForLaterMailStatus.sql" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="LP\Release3\05.04.2016\1. TBL_Alter_LandingPageTransaction.sql" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="LP\Release3\05.04.2016\10. SP_Alter_GetLandingPageUser.sql" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="LP\Release3\05.04.2016\11. TBL_Alter_CTAMessages.sql" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="LP\Release3\05.04.2016\12. SP_Alter_InsertOrUpdateCTAMessages.sql" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="LP\Release3\05.04.2016\13. SP_Alter_InsertTemplates.sql" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="LP\Release3\05.04.2016\2. SP_Alter_AddEditlandingPage.sql" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="LP\Release3\05.04.2016\3. SP_Alter_DeleteCTAMessages.sql" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="LP\Release3\05.04.2016\4. SP_Alter_DeleteLandingPages.sql" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="LP\Release3\05.04.2016\5. SP_Alter_GetAllCTAMessagesByTokenId.sql" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="LP\Release3\05.04.2016\6. SP_Alter_GetAllLandingPageMasterData.sql" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="LP\Release3\05.04.2016\7. SP_Alter_GetLandingPage.sql" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="LP\Release3\05.04.2016\8. SP_Alter_GetLandingPageById.sql" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="LP\Release3\05.04.2016\9. SP_Alter_GetLandingPages.sql" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="LP\Release4\07.04.2016\1.TBL_ALTER_LandingPageTransaction.sql" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="LP\Release4\07.04.2016\2.TBL_ALTER_tblTemplates.sql" />
+    <None Include="LP\Release4\07.04.2016\3.SP_ALTER_GetLandingPage.sql" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Release53\14.04.2016\1.SP_ALTER_GetCredentials.sql" />
+    <None Include="Release53\14.04.2016\2.TBL_Update_StateLobStatus.sql" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Release54\15.04.2015\1.SP_ALTER_MaintainOrganisationUserDetail.sql" />
+    <None Include="Release54\15.04.2015\2.SP_ALTER_MaintainOraganisationAddress.sql" />
+    <None Include="LP\Release5\18.04.2016\1.TBL_CREATE_TblTemplates.sql" />
+    <None Include="LP\Release5\18.04.2016\2.SP_ALTER_GetAllLandingPageMasterData.sql" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Release55\19.04.2016\2.TBL_UPDATE_MANDATORYDEDUCTIBLE.sql" />
+    <None Include="Release55\19.04.2016\1.TBL_UPDATE_POLICYCANCELOPTIONS.sql" />
+    <None Include="Release55\19.04.2016\3.SP_ALTER_GetUserQuotes.sql" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Release56\22.04.2016\1.TBL_ALTER_FeinPremiumFactor.sql" />
+    <None Include="Release56\22.04.2016\2.SP_ALTER_GetFeinXModFactor.sql" />
+    <None Include="Release56\22.04.2016\3.SP_ALTER_UpdateFeinXModFactor.sql" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="LP\Release6\26.04.2016\1.TBL_UPDATE_tblLandingPageUsers.sql" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Release57\05.05.2016\1.SP_ALTER_MaintainPurchasePathCustomeSession.sql" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="LP\Release7\16.05.2016\ALT_SP_InsertOrUpdateCTAMessages.sql" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Release58\2016.05.26\2.SP_ALTER_MaintainCustomSession.sql" />
+    <None Include="Release58\2016.05.26\3.SP_ALTER_GetCustomSession.sql" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Release60\2016.05.30\1.SP_ALTER_MaintainSession.sql" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Release61\2016.06.03\2.SP_CREATE_GetQuoteUserId.sql" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Release62\2016.06.06\1.SP_CREATE_GetQuoteUserId.sql" />
+    <None Include="Release62\2016.06.06\2.TBL_CREATE_CYBClassKeywords.sql" />
+    <None Include="Release62\2016.06.06\3.SP_CREATE_InsertCYBClassKeywords.sql" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Release63\2016.06.11\1.SP_ALTER_GetLobs.sql" />
+    <None Include="Release63\2016.06.11\2.TBL_UPDATE_LobsNameAltered.sql" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Release64\2016.07.04\SP_ALTER_GetApplicationCustomSession.sql" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Release65\2016.07.21\1.TBL_UPDATE_MulticlassMinimumPayrollThreshold.sql" />
+    <None Include="Release65\2016.07.21\2.TBL_INSERT_MulticlassMinimumPayrollThreshold.sql" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Release66\2016.08.03\1.TBL_CREATE_LossControlFile.sql" />
+    <None Include="Release66\2016.08.03\2.SP_CREATE_GetLossControlFileName.sql" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Release67\2016.08.08\2. SP_CREATE_Delete_Account.sql" />
+    <None Include="Release67\2016.08.08\1. SP_CREATE_Merge_Accounts.sql" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Impersonation\2016.08.11\1.TBL_INSERT_MigrateOdlDataIntoUserQuotes.sql" />
+    <None Include="Impersonation\2016.08.11\2.SP_CREATE_InsertUserQuote_PurchasePath.sql" />
+    <None Include="Impersonation\2016.08.11\3.SP_ALTER_CreatePolicy.sql" />
+    <None Include="Impersonation\2016.08.11\4.SP_ALTER_CreateQuote.sql" />
+    <None Include="Impersonation\2016.08.11\5.SP_ALTER_UpdateQuoteUserId.sql" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Impersonation\2016.08.08\2.TBL_CREATE_UserQuotes.sql" />
+    <None Include="Impersonation\2016.08.08\3.TBL_ALTER_OrganisationUserDetail.sql" />
+    <None Include="Impersonation\2016.08.08\4.SP_ALTER_GetPolicyID.sql" />
+    <None Include="Impersonation\2016.08.08\5.SP_CREATE_AttachPolicyToUser.sql" />
+    <None Include="Impersonation\2016.08.08\6.SP_ALTER_DeleteAccount.sql" />
+    <None Include="Impersonation\2016.08.08\7.SP_CREATE_DetachPolicyFromUser.sql" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Impersonation\2016.08.08\8.SP_ALTER_InsertOrUpdateOrganisationUserDetail.sql" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Impersonation\2016.08.08\9.SP_CREATE_MergeAccounts.sql" />
+    <None Include="Impersonation\2016.08.22\SP_ALTER_InsertOrUpdateOraganisationUserDetail.sql" />
+    <None Include="LP\Release8\2016.08.25\1. DROP_AND_CREATE_Table_LandingPageTransaction.sql" />
+    <None Include="LP\Release8\2016.08.25\2. DROP_AND_CREATE_Table_CTAMessages.sql" />
+    <None Include="LP\Release8\2016.08.25\3. DROP_AND_CREATE_Table_tblTemplates.sql" />
+    <None Include="LP\Release8\2016.08.25\4. DROP_AND_CREATE_SP_AddEditlandingPage.sql" />
+    <None Include="LP\Release8\2016.08.25\5. DROP_AND_CREATE_SP_GetLandingPage.sql" />
+    <None Include="LP\Release8\2016.08.25\6. MasterDataSript.sql" />
+  </ItemGroup>
+  <ItemGroup>
+    <Build Include="Impersonation\2016.08.08\1.SEQ_CREATE_UserQuote.sql" />
+  </ItemGroup>
+</Project>

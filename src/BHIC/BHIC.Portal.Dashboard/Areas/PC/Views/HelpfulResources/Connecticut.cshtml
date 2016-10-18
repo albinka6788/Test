@@ -1,0 +1,47 @@
+﻿@using BHIC.Common.Html;
+@using BHIC.Domain.Dashboard;
+@using BHIC.Common.CommonUtilities;
+@using BHIC.Common.Configuration;
+
+@{
+    Dictionary<string, object> document = StaticDocuments.GetStaticDocuments();
+    string refDoc = string.Empty, empAppDoc = string.Empty, empResDoc = string.Empty, empHandDoc = string.Empty, empNotDoc = string.Empty, empNotTimeDoc = string.Empty;
+    if (document != null && document.Count > 0)
+    {
+        List<string> currentPageDocument = (List<string>)document["Connecticut"];
+        refDoc = currentPageDocument.Count > 0 ? Server.UrlEncode(currentPageDocument[0]) : "";
+        empAppDoc = currentPageDocument.Count > 0 ? Server.UrlEncode(currentPageDocument[1]) : "";
+        empResDoc = currentPageDocument.Count > 0 ? Server.UrlEncode(currentPageDocument[2]) : "";
+        empHandDoc = currentPageDocument.Count > 0 ? Server.UrlEncode(currentPageDocument[3]) : "";
+        empNotDoc = currentPageDocument.Count > 0 ? Server.UrlEncode(currentPageDocument[4]) : "";
+        empNotTimeDoc = currentPageDocument.Count > 0 ? Server.UrlEncode(currentPageDocument[5]) : "";
+    }
+}
+<div ng-controller="helpfulResourcesController">
+    <div class="text-block">
+        <p> We are pleased that you have selected one of the Berkshire Hathaway Insurers of CoverYourBusiness.com as your Workers' Compensation insurer. In addition to secure coverage, we provide extensive value-added services. Under this policy, you have chosen to be enrolled in a Managed Care Program (MCP), and we have partnered with Coventry Health Care (a Connecticut State Certified provider) to administer this program. If a claim should happen to occur, our medical management activities are handled through another Berkshire Hathaway partner selected for this program. To better acquaint you with the information and procedures you need to know, we provide the following important materials:</p>
+        <ul>
+            <li> <span style="cursor:pointer; color:#D49000; font-weight:500; " onclick="DownloadStaticDocument('@refDoc');"> Managed Care Plan reference flyer </span> </li>
+            <li> <span style="cursor:pointer; color:#D49000; font-weight:500; " onclick="DownloadStaticDocument('@empAppDoc');">Employer Application Form </span> </li>
+            <li> <span style="cursor:pointer; color:#D49000; font-weight:500; " onclick="DownloadStaticDocument('@empResDoc');">Summary of Employer Responsibilities </span> </li>
+            <li> <span style="cursor:pointer; color:#D49000; font-weight:500; " onclick="DownloadStaticDocument('@empHandDoc');">Employer Handbook</span> (includes Employee Medical & Work Status Form to be Completed by Physician)</li>
+            <li> <span style="cursor:pointer; color:#D49000; font-weight:500; " onclick="DownloadStaticDocument('@empNotDoc');">Initial Employee Notice and Employee Training Acknowledgement Form </span> </li>
+            <li> <span style="cursor:pointer; color:#D49000; font-weight:500; " onclick="DownloadStaticDocument('@empNotTimeDoc');">Employee Notice at Time of Injury </span> </li>
+            <li> <a href="https://www.talispoint.com/firsthealth/external/?AE=997532665&CAID=SBCLNT&BPID=-99&PRODCT=WC&PROD" target="_blank">On-line Directory of Managed Care Providers </a> </li>
+        </ul>
+    </div>
+
+    <div class="text-block">
+        <h4> Employer Instructions </h4>
+        <p> Once you've read and understood the <span style="cursor:pointer; color:#D49000; font-weight:500; " onclick="DownloadStaticDocument('@refDoc');"> Managed Care Plan reference flyer</span>, complete and sign the <span style="cursor:pointer; color:#D49000; font-weight:500; " onclick="DownloadStaticDocument('@empAppDoc');">Employer Application Form </span> and <span style="cursor:pointer; color:#D49000; font-weight:500; " onclick="DownloadStaticDocument('@empResDoc');"> Summary of Employer Responsibilities</span>; send to: </p>
+        <p>
+            <span class="companyDomain"></span>
+            <br><span class="physicalAddress2"></span>
+            <br> <span class="physical_AddressCSZ"></span>
+            <br> Attn: CT Managed Care Department
+        </p>
+        <p> Upon receipt, we will review and process the application, including submission to the State. A representative from the Connecticut Commissioner's office will visit you to confirm: (1) your company is knowledgeable about the MCP; (2) you have access to Coventry's on-line managed care services and tools; and (3) your company has an established safety program and a return-to-work program. Once these items have been successfully reviewed, your application will be approved. Then, a Coventry representative will contact you to schedule an implementation date; we recommend choosing one within two weeks of the request. Once set, you will receive an MCP certificate. </p>
+        <p> Upon certification, you should immediately initiate the MCP as outlined in the <span style="cursor:pointer; color:#D49000; font-weight:500; " onclick="DownloadStaticDocument('@empHandDoc');">Employer Handbook</span>. As part of this process, you will need the <span style="cursor:pointer; color:#D49000; font-weight:500; " onclick="DownloadStaticDocument('@empNotDoc');"> Initial Employee Notice and Employee Training Acknowledgement Form</span>, <span style="cursor:pointer; color:#D49000; font-weight:500; " onclick="DownloadStaticDocument('@empNotTimeDoc');"> Employee Notice at Time of Injury</span>, and <a href="https://www.talispoint.com/firsthealth/?AE=997532665&CAID=BRKHA" target="_blank">On-line Directory of Managed Care Providers</a>. If you have any questions, do not hesitate to contact our office at <span href="" class="mailingClaims_NewClaimPhone"></span> </p>
+    </div>
+</div>
+@CDN.RenderScripts("/bundles/scripts/common-system-variables")

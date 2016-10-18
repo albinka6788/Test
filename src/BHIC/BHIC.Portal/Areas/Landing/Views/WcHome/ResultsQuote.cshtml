@@ -1,0 +1,139 @@
+﻿<h2>Congratulations - Here's Your Quote!</h2>
+<script src="~/Scripts/angular/angular.js"></script>
+<script src="~/Scripts/bhic/services/restServiceConsumer.js"></script>
+<script src="~/Scripts/bhic/controllers/wc/quoteResultCtrl.js"></script>
+<style type="text/css">
+    .panel {
+        margin-bottom: 20px;
+        background-color: #ffffff;
+        border: 1px solid transparent;
+        border-radius: 4px;
+        -webkit-box-shadow: 0 1px 1px rgba(0, 0, 0, 0.05);
+        box-shadow: 0 1px 1px rgba(0, 0, 0, 0.05);
+    }
+
+    .panel-body {
+        padding: 15px;
+    }
+
+    .form-group {
+        margin-bottom: 15px;
+        width: 100%;
+        display: inline-block;
+    }
+
+    .col-xs-1, .col-sm-1, .col-md-1, .col-lg-1, .col-xs-2, .col-sm-2, .col-md-2, .col-lg-2, .col-xs-3, .col-sm-3, .col-md-3, .col-lg-3, .col-xs-4, .col-sm-4, .col-md-4, .col-lg-4, .col-xs-5, .col-sm-5, .col-md-5, .col-lg-5, .col-xs-6, .col-sm-6, .col-md-6, .col-lg-6, .col-xs-7, .col-sm-7, .col-md-7, .col-lg-7, .col-xs-8, .col-sm-8, .col-md-8, .col-lg-8, .col-xs-9, .col-sm-9, .col-md-9, .col-lg-9, .col-xs-10, .col-sm-10, .col-md-10, .col-lg-10, .col-xs-11, .col-sm-11, .col-md-11, .col-lg-11, .col-xs-12, .col-sm-12, .col-md-12, .col-lg-12 {
+        position: relative;
+        min-height: 1px;
+        padding-left: 15px;
+        padding-right: 15px;
+    }
+
+    .custom-button {
+        -moz-box-sizing: border-box;
+        -webkit-box-sizing: border-box;
+        box-sizing: border-box;
+        background-color: #e3b956 !important;
+        border: 1px solid #ffe6b2;
+        border-radius: 5px;
+        color: #fff !important;
+        cursor: pointer;
+        font-size: 14px;
+        line-height: normal !important;
+        padding: 4px 8px;
+        text-transform: uppercase;
+    }
+
+    a:hover, a:visited, a:link, a:active {
+        text-decoration: none;
+    }
+</style>
+<div ng-app="bhic-app.wc.quoteResult" ng-controller="quoteResultCtrl">
+    <form name="quoteResult" class="form-horizontal" novalidate data-ng-submit="submitQuoteResult();">
+
+        <div class="panel">
+            <div class="panel-body">
+                <h4>Quote Information</h4>
+                <hr />
+
+                <div class="form-group">
+                    <div class="col-md-4" style="width:310px;">Quote Reference Number</div>
+                    <div class="col-md-8">
+                        <span ng-bind="quoteResult.DsQuoteId" ></span>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <div class="col-md-4" style="width:310px;">
+                        Get your policy started now for as little as
+                    </div>
+                    <div class="col-md-8" style="color:red;">
+                     <span ng-bind="quoteResult.LowestDownPayment"></span>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <div class="col-md-4" style="width:310px;">
+                        Total estimated policy premium
+                    </div>
+                    <div class="col-md-8">
+                        <span ng-bind="quoteResult.Premium"></span>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <div class="col-md-12">
+                        <p>As is industry standard among all insurance carriers and in accordance with applicable laws and your policy, your Annual Premium is an estimate determined by the information provided to us to date and the application of our manuals of rules, rates, rating plans and classifications. Your Annual Premium is subject to change after coverage has been bound. Please be aware that the information submitted to us by you is subject to verification via an annual audit in accordance with the terms of your policy. Also, additional charges may be applied in certain jurisdictions to address specific circumstances. If a check is returned due to insufficient funds, a fee will be assessed. Payments received after the due date may be subject to a late fee and policy cancellation. Please read your policy carefully. Coverage is only afforded by your policy and endorsements.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="panel">
+            <div class="panel-body">
+                <h4>Payment Options</h4>
+                <hr />
+
+                <div class="form-group">
+                    <div class="col-md-3">Select a Convenient Payment Option</div>
+                    <div class="col-md-3">
+                        <select data-ng-options="paymentOption as paymentOption.Description for paymentOption in quoteResult.PaymentOptions" ng-model="selectedItem" ng-change="changeQuoteParams()"></select>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <div class="col-md-3">Due Now</div>
+                    <div class="col-md-9">
+                        <span ng-bind="quoteResult.CurrentDue"></span>
+                    </div>
+                </div>
+                <div ng-show="!IsSinglePay">
+                    <div class="form-group">
+                        <div class="col-md-3">Future Installment Amount</div>
+                        <div class="col-md-9">
+                          <span ng-bind="quoteResult.FutureInstallmentAmount"></span>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="col-md-3">Number of Installments</div>
+                        <div class="col-md-9">
+                            <span ng-bind="quoteResult.NoOfInstallment"></span>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="col-md-3">Installment Fee</div>
+                        <div class="col-md-9">
+                            <span ng-bind="quoteResult.InstallmentFee"></span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <input type="submit" value="Submit" />
+        @Html.ActionLink("Save For Later", "SaveForLater", "WcHome", new { @class = "custom-button" })
+        <a href="/">Or, Start Over</a>
+    </form>
+</div>
+<script src="~/Scripts/jquery-1.10.2.js"></script>
+<script src="~/Scripts/angular/angular.js"></script>
+<script src="~/Scripts/bhic/services/restServiceConsumer.js"></script>
+<script src="~/Scripts/jquery-2.1.4.js"></script>
+<script src="~/Scripts/bhic/services/wc/quoteResultApi.js"></script>
+<script src="~/Scripts/bhic/controllers/wc/quoteResultCtrl.js"></script>

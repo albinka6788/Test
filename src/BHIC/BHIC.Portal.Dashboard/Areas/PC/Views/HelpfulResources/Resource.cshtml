@@ -1,0 +1,57 @@
+﻿@using BHIC.Common.Html;
+@using BHIC.Domain.Dashboard;
+@using BHIC.Common.CommonUtilities;
+@using BHIC.Common.Html;
+@using BHIC.Common.Configuration;
+
+@{
+    Dictionary<string, object> document = StaticDocuments.GetStaticDocuments();
+    string draftform = string.Empty;
+    if (document != null && document.Count > 0)
+    {
+        List<string> currentPageDocument = (List<string>)document["Resources"];
+        draftform = currentPageDocument.Count > 0 ? Server.UrlEncode(currentPageDocument[0]) : "";
+    }
+}
+<div ng-controller="helpfulResourcesController">
+    <div class="text-block">
+        <h4> Contact Information </h4>
+        <p>
+            <span class="companyDomain"></span>
+            <br> <span class="physicalAddress2"></span>
+            <br> <span class="physical_AddressCSZ"></span>
+        </p>
+
+        <p class="text-bold mb0">For Claims:</p>
+        <p class="mb0">Toll Free <a href="" class="mailingClaims_NewClaimPhone"></a> </p>
+        <p class="mb0">Claims FAX <a href="" class="faxNumber_Claims"></a></p>
+        <p>E-mail <a href="mailto:Claims@CoverYourBusiness.com">Claims@CoverYourBusiness.com </a> </p>
+    </div>
+    <div class="text-block">
+        <h4> Employer Posting Notice </h4>
+        <p> Employers are required in most states to post a Notice to Employees in a conspicuous location. As a service to our Policyholders, we provide a link from which a <a href="#/EmployerNotices" target="_blank">downloadable/printable notice</a> can be obtained for your state. </p>
+    </div>
+    <div class="text-block">
+        <h4> Claims Managed Care/Medical Provider Information (Where Required) </h4>
+        <p class="mb0"> Certain states have special requirements that govern the use of Medical Provider Networks. If a policy incorporates an MPN and the state of coverage is listed below, you need to click the relevant link and review the material provided, taking all recommended actions. </p>
+        <a href="#/Connecticut" target="_blank"> Connecticut </a>
+        <br>
+        <a href="#/TexasMPN" target="_blank"> Texas </a>
+    </div>
+    <div class="text-block">
+        <h4> California Claims </h4>
+        <p class="mb0"> In California, a basic collection of standard information is to be distributed to every employee. You can obtain copies of the documents that must be provided (whether or not an MPN is being utilized) by clicking the link below: </p>
+        <a href="#/CAClaims" target="_blank"> Required California Claims Information </a>
+    </div>
+    <div class="text-block">
+        <h4> Direct Draft Program </h4>
+        <p class="mb0"> To avoid any payment delays and eliminate instalment fees, policyholders can sign up for ongoing premium debits by completing and returning the form below: </p>
+        @*<a href=""> Direct Draft Program Form </a>*@
+        <span style="cursor:pointer; color:#D49000; font-weight:500; " onclick="DownloadStaticDocument('@draftform');"> Direct Draft Program Form</span>
+    </div>
+    <div class="text-block mb0">
+        <p class="mb0 text-bold"> For Additional Information: </p>
+        <p> About your policy or any of the resources included above, call us at <a href="" class="sysPhoneAnchor"></a>. </p>
+    </div>
+</div>
+@CDN.RenderScripts("/bundles/scripts/common-system-variables")

@@ -1,0 +1,269 @@
+﻿@{
+    ViewBag.Title = "Index";
+    Layout = "~/Areas/Landing/Views/Shared/_Layout.cshtml";
+}
+
+<style type="text/css">
+    html {
+        height: 100%;
+    }
+
+    body {
+        height: 100%;
+    }
+
+    #div-getQuote {
+        margin: 20px auto;
+    }
+
+    .div-row {
+        width: 100%;
+        clear: both;
+        margin: 5px auto;
+    }
+
+    input, select {
+        width: 180px !important;
+    }
+
+        input[type="radio"], input[type="checkbox"] {
+            margin: 4px 0 0;
+            width: 20px !important;
+            height: 10px;
+            margin-top: 1px \9;
+            line-height: normal;
+        }
+
+    .getQuote {
+        background-color: #e3b956 !important;
+        border: 1px solid #ffe6b2;
+        border-radius: 5px;
+        box-sizing: border-box;
+        color: #fff !important;
+        cursor: pointer;
+        font-size: 14px;
+        line-height: normal !important;
+        padding: 4px 8px;
+        text-transform: uppercase;
+        text-decoration: none;
+    }
+
+        .getQuote a:active, a:hover {
+            text-decoration: none;
+        }
+
+    .help-block {
+        display: block;
+        margin-top: 5px;
+        margin-bottom: 10px;
+        color: #737373;
+    }
+
+    .has-error {
+        color: #b94a48;
+    }
+
+    .top-buffer {
+        padding-top: 20px;
+    }
+
+    .tags-wrapper {
+        position: relative;
+    }
+
+    .tags-cloud .tag {
+        float: left;
+        padding: 4px 6px;
+        font-size: 1em;
+        margin-right: 5px;
+        margin-bottom: 5px;
+        background: #f2f2f2;
+        font-weight: 600;
+        -webkit-border-radius: 4px;
+        -moz-border-radius: 4px;
+        border-radius: 4px;
+        -moz-background-clip: padding;
+        -webkit-background-clip: padding-box;
+        background-clip: padding-box;
+        border: 1px solid #dddddd;
+    }
+
+        .tags-cloud .tag:hover {
+            border: 1px solid #cccccc;
+        }
+
+            .tags-cloud .tag:hover .cross {
+                opacity: 1;
+            }
+
+        .tags-cloud .tag .cross {
+            margin-left: 5px;
+            margin-right: 3px;
+            font-size: 1em;
+            color: #20a28e;
+            opacity: .7;
+            cursor: pointer;
+        }
+
+    .suggestions-list {
+        position: absolute;
+        list-style-type: none;
+        margin: 0;
+        padding: 0;
+        overflow: auto;
+        -webkit-border-radius: 4px;
+        -moz-border-radius: 4px;
+        border-radius: 4px;
+        -moz-background-clip: padding;
+        -webkit-background-clip: padding-box;
+        background-clip: padding-box;
+        font-size: 14px;
+    }
+
+        .suggestions-list li {
+            color: #333333;
+            font-weight: 600;
+            padding: 4px 25px;
+            font-size: 1em;
+            cursor: pointer;
+            background: #f2f2f2;
+            border-bottom: 1px solid #dddddd;
+        }
+
+            .suggestions-list li:hover {
+                background: #dddddd;
+            }
+
+            .suggestions-list li:active,
+            .suggestions-list li.active {
+                color: #20a28e;
+                background: #dddddd;
+            }
+
+        .suggestions-list:focus {
+            outline: none;
+        }
+        [ng\:cloak], [ng-cloak], [data-ng-cloak], [x-ng-cloak], .ng-cloak, .x-ng-cloak, .ng-hide {
+            display: none !important;
+        }
+
+
+        .ds-logo img {
+            height: auto;
+            /*max-height: 60px;*/
+            width: 100%;
+        }
+
+        img {
+            border: 0 none;
+            margin: 0;
+            padding: 0;
+        }
+
+        img {
+            vertical-align: middle;
+        }
+
+        .ds-hdrLink {
+            float: right;
+        }
+
+        .ds-logo {
+            float: left;
+            width: 33.3333%;
+            float: left;
+            min-height: 1px;
+            padding: 5px;
+            position: relative;
+        }
+
+        .navbar-brand {
+            color: #fff;
+        }
+
+        .panel {
+            background-color: #fff;
+            border: 1px solid transparent;
+            border-radius: 4px;
+            box-shadow: 0 1px 1px rgba(0, 0, 0, 0.05);
+            margin-bottom: 20px;
+        }
+
+        .panel-body {
+            padding: 15px;
+        }
+
+</style>
+
+
+<br /><br />
+<div class="pull-right">
+    @Html.ActionLink("RegisterUser", "Register", "WcAccount", new { area = "Account" }, null) &nbsp;@Html.ActionLink("Login", "Login", "WcAccount", new { area = "Account" }, null)
+</div>
+
+<ng-form id="div-getQuote" novalidate="novalidate" name="quoteInputForm" data-ng-app="bhic-app" data-ng-controller="landingPageCtrl as quoteCtrl">
+    <div class="div-row" ng-class="{ 'has-error' : (quoteInputForm.zipCode.$invalid && !quoteInputForm.zipCode.$pristine) }">
+        <input type="text" minlength="5" maxlength="5" placeholder="Zip Code" name="zipCode" data="zipCode" data-ng-model="quoteCtrl.zipCode" valid-number required />
+        <p ng-show="(quoteInputForm.zipCode.$error.required && !quoteInputForm.zipCode.$pristine)" class="help-block">Zip code is required</p>
+        <p ng-show="(submitted && quoteInputForm.zipCode.$error.minlength)" class="help-block">Zip code should be of 5 digits</p>
+    </div>
+    <div class="div-row" ng-if="keywordSearchAllowed">
+        <div class="div-row"><input type="radio" data-ng-model="classOrIndustry" value="0" ng-change="updateSearchSelection(0)" />Select Business</div>
+        <div class="div-row"><input type="radio" data-ng-model="classOrIndustry" value="1" ng-change="updateSearchSelection(1)" />Select Industry</div>
+    </div>
+    <div class="div-row" ng-if="showKeywordSearch">
+        <input type="text" autocomplete placeholder="Type a keyword for Search" name="classDescriptionKeywordId" ng-model="classDescriptionKeywordId" />
+        @*{{classDescriptionKeywordId}} : {{selectedClassDescKeyId}}*@
+    </div>
+    <div ng-if="(!showKeywordSearch ||!keywordSearchAllowed)" class="div-row" ng-class="{ 'has-error' : (quoteInputForm.industry.$invalid && !quoteInputForm.industry.$pristine) }">
+        <select id="ddlIndustries" data-ng-model="quoteCtrl.industry" name="industry" data-ng-options="industry.Description for industry in industries" data-ng-change="getSubIndustries(quoteCtrl.industry.IndustryId)" required>
+            <!-- Comment : Here bind default text -->
+            <option value="">{{::industryDefaults.text}}</option>
+        </select>
+        <p data-ng-show="show">{{industry}}</p>
+        <p ng-show="(quoteInputForm.industry.$error.required && !quoteInputForm.industry.$pristine)" class="help-block">Industry is required</p>
+    </div>
+    <div ng-show="quoteInputForm.industry.$valid && processingSubIndustry">One Moment Please</div>
+
+    <div class="div-row" ng-if="showSubIndustry && !showKeywordSearch" ng-class="{ 'has-error' : (quoteInputForm.subIndustry.$invalid && !quoteInputForm.subIndustry.$pristine) }">
+        <select id="ddlSubIndustries" data-ng-model="quoteCtrl.subIndustry" name="subIndustry" data-ng-options="subIndustry.Description for subIndustry in subIndustries" data-ng-change="getClass(quoteCtrl.subIndustry.SubIndustryId)" required>
+            <!-- Comment : Here bind default text -->
+            <option value="">{{subIndustryDefaults.text}}</option>
+        </select>
+        <p data-ng-show="show">{{subIndustry}}</p>
+        <p ng-show="(quoteInputForm.subIndustry.$error.required && !quoteInputForm.subIndustry.$pristine)" class="help-block">Sub-industry is required</p>
+    </div>
+    <div ng-show="processingClass && quoteInputForm.subIndustry.$valid">One Moment Please</div>
+
+    <div class="div-row" ng-if="showClass && !showKeywordSearch" ng-class="{ 'has-error' : (quoteInputForm.class.$invalid && !quoteInputForm.class.$pristine) }">
+        <select id="ddlClass" data-ng-model="quoteCtrl.class" name="class" data-ng-options="class.Description for class in classes" required>
+            <!-- Comment : Here bind default text -->
+            <option value="">Select Class</option>
+        </select>
+        <p data-ng-show="show">{{quoteCtrl.class}}</p>
+        <p ng-show="(quoteInputForm.class.$error.required && !quoteInputForm.class.$pristine)" class="help-block">Class is required</p>
+    </div>
+
+    <div class="div-row" style="position:relative">
+        <span class="currencySymbol" style="position:absolute;padding:6px;display:none">$</span>
+        <input type="text" ng-class="{ 'has-error' : (quoteInputForm.exposureAmount.$error.required && !quoteInputForm.exposureAmount.$pristine) }" placeholder="Exposure Amount" maxlength="11" decimal-allowed="false" style="padding-left:15px" name="exposureAmount" amount="quoteCtrl.exposureAmount" data-ng-model="quoteCtrl.exposureAmount" currency-control required />
+        <p ng-class="{ 'has-error' : (quoteInputForm.exposureAmount.$error.required && !quoteInputForm.exposureAmount.$pristine) }" ng-show="((quoteInputForm.exposureAmount.$error.required==true) && !quoteInputForm.exposureAmount.$pristine)" class="help-block">Exposure Amount is required</p>
+        <p ng-class="{ 'has-error' : (quoteInputForm.exposureAmount.$invalid && !quoteInputForm.exposureAmount.$pristine) }" ng-show="(quoteInputForm.exposureAmount.$invalid && !quoteInputForm.exposureAmount.$pristine)" class="help-block">{{quoteCtrl.expoAmtValidationMsg}}</p>
+    </div>
+
+    <div class="div-row" ng-class="{ 'has-error' : (quoteInputForm.policyDate.$invalid && !quoteInputForm.policyDate.$pristine) }">
+        <input class="date" type="text" bootstrap-datepicker placeholder="Policy Date-mm/dd/yyyy" data-ng-model="quoteCtrl.policyDate" name="policyDate" date-control start-date="+1d" end-date="+121d" required />
+        <p ng-show="(quoteInputForm.policyDate.$error.required && !quoteInputForm.policyDate.$pristine)" class="help-block">Policy Date is required</p>
+    </div>
+    <button class="getQuote" ng-disabled="quoteInputForm.$error.required || quoteInputForm.zipCode.$error.required|| quoteInputForm.exposureAmount.$error.required" ng-click="((quoteInputForm.$error.$required || quoteInputForm.zipCode.$error.minlength)?'':submitQuote());submitted=true">Get Quotes & Buy Now!</button>
+    <link href="~/Content/bootstrap.css" rel="stylesheet" />
+    <link href="~/Content/jquery-ui.css" rel="stylesheet" />
+    <script src="~/Scripts/bhic/controls/bhic-app.wc.controls.js"></script>
+    <script src="~/Scripts/bhic/controllers/wc/landingpageCtrl.js"></script>
+    <script src="~/Scripts/bhic/controls/validNumberDirective.js"></script>
+    <script src="~/Scripts/bhic/controls/currencyDirective.js"></script>
+    <script src="~/Scripts/bhic/controls/dateControlDirective.js"></script>
+    <script src="~/Scripts/bhic/directives/wc/typeAheadControlDirective.js"></script>
+    <script src="~/Scripts/bhic/controllers/wc/quoteResultCtrl.js"></script>
+    <link href="~/Content/bootstrap-datepicker.css" rel="stylesheet" />
+</ng-form>

@@ -1,0 +1,65 @@
+﻿@using BHIC.Common.Html;
+@using BHIC.Common.XmlHelper;
+
+@{
+    var appBaseUrl = string.Concat(ConfigCommonKeyReader.AppBaseUrl, HttpContext.Current.Request.Url.Host == "localhost" ? ConfigCommonKeyReader.WcBaseUrlPath : "");
+
+    <!-- Prepare SEO url by add trailing "/" during deployment and blank for localhost -->
+    var appendSlash = (appBaseUrl.EndsWith("/") ? string.Empty : "/");
+
+    <!-- GUIN-166: Albin - Prepare PP Base url -->
+    var WcAppBaseUrl = string.Concat(appBaseUrl, appendSlash);
+}
+
+<div class="container sm-center">
+    <div class="row">
+        <div class="md-col-2 lg-col-2">
+            <nav class="footer-nav">
+                <ul class="no-style">
+                    <li><strong>Products</strong></li>
+                    <li><a href='@string.Concat(WcAppBaseUrl, "workers-comp")'> Workers' Compensation </a></li>
+                    <li><a href='@string.Concat(WcAppBaseUrl, "business-owners-policy")'>Business Owner's Policy</a></li>
+                    <li><a href='@string.Concat(WcAppBaseUrl, "commercial-auto")'>Commercial Auto</a></li>
+                </ul>
+            </nav>
+        </div>
+        <div class="md-col-2 lg-col-2">
+            <nav class="footer-nav">
+                <ul class="no-style">
+                    <li><strong>Information</strong></li>
+                    <li><a href='@string.Concat(WcAppBaseUrl, "about-us")'>About Us</a></li>
+                    <li><a href='@string.Concat(WcAppBaseUrl, "resources")'>Resource Center</a></li>
+                    <li><a href='@string.Concat(WcAppBaseUrl, "loss-control")'>Loss Control</a></li>
+                </ul>
+            </nav>
+        </div>
+        <div class="md-col-2 lg-col-2">
+            <nav class="footer-nav">
+                <ul class="no-style">
+                    <li> <strong>Legal</strong> </li>
+                    <li><a href='@string.Concat(WcAppBaseUrl, "privacy-policy")'>Privacy Policy</a></li>
+                    <li><a href='@string.Concat(WcAppBaseUrl, "terms-conditions")'>Terms &amp; Conditions</a></li>
+                    <li><a href='@string.Concat(WcAppBaseUrl, "other-disclosures")'>Other Disclosures</a></li>
+                </ul>
+            </nav>
+        </div>
+        <div class="md-col-2 lg-col-2">
+            <nav class="footer-nav">
+                <ul class="no-style">
+                    <li> <strong>Help</strong> </li>
+                    <li><a href='@string.Concat(WcAppBaseUrl, "faq")'>FAQs</a></li>
+                    <li id="ReportClaim"><a href="#/ReportClaimDashboard">Claims</a></li>
+                </ul>
+            </nav>
+        </div>
+        <div class="md-col-4 lg-col-4">
+            <p class="copyright mb0">
+                &copy; @DateTime.Now.Year <span class="sysCompany"></span> <br>
+                &copy; @DateTime.Now.Year <span class="sysCompanyNENATI20"></span>
+            </p>
+            @*<button  class="btn btn-primary btn-chat">
+                @Html.ThemeImage("chat", "", new { alt = "" }) <a href="http://www.livechatinc.com/?partner=lc_5059511&amp;utm_source=chat_button">Chat With Us</a>
+                </button>*@
+        </div>
+    </div>
+</div>

@@ -1,0 +1,16 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width" />
+    <title>@ViewBag.Title</title>
+    @Styles.RenderFormat("<link href=\"{0}\" type=\"text/css\" rel=\"stylesheet\"/>", "~/Content/css")
+    @Scripts.RenderFormat("<script src=\"{0}\" async></script>", "~/bundles/modernizr")
+</head>
+<body>
+    @RenderBody()
+
+    @Scripts.RenderFormat("<script src=\"{0}\" async></script>", "~/bundles/jquery")
+    @RenderSection("scripts", required: false)
+</body>
+</html>

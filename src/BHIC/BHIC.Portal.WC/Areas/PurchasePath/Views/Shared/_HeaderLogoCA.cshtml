@@ -1,0 +1,27 @@
+﻿@using BHIC.Common.Html;
+@using BHIC.Common.XmlHelper;
+@using BHIC.Domain.Dashboard;
+
+
+<div class="header-top clear">
+    <div class="container">
+        <span class="brand-tagline">Cover Your Business with Warren Buffett's Berkshire Hathaway Insurance Group</span>
+    </div>
+</div>
+<div class="container">
+    <div class="row no-pad">
+        <div class="col-6 logo-cyb">
+            <h1 class="logo">
+                <a href='@ConfigCommonKeyReader.AppBaseUrl'>
+                    @Html.ThemeImage("logo", "img-responsive", new { alt = "Cover Your Business" })
+                </a>
+            </h1>
+        </div>
+        <div class="col-6 logo-geico">
+            <h1 class="logo">
+                @Html.ThemeImage("geico_logo", "", new { alt = "Geico" })
+            </h1>
+        </div>
+    </div>
+
+</div>

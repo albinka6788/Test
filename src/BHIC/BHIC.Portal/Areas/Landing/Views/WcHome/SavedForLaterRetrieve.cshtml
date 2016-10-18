@@ -1,0 +1,54 @@
+﻿@{
+    ViewBag.Title = "SavedForLaterRetrieve";
+    Layout = "~/Areas/Landing/Views/Shared/_Layout.cshtml";
+}
+
+<link href="~/Content/Custom/user-registration.css" rel="stylesheet" />
+
+<div class="ds-page-container">
+    <div class="ds-wrap">
+        <div class="ds-content-container">
+            <div class="ds-content-region">
+                <h2>Welcome Back!</h2>
+                <div class="ds-row">
+                    <div class="ds-col-12">
+                        <div class="panel">
+                            <div class="panel-body">
+                                <div class="ds-row">
+                                    <div class="ds-col-4">
+                                        <form>
+                                            <p><strong>You can easily access your personlized quote!</strong></p>
+                                            <p>What would you like to do?</p>
+                                            <div>
+                                                @Html.ActionLink("Review Your Quote", "QuestionsGet", "WcHome", null, new { area = "Landing", @class = "dsbutton", style = "display:inline-block; width:100%;text-align:center" })
+                                            </div>
+                                            <br />
+                                            <div>
+                                                @Html.ActionLink("Start Over - Create a New Quote!", "Index", "WcHome", null, new { Area = "Landing", @class = "dsbutton", style = "display:inline-block; width:100%;text-align:center" })
+                                            </div>
+                                        </form>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

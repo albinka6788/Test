@@ -1,0 +1,103 @@
+/******* CSS for Large Screen *******/
+
+@media (min-width:801px) {
+body{padding-top: 127px; min-height: 100%; position: relative; padding-bottom: 75px;}
+.container-fluid { padding-left:25px; padding-right:25px}
+.logo-brand{width:300px;height:108px; position:absolute;}
+.top-nav-content{position: relative;margin-left:300px;height:55px;}
+.top-navbar{height:128px; position:fixed; top: 0;left:0;right:0;}
+.top-most-nav{margin-left: 300px;	pxadding-right:15px;}
+.top-most-nav .topUserPanel{width:auto; float:right; margin-right:10px;}
+.top-most-nav .topUserPanel>.mega-ul>.profile { margin-left:20px; }
+.top-navbar-inner .topNavigation { float:left; border-bottom:none; display:block; position:static; }
+.top-navbar-inner .topNavigation li {	display:inline-block; border-bottom:none; padding:0px 30px;}
+.top-navbar-inner .topNavigation li a {position:relative; padding:14px 0 15px 0;}
+.top-navbar-inner .topNavigation li.active a {color: #101F2D;}
+.top-navbar-inner .topNavigation li a::after
+{
+content: "";
+		background: #009483;
+		width: 0;
+		height:6px;
+		position: absolute;
+		left: 0; bottom:0px;
+		right: 0;
+		margin: auto;
+		transition: width .25s ease;
+}
+
+.top-navbar-inner .topNavigation li a:hover:after, .top-navbar-inner .topNavigation li.active a:after
+{
+width:100%; color: #101F2D;
+}
+
+.btn-collapse-nav{display:none;}
+.top-navbar-inner .topNavigation li.active {background:none;}
+/*.pageHeading{padding-bottom:15px;}*/
+.pageHeading h1 {font-size:1.8em;}
+.productBox{margin-bottom:0px;}
+.thebox{padding:30px;}
+.top-navbar.toggle{left:300px;right: -300px;  }
+.sidebar-left{left:0px;top:128px; width:300px;}
+.page-content{margin-left:300px;left: 0; padding:30px 10px 50px 10px;}
+.page-content-full {padding:50px 10px 50px 10px;}
+.page-content.toggle{left: 0;margin-left:300px;margin-right: -300px;}
+.page-content.toggle-left{margin-left: -300px;margin-right: 300px;}
+.sidebar-right.toggle-left{right: 0px;}
+.nav-dropdown-content{height: auto;max-width: 100%;}
+.btn-collapse-sidebar-right{top: -60px;}
+.btn-collapse-sidebar-left{display:none;}
+.navbar-collapse.in{ border-bottom:2px solid #226078;}
+.btn {width: auto;}
+.topUserPanel .notificationPanel {position:absolute; right:0px; left:auto;}
+.topUserPanel .notificationPanel:after { left:auto; right:11px;}
+.productBox .action-panel {max-width:inherit;}
+.productBox .action-panel li a {white-space:nowrap;}
+.form-horizontal .form-group:after {
+		content: "";
+		display: table;
+		clear: both;
+	}
+	.form-horizontal .form-group>label {
+	    padding-top: 7px;
+	    margin-bottom: 0;
+	}
+
+}
+
+@media (max-width:1200px) {
+.col-policy-box-btn
+{
+width:100%;	
+}
+
+.col-policy-box-btn button
+{
+	margin-bottom:10px;	
+}
+	
+}
+
+@media (min-width: 480px) {
+	.btn {
+		width: auto;
+	}
+	.input-group {
+		width: 440px;
+	}
+	.field-auto {
+		width: auto;
+	}
+	.field-x-sm {
+		width: 150px;
+	}
+	.field-sm {
+		width: 220px;
+	}
+	.field-md {
+		width: 300px;
+	}
+	.field-lg {
+		width: 440px;
+	}
+}

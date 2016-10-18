@@ -1,0 +1,20 @@
+﻿@using BHIC.Common.XmlHelper;
+@using BHIC.Common.Configuration;
+@{
+    BHIC.Common.Payment.PaymentResponseViewModel customSession = (BHIC.Common.Payment.PaymentResponseViewModel)Session["PaymentResponse"];
+
+    if (customSession == null)
+    {
+        BHIC.Common.Logging.LoggingService.Instance.Trace("Session null");
+    }
+}
+
+<script src="https://code.jquery.com/jquery-1.10.2.js"></script>
+
+<script type="text/javascript">
+    $(document).ready(function () {
+
+        window.location.href = '@customSession.PaymentURL';
+
+    });
+</script>

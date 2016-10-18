@@ -1,0 +1,86 @@
+﻿<div class="landing-box" ng-init="loadingPageController">
+    <div class="box-header">
+        <h2 style="margin-left:10px;">Landing Page</h2>
+    </div>
+    <br />
+    <div>
+        <form>
+            <center>
+                <div class="btns_container marT20" style="text-align:left; margin-left:20px;">
+                    <input style="width:250px;" type="submit" name="AddTB" class="btn btn-default" id="btnAdd" value="Upload New Background Image" ng-click="GotoInsertOrUpdate('Temp');" />
+                    <input style="width:200px;" type="submit" name="Add" class="btn btn-default" id="btnAdd" value="Add New Landing Page" ng-click="GotoInsertOrUpdate('Add');" />
+                    <input style="width:150px;" type="submit" name="Edit" class="btn btn-default" id="btnEdit" value="Edit Landing Page" ng-disabled="btnEdit" ng-click="GotoInsertOrUpdate('Edit');" />
+                    <div style="width:100px; float:right; margin-right:20px; " class="dropdown">
+                        <button class="dropbtn"><img src="~/Images/user-icon.png" style="width:30px; height:30px;" />{{loggedInUser}}</button>
+                        <div class="dropdown-content">
+                            <span ng-click="SignOut();">Logout</span>
+                        </div>
+                    </div>
+
+                </div>
+                <div style="max-height:500px; background: #fff; padding-bottom: 30px; text-align:left; ">
+                    <div style="margin-left:20px; margin-top:20px;">
+                        <span colspan="2">Search :</span>
+                        <span colspan="4" style="text-align:left;"> <input type="text" class="field" ng-model="search" style='text-transform:uppercase' /></span>
+                    </div>
+                    <table class="gridtable" style="margin-top:30px;">
+                        <tr>
+                            <th width="7%" align="center" valign="top">Select</th>
+                            <th width="8%" style="cursor:pointer;" ng-click="order('lob')" align="left" valign="top">LOB</th>
+                            @*<th width="5%" align="left" valign="top">Template</th>*@
+                            <th width="25%" align="left" valign="top">Page Title</th>
+                            <th width="10%" style="cursor:pointer;" ng-click="order('State')" align="left" valign="top">State</th>
+                            <th width="20%" style="cursor:pointer;" ng-click="order('CreatedOn')" align="left" valign="top">Created On</th>
+                            <th width="10%" align="left" valign="top">Is Depolyed</th>
+                            <th width="10%" align="left" valign="top">Action</th>
+                            <th width="10%" align="left" valign="top">@*<center><input type="checkbox" name="checkAll" class="checkbox headChk" ng-model="checkAll" ng-change="SelectAll(checkAll);" /></center>*@</th>
+                        </tr>
+                        <tr ng-repeat="lpt in landingPages | offset: currentPage*itemsPerPage | orderBy:predicate:reverse | filter:paginate | filter : search | limitTo: itemsPerPage ">
+                            <td>
+                                <input type="radio" id="{{lpt.Id}}" lobtype="{{lpt.lob}}" value="{{lpt.TokenId}}" ng-model="radioValue" name="radioValue" ng-change="SetEnable(lpt.Id);">
+                            </td>
+                            <td>{{lpt.lob}}</td>
+                            @*<td>{{lpt.TemplateId}}</td>*@
+                            <td>{{lpt.PageName}}</td>
+                            <td>{{lpt.State}}</td>
+                            <td>{{convertToDate(lpt.CreatedOn)}}</td>
+                            <td>{{lpt.IsDeployed}}</td>
+                            <td>
+                                <button id="btn{{lpt.Id}}" class="button dynamicbtnClass" disabled style="vertical-align:middle" ng-click="GotoInsertOrUpdate((lpt.IsDeployed)? 'View' : 'Edit');"><span>{{(lpt.IsDeployed)? 'View' : 'Edit'}}</span></button>
+                            </td>
+                            <td align="center">
+                                <center>
+                                    <input type="checkbox" name="rowCheck" class="checkbox rowChk" value="{{lpt.Id}}" lobtype="{{lpt.lob}}"
+                                           ng-model="rowCheck" ng-change="RowCheck();" />
+                                </center>
+                            </td>
+                        </tr>
+                        <tr ng-if="None"><td colspan="9"><div class="color_red bold size16">Records Not Found.</div></td></tr>
+                    </table>
+                    <div style="width:1050px;margin:auto;">
+                        <div style="margin-top:20px;" class="pagination">
+                            <ul style="list-style-type: none;" class="no-style">
+                                <li style="float:left;" ng-class="prevPageDisabled()">
+                                    <a href="" ng-click="prevPage()">« Prev</a>
+                                </li>
+                                <li style="float:left;">
+                                    <span>Page  {{currentPage + 1}}  of ({{totalPageNumbers}})</span>
+                                </li>
+                                <li style="float:left;" ng-class="nextPageDisabled()">
+                                    <a href="" ng-click="nextPage()">Next »</a>
+                                </li>
+                            </ul>
+                        </div>
+                        <div style="margin-top:5px; margin-right:5px; float:right " class="pagination">
+                            <ul style="list-style-type: none;" class="no-style">
+                                <li style="float:right;">
+                                    <input style="width:70px;" type="submit" name="Delete" class="btn btn-default" id="btnDelete" value="Delete" ng-disabled="btnDelete" ng-click="DeletLandingPages();" />
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </center>
+        </form>
+    </div>
+</div>

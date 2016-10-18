@@ -1,0 +1,203 @@
+﻿@using BHIC.Common.Html;
+@using BHIC.Common.XmlHelper;
+@using BHIC.Common.Configuration;
+@using BHIC.Core.Background;
+@using BHIC.Contract.Background;
+@using BHIC.Common.Client;
+
+@model BHIC.ViewDomain.Landing.BusinessInfoViewModel
+@{
+    ServiceProvider guardServiceProvider = new GuardServiceProvider() { ServiceCategory = ServiceProviderConstants.GuardServiceCategoryWC };
+    ISystemVariableService systemVariable = new SystemVariableService(guardServiceProvider);
+
+    var phone_number = systemVariable.GetSystemVariableByKey(ConfigCommonKeyReader.ApplicationContactInfo["PhoneNumber_CSR"]);
+    var businessHours = systemVariable.GetSystemVariableByKey(ConfigCommonKeyReader.ApplicationContactInfo["BusinessHours"]);
+}
+
+<script type="text/javascript">
+    $(document).ready(function () {
+        // Handle custom triggering of clicks for browse button in IE
+        if (navigator.userAgent.indexOf("MSIE") > 0) {
+            $(".file-upload").mousedown(function () {
+                $(this).trigger('click');
+            });
+        }
+    });
+</script>
+
+<section class="page-content bt10">
+    <div class="container">
+        <div class="row">
+            <div class="col-12">
+                <div class="content">
+                    <!--Comment : Here show this div content dynamically based on MS,MC flow and other-->
+                    @if (Model.IsMultiStateOrMultiClass)
+                    {
+                        @Html.ThemeSharedContent("message-for-multistate-multiclass-referral-header",
+                        new BHIC.ViewDomain.Landing.MultiStateReferralHeader
+                        {
+                            PhoneNumber_CSR = @phone_number,
+                            PhoneNumber_CSR_Tel = string.Concat("tel:", @phone_number)
+                        })
+                    }
+                    else
+                    {
+                        @Html.ThemeSharedContent("message-for-normal-flow-referral-header",
+                             new BHIC.ViewDomain.Landing.ReferralHeaderViewModel { BusinessHours = @businessHours })
+                    }
+                    <div class="page-title">
+                        <h2>Give us your information, and we’ll get back to you soon.</h2>
+                    </div>
+                    <div class="lg-col-8">
+
+                        <form name="form_referralQuote" action="#" class="refer-form form-horizontal" ng-init="referralQuoteController.init(@Newtonsoft.Json.JsonConvert.SerializeObject(Model))" novalidate>
+                            @*@Html.AntiForgeryToken()*@
+
+                            <div error-messages-control errormessagelist="referralQuoteController.listOfErrors"></div>
+
+                            <fieldset>
+                                <legend class="h4">Contact Information</legend>
+                                <div class="form-group">
+                                    <label class="lg-col-4">Contact Name </label>
+                                    <div class="lg-col-8">
+                                        <input type="text" name="contactNameText" class="field field-lg" placeholder="Type Your Name" data-ng-model="referralQuoteController.referralQuoteVm.contactName" data-ng-maxlength="256" maxlength="256" data-ng-required="true" ng-model-options="{updateOn:'blur focusout'}">
+
+                                        <!-- Contact Name Text field validation -->
+                                        <div data-ng-messages="form_referralQuote.contactNameText.$error" data-ng-if="(!form_referralQuote.contactNameText.$pristine && form_referralQuote.contactNameText.$invalid) || (form_referralQuote.contactNameText.$invalid && referralQuoteController.formSubmitted)"
+                                             data-ng-cloak="">
+                                            <span data-ng-message="required" class="error">Please enter your contact name</span>
+                                            <span ng-message="maxlength" class="error">Maximum value can not be &gt; 256</span>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="form-group">
+                                    <label class="lg-col-4">Business Name </label>
+                                    <div class="lg-col-8">
+                                        <input type="text" name="businessNameText" class="field field-lg" placeholder="Type Your Business Name"
+                                               data-ng-model="referralQuoteController.referralQuoteVm.businessName" data-ng-maxlength="150" maxlength="150" data-ng-required="true" ng-model-options="{updateOn:'blur focusout'}">
+
+                                        <!-- Business Name Text field validation -->
+                                        <div data-ng-messages="form_referralQuote.businessNameText.$error" data-ng-if="(!form_referralQuote.businessNameText.$pristine && form_referralQuote.businessNameText.$invalid) || (form_referralQuote.businessNameText.$invalid && referralQuoteController.formSubmitted)"
+                                             data-ng-cloak="">
+                                            <span data-ng-message="required" class="error">Please enter your business name</span>
+                                            <span data-ng-message="maxlength" class="error">Maximum value can not be &gt; 150</span>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="form-group">
+                                    <label class="lg-col-4">Contact Phone </label>
+                                    <div class="lg-col-8">
+                                        <input type="tel" name="contactPhoneText" class="field field-lg"
+                                               placeholder="XXX-XXX-XXXX xXXXX"
+                                               mask-input mask-format="999-999-9999 x9999"
+                                               data-ng-model="referralQuoteController.referralQuoteVm.contactPhone"
+                                               data-ng-pattern="/^([0-9]{3}?-?[0-9]{3}?-?[0-9]{4}?)+(\s?x?[0-9_]{0,4}?)?$/"
+                                               data-ng-required="true"
+                                               ng-model-options="{updateOn:'blur focusout'}">
+
+                                        <!-- Contact Phone Text field Required validation -->
+                                        <div data-ng-messages="form_referralQuote.contactPhoneText.$error" data-ng-if="(!form_referralQuote.contactPhoneText.$pristine && form_referralQuote.contactPhoneText.$invalid) || (form_referralQuote.contactPhoneText.$invalid && referralQuoteController.formSubmitted)"
+                                             data-ng-cloak="">
+                                            <span data-ng-message="required" class="error">Please enter your contact phone number</span>
+                                            <span data-ng-message="pattern" class="error">Please enter valid phone number</span>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="form-group">
+                                    <label class="lg-col-4">Email Address </label>
+                                    <div class="lg-col-8">
+                                        <input type="email" name="contactEmailText" class="field field-lg" placeholder="Type Your Email ID" data-ng-model="referralQuoteController.referralQuoteVm.contactEmail" data- autocomplete="off" data-ng-maxlength="128" maxlength="128"
+                                               data-ng-pattern="referralQuoteController.ValidEmailRegEx"
+                                               ng-required="true" ng-model-options="{updateOn:'blur focusout'}"
+                                               ng-focus="hasFocus=true" ng-blur="hasFocus=false">
+
+                                        <!-- Contact Email Text field validation -->
+                                        <div data-ng-messages="form_referralQuote.contactEmailText.$error" data-ng-if="(!form_referralQuote.contactEmailText.$pristine && form_referralQuote.contactEmailText.$invalid && !hasFocus) || (form_referralQuote.contactEmailText.$invalid && referralQuoteController.formSubmitted)"
+                                             data-ng-cloak="">
+                                            <span data-ng-message="required" class="error">Please enter your contact email id</span>
+                                            <span data-ng-message="email" class="error">Please enter valid email id</span>
+                                            <span data-ng-message="pattern" class="error">Please enter valid email id</span>
+                                        </div>
+                                    </div>
+                                </div>
+
+                            </fieldset>
+                            <!--Comment : Here show this div content dynamically based on MS flow and other-->
+                            <!-- Show only in case of MultiState/MultiClass -->
+                            @if (Model.IsMultiStateOrMultiClass)
+                            {
+                                <fieldset>
+                                    <legend>Policy Information</legend>
+                                    <p class="text-medium">You can help speed things up by uploading your current policy here</p>
+                                    <div class="form-group">
+                                        <input type="file" id="currentPolicyFiles" name="currentPolicyUploadedFile"
+                                               accept="@String.Join(" , ", ConfigCommonKeyReader.AllowedFileTypes.ToArray())"
+                                               mutiple-file-upload-control="referralQuoteController.getCurrentPolicyUploadedFiles($files)" class="field field-lg file-upload"
+                                               data-ng-model="referralQuoteController.currentPolicySelectedFiles"
+                                               placeholder="Browse" oncontextmenu="return false;" multiple>
+
+                                        <!-- Current Policy FileUpload field validation -->
+                                        <span class="error">{{referralQuoteController.uploadedFileException}}</span>
+                                    </div>
+                                </fieldset>
+                            }
+
+                            <input type="button" onclick="ga('send', 'pageview', { page: '/ReferralSubmitted' });" value="Submit" id="ReferralQuote" class="btn btn-primary pull-right"
+                                   data-ng-click="referralQuoteController.formSubmitted=true;
+                                   referralQuoteController.submitReferralQuoteData(form_referralQuote,referralQuoteController.referralQuoteVm)" />
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="remodal" data-remodal-id="ReferralQuote">
+        <button data-remodal-action="close" class="remodal-close"></button>
+        <div class="remodal-heading">
+            <h2>We'll get back to you soon!</h2>
+        </div>
+        <div class="remodal-content">
+            <p>Thank you for your interest. We have referred your submission to our Sales &amp; Support Team and you should receive a response within a few minutes during business hours or on the next business day, if after hours.</p>
+        </div>
+    </div>
+    <script>
+        $(document).on('closed', '.remodal', function (e)
+        {
+            var triggeredElementRemodelId = e.target.attributes['data-remodal-id'].value;
+            var modelName = triggeredElementRemodelId;
+
+            //Comment : Here only when ModelSaveForLaterThankYou is closed
+            if (modelName != null && modelName != '' && modelName == 'ReferralQuote')
+            {
+                $('#divLoader').show();
+                $('html').addClass("is-locked");
+
+                location.href = '@ConfigCommonKeyReader.AppBaseUrl';
+
+                @*location.href = '@string.Concat(HttpContext.Current.Request.Url.Scheme, "://", HttpContext.Current.Request.Url.Host,ConfigCommonKeyReader.PurchasePathAppBaseURL, "Home")';*@
+            }
+        });
+</script>
+
+    <script type="text/javascript">
+        $(document).ready(function () {
+            // Handle custom triggering of clicks for browse button in IE
+            if (navigator.userAgent.indexOf("MSIE") > 0) {
+                $(".file-upload").mousedown(function () {
+                    $(this).trigger('click');
+                });
+            }
+        });
+    </script>
+
+</section>
+
+
+
+
+
+
+

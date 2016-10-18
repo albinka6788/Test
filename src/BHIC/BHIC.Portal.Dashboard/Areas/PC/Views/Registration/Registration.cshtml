@@ -1,0 +1,108 @@
+﻿@using BHIC.Common.Configuration;
+@using BHIC.Common.XmlHelper;
+@{
+    var cdnVersion = BHIC.Portal.Dashboard.BaseController.GetAssemblyVersion();
+}
+@*@CDN.RenderScripts("/bundles/scripts/captcha")*@
+
+<script src="https://www.google.com/recaptcha/api.js"></script>
+
+<script type="text/javascript">
+    $(document).ready(function () {
+        var wH = $(window).height() - 340;
+        $('.page-content').css('minHeight', wH);
+    });
+    $('.tooltip').tooltip();
+</script>
+<div class="shift" ng-controller="accountRegistrationController">
+    <section class="page-content bg-blue--dark">
+        <div class="container">
+            <div class="alert alert-danger" ng-if="hasErrorMain && resMsg">
+                <p class="alert-text text-bold">Registration Failed</p>
+                <p class="alert-text">{{errorMessage}}</p>
+            </div>
+            <div class="alert alert-success" ng-if="!hasErrorMain && resMsg">
+                <p class="alert-text text-bold">Registration Successful</p>
+                <p class="alert-text">Thank you for the registration. You will be receiving an email shortly to confirm your email address.</p>
+                <a href="~/#/Login"> Click here to return to policy login page </a>
+            </div>
+            <div class="lg-col-6 col-centered">
+                <div class="page-title b0 mb0">
+                    <h4>Register for our Policy Center</h4>
+                    <p>Register for access to your online account with us and view your policy, pay your bill, request a Certificate of Insurance, and more...</p>
+                </div>
+                <div class="row">
+                    <div class="lg-col-10">
+                        <form name="regForm" class="form-login" data-ng-submit="regForm.$valid && CreateOrUpdateAccount();" onerrorfocus-form novalidate="novalidate">
+                            <div class="form-group mb1">
+                                <label for="" class="sr-only">First Name</label>
+                                <input autofocus type="text" class="field field-lg" placeholder="First Name" ng-model="fname" autofocusfield="focusField" name="fnameModel" maxlength="50" ng-pattern="/^([A-Za-z\s]{1,}[\.]{0,1}[\']{0,1}[A-Za-z\s]{0,}){0,50}$/" required ng-model-options="{updateOn:'blur focusout'}" />
+                                <span class="error" ng-show="regForm.fnameModel.$error.required && (submitted || !regForm.fnameModel.$pristine)">First Name is required.</span>
+                                <span class="error" ng-show="regForm.fnameModel.$error.pattern && !regForm.fnameModel.$pristine">Invalid First Name.</span>
+                            </div>
+                            <div>
+                                <div class="form-group mb1">
+                                    <label for="" class="sr-only">Last Name</label>
+                                    <input type="text" class="field field-lg" placeholder="Last Name" ng-model="lname" name="lnameModel" maxlength="50" ng-pattern="/^([A-Za-z\s]{1,}[\.]{0,1}[\']{0,1}[A-Za-z\s]{0,}){0,50}$/" required ng-model-options="{updateOn:'blur focusout'}" />
+                                    <span class="error" ng-show="regForm.lnameModel.$error.required && (submitted || !regForm.lnameModel.$pristine)">Last name is required.</span>
+                                    <span class="error" ng-show="regForm.lnameModel.$error.pattern && !regForm.lnameModel.$pristine">Invalid Last Name.</span>
+                                </div>
+                            </div>
+                            <div>
+                                <div class="form-group mb1">
+                                    <label for="" class="sr-only">Organization Name</label>
+                                    <input type="text" class="field field-lg" placeholder="Organization Name" ng-model="orgname" name="orgModel" maxlength="200" required ng-model-options="{updateOn:'blur focusout'}" />
+                                    <span class="error" ng-show="regForm.orgModel.$error.required && (submitted || !regForm.orgModel.$pristine)">Organization Name is required.</span>
+                                </div>
+                            </div>
+                            <div class="form-group mb1">
+                                <label for="" class="sr-only">Phone Number</label>
+                                <input type="tel" class="field field-lg" placeholder="XXX-XXX-XXXX xXXXX" mask-input mask-format="999-999-9999 x9999" ng-model="phone" maxlength="25" name="phoneModel"
+                                       required ng-model-options="{updateOn:'blur focusout'}" />
+                                <span class="error" ng-show="regForm.phoneModel.$error.required && (submitted || !regForm.phoneModel.$pristine)">Phone Number is required.</span>
+                                <span class="error" ng-bind="phoneerrormsg"></span>                                
+                            </div>
+                            <div class="form-group mb1">
+                                <label for="" class="sr-only">Policy Number</label>
+                                <input type="text" class="field field-lg" placeholder="Policy Number" ng-model="policycode" maxlength="10" name="policycodeModel" ng-pattern="/^[a-zA-Z0-9]*$/*/" required ng-model-options="{updateOn:'blur focusout'}" />
+                                <span class="error" ng-show="regForm.policycodeModel.$error.required && (submitted || !regForm.policycodeModel.$pristine)">Policy Number is required.</span>
+                                <span class="error" ng-show="regForm.policycodeModel.$error.pattern && !regForm.policycodeModel.$pristine">Not a valid number.</span>
+                            </div>
+                            <div class="form-group mb1">
+                                <label for="" class="sr-only">Email Address</label>
+                                <input type="email" class="field field-lg" placeholder="Email" ng-model="email" name="emailModel" maxlength="100" required ng-model-options="{updateOn:'blur focusout'}" />
+                                <span class="error" ng-show="regForm.emailModel.$error.required && (submitted || !regForm.emailModel.$pristine)">Email is required.</span>
+                                <span class="error" ng-show="(submitted || !regForm.emailModel.$pristine) && regForm.emailModel.$error.email">Invalid Email Id.</span>
+                            </div>
+                            <div class="form-group mb1">
+                                <div class="input-group with-tooltip">
+                                    <label for="" class="sr-only">Password</label>
+                                    <input type="password" style="font-family: verdana, sans-serif; font-weight: bold;" class="d-tcell field" placeholder="Password" ng-model="password" name="passwordModel" ng-minlength="8" ng-pattern="/(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[^a-zA-Z0-9])/" required ng-model-options="{updateOn:'blur focusout'}" />
+                                    
+                                    <div class="d-tcell">
+                                        <abbr class="tooltip" title="<p class='mb1'>To satisfy your password requirements, please make sure your password meets the following requirements: </p> <ul class='m0'><li>Be at least 8 characters long</li><li>Have at least one lowercase letter (a-z)</li><li>Have at least one uppercase (A-Z) letter</li><li>Have at least one (digit) number (0-9)</li><li>Have at least one special character (!&#64;#$%^&*)</li></ul>">?</abbr>
+                                    </div>
+                                </div>
+                                <span class="error" ng-show="regForm.passwordModel.$error.required && (submitted || !regForm.passwordModel.$pristine)">Password is required.</span>
+                                <span class="error" ng-show="regForm.passwordModel.$error.minlength && !regForm.passwordModel.$pristine">Password should be of minimum 8 characters.</span>
+                                <span class="error" ng-show="regForm.passwordModel.$error.pattern && !regForm.passwordModel.$pristine">Password must contain at least one upper case, one lower case, one number &amp; one special character.</span>
+                                
+                            </div>
+                            <div class="form-group mb1">
+                                <label for="" class="sr-only">Password</label>
+                                <input type="password" style="font-family: verdana, sans-serif; font-weight: bold;" class="field field-lg" placeholder="Confirm Password" ng-model="confirmpassword" name="confirmpasswordModel" ng-match="password" ng-minlength="8" ng-pattern="/(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[^a-zA-Z0-9])/" required ng-model-options="{updateOn:'blur focusout'}" />
+                                <span class="error" ng-show="regForm.confirmpasswordModel.$error.required && (submitted || !regForm.confirmpasswordModel.$pristine)">Confirm Password is required.</span>
+                                <span class="error" ng-if=" (password!='' && password!=null && confirmpassword!='' && confirmpassword!=null) && (password!=confirmpassword) && !regForm.confirmpasswordModel.$pristine">Passwords have to match.</span>
+                            </div>
+                            <div class="form-group mb1">
+                                <div class="g-recaptcha" data-sitekey="@ConfigCommonKeyReader.CaptchaSiteKey"></div>
+                                <span class="error" ng-show="hasErrorMain" ng-bind="captchaMsg"></span>
+                            </div>
+                            <button type="submit" class="btn btn-primary btn-block field-lg" ng-click="submitted=true">Register</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+</div>

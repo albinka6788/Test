@@ -1,0 +1,42 @@
+﻿@{
+    ViewBag.Title = "GeicoIndex";
+    Layout = "~/Areas/Landing/Views/Shared/_Layout.cshtml";
+}
+
+<style type="text/css">
+.scroll-wrapper {
+	-webkit-overflow-scrolling: touch;
+  	overflow-y: scroll;
+    
+	/* important:  dimensions or positioning here! */
+}
+
+.scroll-wrapper iframe {
+	/* nada! */
+    width:100%;
+    height:680px;
+    border:none;
+}
+
+.demo-iframe-holder {
+  position: fixed; 
+  right: 0; 
+  bottom: 0; 
+  left: 0;
+  top: 0;
+  -webkit-overflow-scrolling: touch;
+  overflow-y: scroll;
+}
+
+.demo-iframe-holder iframe {
+  height: 100%;
+  width: 100%;
+}
+</style>
+
+
+<br /><br />
+<div class="scroll-wrapper">
+    <iframe src="https://www.geico.com/"></iframe>
+</div>
+

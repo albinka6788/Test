@@ -1,0 +1,41 @@
+﻿@using BHIC.Domain.Dashboard;
+@using BHIC.Common.Config;
+@{
+    //var policyStatus = Session["policyInfo"] != null ? ((PolicyInfo)Session["policyInfo"]).Status : "";
+    //var policyNumber = Session["policyInfo"] != null ? ((PolicyInfo)Session["policyInfo"]).PolicyNumber : "";
+}
+<ul class="sidebar-menu">
+    @*<li id="Dmenus" class="productName blue-bg">
+       <h3 class="panel-title">
+    <span class="policyNumber text-small mb0">
+        (@policyNumber)
+                </span>
+        </h3>
+    </li>
+    @*<li><a id="PolicyInformation" href="#/PolicyInformation" class="activeLink">Policy Information</a></li>
+        <li><a id="MakePayment" href="#/MakePayment">Make Payment</a></li>
+        <li><a id="PolicyDocument" href="#/PolicyDocument">View Policy Documents</a></li>
+        <li><a id="RequestCertificate" href="#/RequestCertificate">Request Certificate of Insurance</a></li>
+        <li><a id="RequestPolicyChange" href="#/RequestPolicyChange">Request a Policy Change</a></li>
+        <li><a id="ReportClaim" href="#/ReportClaim">Report a Claim</a></li>
+        <li><a id="PhysicianPanel" href="#/PhysicianPanel">Physician Panel</a></li>
+        <li><a id="CancelPolicy" href="#/CancelPolicy">Cancel Policy</a></li>*@
+    @*<li><a id="PolicyInformation" href="#/PolicyInformation" class="activeLink">Policy Information</a></li>
+        @if (policyStatus != Constants.Cancelled && policyStatus != Constants.Expired && policyStatus != Constants.NoCoverage)
+        {
+            <li class="hideMe"><a id="MakePayment" href="#/MakePayment">Make Payment</a></li>
+        }
+        <li><a id="PolicyDocument" href="#/PolicyDocument">View Policy Documents</a></li>
+        @if (policyStatus != Constants.Cancelled && policyStatus != Constants.Expired && policyStatus != Constants.NoCoverage)
+        {
+            <li class="hideMe"><a id="RequestCertificate" href="#/RequestCertificate">Request Certificate of Insurance</a></li>
+            <li class="hideMe"><a id="RequestPolicyChange" href="#/RequestPolicyChange">Request a Policy Change</a></li>
+        }
+
+        <li><a id="ReportClaim" href="#/ReportClaim">Report a Claim</a></li>
+        <li><a id="PhysicianPanel" href="#/PhysicianPanel">Physician Panel</a></li>
+        @if (policyStatus != Constants.Cancelled && policyStatus != Constants.Expired && policyStatus != Constants.NoCoverage)
+        {
+            <li class="hideMe"><a id="CancelPolicy" href="#/CancelPolicy">Cancel Policy</a></li>
+        }*@
+</ul>

@@ -1,0 +1,28 @@
+@using BHIC.Common.XmlHelper;
+@using BHIC.Common.Configuration;
+@CDN.RenderScripts("/bundles/scripts/session-countdown-timer")
+
+@*<header class="with-nav"></header>*@
+<script type="text/javascript">
+    $(document).ready(function () {
+        var wH = $(window).height() - 320;
+        $('.page-content').css('minHeight', wH);
+    });
+</script>
+<section class="page-content">
+    @*@Html.AntiForgeryToken()*@
+
+    <!-- Session expired directive (Right now its not working aftre minification) -->
+    @*<div session-expired></div>*@
+    
+    <div class="container">
+        <div class="alert alert-warning alert-big">
+            <p class="text-bold alert-text-big"> Session Expired! </p>
+            <p class="alert-text">
+                Your session has timed out. You will be redirected to Home page in a short while.&nbsp;
+                <b><span id="timerCount"></span></b>
+            </p>
+        </div>
+    </div>
+
+</section>

@@ -1,0 +1,107 @@
+﻿@using BHIC.Common.Configuration;
+@using BHIC.Common.XmlHelper
+@using BHIC.Common.Html;
+@{
+    //Comment : Here For "GetNewQuote Handling"
+    var basePath = ConfigCommonKeyReader.WcAngularBaseModuleUrl; // "/PurchasePath/Quote/Index#/GetBusinessInfo";
+    
+    var getNewQuoteUrl = string.Concat(HttpContext.Current.Request.Url.Scheme, "://", HttpContext.Current.Request.Url.Host,
+                            ConfigCommonKeyReader.WcAngularBaseModuleUrl);    
+
+    string encyptedNewQuoteUrl = string.Format("{0}{1}", basePath, Server.UrlEncode(BHIC.Common.Encryption.EncryptText("-1")));
+
+    getNewQuoteUrl = string.Concat(HttpContext.Current.Request.Url.Scheme, "://", HttpContext.Current.Request.Url.Host,
+                            encyptedNewQuoteUrl);
+                            
+    //Comment : Here "RetrieveQuote" handling
+    var purchasePathLinkedQuoteUrl = string.Concat(HttpContext.Current.Request.Url.Scheme, "://", HttpContext.Current.Request.Url.Host,
+    ConfigCommonKeyReader.WcAngularBaseModuleUrl);
+
+    //var PurchasePathHomePageUrl = string.Concat(HttpContext.Current.Request.Url.Scheme, "://", HttpContext.Current.Request.Url.Host, 
+    //    (HttpContext.Current.Request.Url.Host == "localhost" ? ConfigCommonKeyReader.WCUrl : ""));
+    
+    //var PurchasePathHomePageUrl = string.Concat(HttpContext.Current.Request.Url.Scheme, "://", HttpContext.Current.Request.Url.Host,ConfigCommonKeyReader.WCUrl, "/Index");
+
+    var cdnVersion = BHIC.Portal.Dashboard.BaseController.GetAssemblyVersion();
+}
+
+<div class="the-box form-container" oncontextmenu="return false;" ng-init="init('@purchasePathLinkedQuoteUrl')">
+    <div class="row">
+        <div class="lg-col-12 right mb1" ng-hide="quotesList.length==0">
+            <button class="btn btn-secondary" data-ng-click="removeCookie('@getNewQuoteUrl')">
+                Get new Quote
+            </button>
+        </div>
+    </div>
+    <div class="table-responsive-scroll" ng-if="quotesList.length>0">
+        <table id="savedQuotes" class="dataTable">
+            <thead>
+                <tr>
+                    <th>Product</th>
+                    <th>Quote ID</th>
+                    <th>Date Created</th>
+                    <th>Zip Code</th>
+                    <th>Business Type</th>
+                    <th>Premium</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr ng-repeat="quote in quotesList" ng-if="quote.LineOfBusinessId==1 || (quote.LineOfBusinessId==2 && quote.RetrieveQuoteURL!=null && quote.RetrieveQuoteURL!='')">
+                    <td data-title="Product" ng-bind="quote.LineOfBusiness"></td>
+                    <td data-title="Quote ID" ng-bind="quote.QuoteID"></td>
+                    <td data-title="Date Created" ng-bind="convertToDate(quote.QuotedDate)"></td>
+                    <td data-title="Zip Code" ng-bind="quote.ZipCode"></td>
+                    <td style="white-space:normal;" data-title="Business Type" ng-bind="quote.BusinessType"> N/A </td>
+                    <td data-title="Premium" ng-bind="quote.PremiumAmt |currency "></td>
+                    <td style="width:100px;" data-title="Actions" class="fullWidthbox saved-quotes-action">
+                        <a href="javascript:void(0);" data-ng-click="checkUserStatus(quote.EncryptedQuoteID,quote.LineOfBusinessId,quote.RetrieveQuoteURL)" tooltip="Retrieve Quote" class="retrieve-quote">
+                            <span>
+                                <svg xmlns="http://www.w3.org/2000/svg" version="1.1" x="0" y="0" viewBox="-293 384 25 25" xml:space="preserve">
+                                <polyline class="stroke-teal" points="-285.6 391.2 -285.6 386.6 -278.6 386.6 -274 391.2 -274 402.3 -281.4 402.3 "></polyline><polyline class="stroke-teal" points="-278.6 386.6 -278.6 391.2 -274 391.2 "></polyline><path class="stroke-teal" d="M-284 404.8c-3.2 0-5.9-2.6-5.9-5.9 0-3.2 2.6-5.9 5.9-5.9 1.3 0 2.5 0.4 3.5 1.2"></path><polyline class="stroke-teal" points="-285.8 406.6 -283.1 404.8 -285.3 402.3 "></polyline><line class="stroke-teal" x1="-283.1" y1="396.6" x2="-276.8" y2="396.6"></line><line class="stroke-teal" x1="-283.1" y1="399" x2="-276.8" y2="399"></line></svg>
+                            </span>
+                        </a>
+                        <a href="javascript:void(0);" data-ng-click="setDeleteQuote(quote.EncryptedQuoteID,$index)" tooltip="Delete Quote" id="delquote" data-remodal-target="delete-quote" class="retrieve-quote">
+                            <svg xmlns="http://www.w3.org/2000/svg" version="1.1" x="0" y="0" viewBox="-293 384 25 25" xml:space="preserve">
+<line class="stroke-teal" x1="-290" y1="388.9" x2="-271.4" y2="388.9"></line><path class="stroke-teal" d="M-284.3 388.9v-1.5c0-0.8 0.6-1.4 1.4-1.4h4.4c0.8 0 1.4 0.6 1.4 1.4v1.5M-273.4 388.6l-1 17.1c-0.1 1-0.8 1.7-1.7 1.7h-9.1c-1 0-1.7-0.8-1.7-1.7l-1-17.1"></path><line class="stroke-teal" x1="-280.7" y1="391.8" x2="-280.7" y2="404.6"></line><line class="stroke-teal" x1="-284.3" y1="391.8" x2="-283.6" y2="404.6"></line><line class="stroke-teal" x1="-277.1" y1="391.8" x2="-277.8" y2="404.6"></line></svg>
+                        </a>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+    <div class="alert alert-warning info-panel" ng-show="quotesList.length==0">
+        <p class="text-warning text-bold"> Sorry, you don't have any saved quotes! </p>
+        <a href='javascript:void(0);' data-ng-click="removeCookie('@getNewQuoteUrl')">Get New Quote</a>
+    </div>
+</div>
+<div class="remodal" data-remodal-id="delete-quote" data-remodal-options="hashTracking: false">
+    <button data-remodal-action="close" class="remodal-close"></button>
+    <div class="remodal-content">
+        <p class="mb0">Are you sure you want to delete this quote?</p>
+    </div>
+    <div class="remodal-footer center">
+        <button data-remodal-target="thank-you" class="btn" data-remodal-action="close">No</button>
+        <button data-remodal-target="thank-you" class="btn btn-primary" data-remodal-action="confirm">Yes</button>
+    </div>
+</div>
+<div class="remodal" data-remodal-id="geico-ca" data-remodal-options="hashTracking: false">
+    <button data-remodal-action="close" class="remodal-close"> </button>
+    <div class="remodal-heading">
+        <h2>GEICO Login</h2>
+    </div>
+    <div class="remodal-content">
+        <div class="mb2 text-big"> You can login to GEICO's policy center here to manage your Commercial Auto policy or you can reach GEICO at <a href="tel:866-509-9444"> (866) 509-9444 </a> for any questions related to your policy. Their Customer Support representatives are available from Monday to Friday, 8am-9pm EST. </div>
+        <a href="https://www.geico.com/manageyourpolicy/commercial/" target="_blank" class="btn btn-primary">Login Here</a>
+    </div>
+</div>
+@CDN.RenderScripts("/bundles/scripts/savedquote")
+@*<script src="~/Content/Dashboard/scripts/savedquote.remodal.js"></script>*@
+<script>
+    $(document).ready(function () {
+        $(document).on('confirmation', '.remodal', function () {
+            angular.element(document.getElementById('delquote')).scope().deleteQuote();
+            angular.element(document.getElementById('delquote')).scope().$apply();
+        });
+    });
+</script>

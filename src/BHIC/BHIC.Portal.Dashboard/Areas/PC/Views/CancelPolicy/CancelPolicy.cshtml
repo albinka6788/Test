@@ -1,0 +1,98 @@
+﻿@using BHIC.Common.Html;
+
+<div ng-init="getContactInfo();">
+    <div class="pageHeading">
+        <p>Sorry to see you go. We will do our best to meet the date you provided but please be aware that state regulations or policy language may alter the date at which we are ultimately able to offer cancellation.</p>
+    </div>
+    <div class="alert alert-success info-panel" ng-show="responseMsg"> <p class="alert-text"> We received your request to cancel your insurance policy. In order to process your request quickly and accurately, one of our Support Team members will contact you shortly to confirm your intent and obtain the necessary sign-off document. Your policy will not be cancelled until we are able to speak with you directly. If you prefer to reach out at your convenience, please call<a href="tel:8444720967"> 844-472-0967</a> or send an email to <a href="mailto:CustomerService@CoverYourBusiness.com"> <strong>CustomerService@CoverYourBusiness.com</strong> </a>.</p> </div>
+    <div class="alert alert-danger info-panel" ng-if="!status">
+        <span class="error">{{errorMessage}}</span>
+    </div>
+    <h3>Request Information</h3>
+    <form name="cancelForm" data-ng-submit="cancelForm.$valid && cancelPolicyForm();" onerrorfocus-form novalidate>
+        <div class="error" ng-bind="errormessage"></div>
+        <div class="the-box form-container">
+            <div class="row">
+                <div class="md-col-12 lg-col-12 form-box-1 form-horizontal">
+                    <div class="form-group">
+                        <label class="lg-col-3">Request Effective Date</label>
+
+                        <div class="lg-col-9">
+                            <div class="with-icon">
+
+                                <input type="text"
+                                       id="effectivedate"
+                                       name="effectivedate"
+                                       class="input-group-input field field-sm datepicker"
+                                       date-control
+                                       startdate="{{minDate}}"
+                                       enddate="{{maxDate}}"
+                                       ng-model="effectivedate"
+                                       format="mm/dd/yy"
+                                       date-parser="MM/dd/yyyy"
+                                       placeholder="mm/dd/yyyy"
+                                       required
+                                       cancelpolicy="true" />
+                                <span class="icon-calendar"></span>
+                            </div>
+                            <span class="error" ng-show="(!cancelForm.effectivedate.$error.required && cancelForm.effectivedate.$error.invalidFormat)">Date format not valid</span>
+                            <span class="error" ng-if="(!cancelForm.effectivedate.$pristine || submitted) &&  cancelForm.effectivedate.$error.invalidRange"> Date should be between {{minDate}} and {{maxDate}}</span>
+                            <span class="error" ng-if=" submitted && cancelForm.effectivedate.$error.required">Date of Injury/Illness not selected</span>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <h3>Contact Information</h3>
+        <div class="the-box form-container">
+            <div class="row">
+                <div class="md-col-12 lg-col-12 form-box-1 form-horizontal">
+                    <span class="error" ng-bind="formerrormsg"></span>
+                    <div class="form-group">
+                        <label class="lg-col-3">Name</label>
+                        <div class="lg-col-9">
+                            <input class="field field-lg" autofocus placeholder="Name" type="text" name="name" tabindex="-1" readonly="readonly" ng-model="name" required />
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="lg-col-3">Phone</label>
+                        <div class="lg-col-9">
+                            <input class="field field-lg" placeholder="XXX-XXX-XXXX xXXXX" mask-input mask-format="999-999-9999 x9999" tabindex="-1" readonly="readonly" ng-model="phone" maxlength="25" name="phoneModel" type="tel">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="lg-col-3">Email</label>
+                        <div class="lg-col-9">
+                            <input class="field field-lg" type="email" placeholder="Email" tabindex="-1" readonly="readonly" ng-model="email">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="lg-col-3">Reason for Cancellation</label>
+                        <div class="lg-col-9">
+                            <select ng-model="mreason" name="reasonModel" ng-options="r.value for r in Reasons" class="dk field-lg field" ng-change="submitted=false" required></select>
+                            <span class="error" ng-show="cancelForm.reasonModel.$viewValue.id==0 && submitted">Please select reason for cancellation. </span>
+                        </div>
+                    </div>
+                    <div ng-if="reasonerrormsg.length>0" class="form-group">
+                        <div class="lg-col-9">
+                            <span class="error" ng-bind="reasonerrormsg"></span>
+                        </div>
+                    </div>
+                    <div ng-if="mreason.id===6 || mreason.id===12" class="form-group">
+                        <label class="lg-col-3 fulllabel">Add Description</label>
+                        <div class="lg-col-9">
+                            <textarea ng-model="$parent.description" class="field field-lg" name="descriptionModel" maxlength="250" required></textarea>
+                            <span class="error" ng-show='cancelForm.descriptionModel.$error.required && submitted'>
+                                Description is required.
+                            </span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="form-group right">
+            <button class="btn btn-primary" ng-click="submitted=true">Request Cancellation</button>
+        </div>
+    </form>
+</div>

@@ -1,0 +1,87 @@
+﻿@using BHIC.Common.Html;
+@using BHIC.Common.Configuration;
+@using BHIC.Common.XmlHelper;
+
+<div ng-init="editContactInfoController">
+    <div class="row" id="contactInfo" ng-show="contactInfo">
+        <div class="lg-col-12 md-col-12">
+            <div class="alert alert-success info-panel" ng-if="responseMsg">
+                <p class="text-alert text-bold"> Your Contact Information has been updated. </p>
+                <a href="#/Policies"> Click here to return to Your Policies </a>
+            </div>
+            <div class="alert alert-danger info-panel" ng-if="errorMessage">
+                <p class="text-bold alert-text">{{errorMessage}} </p>
+            </div>
+            <div class="alert alert-danger info-panel" ng-if="hasErrorMain">
+                <p class="text-bold alert-text">
+                    This option is currently not available for your policy. Feel free to call us at
+                    <a href="" class="sysPhoneAnchor" style="white-space:nowrap;"></a> if you have any questions.
+                    <a href='@string.Concat(HttpContext.Current.Request.Url.Scheme, "://",
+                            HttpContext.Current.Request.Url.Host,"/" ,ConfigCommonKeyReader.BaseUrlPath)'>Click here</a> to go back to policy dashboard.
+
+            </div>
+            <div class="the-box form-middle box-no-heading">
+                <label>
+                    You have the following policies with us. Please choose the policy for which you would like to change your contact information
+                </label>
+                <div id="radioFocus" class="form-group">
+                    <span class="error">{{radiobuttonerror}}</span>
+                    <div ng-repeat="policy in drpPolicyList" class="radio-group">
+                        <label class="radio mb1">
+                            <input type="radio" value="{{policy.Id}}" ng-model="$parent.policyCode" ng-click="getContactInformation(policy.Id)" name="aep"><span></span> {{policy.LOB}} {{policy.PolicyCode}}
+                        </label>
+                        <br>
+                    </div>
+                </div>
+                <hr />
+                <form name="contactInfoForm" data-ng-submit="contactInfoForm.$valid && updateContactInfo();" onerrorfocus-form class="form-horizontal" novalidate>
+                    <div class="alert alert-info info-panel mb2" ng-show="showContactInformation">
+                        <p class="alert-text">These are your existing contact details for this policy. Please provide the new contact details below: </p>
+                    </div>
+                    <div class="form-group">
+                        <label class="lg-col-3">Name</label>
+                        <div class="lg-col-5">
+                            <input id="name" type="text" class="field" ng-model="name" name="nameModel" placeholder="Name" maxlength="100" ng-pattern="/^([A-Za-z\s]{1,}[\.]{0,1}[\']{0,1}[A-Za-z\s]{0,}){0,100}$/" autofocusfield="focusField" required ng-model-options="{updateOn:'blur focusout'}">
+                            <span class="error" ng-show="contactInfoForm.nameModel.$error.required && (submitted|| !contactInfoForm.nameModel.$pristine)">Name is required.</span>
+                            <span class="error" ng-show="contactInfoForm.nameModel.$error.pattern && !contactInfoForm.nameModel.$pristine">Invalid Name.</span>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="lg-col-3">Phone</label>
+                        <div class="lg-col-5">
+                            <input type="tel" class="field" placeholder="XXX-XXX-XXXX xXXXX" mask-input mask-format="999-999-9999 x9999" ng-model="phone" id="phonenumber" maxlength="25" name="phoneModel" required ng-model-options="{updateOn:'blur focusout'}" />
+                            <span class="error" ng-show="contactInfoForm.phoneModel.$error.required && (submitted|| !contactInfoForm.phoneModel.$pristine)">Phone number is required.</span>
+                            <span class="error" ng-bind="phoneerrormsg"></span>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="lg-col-3">Email</label>
+                        <div class="lg-col-5">
+                            <input type="email" placeholder="Email" class="field" ng-model="email" name="emailModel" maxlength="100" required ng-model-options="{updateOn:'blur focusout'}">
+                            <span class="error" ng-show="contactInfoForm.emailModel.$error.required && (submitted|| !contactInfoForm.emailModel.$pristine)">Email is required.</span>
+                            <span class="error" ng-show="(submitted || !contactInfoForm.emailModel.$pristine) && contactInfoForm.emailModel.$error.email">Invalid Email.</span>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="lg-col-3">Address</label>
+                        <div class="lg-col-5">
+                            <div class="alert alert-info">
+                                <p class="alert-text">
+                                    If you want to change your mailing address, we need to make sure we understand if it is the physical address, mailing address or billing address and we may have to endorse one or more of your policies to reflect the address change appropriately. So, please
+                                    <span style="font-weight:500;color:orange;cursor:pointer;"><a ng-click="EditAddress();"> click here </a></span> to give us some more information and we will get back in touch with you shortly.
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="lg-col-8 right">
+                            <button class="btn btn-primary" ng-click="submitted=true">Submit</button>
+                            <span class="error">{{errormsg}}</span>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+@CDN.RenderScripts("/bundles/scripts/common-system-variables")

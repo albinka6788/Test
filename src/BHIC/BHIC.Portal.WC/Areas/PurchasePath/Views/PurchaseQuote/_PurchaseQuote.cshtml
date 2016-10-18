@@ -1,0 +1,484 @@
+﻿@using BHIC.Common.XmlHelper;
+@using BHIC.Common.Configuration;
+@*@if (!String.IsNullOrWhiteSpace(ConfigCommonKeyReader.InspectletWid))
+    {
+        <script type="text/javascript">
+            var inspectletWid = '@ConfigCommonKeyReader.InspectletWid';
+            var inspectletQuoteid = '@BHIC.Common.Quote.QuoteCookieHelper.Cookie_GetQuoteId(new HttpContextWrapper(HttpContext.Current))'
+            var inspectletSessionid = '@Session.SessionID'
+            var inspectletQuoteStatus = 'Quote Displayed'
+            window.recordSession(inspectletWid, inspectletQuoteid, inspectletSessionid, resetSession)
+        </script>
+    }*@
+
+<section class="progress-bar bg-blue">
+    <div class="container">
+        <ul class="no-style steps clear">
+            <li ng-repeat="link in purchaseQuoteViewModel.purchaseQuotePageDefaults.NavLinks" class="{{link.ClassName}}"><a oncontextmenu="return false;" ng-href="{{link.Href}}" url="{{link.NavigationLink}}" ng-click="goTo($event)" target="_self">{{link.DisplayText}}</a></li>
+        </ul>
+    </div>
+</section>
+<section class="page-content">
+    <div class="container">
+        <div class="row">
+            <div class="lg-col-8">
+                <div class="content">
+                    <div class="page-title">
+                        <h2>{{purchaseQuoteViewModel.pageTitle}}</h2>
+                    </div>
+                    <form name="purchaseQuoteForm" class="contact-info-form form-horizontal" novalidate>
+                        <div error-messages-control errormessagelist="purchaseQuoteViewModel.listOfErrors"></div>
+
+                        <fieldset id="businessInfoForm">
+                            <legend class="h4">
+                                Business Information
+                            </legend>
+                            <div class="form-group">
+                                <label class="lg-col-4">
+                                    Business Type
+                                </label>
+                                @*<div class="lg-col-8">
+                                        <div class="row">
+                                            <label ng-repeat="option in purchaseQuoteViewModel.purchaseQuotePageDefaults.businessTypeList" class="md-col-6 lg-col-6 radio">
+                                                <input type="radio" ng-model="purchaseQuoteViewModel.selectedBusiness" ng-click="purchaseQuoteViewModel.updateBusinessType(option.BusinessTypeCode)" name="businessType" value="{{option.BusinessTypeCode}}"><span></span> {{option.Description}}
+                                            </label>
+                                            <div data-ng-cloak="">
+                                                <span class="error"
+                                                      ng-if="submitted && (purchaseQuoteViewModel.selectedBusiness.BusinessTypeCode==null || purchaseQuoteViewModel.selectedBusiness.BusinessTypeCode==undefined || purchaseQuoteViewModel.selectedBusiness.BusinessTypeCode=='')">Please select one of the Business Type</span>
+                                            </div>
+                                        </div>
+                                    </div>*@
+                                <div class="lg-col-8">
+                                    <select class="field field-md"
+                                            data-ng-model="purchaseQuoteViewModel.selectedBusiness"
+                                            name="businessType"
+                                            focus="true"
+                                            data-ng-options="businessType as businessType.Description for businessType in purchaseQuoteViewModel.purchaseQuotePageDefaults.businessTypeList track by businessType.BusinessTypeCode"
+                                            data-ng-change="purchaseQuoteViewModel.updateBusinessType(purchaseQuoteViewModel.selectedBusiness.BusinessTypeCode)"
+                                            required>
+                                        <option value="" disabled selected> - Please Choose - </option>
+                                    </select>
+                                    <p class="field-help">If you're still setting your business up and haven't decided, or if you don't know, please select "other".</p>
+                                    <div data-ng-cloak="">
+                                        <span class="error"
+                                              ng-if="submitted && (purchaseQuoteViewModel.selectedBusiness.BusinessTypeCode==null || purchaseQuoteViewModel.selectedBusiness.BusinessTypeCode==undefined || purchaseQuoteViewModel.selectedBusiness.BusinessTypeCode=='')">Please select one of the Business Type</span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div ng-if="purchaseQuoteViewModel.showIndividualFields">
+                                <div class="form-group">
+                                    <label class="lg-col-4">First Name </label>
+                                    <div class="lg-col-8">
+                                        <input type="text" ng-pattern="/^([A-Za-z\s]{1,}[\.]{0,1}[\']{0,1}[A-Za-z\s]{0,}){0,50}$/" maxlength="50" name="IFName" ng-model="purchaseQuoteViewModel.individual.firstName" ng-change="purchaseQuoteViewModel.updateFirstName(purchaseQuoteViewModel.individual.firstName)" placeholder="Enter your First Name" class="field field-lg" required>
+                                        <div data-ng-cloak="">
+                                            <span class="error" ng-if="(submitted || !purchaseQuoteForm.IFName.$pristine) && purchaseQuoteForm.IFName.$error.required">First Name is required</span>
+                                            <span class="error" ng-if="(submitted || !purchaseQuoteForm.IFName.$pristine) && !purchaseQuoteForm.IFName.$error.required && purchaseQuoteForm.IFName.$error.pattern">Invalid Name</span>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label class="lg-col-4">Middle Name </label>
+                                    <div class="lg-col-8">
+                                        <input type="text" ng-pattern="/^([A-Za-z\s]{1,}[\.]{0,1}[\']{0,1}[A-Za-z\s]{0,}){0,50}$/" maxlength="50" name="IMName" ng-model="purchaseQuoteViewModel.individual.middleName" placeholder="Enter your Middle Name" class="field field-lg">
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label class="lg-col-4">Last Name </label>
+                                    <div class="lg-col-8">
+                                        <input type="text" ng-pattern="/^([A-Za-z\s]{1,}[\.]{0,1}[\']{0,1}[A-Za-z\s]{0,}){0,50}$/" maxlength="50" name="ILName" ng-model="purchaseQuoteViewModel.individual.lastName" ng-change="purchaseQuoteViewModel.updateLastName(purchaseQuoteViewModel.individual.lastName)" placeholder="Enter your Last Name" class="field field-lg" required>
+                                        <div data-ng-cloak="">
+                                            <span class="error" ng-if="(submitted || !purchaseQuoteForm.ILName.$pristine )&& purchaseQuoteForm.ILName.$error.required">Last Name is required</span>
+                                            <span class="error" ng-if="(submitted || !purchaseQuoteForm.ILName.$pristine) && !purchaseQuoteForm.ILName.$error.required && purchaseQuoteForm.ILName.$error.pattern">Invalid Name</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-group" ng-if="purchaseQuoteViewModel.showBusinessFields">
+                                <label class="lg-col-4">Business Name </label>
+                                <div class="lg-col-8">
+                                    <input type="text" ng-model-options="{updateOn:'blur focusout'}" name="businessName" maxlength="150" ng-model="purchaseQuoteViewModel.businessName" placeholder="Enter your Business Name" class="field field-lg" required>
+                                    <div data-ng-cloak="">
+                                        <span class="error" ng-if="(submitted || !purchaseQuoteForm.businessName.$pristine) && purchaseQuoteForm.businessName.$error.required">Business Name is required</span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="lg-col-4">Tax ID Type </label>
+                                <div class="lg-col-8">
+                                    <div class="radio-group">
+                                        <div class="with-tooltip">
+                                            <label class="radio d-tcell">
+                                                <input type="radio" ng-model="purchaseQuoteViewModel.selectedTaxIdType" value="E" ng-disabled="{{isDisabled}}" ng-change="purchaseQuoteViewModel.updateTaxIdOrSSN(E)" ng-checked="purchaseQuoteViewModel.showTaxId" name="business" id="profession">
+                                                <span></span>Federal Employer Identification Number (FEIN)
+                                            </label>
+                                        </div>
+
+                                        <label class="radio">
+                                            <input type="radio" ng-model="purchaseQuoteViewModel.selectedTaxIdType" value="S" ng-disabled="{{isDisabled}}" ng-change="purchaseQuoteViewModel.updateTaxIdOrSSN(S)" ng-checked="!purchaseQuoteViewModel.showTaxId" name="business" id="industry">
+                                            <span></span>Social Security Number (SSN)
+                                        </label>
+                                    </div>
+                                </div>
+
+                            </div>
+                            <div class="form-group">
+                                <label class="lg-col-4">Tax ID </label>
+                                <div class="lg-col-8">
+                                    <input ng-if="purchaseQuoteViewModel.showTaxId"
+                                           name="taxId"
+                                           mask-input
+                                           mask-format="99-9999999"
+                                           ng-model="purchaseQuoteViewModel.taxId"
+                                           type="tel"
+                                           placeholder="Type your Tax ID"
+                                           ng-model-options="{updateOn:'blur focusout'}"
+                                           @*ng-pattern="/^([07][1-7]|1[0-6]|2[0-7]|[35][0-9]|[468][0-8]|9[0-589])-?\\d{7}$/"*@
+                                           class="field field-lg inspectletIgnore"
+                                           validate-taxid-number-control
+                                           update="false"
+                                           ng-disabled="{{isDisabled}}"
+                                           required>
+                                    @*<span class="error" ng-if="purchaseQuoteViewModel.showTaxId && (submitted || !purchaseQuoteForm.taxId.$pristine) && purchaseQuoteForm.taxId.$error.minlength">Invalid Tax ID</span>*@
+                                    <div data-ng-cloak="">
+                                        <span class="error" ng-if="purchaseQuoteViewModel.showTaxId && (submitted || !purchaseQuoteForm.taxId.$pristine) && purchaseQuoteForm.taxId.$error.required">Tax ID required</span>
+                                        <span class="error" ng-if="!purchaseQuoteForm.taxId.$error.required && purchaseQuoteViewModel.showTaxId && purchaseQuoteForm.taxId.$modelValue!='' && purchaseQuoteForm.taxId.$error.validTaxIdNumber">
+                                            Invalid FEIN number
+                                        </span>
+                                    </div>
+                                    <input ng-if="!purchaseQuoteViewModel.showTaxId"
+                                           name="ssn"
+                                           mask-input
+                                           mask-format="999-99-9999"
+                                           ng-model-options="{updateOn:'blur focusout'}"
+                                           ng-model="purchaseQuoteViewModel.SSN"
+                                           type="tel"
+                                           placeholder="Type your SSN"
+                                           class="field field-lg inspectletIgnore"
+                                           validate-taxid-number-control
+                                           update="false"
+                                           ng-disabled="{{isDisabled}}"
+                                           required
+                                           @*ng-pattern="/^(?!\b(\d)\1+-(\d)\1+-(\d)\1+\b)(?!123-45-6789|219-09-9999|078-05-1120)(?!666|000|9\d{2})\d{3}-(?!00)\d{2}-(?!0{4})\d{4}$/"*@>
+                                    <div data-ng-cloak="">
+                                        <span class="error" ng-if="!purchaseQuoteViewModel.showTaxId && (submitted || !purchaseQuoteForm.ssn.$pristine) && purchaseQuoteForm.ssn.$error.pattern && purchaseQuoteViewModel.SSN!=''">Invalid SSN</span>
+                                        <span class="error" ng-if="!purchaseQuoteViewModel.showTaxId && (submitted || !purchaseQuoteForm.ssn.$pristine) && purchaseQuoteForm.ssn.$error.required">SSN Required</span>
+                                        <span class="error" ng-if="!purchaseQuoteForm.ssn.$error.required && !purchaseQuoteViewModel.showTaxId && purchaseQuoteForm.ssn.$modelValue!='' && purchaseQuoteForm.ssn.$error.validTaxIdNumber">Invalid SSN number</span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div ng-if="purchaseQuoteViewModel.purchaseQuotePageDefaults.stateUINDetails!=null" class="form-group">
+                                <label class="lg-col-4">State Unemployment Insurance (UI) Number </label>
+                                <div class="lg-col-8">
+                                    <div class="with-tooltip input-group">
+                                        <input type="tel"
+                                               ng-model="purchaseQuoteViewModel.SUIN"
+                                               class="d-tcell field"
+                                               name="SUIN"
+                                               placeholder="{{purchaseQuoteViewModel.purchaseQuotePageDefaults.stateUINDetails.PlaceHolder}}"
+                                               mask-input
+                                               mask-format="{{purchaseQuoteViewModel.purchaseQuotePageDefaults.stateUINDetails.InputMask}}"
+                                               ng-blur="purchaseQuoteViewModel.validateSUIN(purchaseQuoteViewModel.SUIN)"
+                                               ng-model-options="{updateOn:'blur focusout'}"
+                                               required>
+                                        <div class="d-tcell">
+                                            <abbr bhic-tooltip class="tooltip" data-tooltip="This is typically your State ID Number and it is located on your W-2’s. Some states Unemployment offices will issue you a specific Unemployment Identification number.  It is similar to the FEIN above but on a state level.  Some states require us to collect this information when you buy a policy so we are only asking if you are in state that requires it!">?</abbr>
+                                        </div>
+                                    </div>
+                                    <div data-ng-cloak="">
+                                        <span class="error" ng-if="(submitted || !purchaseQuoteForm.SUIN.$pristine) && purchaseQuoteForm.SUIN.$error.required">SUIN required</span>
+                                        <span class="error" ng-if="(submitted || !purchaseQuoteForm.SUIN.$pristine) && !purchaseQuoteForm.SUIN.$error.required && invalidSUIN">Invalid SUIN</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </fieldset>
+                        <fieldset id="businessMailingInfoForm">
+                            <legend class="h4">Business Mailing Address</legend>
+                            <div class="form-group">
+                                <label class="lg-col-4">Address Line 1 </label>
+                                <div class="lg-col-8">
+                                    <input type="text" name="bmAddressLine1" maxlength="50" ng-model-options="{updateOn:'blur focusout'}" ng-model="purchaseQuoteViewModel.businessMailingAddress.addressLine1" placeholder="Type your Address" class="field field-lg" required>
+                                    <div data-ng-cloak="">
+                                        <span class="error" ng-if="(submitted || !purchaseQuoteForm.bmAddressLine1.$pristine) && purchaseQuoteForm.bmAddressLine1.$error.required">Address First Line is required</span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="lg-col-4">Address Line 2</label>
+                                <div class="lg-col-8">
+                                    <input type="text" maxlength="50" ng-model="purchaseQuoteViewModel.businessMailingAddress.addressLine2" placeholder="Type your address" class="field field-lg">
+                                </div>
+                            </div>
+                            <div class="form-group relative">
+                                <label class="lg-col-4">City </label>
+                                <div class="lg-col-8">
+                                    <input type="text"
+                                           name="bmCity"
+                                           id="bmCity"
+                                           maxlength="30"
+                                           ng-model-options="{updateOn:'blur focusout'}"
+                                           ng-model="purchaseQuoteViewModel.businessMailingAddress.city"
+                                           ng-blur="purchaseQuoteViewModel.validateCity()"
+                                           placeholder="Enter your City"
+                                           data="purchaseQuoteViewModel.purchaseQuotePageDefaults.cityList"
+                                           city-auto-complete
+                                           class="field field-lg"
+                                           required>
+                                    @*<input type="text" name="bmCity" ng-model="purchaseQuoteViewModel.businessMailingAddress.city" placeholder="Enter your City" class="field field-lg" ng-blur="purchaseQuoteViewModel.validateCity()" required>*@
+                                    <div data-ng-cloak="">
+                                        <span class="error" ng-if="(submitted || !purchaseQuoteForm.bmCity.$pristine) && purchaseQuoteForm.bmCity.$error.required">City Name is required</span>
+                                        <span class="error" ng-if="submitted && !purchaseQuoteForm.bmCity.$error.required && purchaseQuoteViewModel.invalidZipCityState">Invalid City,State & Zip combination</span>
+                                        <span class="error" ng-if="!submitted && purchaseQuoteForm.bmCity.$pristine && !purchaseQuoteForm.bmCity.$error.required && purchaseQuoteViewModel.invalidZipCityState">Invalid City Name</span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="lg-col-4">State</label>
+                                <div class="lg-col-8">
+                                    <input type="text" class="field field-lg noborder" ng-value="purchaseQuoteViewModel.businessMailingAddress.state" disabled>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="lg-col-4">Zip Code</label>
+                                <div class="lg-col-8">
+                                    <input type="text" class="field field-lg noborder" ng-value="purchaseQuoteViewModel.businessMailingAddress.zipCode" disabled>
+                                </div>
+                            </div>
+                        </fieldset>
+                        <fieldset id="contactInfoForm">
+                            <legend class="h4">Your Contact Information</legend>
+
+                            <div class="form-group">
+                                <label class="lg-col-4">First Name </label>
+                                <div class="lg-col-8">
+                                    <input type="text" ng-model-options="{updateOn:'blur focusout'}" ng-pattern="/^([A-Za-z\s]{1,}[\.]{0,1}[\']{0,1}[A-Za-z\s]{0,}){0,50}$/" maxlength="50" name="pcFirstName" ng-model="purchaseQuoteViewModel.primaryContactInformation.firstName" placeholder="Enter your First Name" class="field field-lg" required>
+                                    <div data-ng-cloak="">
+                                        <span class="error" ng-if="(submitted || !purchaseQuoteForm.pcFirstName.$pristine) && purchaseQuoteForm.pcFirstName.$error.required">First Name is required</span>
+                                        <span class="error" ng-if="(submitted || !purchaseQuoteForm.pcFirstName.$pristine) && !purchaseQuoteForm.pcFirstName.$error.required && purchaseQuoteForm.pcFirstName.$error.pattern">Invalid Name</span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="lg-col-4">Last Name </label>
+                                <div class="lg-col-8">
+                                    <input type="text" ng-model-options="{updateOn:'blur focusout'}" ng-pattern="/^([A-Za-z\s]{1,}[\.]{0,1}[\']{0,1}[A-Za-z\s]{0,}){0,50}$/" maxlength="50" name="pcLastName" ng-model="purchaseQuoteViewModel.primaryContactInformation.lastName" placeholder="Enter your Last Name" class="field field-lg" required>
+                                    <div data-ng-cloak="">
+                                        <span class="error" ng-if="(submitted || !purchaseQuoteForm.pcLastName.$pristine) && purchaseQuoteForm.pcLastName.$error.required">Last Name is required</span>
+                                        <span class="error" ng-if="(submitted || !purchaseQuoteForm.pcLastName.$pristine) && !purchaseQuoteForm.pcLastName.$error.required && purchaseQuoteForm.pcLastName.$error.pattern">Invalid Name</span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="lg-col-4">Email Address </label>
+                                <div class="lg-col-8">
+                                    <input type="email"
+                                           autocomplete="off"
+                                           name="pcEmail"
+                                           ng-model="purchaseQuoteViewModel.primaryContactInformation.email"
+                                           ng-blur="!disableUserAccountDetails?purchaseQuoteViewModel.checkUserExistence(purchaseQuoteViewModel.primaryContactInformation.email,purchaseQuoteViewModel.account.password):''"
+                                           ng-change="!disableUserAccountDetails?purchaseQuoteViewModel.updateEmailId(purchaseQuoteViewModel.primaryContactInformation.email):''"
+                                           placeholder="Type your Email Address"
+                                           ng-model-options="{updateOn:'blur focusout'}"
+                                           class="field field-lg"
+                                           data-ng-pattern="validEmailRegEx"
+                                           required>
+                                    <div data-ng-cloak="">
+                                        <span class="error" ng-if="(submitted || !purchaseQuoteForm.pcEmail.$pristine) && purchaseQuoteForm.pcEmail.$error.required">Email ID Name is required</span>
+                                        <span class="error" ng-if="!purchaseQuoteForm.pcEmail.$error.required && purchaseQuoteForm.pcEmail.$error.email">Email ID is invalid</span>
+                                        <span class="error" ng-if="!purchaseQuoteForm.pcEmail.$error.required && !purchaseQuoteForm.pcEmail.$error.email && purchaseQuoteForm.pcEmail.$error.pattern">Email ID is invalid</span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="lg-col-4">Phone </label>
+                                <div class="lg-col-8">
+                                    <input type="tel"
+                                           name="pcPhone"
+                                           ng-model="purchaseQuoteViewModel.primaryContactInformation.phone"
+                                           placeholder="XXX-XXX-XXXX xXXXX"
+                                           ng-pattern="/^([0-9]{3}?-?[0-9]{3}?-?[0-9]{4}?)+(\s?x?[0-9_]{0,4}?)?$/"
+                                           ng-model-options="{updateOn:'blur focusout'}"
+                                           mask-input
+                                           mask-format="999-999-9999 x9999"
+                                           class="field field-lg"
+                                           required>
+                                    <div data-ng-cloak="">
+                                        <span class="error" ng-if="(submitted || !purchaseQuoteForm.pcPhone.$pristine) && purchaseQuoteForm.pcPhone.$error.required">Phone Number is required</span>
+                                        <span class="error" ng-if="(submitted || !purchaseQuoteForm.pcPhone.$pristine) && !purchaseQuoteForm.pcPhone.$error.required && purchaseQuoteForm.pcPhone.$error.pattern">Phone Number is invalid</span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="checkbox">
+                                    <input type="checkbox" ng-model="purchaseQuoteViewModel.primaryContactInformation.copyPrimaryContactInfoToBusinessContact" ng-click="purchaseQuoteViewModel.updateBusinessContactInformation()" checked><span>
+                                        <svg class="icon-check" xmlns="http://www.w3.org/2000/svg" version="1.1" x="0" y="0" viewBox="-124 239.2 281 242" xml:space="preserve"> 
+                                        <path class="fill-teal--dark" d="M130.5 257.9c-9.3-9.3-24.4-9.3-33.7 0.7L-37.5 397l-35.1-35.1c-8.6-8.6-23-9.3-32.3-0.7l-11.5 10c-10 8.6-10 24.4-0.7 33.7l56.7 56.7c0 0 0 0 0.7 0l5.7 6.5c9.3 9.3 24.4 9.3 33.7-0.7l162.2-167c8.6-9.3 8.6-23.7-0.7-32.3L130.5 257.9z" />
+                            </svg>
+                                    </span> Use this contact information for needed communications from CoverYourBusiness.com.
+                                </label>
+                            </div>
+                        </fieldset>
+                        <fieldset id="businessContactInfoForm" ng-if="!purchaseQuoteViewModel.primaryContactInformation.copyPrimaryContactInfoToBusinessContact">
+                            <legend class="h4">Your Business Contact Information</legend>
+                            <div class="form-group">
+                                <label class="lg-col-4">First Name </label>
+                                <div class="lg-col-8">
+                                    <input type="text" ng-model-options="{updateOn:'blur focusout'}" ng-pattern="/^([A-Za-z\s]{1,}[\.]{0,1}[\']{0,1}[A-Za-z\s]{0,}){0,50}$/" maxlength="50" placeholder="First Name" name="bcFirstName" ng-model="purchaseQuoteViewModel.businessContactInformation.firstName" class="field field-lg" required>
+                                    <div data-ng-cloak="">
+                                        <span class="error" ng-if="(submitted || !purchaseQuoteForm.bcFirstName.$pristine) && purchaseQuoteForm.bcFirstName.$error.required">First Name is required</span>
+                                        <span class="error" ng-if="(submitted || !purchaseQuoteForm.bcFirstName.$pristine) && !purchaseQuoteForm.bcFirstName.$error.required && purchaseQuoteForm.bcFirstName.$error.pattern">Invalid Name</span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="lg-col-4">Last Name </label>
+                                <div class="lg-col-8">
+                                    <input type="text" ng-model-options="{updateOn:'blur focusout'}" ng-pattern="/^([A-Za-z\s]{1,}[\.]{0,1}[\']{0,1}[A-Za-z\s]{0,}){0,50}$/" maxlength="50" placeholder="Last Name" name="bcLastName" ng-model="purchaseQuoteViewModel.businessContactInformation.lastName" class="field field-lg" required>
+                                    <div data-ng-cloak="">
+                                        <span class="error" ng-if="(submitted || !purchaseQuoteForm.bcLastName.$pristine) && purchaseQuoteForm.bcLastName.$error.required">Last Name is required</span>
+                                        <span class="error" ng-if="(submitted || !purchaseQuoteForm.bcLastName.$pristine) && !purchaseQuoteForm.bcLastName.$error.required && purchaseQuoteForm.bcLastName.$error.pattern">Invalid Name</span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="lg-col-4">Email Address </label>
+                                <div class="lg-col-8">
+                                    <input type="email" placeholder="Email ID" name="bcEmail" ng-model="purchaseQuoteViewModel.businessContactInformation.email" class="field field-lg"
+                                           ng-model-options="{updateOn:'blur focusout'}"
+                                           data-ng-pattern="validEmailRegEx"
+                                           required>
+                                    <div data-ng-cloak="">
+                                        <span class="error" ng-if="(submitted || !purchaseQuoteForm.bcEmail.$pristine) && purchaseQuoteForm.bcEmail.$error.required">Email ID is required</span>
+                                        <span class="error" ng-if="(submitted || !purchaseQuoteForm.bcEmail.$error.required) && purchaseQuoteForm.bcEmail.$error.email">Email ID is invalid</span>
+                                        <span class="error" ng-if="(submitted || !purchaseQuoteForm.bcEmail.$error.required) && !purchaseQuoteForm.bcEmail.$error.email && purchaseQuoteForm.bcEmail.$error.pattern">Email ID is invalid</span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="lg-col-4">Phone </label>
+                                <div class="lg-col-8">
+                                    <input type="tel"
+                                           name="bcPhone"
+                                           ng-model="purchaseQuoteViewModel.businessContactInformation.phone"
+                                           ng-pattern="/^([0-9]{3}?-?[0-9]{3}?-?[0-9]{4}?)+(\s?x?[0-9_]{0,4}?)?$/"
+                                           placeholder="XXX-XXX-XXXX xXXXX"
+                                           ng-model-options="{updateOn:'blur focusout'}"
+                                           mask-input mask-format="999-999-9999 x9999"
+                                           class="field field-lg"
+                                           required>
+                                    <div data-ng-cloak="">
+                                        <span class="error" ng-if="(submitted || !purchaseQuoteForm.bcPhone.$pristine) && purchaseQuoteForm.bcPhone.$error.required">Phone Number is required</span>
+                                        <span class="error" ng-if="(submitted || !purchaseQuoteForm.bcPhone.$pristine) && !purchaseQuoteForm.bcPhone.$error.required && purchaseQuoteForm.bcPhone.$error.pattern">Phone Number is required</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </fieldset>
+                        <fieldset id="createAccountForm" ng-if="!disableUserAccountDetails" class="fieldsetLegend">
+                            <legend class="h4">
+                                Create Your Account
+                                <p class="text-small text-normal text-info">You will use these login credentials to access your online account, which will include your policy documents, the ability to generate a Certificate of Insurance, an online payments feature, and other valuable policy tools and information.</p>
+                            </legend>
+                            <!-- Comment : Here in case of existing user show this text -->
+                            <div class="alert alert-warning mb2" ng-if="userEmailExists && !disableUserAccountDetails && !mailSentSuccessfully">
+                                <p class="alert-text"> This User ID already exists and has a policy linked to it. If you want to link this policy with your existing account, please provide the correct password for the existing account. In case you have forgotten your password,&nbsp;<a href="" ng-click="purchaseQuoteViewModel.forgotPassword()">Click Here</a> and we will send an email to reset your password. </p>
+                            </div>
+                            <div class="alert alert-success mb2" ng-if="userEmailExists && !disableUserAccountDetails && mailSentSuccessfully">
+                                <p class="alert-text">A link to reset your password has been sent to you. If you don’t receive our e-mail after few minutes, be sure to check your spam filter.</p>
+                            </div>
+
+                            <div class="form-group" style="margin-top:20px;">
+                                <label class="lg-col-4">Email Address</label>
+                                <div class="lg-col-8">
+                                    <input type="email"
+                                           @*ng-disabled="disableUserAccountDetails"*@
+                                           name="aEmail"
+                                           placeholder="Email ID"
+                                           class="field field-lg"
+                                           ng-blur="!disableUserAccountDetails?purchaseQuoteViewModel.checkUserExistence(purchaseQuoteViewModel.account.email,purchaseQuoteViewModel.account.password):''"
+                                           ng-model-options="{updateOn:'blur focusout'}"
+                                           ng-model="purchaseQuoteViewModel.account.email"
+                                           data-ng-pattern="validEmailRegEx"
+                                           required>
+                                    <div data-ng-cloak="">
+                                        <span class="error" ng-if="(submitted || !purchaseQuoteForm.aEmail.$pristine) && purchaseQuoteForm.aEmail.$error.required">Email ID is required</span>
+                                        <span class="error" ng-if="!purchaseQuoteForm.aEmail.$error.required && purchaseQuoteForm.aEmail.$error.email">Email ID is invalid</span>
+                                        <span class="error" ng-if="!purchaseQuoteForm.aEmail.$error.required && !purchaseQuoteForm.aEmail.$error.email && purchaseQuoteForm.aEmail.$error.pattern">Email ID is invalid</span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="lg-col-4">Password </label>
+                                <div class="lg-col-8">
+                                    <div class="input-group with-tooltip">
+                                        @*<input type="password" ng-disabled="disableUserAccountDetails" name="aPassword" placeholder="Password" class="field field-lg" ng-pattern="/^(?=.*?[A-Z])(?=(.*[a-z]){1,})(?=(.*[\d]){1,})(?=(.*[\W]){1,})(?!.*\s).{8,}$/" user-email-id="{{purchaseQuoteViewModel.account.email}}" ng-model="purchaseQuoteViewModel.account.password" required>*@
+                                        <input type="password" ng-model-options="{updateOn:'blur focusout'}" invalid-password-control ng-disabled="disableUserAccountDetails" name="aPassword" placeholder="Password" class="field d-tcell" style="font-family: verdana, sans-serif; font-weight: bold;" ng-pattern="/(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[^a-zA-Z0-9])/" ng-minlength="8" user-email-id="{{purchaseQuoteViewModel.account.email}}" ng-model="purchaseQuoteViewModel.account.password" required>
+                                        <div data-ng-cloak="">
+                                            <span class="error" ng-if="(submitted || !purchaseQuoteForm.aPassword.$pristine) && !purchaseQuoteForm.aPassword.$error.required && purchaseQuoteForm.aPassword.$error.invalidPassword">Please provide valid credentials...!</span>
+                                            <span class="error" ng-if="(submitted || !purchaseQuoteForm.aPassword.$pristine) && purchaseQuoteForm.aPassword.$error.required">Password is required</span>
+                                            <span class="error" ng-if="purchaseQuoteForm.aPassword.$touched && purchaseQuoteForm.aPassword.$error.minlength">Password should be minimum of 8 characters!.</span>
+                                            <span class="error" ng-if="purchaseQuoteForm.aPassword.$touched && purchaseQuoteForm.aPassword.$error.pattern">Password must Contain at least one upper case, one lower case, one number &amp; one special character</span>
+                                        </div>
+                                    </div>
+                                    <div class="field-help">
+                                        <strong>Your password must:</strong>
+                                        <ul class="mb0">
+                                            <li>Be at least 8 characters long </li>
+                                            <li>Have at least one lowercase letter (a-z)</li>
+                                            <li>Have at least one uppercase letter (A-Z) </li>
+                                            <li>Have at least one digit/number (0-9)</li>
+                                            <li>Have at least one special character (!&#64;#$%^&*)</li>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="lg-col-4">Confirm Password </label>
+                                <div class="lg-col-8">
+                                    <div class="input-group">
+                                        @*<input type="password" ng-disabled="disableUserAccountDetails" name="aPassword" placeholder="Password" class="field field-lg" ng-pattern="/^(?=.*?[A-Z])(?=(.*[a-z]){1,})(?=(.*[\d]){1,})(?=(.*[\W]){1,})(?!.*\s).{8,}$/" user-email-id="{{purchaseQuoteViewModel.account.email}}" ng-model="purchaseQuoteViewModel.account.password" required>*@
+                                        <input type="password" ng-model-options="{updateOn:'blur focusout'}" name="acPassword" placeholder="Re-enter Password" class="field field-lg" style="font-family: verdana, sans-serif; font-weight: bold;" ng-pattern="/(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[^a-zA-Z0-9])/" ng-minlength="8" ng-model="purchaseQuoteViewModel.account.confirmPassword" required>
+                                        @*<div class="d-tcell"><abbr class="tooltip" data-tooltip="Please enter the password filled in previous field">?</abbr></div>*@
+                                        @*<span class="error" ng-if="(submitted || !purchaseQuoteForm.acPassword.$pristine) && !purchaseQuoteForm.acPassword.$error.required && purchaseQuoteForm.acPassword.$error.pattern">Please provide valid credentials...!</span>*@
+                                        <div data-ng-cloak="">
+                                            <span class="error" ng-if="(submitted || !purchaseQuoteForm.acPassword.$pristine) && purchaseQuoteForm.acPassword.$error.required">Password is required</span>
+                                            @*<span class="error" ng-if="purchaseQuoteForm.acPassword.$touched && purchaseQuoteForm.acPassword.$error.minlength">Password should be minimum of 8 characters!.</span>
+                                                <span class="error" ng-if="purchaseQuoteForm.acPassword.$touched && purchaseQuoteForm.acPassword.$error.pattern">Password must Contain at least one upper case, one lower case, one number &amp; one special character</span>*@
+                                            <span class="error" ng-if="!purchaseQuoteForm.acPassword.$error.required && purchaseQuoteForm.acPassword.$touched && (purchaseQuoteViewModel.account.confirmPassword!=purchaseQuoteViewModel.account.password)">Password and confirm password are not same</span>
+                                        </div>
+                                    </div>
+
+                                </div>
+                            </div>
+                        </fieldset>
+                        <div class="btn-actions clear">
+                            <a href="#/QuoteSummary/" class="btn btn-secondary disable-navigate">Back &amp; Modify</a>
+                            <button ng-click="submitted=true;purchaseQuoteForm.$valid?purchaseQuoteViewModel.submitPurchaseData():purchaseQuoteViewModel.scrollFormOnError()" class="btn btn-primary pull-right disable-navigate">{{purchaseQuoteViewModel.submitButtonCaption}}</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+
+            <!-- Comment : Here common SaveForLater directive for all pages -->
+            <div id="ModelSaveForLater" save-for-later-div-control pagename="ModifyPurchaseQuote" isvalidform="{{purchaseQuoteForm.$valid}}" currentquoteid="@Convert.ToString(Session["quoteId"])"
+                 submit-validated-form="purchaseQuoteViewModel.submitSaveForLater(argument1)"></div>
+
+            @*<div id="ModelSaveForLater" save-for-later-div-control controllercontext="purchaseQuoteViewModel" formvalidationstatus="true" validate-save-for-later="purchaseQuoteViewModel.saveForLater()"></div>
+
+                <!-- Comment : Here model pop-up-1 for ask user to fill emailId -->
+                <save-for-later-form-model-control controllercontext="purchaseQuoteViewModel" close-save-for-later-model="purchaseQuoteViewModel.closeSaveForLaterModel('ModelSaveForLater')">
+                </save-for-later-form-model-control>
+
+                <!-- Comment : Here model pop-up-2 to show user thanks text after successful submit -->
+                <thank-you-model-control controllercontext="purchaseQuoteViewModel" close-save-for-later-model="purchaseQuoteViewModel.closeSaveForLaterModel('ModelSaveForLaterThankYou')">
+                </thank-you-model-control>*@
+
+        </div>
+    </div>
+</section>
+<script>
+    $(document).ready(function () {
+        $('.progress-bar').click(function (event) {
+            event.preventDefault();
+        });
+    });
+</script>
+@CDN.RenderScripts("/bundles/scripts/navigation")

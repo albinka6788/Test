@@ -1,0 +1,27 @@
+﻿@{
+    Layout = "~/Areas/QuestionEngine/Views/Shared/_Layout.cshtml";
+}
+
+<!DOCTYPE html>
+<html ng-app="questionEngineApp" ng-controller="questionCtrl">
+<head>
+    <meta name="viewport" content="width=device-width" />
+
+    <!-- Comment : Here ng-bind => {this directive binds the value of the input field to the application variable name.} -->
+    <title ng-bind="ModuleTitle"></title>
+</head>
+<body>
+    
+    <!-- Comment : Here some routing to QuestionEngine module QuestionController -->
+    <div style="width:450px;background-color:gray;font-weight:bold;color:#fff;margin:20px 0px;clear:both;padding-left:10px">
+        See four different views processing by Question-Engine 
+    </div>
+    <ul>
+        <li>@Html.ActionLink("Default Questions", "MyGetQuestions", "/MyQuestions")</li>
+        <li>@Html.ActionLink("Get Question Variant 1", "MyGetQuestions/1", "/MyQuestions")</li>
+        <li>@Html.ActionLink("Get Question Variant 2", "MyGetQuestions/2", "/MyQuestions")</li>
+        <li>@Html.ActionLink("Get Question Variant 3", "MyGetQuestions/3", "/MyQuestions")</li>
+    </ul>
+
+</body>
+</html>

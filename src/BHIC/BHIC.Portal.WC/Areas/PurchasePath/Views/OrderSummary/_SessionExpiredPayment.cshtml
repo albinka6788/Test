@@ -1,0 +1,55 @@
+﻿@using BHIC.Common.XmlHelper;
+@using BHIC.Common.Configuration;
+@{
+
+    var cdnVersion = BHIC.Portal.WC.BaseController.GetAssemblyVersion();
+}
+
+@*<script>
+
+    $(document).ready(function ()
+    {
+        //Comment : Here on page load show session-expired view with timer then redirect user to home page
+        setTimeout(redirectUser, updateTimerAfter);
+
+        //Comment : Here default count down timer seconds
+        var timeCountDown = 10;
+        var updateTimerAfter = 1000;
+
+        function redirectUser()
+        {
+            timeCountDown--;
+
+            //console.log(timeCountDown);
+
+            //Comment : Here refresh page counter after interval of time
+            $('#timerCount').html(timeCountDown.toString() + '  secs...');
+            $(".loader-overlay").css('display', 'none');
+
+            //Comment : Here time spent then redirect user to home page
+            if (timeCountDown == 0) {
+                window.location.href = '/PurchasePath/Home/Index';
+            }
+            else {
+                setTimeout(redirectUser, updateTimerAfter);
+            }
+        }
+    })
+
+</script>*@
+@CDN.RenderScripts("/bundles/scripts/session-countdown-timer")
+<script type="text/javascript">
+    $(document).ready(function () {
+        var wH = $(window).height() - 320;
+        $('.page-content').css('minHeight', wH);
+    });
+</script>
+<div class="container" >
+    <div class="alert alert-warning alert-big">
+        <p class="text-bold alert-text-big"> Session Expired! </p>
+        <p class="alert-text">
+            Your session has timed out. You will be redirected to Home page in a short while.&nbsp;
+            <b><span id="timerCount"></span></b>
+        </p>
+    </div>
+</div>

@@ -1,0 +1,286 @@
+﻿[
+  {
+      "questionId": 22,
+      "questionText": "What is the delivery/service radius (in miles)?",
+      "sortOrder": 108,
+      "QuestionType": "N",
+      "ResponseLimits": "0-9999",
+      "QuestionResponseLimitList": [
+        {
+            "Value": "0",
+            "Prompt": ""
+        },
+        {
+            "Value": "9999",
+            "Prompt": ""
+        }
+      ],
+      "WhenQuestion": 0,
+      "WhenCondition": " ",
+      "WhenResponse": "",
+      "DecisionEngineResponsesValid": "Y",
+      "ResultMessages": "OK",
+      "RenderFlag": true,
+      "UserResponse": ""
+  },
+  {
+      "questionId": 83,
+      "questionText": "Do you engage in the sale, delivery, service, or repair of large trucks (commercial), tractor trailers, mobile homes, or boats?",
+      "sortOrder": 129,
+      "QuestionType": "R",
+      "ResponseLimits": "Y|Yes,N|No",
+      "QuestionResponseLimitList": [
+        {
+            "Value": "Y",
+            "Prompt": "Yes"
+        },
+        {
+            "Value": "N",
+            "Prompt": "No"
+        }
+      ],
+      "WhenQuestion": 0,
+      "WhenCondition": " ",
+      "WhenResponse": "",
+      "DecisionEngineResponsesValid": "Y",
+      "ResultMessages": "OK",
+      "RenderFlag": true,
+      "UserResponse": null
+  },
+  {
+      "questionId": 37,
+      "questionText": "What percentage of your receipts is derived from towing?",
+      "sortOrder": 200,
+      "QuestionType": "P",
+      "ResponseLimits": "0-100",
+      "QuestionResponseLimitList": [
+        {
+            "Value": "0",
+            "Prompt": "100"
+        },
+        {
+            "Value": "100",
+            "Prompt": ""
+        }
+      ],
+      "WhenQuestion": 0,
+      "WhenCondition": " ",
+      "WhenResponse": "",
+      "DecisionEngineResponsesValid": "Y",
+      "ResultMessages": "OK",
+      "RenderFlag": true,
+      "UserResponse": "0"
+  },
+  {
+      "questionId": 9,
+      "questionText": "What percentage of your overall sales involve delivery?",
+      "sortOrder": 500,
+      "QuestionType": "P",
+      "ResponseLimits": "0-100",
+      "QuestionResponseLimitList": [
+        {
+            "Value": "0",
+            "Prompt": ""
+        },
+        {
+            "Value": "100",
+            "Prompt": ""
+        }
+      ],
+      "WhenQuestion": 0,
+      "WhenCondition": " ",
+      "WhenResponse": "",
+      "DecisionEngineResponsesValid": "Y",
+      "ResultMessages": "OK",
+      "RenderFlag": true,
+      "UserResponse": "0"
+  },
+  {
+      "questionId": 92,
+      "questionText": "Please provide the total number of claims (Lost Time or Medical) in the past three years?",
+      "sortOrder": 600,
+      "QuestionType": "N",
+      "ResponseLimits": "0-999",
+      "QuestionResponseLimitList": [
+        {
+            "Value": "0",
+            "Prompt": ""
+        },
+        {
+            "Value": "999",
+            "Prompt": ""
+        }
+      ],
+      "WhenQuestion": 0,
+      "WhenCondition": "",
+      "WhenResponse": "",
+      "DecisionEngineResponsesValid": "Y",
+      "ResultMessages": "OK",
+      "RenderFlag": true,
+      "UserResponse": ""
+  },
+  {
+      "questionId": 93,
+      "questionText": "Has any prior coverage been cancelled, declined, or non-renewed?",
+      "sortOrder": 600,
+      "QuestionType": "R",
+      "ResponseLimits": "Y|Yes,N|No",
+      "QuestionResponseLimitList": [
+        {
+            "Value": "Y",
+            "Prompt": "Yes"
+        },
+        {
+            "Value": "N",
+            "Prompt": "No"
+        }
+      ],
+      "WhenQuestion": 0,
+      "WhenCondition": "",
+      "WhenResponse": "",
+      "DecisionEngineResponsesValid": "Y",
+      "ResultMessages": "OK",
+      "RenderFlag": true,
+      "UserResponse": null
+  },
+  {
+      "questionId": 84,
+      "questionText": "Do you engage in the sale, delivery, service, or repair of motorcycles?",
+      "sortOrder": 53581,
+      "QuestionType": "R",
+      "ResponseLimits": "Y|Yes,N|No",
+      "QuestionResponseLimitList": [
+        {
+            "Value": "Y",
+            "Prompt": "Yes"
+        },
+        {
+            "Value": "N",
+            "Prompt": "No"
+        }
+      ],
+      "WhenQuestion": 0,
+      "WhenCondition": " ",
+      "WhenResponse": "",
+      "DecisionEngineResponsesValid": "Y",
+      "ResultMessages": "OK",
+      "RenderFlag": true,
+      "UserResponse": null
+  },
+  {
+      "questionId": 85,
+      "questionText": "What is the percentage of time that motorcycles are driven by employees?",
+      "sortOrder": 53601,
+      "QuestionType": "P",
+      "ResponseLimits": "0-100",
+      "QuestionResponseLimitList": [
+        {
+            "Value": "0",
+            "Prompt": ""
+        },
+        {
+            "Value": "100",
+            "Prompt": ""
+        }
+      ],
+      "WhenQuestion": 84,
+      "WhenCondition": "=",
+      "WhenResponse": "Y",
+      "DecisionEngineResponsesValid": "Y",
+      "ResultMessages": "OK",
+      "RenderFlag": false,
+      "UserResponse": "0"
+  },
+  {
+      "questionId": 86,
+      "questionText": "Do you have written guidelines describing test driving including driver MVR requirements, radius and speed?",
+      "sortOrder": 53621,
+      "QuestionType": "R",
+      "ResponseLimits": "Y|Yes,N|No",
+      "QuestionResponseLimitList": [
+        {
+            "Value": "Y",
+            "Prompt": "Yes"
+        },
+        {
+            "Value": "N",
+            "Prompt": "No"
+        }
+      ],
+      "WhenQuestion": 84,
+      "WhenCondition": "=",
+      "WhenResponse": "Y",
+      "DecisionEngineResponsesValid": "Y",
+      "ResultMessages": "OK",
+      "RenderFlag": false,
+      "UserResponse": null
+  },
+  {
+      "questionId": 87,
+      "questionText": "Do you sell and/or service other outdoor recreational vehicles (e.g. dirt bikes, ATV's, snowmobiles, watercrafts, etc.)?",
+      "sortOrder": 53641,
+      "QuestionType": "R",
+      "ResponseLimits": "Y|Yes,N|No",
+      "QuestionResponseLimitList": [
+        {
+            "Value": "Y",
+            "Prompt": "Yes"
+        },
+        {
+            "Value": "N",
+            "Prompt": "No"
+        }
+      ],
+      "WhenQuestion": 84,
+      "WhenCondition": "=",
+      "WhenResponse": "Y",
+      "DecisionEngineResponsesValid": "Y",
+      "ResultMessages": "OK",
+      "RenderFlag": false,
+      "UserResponse": null
+  },
+  {
+      "questionId": 88,
+      "questionText": "What percentage of work comes from street motorcycles sales and/or service?",
+      "sortOrder": 53661,
+      "QuestionType": "P",
+      "ResponseLimits": "0-100",
+      "QuestionResponseLimitList": [
+        {
+            "Value": "0",
+            "Prompt": ""
+        },
+        {
+            "Value": "100",
+            "Prompt": ""
+        }
+      ],
+      "WhenQuestion": 87,
+      "WhenCondition": "=",
+      "WhenResponse": "Y",
+      "DecisionEngineResponsesValid": "Y",
+      "ResultMessages": "OK",
+      "RenderFlag": false,
+      "UserResponse": "0"
+  },
+  {
+      "questionId": 91,
+      "questionText": "By checking the following box, I hereby certify that all of the following are true statements for this business: <br /> <ul> <li>Does not own operate or lease any aircraft/watercraft</li> <li>Does not store/treat/discharge/apply/dispose/transport/or handle hazardous materials of any kind</li> <li>Does not perform and work on barges/vessels/docks/or bridges over water</li> <li>Does not provide group transportation for employees</li> <li>Does not use volunteers or donated labor</li><li>Area of operations is less than 200 miles from a location on your policy</li> </ul>",
+      "sortOrder": 99999,
+      "QuestionType": "R",
+      "ResponseLimits": "Y|I agree",
+      "QuestionResponseLimitList": [
+        {
+            "Value": "Y",
+            "Prompt": "I agree"
+        }
+      ],
+      "WhenQuestion": 0,
+      "WhenCondition": " ",
+      "WhenResponse": "",
+      "DecisionEngineResponsesValid": "Y",
+      "ResultMessages": "OK",
+      "RenderFlag": true,
+      "UserResponse": null
+  }
+]

@@ -1,0 +1,6 @@
+
+--STEP - 1 
+TRUNCATE TABLE dbo.ZipCodeStates
+
+--STEP - 2 
+ALTER SEQUENCE dbo.SEQUENCEZipCodeStates RESTART WITH 1 

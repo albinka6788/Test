@@ -1,0 +1,30 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ReferralReasons>
+  
+	<ReferralReason ScenarioId="1" ReferrarPage="Exposure" ReferralReasonText="Other Class Description" ReferralDescription="Class provided by user for Other description class is ##OtherClassName##" IsActive="1"/>
+
+	<ReferralReason ScenarioId="2" ReferrarPage="Exposure" ReferralReasonText="Referral Only Class" ReferralDescription="Class selected by user is ##ReferralOnlyClass##" IsActive="1" />
+
+	<ReferralReason ScenarioId="3" ReferrarPage="Exposure" ReferralReasonText="Payroll below minimum and in “Good State”" ReferralDescription="Minimum payroll acceptable is ##GoodStateAcceptableMinPayroll##" IsActive="1" />
+
+	<ReferralReason ScenarioId="4" ReferrarPage="Exposure" ReferralReasonText="Multi-State" ReferralDescription="Multi-State option is selected by the user" IsActive="1" />
+
+	<ReferralReason ScenarioId="5" ReferrarPage="Exposure" ReferralReasonText="Too much payroll in companions" ReferralDescription="Entered amount was ##UserEnteredPayrollPercentage##%. Minimum acceptable for this class and state is ##ClassAcceptablePayrollPercentage##%" IsActive="1" />
+
+	<ReferralReason ScenarioId="6" ReferrarPage="Question" ReferralReasonText="Multiple xMOD returns" ReferralDescription="Multiple Risk-IDs found" IsActive="1" />
+
+	<ReferralReason ScenarioId="7" ReferrarPage="Question" ReferralReasonText="Number of claims" ReferralDescription="Claims exceeds the threshold based on class, state, and payroll amount" IsActive="1" />
+
+	<ReferralReason ScenarioId="8" ReferrarPage="Question" ReferralReasonText="Yes to non-eligible risk" ReferralDescription="##GuardReferralMessage##" IsActive="1" />
+
+  <ReferralReason ScenarioId="9" ReferrarPage="Question" ReferralReasonText="Currently eligible but initially ##ReferralStatus##" ReferralDescription="##NA##" IsActive="1" />
+
+  <ReferralReason ScenarioId="10" ReferrarPage="Exposure" ReferralReasonText="Decline only class" ReferralDescription="##NA##" IsActive="1" />
+
+  <ReferralReason ScenarioId="11" ReferrarPage="Exposure" ReferralReasonText="Payroll is less than Guard Minimum threshold for a Bad state" ReferralDescription="##NA##" IsActive="1" />
+
+  <ReferralReason ScenarioId="12" ReferrarPage="Question" ReferralReasonText="Yes to user's declaration on question page" ReferralDescription="##NA##" IsActive="1" />
+
+  <ReferralReason ScenarioId="13" ReferrarPage="Question" ReferralReasonText="Guard has declined" ReferralDescription="##GuardDeclineMessage##" IsActive="1" />
+  
+</ReferralReasons>

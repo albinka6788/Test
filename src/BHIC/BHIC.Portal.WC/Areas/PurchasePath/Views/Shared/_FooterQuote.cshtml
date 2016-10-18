@@ -1,0 +1,84 @@
+﻿@using BHIC.Common.Html;
+@using BHIC.Common.XmlHelper;
+@using BHIC.Domain.Dashboard;
+
+@{
+    <!-- Prepare SEO url by add trailing "/" during deployment and blank for localhost -->
+    var appendSlash = (ConfigCommonKeyReader.AppBaseUrl.EndsWith("/") ? string.Empty : "/");
+
+    <!-- GUIN-166: Albin - Prepare PP Base url -->
+    var WcAppBaseUrl = string.Concat(ConfigCommonKeyReader.AppBaseUrl, appendSlash);
+
+        <!-- Get request URL scheme and host details -->
+    var baseSchemeAndHostUrl = string.Concat(HttpContext.Current.Request.Url.Scheme, "://", HttpContext.Current.Request.Url.Host);
+
+    <!-- PC logged user handling -->
+    var loggedUser = new UserRegistration();
+
+    if (Session["user"] != null)
+    {
+        loggedUser = (UserRegistration)Session["user"];
+    }
+}
+
+<div class="container sm-center">
+    <div class="row">
+        <div class="md-col-2 lg-col-2">
+            <nav class="footer-nav">
+                <ul class="no-style">
+                    <li><strong>Products</strong></li>
+                    <li><a href='@string.Concat(WcAppBaseUrl, "workers-comp")' target="_blank"> Workers' Compensation </a></li>
+                    <li><a href='@string.Concat(WcAppBaseUrl, "business-owners-policy")' target="_blank">Business Owner's Policy</a></li>
+                    <li><a href='@string.Concat(WcAppBaseUrl, "commercial-auto")' target="_blank">Commercial Auto</a></li>
+                </ul>
+            </nav>
+        </div>
+        <div class="md-col-2 lg-col-2">
+            <nav class="footer-nav">
+                <ul class="no-style">
+                    <li><strong>Information</strong></li>
+                    <li><a href='@string.Concat(WcAppBaseUrl, "about-us")' target="_blank">About Us</a></li>
+                    <li><a href='@string.Concat(WcAppBaseUrl, "resources")' target="_blank">Resource Center</a></li>
+                    <li><a href='@string.Concat(WcAppBaseUrl, "loss-control")' target="_blank">Loss Control</a></li>
+                </ul>
+            </nav>
+        </div>
+        <div class="md-col-2 lg-col-2">
+            <nav class="footer-nav">
+                <ul class="no-style">
+                    <li> <strong>Legal</strong> </li>
+                    <li><a href='@string.Concat(WcAppBaseUrl, "privacy-policy")' target="_blank">Privacy Policy</a></li>
+                    <li><a href='@string.Concat(WcAppBaseUrl, "terms-conditions")' target="_blank">Terms &amp; Conditions</a></li>
+                    <li><a href='@string.Concat(WcAppBaseUrl, "other-disclosures")' target="_blank">Other Disclosures</a></li>
+                </ul>
+            </nav>
+        </div>
+        <div class="md-col-2 lg-col-2">
+            <nav class="footer-nav">
+                <ul class="no-style">
+                    <li> <strong>Help</strong> </li>
+                    <li><a href='@string.Concat(WcAppBaseUrl, "faq")' target="_blank">FAQs</a></li>
+                    <li>
+                        @if (loggedUser != null && loggedUser.Id > 0)
+                        {
+                            <a href='@string.Concat(baseSchemeAndHostUrl, ConfigCommonKeyReader.PolicyCentreURL, "#/ReportClaimFromHeader")' target="_blank">Claims</a>
+                        }
+                        else
+                        {
+                            <a href='@string.Concat(baseSchemeAndHostUrl, ConfigCommonKeyReader.PolicyCentreURL, "#/ReportClaimDashboard")' target="_blank">Claims</a>
+                        }
+                    </li>
+                </ul>
+            </nav>
+        </div>
+        <div class="md-col-4 lg-col-4">
+            <p class="copyright mb0">
+                &copy; @DateTime.Now.Year <span class="sysCompany"></span> <br>
+                &copy; @DateTime.Now.Year <span class="sysCompanyNENATI20"></span>
+            </p>
+            @*<button  class="btn btn-primary btn-chat">
+                @Html.ThemeImage("chat", "", new { alt = "" }) <a href="http://www.livechatinc.com/?partner=lc_5059511&amp;utm_source=chat_button">Chat With Us</a>
+                </button>*@
+        </div>
+    </div>
+</div>

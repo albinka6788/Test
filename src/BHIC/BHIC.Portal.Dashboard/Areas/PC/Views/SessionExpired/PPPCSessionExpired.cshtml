@@ -1,0 +1,50 @@
+﻿@using BHIC.Common.Html;
+@using BHIC.Common.Configuration;
+@using BHIC.Common.XmlHelper;
+@{
+    var cdnVersion = BHIC.Portal.Dashboard.BaseController.GetAssemblyVersion();
+}
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Cover Your Business</title>
+    <link rel="icon" href='@string.Concat(ConfigCommonKeyReader.CdnPath, "Content/", ConfigCommonKeyReader.CdnDefaultCommonFolder, "/images/favicon.ico")'>
+    <link rel="shortcut icon" sizes="192x192" type="image/png" href='@string.Concat(ConfigCommonKeyReader.CdnPath, "Content/", ConfigCommonKeyReader.CdnDefaultCommonFolder, "/appicon-highres.png")'>
+    <link rel="shortcut icon" sizes="128x128" type="image/png" href='@string.Concat(ConfigCommonKeyReader.CdnPath, "Content/", ConfigCommonKeyReader.CdnDefaultCommonFolder, "/appicon.png")'>
+    <meta name="viewport" content="width=device-width, initial-scale=1,maximum-scale=1,user-scalable=no">
+    @CDN.RenderStyles("/bundles/styles/Dashboard")
+</head>
+<body>
+    <div class="container-fluid">
+        <div class="top-navbar">
+            @Html.Partial("_Header")
+        </div>
+
+        <div class="page-content page-content-full">
+            <div class="container-fluid">
+                <div class="alert alert-warning alert-big info-panel">
+                    <p class="text-bold alert-text-big"> Session Expired! </p>
+                    <p class="text-alert m0"> <span class="text-bold"> Your session has expired. </span>  Please @Html.ActionLink("login", "RedirectToLogin", new { style = "cursor:pointer;" }) again </p>
+                    <b><span id="timerCount"></span></b>
+                </div>
+            </div>
+        </div>
+
+        <footer class="footer" style="margin-left:0px;">
+            @Html.Partial("_Footer")
+        </footer>
+    </div>
+   
+</body>
+</html>
+<script>
+
+    companyName = '@BHIC.Common.XmlHelper.ConfigCommonKeyReader.ApplicationContactInfo["SysVarCompanyName"]';
+    companyName_NENATI20 = '@BHIC.Common.XmlHelper.ConfigCommonKeyReader.ApplicationContactInfo["CompanyName_NENATI20"]';
+</script>
+
+@CDN.RenderScripts("/bundles/scripts/script_auth")
+@CDN.RenderScripts("/bundles/scripts/common-system-variables")

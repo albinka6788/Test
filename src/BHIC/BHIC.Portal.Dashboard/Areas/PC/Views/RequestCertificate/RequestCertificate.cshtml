@@ -1,0 +1,159 @@
+﻿@using BHIC.Common.Html;
+@using BHIC.Domain.Dashboard;
+
+@{
+    
+   
+}
+<div ng-init="requestCertificateController" id="resMsg">
+    <div class="pageHeading">
+        <div class="form-group" ng-hide="stateNY">
+            <p class="m0">  If you would like your certificate right now, fill in the information below & hit submit!  </p>
+            <p> If you are not in a rush and need additional information displayed on your certificate over and above the certificate holder, please call us at <a href="tel:8444720967">844-472-0967</a> or webchat below and we’ll take care of it as soon as possible.</p>
+        </div>
+        <div class="form-group" ng-show="stateNY">
+            <p class="m0">  If you would like your certificate right now, fill in the information below & hit submit! </p>
+            <p>If you are not in a rush and need additional information displayed on your certificate over and above the certificate holder or form C 105.2, please call us at <a href="tel:8444720967">844-472-0967</a> or webchat below and we’ll take care of it as soon as possible.</p>
+        </div>
+    </div>
+    @*<div class="alert alert-success info-panel" ng-if="certificateMsg && status">
+        <p class="text-bold alert-text">Thank you for your request for a Certificate of Insurance. </p>
+        <p class="alert-text">
+            As you read this, we made your Certificate so scroll down and it will be there! If you want to speak to someone about your Certificate, please call <a href="tel:8444720967"> 844-472-0967 </a> or send an email to <a href="mailto:Certificates@CoverYourBusiness.com"> Certificates@CoverYourBusiness.com </a>
+        </p>
+    </div>*@
+    <div class="alert alert-success info-panel" ng-if="certificateMsg && status">
+        <p class="text-bold alert-text">Thank you for your request for a Certificate of Insurance. </p>
+        <p class="alert-text">
+            When ready, you will receive an email.
+            Someone from Customer Service will be in touch soon if we need any additional information. Most of the time, we will notify you within 24 hours but it could take longer.  If you want to speak to someone about your Certificate request urgently, please call <a href="tel:8444720967">844-472-0967</a> or send an email to <a href="mailto:CustomerService@CoverYourBusiness.com">CustomerService@CoverYourBusiness.com</a>
+        </p>
+    </div>
+    <div class="alert alert-danger info-panel" ng-if="certificateMsg && !status">
+        <p class="text-bold alert-text"> Request for Certificate of Insurance Failed. </p>
+        <p class="alert-text"> {{errorMessage}}</p>
+    </div>
+    <span></span>
+    <h3>Certificate Holder requiring Certificate of Insurance (on behalf of)</h3>
+    @*@Html.AntiForgeryToken()*@
+    <form name="certificateForm" data-ng-submit="certificateForm.$valid && submitReportForm();" onerrorfocus-form novalidate>
+        <div class="the-box form-container">
+            <div class="row">
+
+                <div class="md-col-12 lg-col-12 form-box-1 form-horizontal">
+                    <div class="form-group">
+                        <label class="lg-col-3 fulllabel">Full Name</label>
+                        <div class="lg-col-9">
+                            <input type="text" class="field field-lg" placeholder="Full Name" ng-model="fname" name="fnameModel" ng-pattern="/^([A-Za-z\s]{1,}[\.]{0,1}[\']{0,1}[A-Za-z\s]{0,}){0,100}$/" autofocusfield="focusField" required ng-model-options="{updateOn:'blur focusout'}" />
+                            <span class="error" ng-show="(submitted || !certificateForm.fnameModel.$pristine) && certificateForm.fnameModel.$error.required">Full Name is required.</span>
+                            <span class="error" ng-show="certificateForm.fnameModel.$error.pattern && !certificateForm.fnameModel.$pristine">Invalid Full Name.</span>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="lg-col-3 fulllabel">Address 1</label>
+                        <div class="lg-col-9">
+                            <input type="text" class="field field-lg" placeholder="Address 1" ng-model="address1" name="address1Model" required ng-model-options="{updateOn:'blur focusout'}" />
+                            <span class="error" ng-show="(submitted || !certificateForm.address1Model.$pristine) && certificateForm.address1Model.$error.required">Address 1 is required.</span>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="lg-col-3 fulllabel">Address 2</label>
+                        <div class="lg-col-9">
+                            <input type="text" class="field field-lg" placeholder="Address 2" ng-model="address2" name="address1Model2" />
+                            @*<span class="error" ng-show="submitted && certificateForm.address1Model2.$error.required">Address 2 is required!</span>*@
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="lg-col-3 fulllabel">City</label>
+                        <div class="lg-col-9">
+                            <input type="text" class="field field-sm" placeholder="City" ng-model="city" name="cityModel" ng-pattern="/^[a-zA-Z ]*$/" maxlength="20" required ng-model-options="{updateOn:'blur focusout'}" />
+                            <span class="error" ng-show="(submitted || !certificateForm.cityModel.$pristine)  && certificateForm.cityModel.$error.required">City  is required.</span>
+                            <span class="error" ng-show="certificateForm.cityModel.$error.pattern && !certificateForm.cityModel.$pristine">Invalid city Name.</span>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="lg-col-3 fulllabel">State</label>
+                        <div class="lg-col-9">
+                            <input type="text" class="field field-sm" placeholder="State" ng-model="state" name="stateModel" ng-change="onStateChange()" minlength="2" maxlength="2" ng-pattern="/^[a-zA-Z ]*$/" required ng-model-options="{updateOn:'blur focusout'}" />
+                            <span class="error" ng-show="(submitted || !certificateForm.stateModel.$pristine) && certificateForm.stateModel.$error.required">State is required.</span>
+                            <span class="error" ng-show="certificateForm.stateModel.$error.pattern && !certificateForm.stateModel.$pristine">Invalid State Name.</span>
+                            <span class="error" ng-show="certificateForm.stateModel.$error.minlength && !certificateForm.stateModel.$pristine">State should be minimum of 2 characters. </span>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="lg-col-3 fulllabel">Zip Code</label>
+                        <div class="lg-col-9">
+                            <input type="text" class="field field-sm" placeholder="Zip Code" ng-model="zipCode" name="zipCodeModel" maxlength="5" ng-pattern="/^\d+$/" required ng-model-options="{updateOn:'blur focusout'}" />
+                            <span class="error" ng-show="(submitted || !certificateForm.zipCodeModel.$pristine) && certificateForm.zipCodeModel.$error.required">Zip Code is required.</span>
+                            <span class="error" ng-show="certificateForm.zipCodeModel.$error.pattern && !certificateForm.zipCodeModel.$pristine">Invalid Zip Code.</span>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+        <h3>Contact Information</h3>
+        <div class="the-box form-container">
+            <div class="row">
+                <div class="md-col-12 lg-col-12 form-box-1 form-horizontal">
+                    <div class="form-group">
+                        <label class="lg-col-3">Name</label>
+                        <div class="lg-col-9">
+                            <input type="text" class="field field-lg" placeholder="Contact Name" name="cnameModel" readonly="readonly" tabindex="-1" ng-model="username" required />
+                            <span class="error" ng-show="submitted && certificateForm.cnameModel.$error.required">Contact Name is required.</span>
+                            <span class="error" ng-show="certificateForm.cnameModel.$error.pattern">Invalid Contact Name.</span>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="lg-col-3">Email</label>
+                        <div class="lg-col-9">
+                            <input type="email" class="field field-lg" placeholder="Email" readonly="readonly" tabindex="-1" name="cemailModel" ng-model="email" required />
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="lg-col-3">Phone</label>
+                        <div class="lg-col-9">
+                            <input type="tel" class="field field-lg" placeholder="XXX-XXX-XXXX xXXXX" mask-input mask-format="999-999-9999 x9999" tabindex="-1" readonly="readonly" ng-model="cphone" maxlength="25" name="cphoneModel" />
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="form-group group">
+            <button id="btnSubmit" class="btn btn-primary pull-right" ng-click="submitted=true">Submit</button>
+        </div>
+    </form>
+    <h3>Certificate of Insurance for {{PolicyCode}}</h3>
+    <div class="row">
+        <div class="col-12">
+            <div class="the-box">
+                <div class="table-responsive m50">
+                    <table id="certificate">
+                        <thead>
+                            <tr>
+                                <th>Name</th>
+                                <th>Address</th>
+                                <th>Issued On</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr ng-repeat="certificate in certificatesList">
+                                <td data-title="Name">                                    
+                                    <div data-ng-click="DownloadDocument(certificate.Document.EncryptedDocumentId)" style="cursor:pointer">
+                                        <span class="table-icon">
+                                            <svg xmlns="http://www.w3.org/2000/svg" version="1.1" x="0" y="0" viewBox="-293 384 25 25" xml:space="preserve">
+                                            <polygon class="stroke-teal" points="-273 407.2 -288.9 407.2 -288.9 385.8 -279.4 385.8 -273 392.1 "></polygon><polyline class="stroke-teal" points="-279.4 385.8 -279.4 392.1 -273 392.1 "></polyline><path class="stroke-teal stroke-thin" d="M-275.3 397.8c-0.4-0.4-1.4-0.3-2.1-0.2 -0.4 0.1-0.9 0.2-1.3 0.3 -0.4-0.1-0.7-0.3-1.1-0.5 -0.8-0.4-1.5-1.3-2.1-2.4 0-0.8 0.2-3.9-1.1-3.6 -1.3 0.3-0.2 2.6 0.3 3.8 -0.1 1-0.3 2.1-0.7 3.2 -0.3 1-0.7 2.2-0.7 2.2s-3.2 2.7-1.9 3.4c0.9 0.5 2-1.3 2.8-3.5 1.2-0.6 2.8-1.3 4.3-1.7 1.1 0.3 3.2 0.7 3.7-0.3C-275.1 398-275.2 397.9-275.3 397.8zM-285.3 403.1c0 0-0.9-0.1 0.9-1.6C-284.4 401.4-284.7 403-285.3 403.1zM-283 392c0 0 0.7-0.6 0.5 1.9C-282.5 393.9-283.4 392.5-283 392zM-282.7 399.4c0.1-0.3 0.2-0.6 0.3-0.9 0.2-0.7 0.4-1.4 0.5-2 0.4 0.6 1 1.1 1.5 1.5 0.1 0.1 0.2 0.1 0.3 0.2C-281 398.5-281.9 398.9-282.7 399.4zM-277.8 398.1c0 0 1.5-0.6 1.9-0.1C-275.9 398.1-275.5 398.8-277.8 398.1z"></path></svg>
+                                        </span> {{certificate.Name}}
+                                    </div>
+                                </td>
+                                <td data-title="Address">{{certificate.Address1}}, {{certificate.Address2}}<span ng-if="certificate.Address2">,</span> {{certificate.City}}, {{certificate.State}} {{certificate.ZipCode}}</td>
+                                <td data-title="Issued On">{{ convertToDate(certificate.RequestDate)}}</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,247 @@
+﻿@using BHIC.Common.Html;
+@using BHIC.Common.XmlHelper;
+@using BHIC.Common.Configuration;
+
+@model BHIC.ViewDomain.Landing.BusinessInfoViewModel
+@if (!String.IsNullOrWhiteSpace(ConfigCommonKeyReader.InspectletWid))
+{
+    <script type="text/javascript">
+        var inspectletWid = '@ConfigCommonKeyReader.InspectletWid';
+        var resetSession = false;
+        if (inspectletQuoteid == null || inspectletQuoteid == undefined) {
+            var inspectletQuoteid = '@Convert.ToString(Session["quoteId"])';
+        }
+        else if (inspectletQuoteid != '@Convert.ToString(Session["quoteId"])') {
+            resetSession = true;
+            inspectletQuoteid = '@Convert.ToString(Session["quoteId"])';
+        }
+
+        var inspectletQuoteStatus = '';
+        var inspectletSessionid = '@Session.SessionID'
+
+        if (googleAdId == null || googleAdId == undefined) {
+            var googleAdId = '@Convert.ToString(Session["googleAdId"])';
+        }
+        else if (googleAdId != '@Convert.ToString(Session["googleAdId"])') {
+            resetSession = true;
+            googleAdId = '@Convert.ToString(Session["googleAdId"])';
+        }
+        window.recordSession(inspectletWid, inspectletQuoteid, inspectletSessionid, resetSession, googleAdId)
+    </script>
+}
+
+<section class="page-content bt10">
+    <div class="container">
+        <div class="row no-gutter">
+            <div class="lg-col-8">
+                <div class="content">
+                    <div class="page-title">
+                        <h2>Please tell us about your Business</h2>
+                    </div>
+                    <div error-messages-control errormessagelist="businessInfoCtrl.listOfErrors"></div>
+
+                    <!-- Comment : Here Form controls panel -->
+                    <form name="form_BusinessInfo" class="form-horizontal lob-select-form" novalidate
+                          data-ng-init="businessInfoCtrl.init(@Newtonsoft.Json.JsonConvert.SerializeObject(Model));">
+                        <div class="form-group mb1">
+                            <label class="lg-col-4">Business Name<span class="mandatory">*</span></label>
+                            <div class="lg-col-8">
+                                <input type="text" focus="true" name="companyNameText" class="field field-lg" placeholder="Business or Individual Name" data-ng-model="businessInfoCtrl.businessInfoVm.companyName" data-ng-maxlength="150" maxlength="150" data-ng-required="true" ng-model-options="{updateOn:'blur focusout'}">
+
+                                <!-- Company Name Text field validation -->
+                                <div data-ng-messages="form_BusinessInfo.companyNameText.$error" data-ng-if="(!form_BusinessInfo.companyNameText.$pristine && form_BusinessInfo.companyNameText.$invalid) || (form_BusinessInfo.companyNameText.$invalid && businessInfoCtrl.formSubmitted)"
+                                     data-ng-cloak="">
+                                    <span data-ng-message="required" class="error">Please enter your business name</span>
+                                    <span ng-message="maxlength" class="error">Maximum value can not be &gt; 150</span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group mb1">
+                            <label class="lg-col-4">Business Zip Code<span class="mandatory">*</span></label>
+                            <div class="lg-col-3">
+                                <input type="text" name="zipCodeText" class="field field-lg" placeholder="" 
+                                       data-ng-model="businessInfoCtrl.businessInfoVm.zipCode" data-ng-maxlength="5" autocomplete="off" maxlength="5"
+                                       data-ng-required="true" @*ng-model-options="{updateOn:'blur focusout'}" *@
+                                       vm="businessInfoCtrl.businessInfoVm" zip-validation-control>
+
+                                <!-- ZipCode Text field validation -->
+                                <div data-ng-messages="form_BusinessInfo.zipCodeText.$error" data-ng-if="(!form_BusinessInfo.zipCodeText.$pristine && form_BusinessInfo.zipCodeText.$invalid) || (form_BusinessInfo.zipCodeText.$invalid && businessInfoCtrl.formSubmitted)"
+                                     data-ng-cloak="">
+                                    <span data-ng-message="required" class="error">Please enter zip code</span>
+                                    <span ng-message="maxlength" class="error">Maximum value can not be &gt; 5</span>
+                                    @*<span ng-message="invalidZipCode" class="error">Invalid Zip Code</span>*@
+                                </div>
+                                <span class="error" ng-if="form_BusinessInfo.zipCodeText.$error && !form_BusinessInfo.zipCodeText.$pristine  && !form_BusinessInfo.zipCodeText.$error.required && form_BusinessInfo.zipCodeText.$error.invalidZipCode">
+                                    Invalid Zip Code
+                                </span>
+                            </div>
+                        </div>
+                        <div class="form-group mb1">
+                            <label class="lg-col-4">Contact Email<span class="mandatory">*</span></label>
+                            <div class="lg-col-8">
+                                <input type="email" name="contactEmailText" class="field field-lg" placeholder="" data-ng-model="businessInfoCtrl.businessInfoVm.contactEmail" data- autocomplete="off" data-ng-maxlength="128" maxlength="128"
+                                       data-ng-pattern="businessInfoCtrl.ValidEmailRegEx"
+                                       ng-required="true" ng-model-options="{updateOn:'blur focusout'}"
+                                       ng-focus="hasFocus=true" ng-blur="hasFocus=false">
+
+                                <!-- Contact Email Text field validation -->
+                                <div data-ng-messages="form_BusinessInfo.contactEmailText.$error" data-ng-if="(!form_BusinessInfo.contactEmailText.$pristine && form_BusinessInfo.contactEmailText.$invalid && !hasFocus) || (form_BusinessInfo.contactEmailText.$invalid && businessInfoCtrl.formSubmitted)"
+                                     data-ng-cloak="">
+                                    <span data-ng-message="required" class="error">Please enter your contact email id</span>
+                                    <span data-ng-message="email" class="error">Please enter valid email id</span>
+                                    <span data-ng-message="pattern" class="error">Please enter valid email id</span>
+                                    <span data-ng-message="maxlength" class="error">Maximum value can not be &gt; 128</span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group mb1">
+                            <label class="lg-col-4">Contact Phone</label>
+                            <div class="lg-col-8">
+                                <input type="tel" name="contactPhoneText" class="field field-lg"
+                                       placeholder="XXX-XXX-XXXX xXXXX"
+                                       mask-input mask-format="999-999-9999 x9999"
+                                       data-ng-model="businessInfoCtrl.businessInfoVm.contactPhone"
+                                       @*data-ng-pattern="/^\(?(\d{3})\)?[- ]?(\d{3})[- ]?(\d{4})$/"*@
+                                       data-ng-pattern="/^([0-9]{3}?-?[0-9]{3}?-?[0-9]{4}?)+(\s?x?[0-9_]{0,4}?)?$/"                                
+                                       ng-model-options="{updateOn:'blur focusout'}">
+
+                                <!-- Contact Phone Text field Required validation -->                                
+                                <div data-ng-messages="form_BusinessInfo.contactPhoneText.$error" data-ng-if="(!form_BusinessInfo.contactPhoneText.$pristine && form_BusinessInfo.contactPhoneText.$invalid) || (form_BusinessInfo.contactPhoneText.$invalid && businessInfoCtrl.formSubmitted)"
+                                     data-ng-cloak="">
+                                    <span data-ng-message="pattern" class="error">Please enter valid phone number</span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group mb1">
+                            <label class="lg-col-4">Contact Name</label>
+                            <div class="lg-col-8">
+                                <input type="text" name="contactNameText" class="field field-lg" placeholder="" data-ng-model="businessInfoCtrl.businessInfoVm.contactName" data-ng-maxlength="256" maxlength="256" ng-model-options="{updateOn:'blur focusout'}">
+
+                                <!-- Company Name Text field validation -->
+                                <div data-ng-messages="form_BusinessInfo.contactNameText.$error" data-ng-if="(!form_BusinessInfo.contactNameText.$pristine && form_BusinessInfo.contactNameText.$invalid) || (form_BusinessInfo.contactNameText.$invalid && businessInfoCtrl.formSubmitted)"
+                                     data-ng-cloak="">
+                                    <span ng-message="maxlength" class="error">Maximum value can not be &gt; 256</span>
+                                </div>
+                            </div>
+                        </div>
+                        @*<div class="form-group mb1">
+                                <label class="lg-col-4">Address 1</label>
+                                <div class="lg-col-8">
+                                    <input type="text" name="addressFirstText" class="field field-lg" placeholder="" data-ng-model="businessInfoCtrl.businessInfoVm.address1" data-ng-maxlength="50" ng-model-options="{updateOn:'blur focusout'}">
+
+
+                                    <div data-ng-messages="form_BusinessInfo.addressFirstText.$error" data-ng-if="(!form_BusinessInfo.addressFirstText.$pristine && form_BusinessInfo.addressFirstText.$invalid) || (form_BusinessInfo.addressFirstText.$invalid && businessInfoCtrl.formSubmitted)"
+                                         data-ng-cloak="">
+                                        <span ng-message="maxlength" class="error">Maximum value can not be &gt; 256</span>
+                                    </div>
+                                </div>
+                            </div>*@
+                        @*<div class="form-group mb1" data-ng-show="businessInfoCtrl.businessInfoVm.showCity">
+                                <label class="lg-col-4">City</label>
+                                <div class="lg-col-5">
+                                    <select class="field field-lg" name="cityDropDown"
+                                            data-ng-options="county as county.City for county in businessInfoCtrl.businessInfoVm.cityList"
+                                            ng-model="businessInfoCtrl.businessInfoVm.selectedCity">
+                                        <option value="" disabled selected>Please Select City</option>
+                                    </select>
+
+
+                                    <div data-ng-messages="form_BusinessInfo.cityText.$error" data-ng-if="(!form_BusinessInfo.cityText.$pristine && form_BusinessInfo.cityText.$invalid) || (form_BusinessInfo.cityText.$invalid && businessInfoCtrl.formSubmitted)"
+                                         data-ng-cloak="">
+                                        <span ng-message="maxlength" class="error">Maximum value can not be &gt; 30</span>
+                                    </div>
+                                </div>
+                            </div>*@
+
+                        <!-- Comment : Here Products/LOBs selection list -->
+                        <fieldset>
+                            <legend class="h4">Where would you like to start?<span class="mandatory">*</span></legend>
+                            <label data-ng-class="{radio: true, 'disabled': businessInfoCtrl.setLobsStatus(1)}">
+                                <input type="radio" id="lobTypeRadio1" name="lobTypeRadioGroup"
+                                       data-ng-model="businessInfoCtrl.businessInfoVm.lobId" value="1" data-ng-disabled="businessInfoCtrl.setLobsStatus(1)"
+                                       data-ng-click="businessInfoCtrl.updateSelectedLobStatus($event)" data-ng-required="true" disabled>
+                                <span></span><b>Workers' Compensation Insurance</b>
+                                <i class="text-warning" data-ng-show="businessInfoCtrl.setLobsStatus(1)">
+                                    {{businessInfoCtrl.setLobsMessages(1)}}
+                                </i>
+                            </label>
+                            <label data-ng-class="{radio: true, 'disabled': businessInfoCtrl.setLobsStatus(2)}">
+                                <input type="radio" id="lobTypeRadio2" name="lobTypeRadioGroup"
+                                       data-ng-model="businessInfoCtrl.businessInfoVm.lobId" value="2" data-ng-disabled="businessInfoCtrl.setLobsStatus(2)"
+                                       data-ng-click="businessInfoCtrl.updateSelectedLobStatus($event)" data-ng-required="true" disabled>
+                                <span></span><b>Property &amp; Liability (BOP)</b>
+                                <i class="text-warning" data-ng-show="businessInfoCtrl.setLobsStatus(2)">
+                                    {{businessInfoCtrl.setLobsMessages(2)}}
+                                </i>
+                            </label>
+                            <label data-ng-class="{radio: true, 'disabled': businessInfoCtrl.setLobsStatus(3)}">
+                                <input type="radio" id="lobTypeRadio3" name="lobTypeRadioGroup"
+                                       data-ng-model="businessInfoCtrl.businessInfoVm.lobId" value="3" data-ng-disabled="businessInfoCtrl.setLobsStatus(3)"
+                                       data-ng-click="businessInfoCtrl.updateSelectedLobStatus($event)" data-ng-required="true" disabled>
+                                <span></span><b>Commercial Auto Insurance</b>
+                                <i class="text-warning" data-ng-show="businessInfoCtrl.setLobsStatus(3)">
+                                    {{businessInfoCtrl.setLobsMessages(3)}}
+                                </i>
+                            </label>
+
+                            <!-- Comment : Here Product/LOB selection validation message -->
+                            <div data-ng-messages="form_BusinessInfo.lobTypeRadioGroup.$error"
+                                 data-ng-if="(form_BusinessInfo.lobTypeRadioGroup.$invalid && businessInfoCtrl.formSubmitted && !(businessInfoCtrl.setLobsStatus(1) && businessInfoCtrl.setLobsStatus(2) &&businessInfoCtrl.setLobsStatus(3)))" data-ng-cloak="">
+                                <span ng-message="required" class="error">Please select line of business</span>
+                            </div>
+                            @*<div data-ng-messages="form_BusinessInfo.lobTypeRadioGroup.$error" data-ng-if="(!form_BusinessInfo.lobTypeRadioGroup.$pristine && form_BusinessInfo.lobTypeRadioGroup.$invalid) || (form_BusinessInfo.lobTypeRadioGroup.$invalid && businessInfoCtrl.formSubmitted)"
+                                     data-ng-cloak="">
+                                    <span ng-message="required" class="error">Please select line of business</span>
+                                </div>*@
+                        </fieldset>
+
+                        <!-- Comment : Here Form submission panel -->
+                        <div class="btn-actions clear">
+                            <input type="button" id="btn_SubmitBusinessInfo" value="Continue" class="btn btn-primary pull-right"
+                                   data-ng-click="businessInfoCtrl.formSubmitted=true;
+                                   businessInfoCtrl.submitBusinessInfoData(form_BusinessInfo,businessInfoCtrl.businessInfoVm)" />
+                        </div>
+                    </form>
+                </div>
+            </div>
+            
+            <!-- Comment : Here Right side static panel -->
+            <div class="lg-offset-1 lg-col-3">
+                <aside>
+                    <div class="widget product-offering">
+                        <div class="widget-heading">
+                            <h6>Our Product Offering</h6>
+                        </div>
+                        <div class="widget-content">
+                            <h4> Workers' Compensation Insurance </h4>
+                            <ul>
+                                <li> Mandatory for almost all businesses </li>
+                                <li> Covers employees injured at work </li>
+                                <li> Takes care of medical bills & lost wages </li>
+                            </ul>
+                            <hr>
+                            <h4> Property & Liability (BOP) </h4>
+                            <ul>
+                                <li> Protects your business property and lost income</li>
+                                <li>  Offers liability protection if your business is sued </li>
+                                <li>Contains other coverages customized for your business</li>
+                                <li>Business Owner’s Policy (BOP)</li>
+                            </ul>
+                            <hr>
+                            <h4> Commercial Auto Insurance</h4>
+                            <ul>
+                                <li> Covers a variety of company-owned vehicles </li>
+                                <li> Provides coverage for :</li>
+                                <ul>
+                                    <li> medical costs of the driver, passengers & people in the other car </li>
+                                    <li> vehicle repair costs </li>
+                                    <li> Lawyer fees, settlements & judgments if you're sued </li>
+                                </ul>
+                            </ul>
+                        </div>
+                    </div>
+                </aside>
+            </div>
+        </div>
+    </div>
+</section>

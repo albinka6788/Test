@@ -1,0 +1,21 @@
+﻿@using BHIC.Domain.CommercialAuto;
+@using BHIC.Common.XmlHelper;
+@using BHIC.Common.Configuration;
+@{
+    ViewBag.Title = "Quote Page Index";
+    Layout = "~/Areas/PurchasePath/Views/Shared/_LayoutCA.cshtml";
+    string iframeURL = ConfigCommonKeyReader.CommercialAutoURL + "?POL_soaCode=" + ConfigCommonKeyReader.PolSOACode + "&Zipcode=" + Model.ZipCode;
+}
+@if (!String.IsNullOrWhiteSpace(ConfigCommonKeyReader.InspectletWid))
+{
+    <script type="text/javascript">
+        var inspectletWid = '@ConfigCommonKeyReader.InspectletWid';
+        var inspectletQuoteid = '@BHIC.Common.Quote.QuoteCookieHelper.Cookie_GetQuoteId(new HttpContextWrapper(HttpContext.Current))'
+        var inspectletSessionid = '@Session.SessionID'
+        var resetSession = false;
+        window.recordSession(inspectletWid, inspectletQuoteid, inspectletSessionid, resetSession)
+    </script>
+}
+<div class="iframe-holder">
+    <iframe id="ca-geico" src="@iframeURL" frameborder="0" scrolling="no"></iframe>
+</div>

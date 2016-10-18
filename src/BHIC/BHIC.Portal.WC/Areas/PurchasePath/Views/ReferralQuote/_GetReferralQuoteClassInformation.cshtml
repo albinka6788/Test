@@ -1,0 +1,83 @@
+﻿@model BHIC.ViewDomain.CustomSession
+@using BHIC.Common.XmlHelper;
+@using BHIC.Common.Configuration;
+@{
+    var sessionQuoteVM = Model.QuoteVM;
+}
+
+
+<table id="tblClassInfo" cellpadding="0" cellspacing="0" style="border-collapse:collapse;width:100%;">
+    <tbody>
+        <tr>
+            <td style="border-collapse:collapse;padding:2px 0px;border-bottom:1px solid #ccc;" colspan="4">
+                <p style="margin:0px;font-size:13px; font-weight:bold;line-height:16px;color:#009483;font-family:verdana;margin-bottom:10px;margin-top:10px;">
+                    Class Information
+                </p>
+            </td>
+        </tr>
+        <tr>
+            <td style="border-collapse:collapse;padding:2px 0px;">
+                <p style="margin-top:10px;margin-bottom:0;margin-right:0;margin-left:0;color:#182a54;font-family:verdana;font-size:12px;font-weight:bold;"> State </p>
+            </td>
+            <td style="border-collapse:collapse;padding:2px 0px;">
+                <p style="margin-top:10px;margin-bottom:0;margin-right:0;margin-left:0;color:#182a54;font-family:verdana;font-size:12px;font-weight:bold;"> Class Code </p>
+            </td>
+            <td style="border-collapse:collapse;padding:2px 0px;">
+                <p style="margin-top:10px;margin-bottom:0;margin-right:0;margin-left:0;color:#182a54;font-family:verdana;font-size:12px;font-weight:bold;"> Class Suffix </p>
+            </td>
+            <td style="border-collapse:collapse;padding:2px 0px;">
+                <p style="margin-top:10px;margin-bottom:0;margin-right:0;margin-left:0;color:#182a54;font-family:verdana;font-size:12px;font-weight:bold;"> Annual Payroll</p>
+            </td>
+        </tr>
+
+        <!-- Comment : Here show primary class related information ROW -->
+        @if (sessionQuoteVM != null)
+        {
+            <tr>
+                <td style="border-collapse:collapse;padding:2px 0px;">
+                    <p style="margin-top:0;margin-bottom:0;margin-right:0;margin-left:0;color:#182a54;font-family:verdana;font-size:12px;"> @Model.StateAbbr </p>
+                </td>
+                <td style="border-collapse:collapse;padding:2px 0px;">
+                    <p style="margin-top:0;margin-bottom:0;margin-right:0;margin-left:0;color:#182a54;font-family:verdana;font-size:12px;"> 
+                        @(sessionQuoteVM.SelectedSearch == 0 ? (sessionQuoteVM.ClassCode == "-1" ? string.Empty : sessionQuoteVM.ClassCode) : sessionQuoteVM.Class.ClassCode)
+                    </p>
+                </td>
+                <td style="border-collapse:collapse;padding:2px 0px;">
+                    <p style="margin-top:0;margin-bottom:0;margin-right:0;margin-left:0;color:#182a54;font-family:verdana;font-size:12px;"> &nbsp; </p>
+                </td>
+                <td style="border-collapse:collapse;padding:2px 0px;">
+                    <p style="margin-top:0;margin-bottom:0;margin-right:0;margin-left:0;color:#182a54;font-family:verdana;font-size:12px;"> @sessionQuoteVM.AnnualPayroll.ToString("#,##0")</p>
+                </td>
+            </tr>
+        }
+
+        <!-- Comment : Here show all companion classes information ROWs -->
+        @if (sessionQuoteVM.CompClassData != null)
+        {
+            
+            foreach (var businessClass in sessionQuoteVM.CompClassData)
+        {
+            <tr>
+                <td style="border-collapse:collapse;padding:2px 0px;">
+                    <p style="margin-top:0;margin-bottom:0;margin-right:0;margin-left:0;color:#182a54;font-family:verdana;font-size:12px;"> @Model.StateAbbr </p>
+                </td>
+                <td style="border-collapse:collapse;padding:2px 0px;">
+                    <p style="margin-top:0;margin-bottom:0;margin-right:0;margin-left:0;color:#182a54;font-family:verdana;font-size:12px;"> @businessClass.ClassCode </p>
+                </td>
+                <td style="border-collapse:collapse;padding:2px 0px;">
+                    <p style="margin-top:0;margin-bottom:0;margin-right:0;margin-left:0;color:#182a54;font-family:verdana;font-size:12px;"> @businessClass.ClassSuffix </p>
+                </td>
+                <td style="border-collapse:collapse;padding:2px 0px;">
+                    <p style="margin-top:0;margin-bottom:0;margin-right:0;margin-left:0;color:#182a54;font-family:verdana;font-size:12px;"> @businessClass.PayrollAmount</p>
+                </td>
+            </tr>
+        }
+        }
+
+        <tr>
+            <td style="border-collapse:collapse;padding:2px 0px;" colspan="4">
+                <p style="margin-top:5px;margin-bottom:0;margin-right:0;margin-left:0;color:#5c666f;font-family:verdana;font-size:11px;"> *A maximum of 5 classes will be listed above</p>
+            </td>
+        </tr>
+    </tbody>
+</table>

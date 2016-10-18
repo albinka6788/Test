@@ -1,0 +1,47 @@
+﻿@using BHIC.Common.Html;
+@using BHIC.Common.XmlHelper;
+@using BHIC.Common.Configuration;
+@if (!String.IsNullOrWhiteSpace(ConfigCommonKeyReader.InspectletWid))
+{
+    <script type="text/javascript">
+        var inspectletWid = '@ConfigCommonKeyReader.InspectletWid';
+        var resetSession = false;
+        var inspectletQuoteid = '@BHIC.Common.Quote.QuoteCookieHelper.Cookie_GetQuoteId(new HttpContextWrapper(HttpContext.Current))'
+        var inspectletSessionid = '@Session.SessionID'
+        var googleAdId = '@Session["googleAdId"]';
+        window.recordSession(inspectletWid, inspectletQuoteid, inspectletSessionid, resetSession, googleAdId)
+    </script>
+}
+    @*@model object*@
+    @model BHIC.ViewDomain.Landing.HomeViewModel
+
+    @{
+        Layout = "~/Areas/PurchasePath/Views/Shared/_Layout.cshtml";
+    }
+
+    <div class="shift">
+        @Html.AntiForgeryToken()
+        <!-- Comment : Here add dynamic site content -->
+        @*@Html.Raw(Model)*@
+        @Html.Raw(Model.SessionData)
+
+        <!-- Comment : Here hide default laoder -->
+        <script src="https://code.jquery.com/jquery-1.10.2.js"></script>
+        <script>
+            $(document).ready(function () {
+                $('#divLoader').hide();
+
+                //highligh selected menu item
+                $('.main-menu').find('li').each(function () {
+                    $(this).removeAttr('class');
+
+                    if ($(this).find('a').attr('id') != undefined && $('#hdnViewId').val() != undefined) {
+                        if ($(this).find('a').attr('id') == $('#hdnViewId').val()) {
+                            $(this).addClass('active');
+                        }
+                    }
+                });
+            });
+        </script>
+
+    </div>

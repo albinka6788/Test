@@ -1,0 +1,170 @@
+﻿@using BHIC.Domain.QuestionEngine;
+@model BHIC.Portal.Areas.QuestionEngine.Models.MyQuestionsViewModel
+
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Areas/QuestionEngine/Views/Shared/_Layout.cshtml";
+}
+
+
+@*<style type="text/css"></style>*@
+<link href="~/Content/Site.css" rel="stylesheet" />
+
+<link href="http://code.jquery.com/ui/1.10.3/themes/smoothness/jquery-ui.css" rel="stylesheet">
+<script src="http://code.jquery.com/jquery-1.9.1.js"></script>
+<script src="http://code.jquery.com/ui/1.10.3/jquery-ui.js"></script>
+@*<script src="//ajax.googleapis.com/ajax/libs/jquery/1.8.1/jquery.min.js"></script>*@
+
+@*<script type="text/javascript"></script>*@
+<script src="~/Scripts/questionRender.js"></script>
+
+<!-- Comment : Here if found error then show ErrorMessage -->
+@ViewBag.Error
+
+<div style="width:100%;font-weight:bold;color:#000;margin:10px 0px 10px 0px;text-align:right;padding-right:15px">
+    @Html.ActionLink("<< Go To Index", "Index", "QuestionEngine/Questions", new { area = "" }, new { @class = "" })
+</div>
+
+<h2>Just a few more questions...</h2>
+<br />
+
+@using (Html.BeginForm("SubmitQuestions", "Questions"))
+{
+
+    @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+    <table cellpadding="4" width="100%">
+        @foreach (var objQuestion in Model.QuestionsList)
+        {
+            <tr>
+                <td>
+                    @*<div style="background-color:gray;color:#fff;font-weight:bold">*@
+                    <div class="panel panel-body" style="clear:both;">
+                        <div class="question-text">
+                            @objQuestion.QuestionId
+                            .
+                            @objQuestion.QuestionText
+                            <br />
+                            @objQuestion.QuestionType
+                            <br />
+
+                            @switch (@objQuestion.QuestionType)
+                            {
+
+                                case MyQuestionType.Numeric:
+                                    {
+                                        @*@Html.TextBox("txtNum_" + @objQuestion.QuestionId.ToString(), "", new { type = "number", @class = "testClass" })*@
+                                        @Html.TextBoxFor(m => Model.TypeNumeric, new { type = "number", data_custom_string = "Value1", data_custom_string2 = "Value2", @class = "NumericOnly", })
+                                        @Html.ValidationMessageFor(person => Model.TypeNumeric, "", new { @class = "txt-customDanger" })
+                                        break;
+                                    }
+                                case MyQuestionType.Percentage:
+                                    {
+                                        @*<div style="margin-bottom:5px;">
+                                                <input id="slider-step-value1" type="text" value="0" style="border: 0px; font-weight: bold; width:30px; text-align:right;padding:0px;" readonly="readonly" name="QuestionsResponse.Questions[5].ResponsePercent" min="0" max="100" data-val-required="A response is required for this question." data-val-number="The field ResponsePercent must be a number." data-val="true" class="questionId94 valid" aria-required="true" aria-invalid="false" aria-describedby="slider-step-value5-error" />%
+                                            </div>*@
+
+                                        @Html.TextBoxFor(m => Model.TypePercentage, new
+                                   {
+                                       id = "slider-step-value" + @objQuestion.QuestionId.ToString(),
+                                       @readonly = "readonly"
+                                       ,
+                                       @style = "border: 0px; font-weight: bold; width:30px; text-align:right;padding:0px;"
+                                   }) <text>%</text>
+
+                                <div style="margin-left:15px;">
+                                    <div id="@string.Concat("slider-step", @objQuestion.QuestionId)" class="ui-slider ui-slider-horizontal ui-widget ui-widget-content ui-corner-all"><div class="ui-slider-range ui-widget-header ui-corner-all ui-slider-range-min" style="width: 0%;"></div><span tabindex="0" class="ui-slider-handle ui-state-default ui-corner-all" style="left: 0%;"></span></div>
+                                </div>
+                                        break;
+                                    }
+                                case MyQuestionType.Text:
+                                    {
+                                        @*@Html.TextBox("txtNum_" + @objQuestion.QuestionId.ToString(), "", new { type = "number", @class = "testClass" })*@
+                                        @Html.EditorFor(m => Model.TypeText)
+                                        @Html.ValidationMessageFor(m => Model.TypeText, "", new { @class = "txt-customDanger" })
+                                        break;
+                                    }
+                                case MyQuestionType.TextParagraph:
+                                    {
+                                        @*@Html.TextBox("txtNum_" + @objQuestion.QuestionId.ToString(), "", new { type = "number", @class = "testClass" })*@
+                                        @Html.EditorFor(m => Model.TypeTextParagraph)
+                                        @Html.ValidationMessageFor(m => Model.TypeTextParagraph, "", new { @class = "txt-customDanger" })
+                                        break;
+                                    }
+                                case MyQuestionType.Radio:
+                                    {
+                                        var lblRadio = (@objQuestion.QuestionId > 0 ? "Yes" : "N0");
+                                        var QuestionId = (@objQuestion.QuestionId);
+
+                                        <!-- Comment : Here because of Mutiple radiobutton group model pattern of "RadioButtonFor" will not work -->
+                                        @Html.RadioButton("QuestionId_" + QuestionId.ToString(), "Y", false, new { id = "QuestionId_" + QuestionId, value = "Y" }) @:Yes
+                                        @*@Html.RadioButtonFor(objQ => @objQuestion.QuestionId, "Yes", new { id = "QuestionId_" + QuestionId, value = "Y", groupname = "RadioGroup_" + QuestionId })  @:Yes*@
+                                        @*@Html.Label(lblRadio, new { id = "lblRadio" + lblRadio })
+                                            <text>&nbsp;</text>*@
+
+                                        @Html.RadioButton("QuestionId_" + QuestionId.ToString(), "N", false, new { id = "QuestionId_" + QuestionId, value = "N" }) @:No
+                                        @*@Html.RadioButtonFor(objQ => @objQuestion.QuestionId, "No", new { id = "QuestionId_" + QuestionId, value = "N", groupname = "RadioGroup_" + QuestionId }) @:No*@
+                                        @*@Html.Label(lblRadio, new { id = "lblRadio" + lblRadio })*@
+
+                                        break;
+                                    }
+                                case MyQuestionType.List:
+                                    {
+                                        @Html.DropDownList(
+                                                "ddl_PersonType"
+                                               , new SelectList
+                                                (
+                                                    new List<Object>
+                                                    {
+                                                         new { text = "--Select--", value = "0"}
+                                                        ,new { text ="List Item 1", value = "1"}
+                                                        ,new { text ="List Item 2", value = "2"}
+                                                        ,new { text ="List Item 3", value = "3"}
+                                                    }
+                                                    , "value"
+                                                    , "text"
+                                                    , 0
+                                                )
+                                            )
+
+                                        //Comment : Here we can also bind it from Directly enum also
+                                        @*@Html.DropDownList("ddlName", new SelectList(new [] { "All" }.Concat(Enum.GetNames(typeof(MyQuestionType)))))*@
+
+                                        break;
+                                    }
+                            }
+                        </div>
+                    </div>
+
+                </td>
+            </tr>
+
+        }
+
+    </table>
+    <div style="" class="panel">
+        <div class="panel-body">
+
+            <div>
+                By checking the following box, I hereby certify that all of the following are true statements for this business: <br> <ul> <li>Does not own operate or lease any aircraft/watercraft</li> <li>Does not store/treat/discharge/apply/dispose/transport/or handle hazardous materials of any kind</li> <li>Does not perform and work on barges/vessels/docks/or bridges over water</li> <li>Does not provide group transportation for employees</li> <li>Does not use volunteers or donated labor</li><li>Area of operations is less than 200 miles from a location on your policy</li> </ul>
+            </div>
+            <div style="padding-top:5px;">
+
+                <div class="form-group">
+                    <div class="col-md-10">
+                        @Html.CheckBoxFor(m => Model.AcceptFlag, new { id = "AcceptCheckbox" })
+                        @*<input type="checkbox" value="true" name="AcceptFlag" id="AcceptCheckbox" data-val-required="The AcceptFlag field is required." data-val="true">*@
+                        @*<input type="hidden" value="false" name="AcceptFlag">*@
+                        <b>I certify that the above statements are true.</b>
+                        &nbsp;(Please click to continue)
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div>
+        <input id="btn_Save" type="submit" value="GET MY QUOTE!" class="ds-button-activecommand" disabled="disabled" />
+        <input id="btn_Save" type="submit" value="Save for Later" class="btn-Save" disabled="" />
+    </div>
+
+}

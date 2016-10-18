@@ -1,0 +1,103 @@
+﻿<ng-form name="businessInfo">
+    <div class="panel">
+        <div class="panel-body">
+            <h4>Additional Business Information</h4>
+            <hr>
+            <div class="form-group">
+                <label class="col-md-3" for="DsQuoteViewModel_BusinessName">Business Name</label>
+                <div class="col-md-9">
+                    <input type="text" name="businessName" ng-model="purchaseModel.businessInfo.businessName" required />
+                    <p data-ng-show="submitted && businessInfo.businessName.$error.required" class="help-block">Please provide the formal name of the business</p>
+                </div>
+            </div>
+
+            <input data-val="true" data-val-length="The field Description of Business must be a string with a maximum length of 250." data-val-length-max="250" id="DsQuoteViewModel_DescriptionOfOperations" name="DsQuoteViewModel.DescriptionOfOperations" type="hidden" value="">
+
+            <div class="form-group">
+                <label class="col-md-3" for="DsQuoteViewModel_BusinessType">Business Type</label>
+                <div class="col-md-9">
+                    <select name="businessType" data-ng-model="purchaseModel.businessInfo.businessType" ng-options="business.Description for business in businessTypes track by business.BusinessTypeCode" required>
+                        <option value="">- Please Select -</option>
+                    </select>
+                    <p data-ng-show="submitted && businessInfo.businessType.$error.required" class="help-block">Please specify the type of business</p>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label class="col-md-3" for="DsQuoteViewModel_TaxIdType">Tax ID Type</label>
+                <div class="col-md-9">
+                    <div class="radio">
+                        <div ng-repeat="textIdType in textIdTypes">
+                            <label>
+                                <input type="radio" ng-value="textIdType.Value" data-ng-model="selectedTax" ng-change="updateTaxSelection(textIdType.Value)" name="selectedTax" required>
+                                {{textIdType.Text}}
+                            </label>
+                        </div>
+                    </div>
+
+                    <p data-ng-show="submitted && businessInfo.taxIdType.$error.required" class="help-block">Please select a valid Tax ID Type</p>
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="col-md-3" for="DsQuoteViewModel_TaxId" id="DsTaxIdLabel">Tax ID or SSN</label>
+                <div class="col-md-9">
+                    <input type="text" mask-input mask-format="99-9999999" data-ng-model="purchaseModel.businessInfo.taxIdOrSSN" name="taxIdOrSSN" ssn-format required />
+                    <p data-ng-show="submitted && businessInfo.taxIdOrSSN.$error.required" class="help-block"> Please provide a valid SSN or Tax Id Number max</p>
+                    <p data-ng-show="submitted && businessInfo.taxIdOrSSN.$error.minlength" class="help-block">Tax ID or SSN no should be minimum of 9 digits</p>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="panel">
+        <div class="panel-body">
+            <h4>Business Mailing Address</h4>
+            <hr>
+            <div class="form-group">
+                <label class="col-md-3" for="Address_Line_1">Address Line 1</label>
+                <div class="col-md-9">
+                    <input type="text" name="addressLine1" ng-model="purchaseModel.mailingAddress.addressLine1" required />
+                    <p data-ng-show="submitted && businessInfo.addressLine1.$error.required" class="help-block">Please provide an address</p>
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="col-md-3" for="Address_Line_2">Address Line 2</label>
+                <div class="col-md-9">
+                    <input type="text" name="addressLine2" ng-model="purchaseModel.mailingAddress.addressLine2" />
+                </div>
+            </div>
+            <div id="DsContactCityStateContainer">
+                <div class="form-group">
+                    <label class="col-md-3" for="City">City</label>
+                    <div class="col-md-9">
+                        <input type="text" name="city" ng-model="purchaseModel.mailingAddress.city" ng-blur="validateStateCityZip()" required />
+                        <p data-ng-show="submitted && businessInfo.city.$error.required" class="help-block">Please specify city</p>
+                        <p data-ng-show="invalidZipCityState" class="help-block">City ,State and ZipCode combination is not valid</p>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-md-3" for="State">State</label>
+                    <div class="col-md-9">
+                        &nbsp;<span type="text" ng-model="purchaseModel.mailingAddress.state" />{{purchaseModel.mailingAddress.state}}
+                    </div>
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="col-md-3" for="Zip">Zip</label>
+                <div ng-if="!showZipCodeTextInput" class="col-md-9">
+                    &nbsp;<span type="text" ng-model="purchaseModel.mailingAddress.zip" />{{purchaseModel.mailingAddress.zip}}
+                </div>
+                <div ng-if="showZipCodeTextInput" class="col-md-9">
+                    &nbsp;<input type="text" ng-model="purchaseModel.mailingAddress.zip" ng-blur="validateStateCityZip()" />
+                </div>
+            </div>
+            <div>
+                <strong>Note: </strong>
+                <br>
+                If you need to revise the zip code that you provided earlier, you can do so by clicking
+                <a ng-click="goToHomePage()">here.</a>
+                &nbsp;
+                It is important to understand that changing the zip code may affect the custom premium amount that we calculated for you.
+            </div>
+        </div>
+    </div>
+</ng-form>

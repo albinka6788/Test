@@ -1,0 +1,499 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="12.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProductVersion>
+    </ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{E9322E76-3C67-48C7-8244-A68CCE014F66}</ProjectGuid>
+    <ProjectTypeGuids>{349c5851-65df-11da-9384-00065b846f21};{fae04ec0-301f-11d3-bf4b-00c04f79efbc}</ProjectTypeGuids>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>BHIC.Portal</RootNamespace>
+    <AssemblyName>BHIC.Portal</AssemblyName>
+    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
+    <MvcBuildViews>false</MvcBuildViews>
+    <UseIISExpress>true</UseIISExpress>
+    <IISExpressSSLPort />
+    <IISExpressAnonymousAuthentication />
+    <IISExpressWindowsAuthentication />
+    <IISExpressUseClassicPipelineMode />
+    <SolutionDir Condition="$(SolutionDir) == '' Or $(SolutionDir) == '*Undefined*'">..\</SolutionDir>
+    <RestorePackages>true</RestorePackages>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <UseVSHostingProcess>false</UseVSHostingProcess>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="Microsoft.Practices.ServiceLocation, Version=1.3.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\CommonServiceLocator.1.3\lib\portable-net4+sl5+netcore45+wpa81+wp8\Microsoft.Practices.ServiceLocation.dll</HintPath>
+    </Reference>
+    <Reference Include="Newtonsoft.Json, Version=6.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\Newtonsoft.Json.6.0.8\lib\net45\Newtonsoft.Json.dll</HintPath>
+    </Reference>
+    <Reference Include="NLog, Version=4.0.0.0, Culture=neutral, PublicKeyToken=5120e14c03d0593c, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\NLog.4.1.2\lib\net45\NLog.dll</HintPath>
+    </Reference>
+    <Reference Include="StructureMap, Version=3.1.5.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\structuremap.3.1.5.154\lib\net40\StructureMap.dll</HintPath>
+    </Reference>
+    <Reference Include="StructureMap.Net4">
+      <HintPath>..\packages\structuremap.3.1.5.154\lib\net40\StructureMap.Net4.dll</HintPath>
+    </Reference>
+    <Reference Include="StructureMap.Web">
+      <HintPath>..\packages\structuremap.web.3.1.5.154\lib\net40\StructureMap.Web.dll</HintPath>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Runtime.Caching" />
+    <Reference Include="System.Web.DynamicData" />
+    <Reference Include="System.Web.Entity" />
+    <Reference Include="System.Web.ApplicationServices" />
+    <Reference Include="System.ComponentModel.DataAnnotations" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="System.Web.Helpers, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\Microsoft.AspNet.WebPages.3.2.3\lib\net45\System.Web.Helpers.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.Mvc, Version=5.2.3.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\Microsoft.AspNet.Mvc.5.2.3\lib\net45\System.Web.Mvc.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.Razor, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\Microsoft.AspNet.Razor.3.2.3\lib\net45\System.Web.Razor.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.WebPages, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\Microsoft.AspNet.WebPages.3.2.3\lib\net45\System.Web.WebPages.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.WebPages.Deployment, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\Microsoft.AspNet.WebPages.3.2.3\lib\net45\System.Web.WebPages.Deployment.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.WebPages.Razor, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\Microsoft.AspNet.WebPages.3.2.3\lib\net45\System.Web.WebPages.Razor.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Web" />
+    <Reference Include="System.Web.Extensions" />
+    <Reference Include="System.Web.Abstractions" />
+    <Reference Include="System.Web.Routing" />
+    <Reference Include="System.Xml" />
+    <Reference Include="System.Configuration" />
+    <Reference Include="System.Web.Services" />
+    <Reference Include="System.EnterpriseServices" />
+    <Reference Include="Microsoft.Web.Infrastructure, Version=1.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <Private>True</Private>
+      <HintPath>..\packages\Microsoft.Web.Infrastructure.1.0.0.0\lib\net40\Microsoft.Web.Infrastructure.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Net.Http">
+    </Reference>
+    <Reference Include="System.Net.Http.WebRequest">
+    </Reference>
+    <Reference Include="System.Web.Optimization">
+      <HintPath>..\packages\Microsoft.AspNet.Web.Optimization.1.1.1\lib\net40\System.Web.Optimization.dll</HintPath>
+    </Reference>
+    <Reference Include="WebActivatorEx">
+      <HintPath>..\packages\WebActivatorEx.2.0.6\lib\net40\WebActivatorEx.dll</HintPath>
+    </Reference>
+    <Reference Include="WebGrease">
+      <Private>True</Private>
+      <HintPath>..\packages\WebGrease.1.5.2\lib\WebGrease.dll</HintPath>
+    </Reference>
+    <Reference Include="Antlr3.Runtime">
+      <Private>True</Private>
+      <HintPath>..\packages\Antlr.3.4.1.9004\lib\Antlr3.Runtime.dll</HintPath>
+    </Reference>
+  </ItemGroup>
+  <ItemGroup>
+    <Reference Include="EntityFramework">
+      <HintPath>..\packages\EntityFramework.6.0.0\lib\net45\EntityFramework.dll</HintPath>
+    </Reference>
+    <Reference Include="EntityFramework.SqlServer">
+      <HintPath>..\packages\EntityFramework.6.0.0\lib\net45\EntityFramework.SqlServer.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.AspNet.Identity.Core">
+      <HintPath>..\packages\Microsoft.AspNet.Identity.Core.1.0.0\lib\net45\Microsoft.AspNet.Identity.Core.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.AspNet.Identity.Owin">
+      <HintPath>..\packages\Microsoft.AspNet.Identity.Owin.1.0.0\lib\net45\Microsoft.AspNet.Identity.Owin.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.AspNet.Identity.EntityFramework">
+      <HintPath>..\packages\Microsoft.AspNet.Identity.EntityFramework.1.0.0\lib\net45\Microsoft.AspNet.Identity.EntityFramework.dll</HintPath>
+    </Reference>
+    <Reference Include="Owin">
+      <HintPath>..\packages\Owin.1.0\lib\net40\Owin.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Owin">
+      <HintPath>..\packages\Microsoft.Owin.2.0.0\lib\net45\Microsoft.Owin.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Owin.Host.SystemWeb">
+      <HintPath>..\packages\Microsoft.Owin.Host.SystemWeb.2.0.0\lib\net45\Microsoft.Owin.Host.SystemWeb.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Owin.Security">
+      <HintPath>..\packages\Microsoft.Owin.Security.2.0.0\lib\net45\Microsoft.Owin.Security.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Owin.Security.Facebook">
+      <HintPath>..\packages\Microsoft.Owin.Security.Facebook.2.0.0\lib\net45\Microsoft.Owin.Security.Facebook.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Owin.Security.Cookies">
+      <HintPath>..\packages\Microsoft.Owin.Security.Cookies.2.0.0\lib\net45\Microsoft.Owin.Security.Cookies.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Owin.Security.OAuth">
+      <HintPath>..\packages\Microsoft.Owin.Security.OAuth.2.0.0\lib\net45\Microsoft.Owin.Security.OAuth.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Owin.Security.Google">
+      <HintPath>..\packages\Microsoft.Owin.Security.Google.2.0.0\lib\net45\Microsoft.Owin.Security.Google.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Owin.Security.Twitter">
+      <HintPath>..\packages\Microsoft.Owin.Security.Twitter.2.0.0\lib\net45\Microsoft.Owin.Security.Twitter.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Owin.Security.MicrosoftAccount">
+      <HintPath>..\packages\Microsoft.Owin.Security.MicrosoftAccount.2.0.0\lib\net45\Microsoft.Owin.Security.MicrosoftAccount.dll</HintPath>
+    </Reference>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="App_Start\BundleConfig.cs" />
+    <Compile Include="App_Start\CustomHandleErrorAttribute.cs" />
+    <Compile Include="App_Start\FilterConfig.cs" />
+    <Compile Include="App_Start\RouteConfig.cs" />
+    <Compile Include="App_Start\Startup.Auth.cs" />
+    <Compile Include="Areas\Account\AccountAreaRegistration.cs" />
+    <Compile Include="Areas\Account\Controllers\WcAccountController.cs" />
+    <Compile Include="Areas\Account\Models\AccountViewModel.cs" />
+    <Compile Include="Areas\Landing\Controllers\WcHomeController.cs" />
+    <Compile Include="Areas\Landing\Controllers\WebApiTestClientController.cs" />
+    <Compile Include="Areas\Landing\LandingAreaRegistration.cs" />
+    <Compile Include="Areas\Landing\Models\SaveForLaterViewModel.cs" />
+    <Compile Include="Areas\QuestionEngine\Controllers\MyQuestionsController.cs" />
+    <Compile Include="Areas\QuestionEngine\Models\MyQuestionResponseViewModel.cs" />
+    <Compile Include="Areas\QuestionEngine\Models\MyQuestionsViewModel.cs" />
+    <Compile Include="Areas\QuestionEngine\QuestionEngineAreaRegistration.cs" />
+    <Compile Include="Code\Configuration\Authorize\ValidateJsonAntiForgeryToken.cs" />
+    <Compile Include="Code\Configuration\ThemeManager.cs" />
+    <Compile Include="Code\Configuration\ThemeSharedContent.cs" />
+    <Compile Include="Code\Html\ThemePropertyExtensions.cs" />
+    <Compile Include="Code\Quote\QuoteCookieHelper.cs" />
+    <Compile Include="Controllers\AccountController.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Controllers\BaseController.cs" />
+    <Compile Include="Controllers\HomeController.cs" />
+    <Compile Include="Global.asax.cs">
+      <DependentUpon>Global.asax</DependentUpon>
+    </Compile>
+    <Compile Include="Models\AccountViewModels.cs" />
+    <Compile Include="Models\ApplicationUser.cs" />
+    <Compile Include="Models\IdentityModels.cs" />
+    <Compile Include="Models\WcBusinessClasses.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Startup.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Areas\Landing\Views\WcHome\_businessInfoRefer.html" />
+    <Content Include="Content\bootstrap-datepicker.css" />
+    <Content Include="Content\bootstrap.css" />
+    <Content Include="Content\bootstrap.min.css" />
+    <Content Include="Content\Custom\user-registration.css" />
+    <Content Include="Content\images\ajax-loader_blue.gif" />
+    <Content Include="Content\jquery-ui.css" />
+    <Content Include="Content\jquery-ui.min.css" />
+    <Content Include="Content\jquery-ui.structure.css" />
+    <Content Include="Content\jquery-ui.structure.min.css" />
+    <Content Include="Content\jquery-ui.theme.css" />
+    <Content Include="Content\jquery-ui.theme.min.css" />
+    <Content Include="Content\Themes\_sharedFiles\checkbox-terms-and-conditions.html" />
+    <Content Include="Content\Themes\_sharedFiles\guardemail-hard-referral-body.js" />
+    <Content Include="Content\Themes\_sharedFiles\guardemail-hard-referral-subject.js" />
+    <Content Include="Content\Themes\_sharedFiles\guardemail-soft-referral-body.html" />
+    <Content Include="Content\Themes\_sharedFiles\guardemail-soft-referral-subject.html" />
+    <Content Include="Content\Themes\_sharedFiles\landing-common-zip-section.html" />
+    <Content Include="Content\Themes\_sharedFiles\LandingPages\2123_landing-page.html" />
+    <Content Include="Content\Themes\_sharedFiles\LandingPages\wc-default-landing-page.html" />
+    <Content Include="Content\Themes\_sharedFiles\referral-complete.html" />
+    <Content Include="Content\Themes\_sharedFiles\referral.html" />
+    <Content Include="Content\Themes\_sharedFiles\useremail-saveforlater-anchortext.html" />
+    <Content Include="Content\Themes\_sharedFiles\useremail-saveforlater-body.html" />
+    <Content Include="Content\Themes\_sharedFiles\useremail-saveforlater-subject.html" />
+    <Content Include="Content\Themes\_sharedFiles\Xml\WcLandingPages.xml" />
+    <Content Include="favicon.ico" />
+    <Content Include="fonts\glyphicons-halflings-regular.svg" />
+    <Content Include="Global.asax" />
+    <Content Include="Content\Site.css" />
+    <Content Include="Scripts\angular\angular-messages.js" />
+    <Content Include="Scripts\angular\angular-resource.js" />
+    <Content Include="Scripts\angular\angular-route.js" />
+    <Content Include="Scripts\angular\angular-sanitize.js" />
+    <Content Include="Scripts\angular\angular.js" />
+    <Content Include="Scripts\applications\questionEngineApp.js" />
+    <Content Include="Areas\Landing\Views\WcHome\ResultsReferQ.cshtml" />
+    <Content Include="Areas\Account\Views\Shared\_Layout.cshtml" />
+    <Content Include="Areas\Account\Views\WcAccount\ForgotPassword.cshtml" />
+    <Content Include="Areas\Account\Views\WcAccount\Login.cshtml" />
+    <Content Include="Areas\Account\Views\WcAccount\Register.cshtml" />
+    <Content Include="Areas\Account\Views\web.config" />
+    <Content Include="Areas\Account\Views\WcAccount\ForgotPasswordConfirmation.cshtml" />
+    <Content Include="Areas\Landing\Views\WcHome\SavedForLaterRetrieve.cshtml" />
+    <Content Include="Areas\Account\Views\WcAccount\LoginSuccess.cshtml" />
+    <Content Include="Areas\Landing\Views\WcHome\SaveForLater.cshtml" />
+    <Content Include="Areas\Account\Views\WcAccount\DisplayEmail.cshtml" />
+    <Content Include="Areas\Landing\Views\WcHome\SavedForLater.cshtml" />
+    <Content Include="Areas\Landing\Views\WcHome\ResultsReferQResponse.cshtml" />
+    <Content Include="Areas\Landing\Views\WcHome\VerifyOrder.cshtml" />
+    <Content Include="Areas\Landing\Views\WcHome\Purchase.cshtml" />
+    <Content Include="Areas\Landing\Views\WcHome\CacheView.cshtml" />
+    <Content Include="Areas\Landing\Views\WcHome\NewIndex.cshtml" />
+    <Content Include="Areas\Landing\Views\WcHome\GeicoIndex.cshtml" />
+    <None Include="Scripts\bhic\contents\wc\questions.json" />
+    <Content Include="Scripts\bhic\controllers\wc\cacheDemoCtrl.js" />
+    <Content Include="Scripts\bhic\controllers\wc\landingpageCtrl.js" />
+    <Content Include="Scripts\bhic\controllers\wc\loginCtrl.js" />
+    <Content Include="Scripts\bhic\controllers\wc\questionspageCtrl.js" />
+    <Content Include="Scripts\bhic\controllers\wc\quotereferralpageCtrl.js" />
+    <Content Include="Scripts\bhic\controllers\wc\purchaseGetCtrl.js" />
+    <Content Include="Scripts\bhic\controllers\wc\quoteResultCtrl.js" />
+    <Content Include="Scripts\bhic\controllers\wc\registrationCtrl.js" />
+    <Content Include="Scripts\bhic\controllers\wc\verifypurchaseorderpageCtrl.js" />
+    <Content Include="Scripts\bhic\controls\bhic-app.wc.controls.js" />
+    <Content Include="Scripts\bhic\directives\root\common.validation.js" />
+    <Content Include="Scripts\bhic\directives\wc\businessInput\businessInfoControlDirective.js" />
+    <Content Include="Scripts\bhic\directives\wc\businessInput\businessInputControlTemplate.html" />
+    <Content Include="Scripts\bhic\controls\maskInputDirective.js" />
+    <Content Include="Scripts\bhic\controls\dateControlDirective.js" />
+    <Content Include="Scripts\bhic\directives\wc\passwordInput\passwordInfoControlDirective.js" />
+    <Content Include="Scripts\bhic\directives\wc\passwordInput\passwordInputControlTemplate.html" />
+    <Content Include="Scripts\bhic\directives\wc\quoteInput\contactInputControl\contactInfoControlDirective.js" />
+    <Content Include="Scripts\bhic\directives\wc\quoteInput\contactInputControl\contactInputControlTemplate.html" />
+    <Content Include="Scripts\bhic\directives\wc\ssnFormatterDirective.js" />
+    <Content Include="Scripts\bhic\directives\wc\typeAheadControlDirective.js" />
+    <Content Include="Scripts\bhic\directives\wc\confirmPasswordDirective.js" />
+    <Content Include="Scripts\bhic\controls\currencyDirective.js" />
+    <Content Include="Scripts\bhic\directives\wc\numericValidationDirective.js" />
+    <Content Include="Scripts\bhic\directives\wc\passwordStrengthDirective.js" />
+    <Content Include="Scripts\bhic\controls\validNumberDirective.js" />
+    <Content Include="Scripts\bhic\modules\root\bhic-app.constant.js" />
+    <Content Include="Scripts\bhic\modules\root\slider.js" />
+    <Content Include="Scripts\bhic\modules\wc\bhic-app.wc.js" />
+    <Content Include="Scripts\bhic\bhic-app.js" />
+    <Content Include="Scripts\bhic\controllers\wc\questionEngineCtrl.js" />
+    <Content Include="Scripts\bhic\services\restServiceConsumer.js" />
+    <Content Include="Scripts\bhic\services\wc\cacheApi.js" />
+    <Content Include="Scripts\bhic\services\wc\landingPageDataProvider.js" />
+    <Content Include="Scripts\bhic\services\wc\purchaseApi.js" />
+    <Content Include="Scripts\bhic\services\wc\quotereferralApi.js" />
+    <Content Include="Scripts\bhic\services\wc\questionsApi.js" />
+    <Content Include="Scripts\bhic\services\wc\quoteResultApi.js" />
+    <Content Include="Scripts\bhic\services\wc\userProfileService.js" />
+    <Content Include="Scripts\bootstrap-datepicker.js" />
+    <Content Include="Scripts\bootstrap.js" />
+    <Content Include="Scripts\bootstrap.min.js" />
+    <Content Include="NLog.config">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Areas\QuestionEngine\Views\Shared\_Layout.cshtml" />
+    <Content Include="Areas\QuestionEngine\Views\web.config" />
+    <Content Include="Areas\QuestionEngine\Views\_ViewStart.cshtml" />
+    <Content Include="Areas\QuestionEngine\Views\MyQuestions\Index.cshtml" />
+    <Content Include="Areas\QuestionEngine\Views\MyQuestions\MyGetQuestionsByAngular.cshtml" />
+    <Content Include="Areas\QuestionEngine\Views\MyQuestions\MyGetQuestions.cshtml" />
+    <Content Include="Areas\QuestionEngine\Views\MyQuestions\MyShowQuestions.cshtml" />
+    <Content Include="Areas\Landing\Views\web.config" />
+    <Content Include="Areas\Landing\Views\_ViewStart.cshtml" />
+    <Content Include="Areas\Landing\Views\Shared\_Layout.cshtml" />
+    <Content Include="Areas\Landing\Views\Index.cshtml" />
+    <Content Include="Areas\Landing\Views\WcHome\Index.cshtml" />
+    <Content Include="Areas\Landing\Views\WebApiTestClient\Index.cshtml" />
+    <Content Include="Areas\Landing\Views\WcHome\QuestionsGet.cshtml" />
+    <Content Include="Areas\Landing\Views\WcHome\Test.cshtml" />
+    <Content Include="Areas\Landing\Views\WcHome\ResultsQuote.cshtml" />
+    <None Include="NLog.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <Content Include="Scripts\bhic\contents\wc\questionsJson.json" />
+    <Content Include="Scripts\bhic\contents\wc\landingPage.js" />
+    <None Include="Scripts\jquery-1.10.2.intellisense.js" />
+    <Content Include="Scripts\clock\jquery-1.11.1.min.js" />
+    <Content Include="Scripts\clock\jquery.corner.js" />
+    <Content Include="Scripts\clock\jquery.jclock.js" />
+    <Content Include="Scripts\controllers\questionsCtrl.js" />
+    <Content Include="Scripts\jquery-1.10.2.js" />
+    <Content Include="Scripts\jquery-1.10.2.min.js" />
+    <None Include="Scripts\jquery.validate-vsdoc.js" />
+    <Content Include="Scripts\jquery-2.1.4.js" />
+    <Content Include="Scripts\jquery-ui-1.10.2.js" />
+    <Content Include="Scripts\jquery.inputmask.bundle.js" />
+    <Content Include="Scripts\jquery.validate.js" />
+    <Content Include="Scripts\jquery.validate.min.js" />
+    <Content Include="Scripts\jquery.validate.unobtrusive.js" />
+    <Content Include="Scripts\jquery.validate.unobtrusive.min.js" />
+    <Content Include="Scripts\modernizr-2.6.2.js" />
+    <Content Include="Scripts\questionRender.js" />
+    <Content Include="Scripts\respond.js" />
+    <Content Include="Scripts\respond.min.js" />
+    <Content Include="Scripts\_references.js" />
+    <Content Include="Content\images\ui-bg_diagonals-thick_18_b81900_40x40.png" />
+    <Content Include="Content\images\ui-bg_diagonals-thick_20_666666_40x40.png" />
+    <Content Include="Content\images\ui-bg_flat_10_000000_40x100.png" />
+    <Content Include="Content\images\ui-bg_glass_100_f6f6f6_1x400.png" />
+    <Content Include="Content\images\ui-bg_glass_100_fdf5ce_1x400.png" />
+    <Content Include="Content\images\ui-bg_glass_65_ffffff_1x400.png" />
+    <Content Include="Content\images\ui-bg_gloss-wave_35_f6a828_500x100.png" />
+    <Content Include="Content\images\ui-bg_highlight-soft_100_eeeeee_1x100.png" />
+    <Content Include="Content\images\ui-bg_highlight-soft_75_ffe45c_1x100.png" />
+    <Content Include="Content\images\ui-icons_222222_256x240.png" />
+    <Content Include="Content\images\ui-icons_228ef1_256x240.png" />
+    <Content Include="Content\images\ui-icons_ef8c08_256x240.png" />
+    <Content Include="Content\images\ui-icons_ffd27a_256x240.png" />
+    <Content Include="Content\images\ui-icons_ffffff_256x240.png" />
+    <Content Include="Web.config">
+      <SubType>Designer</SubType>
+    </Content>
+    <Content Include="Web.Debug.config">
+      <DependentUpon>Web.config</DependentUpon>
+    </Content>
+    <Content Include="Web.Release.config">
+      <DependentUpon>Web.config</DependentUpon>
+    </Content>
+    <Content Include="Views\Web.config" />
+    <Content Include="Views\_ViewStart.cshtml" />
+    <Content Include="Areas\Landing\Views\Shared\Error.cshtml" />
+    <Content Include="Views\Shared\_Layout.cshtml" />
+    <Content Include="Views\Home\About.cshtml" />
+    <Content Include="Views\Home\Contact.cshtml" />
+    <Content Include="Views\Home\Index.cshtml" />
+    <Content Include="Scripts\jquery-1.10.2.min.map" />
+    <Content Include="Views\Account\_ChangePasswordPartial.cshtml" />
+    <Content Include="Views\Account\_ExternalLoginsListPartial.cshtml" />
+    <Content Include="Views\Account\_RemoveAccountPartial.cshtml" />
+    <Content Include="Views\Account\_SetPasswordPartial.cshtml" />
+    <Content Include="Views\Account\ExternalLoginConfirmation.cshtml" />
+    <Content Include="Views\Account\ExternalLoginFailure.cshtml" />
+    <Content Include="Views\Account\Login.cshtml" />
+    <Content Include="Views\Account\Manage.cshtml" />
+    <Content Include="Views\Account\Register.cshtml" />
+    <Content Include="Views\Shared\_LoginPartial.cshtml" />
+    <Content Include="Views\Home\TestView.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="App_Data\" />
+    <Folder Include="Areas\Landing\Views\Results\" />
+    <Folder Include="Scripts\bhic\filters\wc\" />
+    <Folder Include="Themes\_Shared\" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="fonts\glyphicons-halflings-regular.woff" />
+    <Content Include="fonts\glyphicons-halflings-regular.ttf" />
+    <Content Include="fonts\glyphicons-halflings-regular.eot" />
+    <Content Include="packages.config" />
+    <None Include="Project_Readme.html" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\BHIC.Common.Caching\BHIC.Common.Caching.csproj">
+      <Project>{ce7f0ece-cf1a-4453-8e88-aa6a8d978a5b}</Project>
+      <Name>BHIC.Common.Caching</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\BHIC.Common.Client\BHIC.Common.Client.csproj">
+      <Project>{797663fa-3772-47c1-9e2c-6d2ea3be2a11}</Project>
+      <Name>BHIC.Common.Client</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\BHIC.Common\BHIC.Common.csproj">
+      <Project>{35bc1847-77a6-44db-bbeb-25a99a5f700e}</Project>
+      <Name>BHIC.Common</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\BHIC.Contract\BHIC.Contract.WC.csproj">
+      <Project>{7c5c6d0f-90ab-41d6-9863-468ae3f96cb6}</Project>
+      <Name>BHIC.Contract.WC</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\BHIC.Core\BHIC.Core.WC.csproj">
+      <Project>{55f05b0d-b992-4eb1-91a5-9274adcfaaaa}</Project>
+      <Name>BHIC.Core.WC</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\BHIC.Domain\BHIC.Domain.WC.csproj">
+      <Project>{a3b360bc-6d15-4da6-bb04-551e6be45965}</Project>
+      <Name>BHIC.Domain.WC</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\BHIC.ViewDomain\BHIC.ViewDomain.WC.csproj">
+      <Project>{3733bf06-dab1-4264-9892-b2095c7b5636}</Project>
+      <Name>BHIC.ViewDomain.WC</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <PropertyGroup>
+    <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
+    <VSToolsPath Condition="'$(VSToolsPath)' == ''">$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)</VSToolsPath>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'QA|AnyCPU'">
+    <OutputPath>bin\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <Optimize>true</Optimize>
+    <DebugType>pdbonly</DebugType>
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <ErrorReport>prompt</ErrorReport>
+    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'UAT|AnyCPU'">
+    <OutputPath>bin\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <Optimize>true</Optimize>
+    <DebugType>pdbonly</DebugType>
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <ErrorReport>prompt</ErrorReport>
+    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
+  </PropertyGroup>
+  <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
+  <Import Project="$(VSToolsPath)\WebApplications\Microsoft.WebApplication.targets" Condition="'$(VSToolsPath)' != ''" />
+  <Import Project="$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v10.0\WebApplications\Microsoft.WebApplication.targets" Condition="false" />
+  <Target Name="MvcBuildViews" AfterTargets="AfterBuild" Condition="'$(MvcBuildViews)'=='true'">
+    <AspNetCompiler VirtualPath="temp" PhysicalPath="$(WebProjectOutputDir)" />
+  </Target>
+  <ProjectExtensions>
+    <VisualStudio>
+      <FlavorProperties GUID="{349c5851-65df-11da-9384-00065b846f21}">
+        <WebProjectProperties>
+          <UseIIS>True</UseIIS>
+          <AutoAssignPort>True</AutoAssignPort>
+          <DevelopmentServerPort>60793</DevelopmentServerPort>
+          <DevelopmentServerVPath>/</DevelopmentServerVPath>
+          <IISUrl>http://localhost:60793/</IISUrl>
+          <NTLMAuthentication>False</NTLMAuthentication>
+          <UseCustomServer>False</UseCustomServer>
+          <CustomServerUrl>
+          </CustomServerUrl>
+          <SaveServerSettingsInUserFile>False</SaveServerSettingsInUserFile>
+        </WebProjectProperties>
+      </FlavorProperties>
+    </VisualStudio>
+  </ProjectExtensions>
+  <Import Project="$(SolutionDir)\.nuget\NuGet.targets" Condition="Exists('$(SolutionDir)\.nuget\NuGet.targets')" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it.
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target> -->
+</Project>
